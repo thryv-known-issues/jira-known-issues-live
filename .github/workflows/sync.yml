@@ -1,0 +1,90 @@
+name: Sync Jira Data
+
+on:
+  schedule:
+    - cron: '0 */2 * * *'  # Every 2 hours
+  workflow_dispatch: {}     # Manual trigger button
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch Jira issues
+        env:
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
+        run: |
+          echo "Fetching issues from Jira..."
+          
+          ALL_ISSUES="[]"
+          
+          for PROJECT in MCB MC MNY TPAY TPS; do
+            START=0
+            TOTAL=999999
+            
+            while [ $START -lt $TOTAL ]; do
+              RESPONSE=$(curl -s -u "${JIRA_EMAIL}:${JIRA_TOKEN}" \
+                -H "Accept: application/json" \
+                "https://thryv.atlassian.net/rest/api/3/search?jql=project=${PROJECT}+AND+created>=%272026-01-01%27+ORDER+BY+created+DESC&fields=summary,status,priority,components,labels,created,updated,issuetype&maxResults=100&startAt=${START}")
+              
+              TOTAL=$(echo "$RESPONSE" | jq '.total // 0')
+              COUNT=$(echo "$RESPONSE" | jq '.issues | length')
+              
+              echo "  ${PROJECT}: fetched ${COUNT} issues (startAt=${START}, total=${TOTAL})"
+              
+              # Normalize each issue into flat shape
+              BATCH=$(echo "$RESPONSE" | jq '[.issues[] | {
+                key: .key,
+                project: (.key | split("-")[0]),
+                summary: (.fields.summary // ""),
+                status: (.fields.status.name // ""),
+                statusCategory: (.fields.status.statusCategory.name // "To Do"),
+                priority: (.fields.priority.name // "P3"),
+                components: [(.fields.components // [])[] | .name],
+                labels: (.fields.labels // []),
+                created: (.fields.created // ""),
+                updated: (.fields.updated // ""),
+                type: (.fields.issuetype.name // "")
+              }]')
+              
+              ALL_ISSUES=$(echo "$ALL_ISSUES" "$BATCH" | jq -s '.[0] + .[1]')
+              
+              START=$((START + 100))
+              
+              # Safety cap
+              if [ $(echo "$ALL_ISSUES" | jq 'length') -ge 2000 ]; then
+                echo "  Hit 2000 issue cap, stopping."
+                break 2
+              fi
+            done
+          done
+          
+          TOTAL_COUNT=$(echo "$ALL_ISSUES" | jq 'length')
+          echo "Total issues fetched: ${TOTAL_COUNT}"
+          
+          # Write final JSON
+          echo "$ALL_ISSUES" | jq "{
+            total: length,
+            fetchedAt: \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",
+            since: \"2026-01-01\",
+            projects: [\"MCB\",\"MC\",\"MNY\",\"TPAY\",\"TPS\"],
+            issues: .
+          }" > data.json
+          
+          echo "data.json written ($(wc -c < data.json) bytes)"
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Sync Jira data $(date -u +%Y-%m-%d_%H:%M)"
+            git push
+          fi
