@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Known System Issues — Thryv Advanced Technical Support</title>
+<style>
+  :root {
+    --orange: #FF5000; --midnight: #29355D; --black: #121212; --white: #FFFFFF;
+    --mist: #F4F6FB; --cloud: #ECEEF1; --steel: #808080; --night: #4D4D4D;
+    --sapphire: #5378FC;
+    --bg: #FFFFFF; --bg2: #F4F6FB; --bg3: #ECEEF1;
+    --text: #121212; --text2: #4D4D4D; --text3: #808080;
+    --border: #ECEEF1; --border2: #D0D0D0;
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --mono: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a2e; --bg2: #222240; --bg3: #2a2a4a;
+      --text: #e8e8f0; --text2: #a0a0b8; --text3: #707088;
+      --border: #333355; --border2: #444466;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); font-size: 13px; line-height: 1.4; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 20px 24px; }
+  .hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .hdr-left { display: flex; align-items: center; gap: 10px; }
+  .hdr-dot { width: 8px; height: 8px; border-radius: 2px; background: var(--orange); flex-shrink: 0; }
+  .hdr h1 { font-size: 20px; font-weight: 500; white-space: nowrap; }
+  .hdr-sub { font-size: 12px; color: var(--text3); white-space: nowrap; margin-left: 6px; }
+  .hdr-right { display: flex; align-items: center; gap: 10px; }
+  .sync-time { font-size: 10px; color: var(--text3); white-space: nowrap; }
+  .status-bar { padding: 8px 14px; border-radius: 6px; margin-bottom: 14px; font-size: 12px; display: none; align-items: center; gap: 8px; }
+  .status-bar.error { display: flex; background: #FAEEDA; color: #854F0B; border: 1px solid #FAC775; }
+  .status-bar.loading { display: flex; background: #E6F1FB; color: #185FA5; border: 1px solid #85B7EB; }
+  .status-bar.success { display: flex; background: #EAF3DE; color: #3B6D11; border: 1px solid #C0DD97; }
+  .spinner { width: 14px; height: 14px; border: 2px solid #85B7EB; border-top-color: #185FA5; border-radius: 50%; animation: spin .6s linear infinite; flex-shrink: 0; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
+  .metric { background: var(--bg2); border-radius: 8px; padding: 12px 14px; overflow: hidden; }
+  .metric-label { font-size: 11px; color: var(--text3); white-space: nowrap; margin-bottom: 2px; }
+  .metric-val { font-size: 24px; font-weight: 600; line-height: 1.1; }
+  .metric-sub { font-size: 10px; color: var(--text3); margin-top: 2px; white-space: nowrap; }
+  .products { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
+  .prod-card { background: var(--bg); border: 0.5px solid var(--border); border-radius: 10px; padding: 14px 16px; overflow: hidden; }
+  .prod-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .prod-nums { display: flex; gap: 16px; }
+  .prod-num-val { font-size: 20px; font-weight: 600; line-height: 1.1; }
+  .prod-num-lbl { font-size: 10px; color: var(--text3); white-space: nowrap; }
+  .pill { display: inline-block; padding: 2px 9px; border-radius: 100px; font-size: 10.5px; font-weight: 600; letter-spacing: .3px; white-space: nowrap; line-height: 18px; border-width: 1.5px; border-style: solid; }
+  .pill-mc { background: #3C3489; border-color: #9B8FFF; color: #fff; }
+  .pill-ol { background: #29355D; border-color: #5378FC; color: #fff; }
+  .pill-tp { background: #5378FC; border-color: #A8C0FF; color: #fff; }
+  .pill-p1 { background: #FFE0D0; border-color: #F0997B; color: #993C1D; }
+  .pill-p2 { background: #FAEEDA; border-color: #FAC775; color: #854F0B; }
+  .pill-p3 { background: #E6F1FB; border-color: #85B7EB; color: #185FA5; }
+  .pill-p4 { background: #EAF3DE; border-color: #C0DD97; color: #3B6D11; }
+  .pill-todo { background: #B5D4F4; border-color: #B5D4F4; color: #0C447C; }
+  .pill-prog { background: #FAC775; border-color: #FAC775; color: #633806; }
+  .pill-done { background: #C0DD97; border-color: #C0DD97; color: #27500A; }
+  .pill-label { background: var(--bg2); border-color: var(--border2); color: var(--text2); }
+  .lookup { background: var(--bg2); border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; }
+  .lookup-row { display: flex; align-items: center; gap: 10px; }
+  .lookup-label { font-size: 11px; font-weight: 600; color: var(--text3); white-space: nowrap; flex-shrink: 0; }
+  .lookup-input { padding: 5px 10px; border-radius: 6px; border: 0.5px solid var(--border); font-size: 12px; width: 140px; flex-shrink: 0; background: var(--bg); color: var(--text); }
+  .lookup-result { display: flex; align-items: center; gap: 6px; font-size: 12px; overflow: hidden; min-width: 0; }
+  .lookup-result .key { font-family: var(--mono); color: var(--sapphire); font-weight: 600; flex-shrink: 0; }
+  .lookup-result .summ { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+  .lookup-result .st { font-size: 10px; color: var(--text3); white-space: nowrap; flex-shrink: 0; }
+  .lookup-result a { color: var(--sapphire); font-size: 11px; white-space: nowrap; flex-shrink: 0; text-decoration: none; }
+  .lookup-miss { font-size: 11px; color: var(--text3); }
+  .filters { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .fbtn { padding: 4px 12px; border-radius: 100px; font-size: 11px; font-weight: 500; cursor: pointer; white-space: nowrap; flex-shrink: 0; border: 1.5px solid var(--border); background: transparent; color: var(--text2); transition: all .15s; }
+  .fbtn.on { color: #fff; }
+  .search-input { margin-left: auto; padding: 4px 12px; border-radius: 100px; font-size: 11px; border: 0.5px solid var(--border); width: 170px; flex-shrink: 0; background: var(--bg); color: var(--text); }
+  .detail { background: var(--bg); border: 0.5px solid var(--border); border-radius: 10px; padding: 14px 18px; margin-bottom: 14px; position: relative; display: none; }
+  .detail.show { display: block; }
+  .detail-close { position: absolute; top: 8px; right: 12px; background: none; border: none; font-size: 18px; cursor: pointer; color: var(--text3); }
+  .detail-top { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .detail-top .key { font-family: var(--mono); font-size: 13px; color: var(--sapphire); font-weight: 600; flex-shrink: 0; }
+  .detail-top a { margin-left: auto; color: var(--sapphire); font-size: 12px; white-space: nowrap; flex-shrink: 0; text-decoration: none; }
+  .detail-summary { font-size: 15px; font-weight: 500; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .detail-meta { display: flex; gap: 16px; font-size: 12px; color: var(--text2); flex-wrap: wrap; }
+  .detail-meta span { white-space: nowrap; }
+  .detail-meta strong { color: var(--text); }
+  .detail-labels { display: flex; gap: 4px; margin-top: 6px; }
+  .tbl-wrap { overflow-x: auto; margin-bottom: 20px; }
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  col.c-key { width: 80px; } col.c-issue { } col.c-proj { width: 56px; } col.c-prod { width: 125px; }
+  col.c-pri { width: 56px; } col.c-stat { width: 118px; }
+  col.c-date { width: 68px; } col.c-age { width: 38px; }
+  thead th { padding: 8px 6px; font-size: 10.5px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: .5px; cursor: pointer; user-select: none; text-align: left; white-space: nowrap; border-bottom: 1.5px solid var(--border2); }
+  thead th:hover { color: var(--text2); }
+  tbody tr { border-bottom: 0.5px solid var(--border); cursor: pointer; transition: background .1s; }
+  tbody tr:hover { background: var(--bg2); }
+  tbody td { padding: 7px 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .td-key { font-size: 11px; color: var(--text2); font-family: var(--mono); }
+  .td-proj { font-size: 10px; color: var(--text3); font-family: var(--mono); }
+  .td-sum { font-size: 12.5px; font-weight: 500; }
+  .td-date { font-size: 11px; color: var(--text2); }
+  .td-age { font-size: 10px; color: var(--text3); }
+  .empty-msg { text-align: center; padding: 32px; color: var(--text3); font-size: 13px; }
+  .resolved-section { margin-bottom: 18px; }
+  .resolved-title { font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+  .resolved-row { display: flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 6px; background: var(--bg2); font-size: 12px; overflow: hidden; margin-bottom: 4px; }
+  .resolved-row .key { font-family: var(--mono); font-size: 10.5px; color: var(--text3); min-width: 62px; flex-shrink: 0; white-space: nowrap; }
+  .resolved-row .summ { flex: 1 1 0%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+  .resolved-row .days { font-size: 10.5px; color: #27500A; background: #EAF3DE; padding: 2px 8px; border-radius: 100px; border: 1px solid #C0DD97; flex-shrink: 0; white-space: nowrap; }
+  .legend { display: flex; gap: 18px; padding: 12px 16px; background: var(--bg2); border-radius: 8px; font-size: 11px; color: var(--text3); overflow: hidden; }
+  .legend-group { display: flex; align-items: center; gap: 8px; white-space: nowrap; flex-shrink: 0; }
+  .legend-group b { font-weight: 600; }
+  .legend-item { display: inline-flex; align-items: center; gap: 3px; }
+  .footer { text-align: center; padding: 14px 0 4px; font-size: 10px; color: var(--text3); white-space: nowrap; }
+  .spark { display: block; flex-shrink: 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hdr">
+    <div class="hdr-left">
+      <div class="hdr-dot"></div>
+      <h1>Known system issues</h1>
+      <span class="hdr-sub" id="hdr-date"></span>
+    </div>
+    <div class="hdr-right">
+      <span class="sync-time" id="sync-time"></span>
+    </div>
+  </div>
+  <div class="status-bar" id="status-bar"><div class="spinner" id="spinner"></div><span id="status-msg"></span></div>
+  <div class="metrics" id="metrics"></div>
+  <div class="products" id="products"></div>
+  <div class="lookup"><div class="lookup-row">
+    <span class="lookup-label">Ticket lookup</span>
+    <input class="lookup-input" id="lookup-input" placeholder="MCB-290" oninput="doLookup()">
+    <span id="lookup-result"></span>
+  </div></div>
+  <div class="filters" id="filters"></div>
+  <div class="detail" id="detail"></div>
+  <div class="tbl-wrap">
+    <table>
+      <colgroup><col class="c-key"><col class="c-issue"><col class="c-proj"><col class="c-prod"><col class="c-pri"><col class="c-stat"><col class="c-date"><col class="c-age"></colgroup>
+      <thead id="thead"></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <div class="empty-msg" id="empty-msg" style="display:none">No issues match your filters.</div>
+  </div>
+  <div class="resolved-section" id="resolved-section"></div>
+  <div class="legend">
+    <div class="legend-group"><b>Priority:</b>
+      <span class="legend-item"><span class="pill pill-p1">P1</span> Critical</span>
+      <span class="legend-item"><span class="pill pill-p2">P2</span> High</span>
+      <span class="legend-item"><span class="pill pill-p3">P3</span> Medium</span>
+      <span class="legend-item"><span class="pill pill-p4">P4</span> Low</span>
+    </div>
+    <div class="legend-group"><b>Status:</b>
+      <span class="legend-item">◯ To Do</span>
+      <span class="legend-item">◐ In Progress</span>
+      <span class="legend-item">● Done</span>
+    </div>
+  </div>
+  <div class="footer">Thryv Advanced Technical Support • Known Issues Dashboard • Live from Jira (MCB, MC, MNY, TPAY, TPS)</div>
+</div>
+<script>
+// Data URL — this JSON file is auto-updated by GitHub Actions
+const DATA_URL = 'data.json';
+
+const PRODUCT_MAP = {
+  'Marketing Center': { cls: 'pill-mc', bg: '#3C3489' },
+  'Online Listings':  { cls: 'pill-ol', bg: '#29355D' },
+  'ThryvPay':         { cls: 'pill-tp', bg: '#5378FC' },
+};
+const PRI_CLS = { P1:'pill-p1', P2:'pill-p2', P3:'pill-p3', P4:'pill-p4' };
+const PRI_LABEL = { P1:'Critical', P2:'High', P3:'Medium', P4:'Low' };
+const PRI_ORD = { P1:0, P2:1, P3:2, P4:3 };
+const STAT_CLS = { 'To Do':'pill-todo', 'In Progress':'pill-prog', 'Done':'pill-done' };
+const STAT_ICON = { 'To Do':'◯', 'In Progress':'◐', 'Done':'●' };
+
+let ALL_ISSUES = [];
+let currentFilter = 'All';
+let currentSearch = '';
+let sortKey = 'priority';
+let sortDir = 'asc';
+
+function classifyProduct(i) {
+  const comps = (i.components||[]).join(' ').toLowerCase();
+  const sum = (i.summary||'').toLowerCase();
+  const proj = i.project || i.key.split('-')[0];
+  if (['TPS','TPAY','MNY'].includes(proj)) return 'ThryvPay';
+  if (comps.includes('listings manager')||sum.includes('listing')||sum.includes('yext')||sum.includes('yelp')||sum.includes('olm')||sum.includes('gump')) return 'Online Listings';
+  return 'Marketing Center';
+}
+function clean(s) { return (s||'').replace(/\s*-\s*[a-z0-9]{16,}$/i,'').replace(/\s*-\s*LOC[A-Z0-9]+$/i,'').replace(/\s*-\s*acct_[^\s]+(\s*-\s*[a-z0-9]+)?$/i,'').replace(/\s*\|\s*[^|]+\s*-\s*acct_.*$/i,'').replace(/^\*[A-Z]+\*\s*/i,'').replace(/\s*-\s*www\.\S+$/i,'').replace(/\s*-\s*\S+\.com$/i,'').trim(); }
+function daysAgo(d) { return Math.max(0,Math.floor((Date.now()-new Date(d).getTime())/864e5)); }
+function fmtDate(d) { return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric'}); }
+function fmtFull(d) { return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); }
+function pill(t,c) { return '<span class="pill '+c+'">'+t+'</span>'; }
+function sparkSVG(data,color,w,h) { w=w||72;h=h||24; if(!data||data.length<2) return '<span style="color:#bbb;font-size:10px">—</span>'; const mx=Math.max(...data,1),mn=Math.min(...data,0),r=mx-mn||1; const pts=data.map((v,i)=>`${(i/(data.length-1))*w},${h-((v-mn)/r)*(h-4)-2}`).join(' '); return `<svg width="${w}" height="${h}" class="spark"><polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`; }
+function trendData(arr) { const now=Date.now(); return Array.from({length:14},(_,i)=>{ const d=new Date(now-(13-i)*864e5);d.setHours(0,0,0,0); const e=new Date(d);e.setHours(23,59,59,999); return arr.filter(x=>{const c=new Date(x.created);return c>=d&&c<=e;}).length; }); }
+
+function showStatus(type,msg) {
+  const bar=document.getElementById('status-bar'), sp=document.getElementById('spinner'), ms=document.getElementById('status-msg');
+  bar.className='status-bar '+type; sp.style.display=type==='loading'?'block':'none'; ms.textContent=msg;
+  if(type==='success') setTimeout(()=>{bar.className='status-bar';},3000);
+}
+
+async function loadData() {
+  showStatus('loading','Loading issues…');
+  try {
+    const resp = await fetch(DATA_URL + '?t=' + Date.now());
+    if (!resp.ok) throw new Error('HTTP '+resp.status);
+    const data = await resp.json();
+    ALL_ISSUES = (data.issues||[]).map(i=>({...i, product: classifyProduct(i)}));
+    const syncTime = data.fetchedAt ? new Date(data.fetchedAt) : new Date();
+    document.getElementById('sync-time').textContent = 'Data from: '+syncTime.toLocaleString();
+    showStatus('success', 'Loaded '+data.total+' issues from '+data.projects.join(', '));
+    render();
+  } catch(err) {
+    showStatus('error','Failed to load data.json — run the GitHub Action first. '+err.message);
+  }
+}
+
+function render() {
+  const open=ALL_ISSUES.filter(i=>i.statusCategory!=='Done');
+  const resolved=ALL_ISSUES.filter(i=>i.statusCategory==='Done');
+  const byProd={}; Object.keys(PRODUCT_MAP).forEach(p=>{byProd[p]=ALL_ISSUES.filter(i=>i.product===p);});
+  document.getElementById('hdr-date').textContent='Advanced Technical Support • '+fmtFull(new Date());
+  const avgAge=open.length?Math.round(open.reduce((s,i)=>s+daysAgo(i.created),0)/open.length):0;
+  document.getElementById('metrics').innerHTML=[
+    {label:'Total open',val:open.length,sub:'All products',color:'var(--midnight)'},
+    {label:'In progress',val:open.filter(i=>i.statusCategory==='In Progress').length,sub:'Active dev',color:'#BA7517'},
+    {label:'Resolved (YTD)',val:resolved.length,sub:'Since Jan 1',color:'#639922'},
+    {label:'Avg age',val:avgAge+'d',sub:'Open issues',color:'var(--sapphire)'},
+  ].map(m=>`<div class="metric"><div class="metric-label">${m.label}</div><div class="metric-val" style="color:${m.color}">${m.val}</div><div class="metric-sub">${m.sub}</div></div>`).join('');
+  document.getElementById('products').innerHTML=Object.entries(PRODUCT_MAP).map(([name,sty])=>{
+    const arr=byProd[name]||[]; const o=arr.filter(i=>i.statusCategory!=='Done').length; const ip=arr.filter(i=>i.statusCategory==='In Progress').length; const r=arr.filter(i=>i.statusCategory==='Done').length;
+    return `<div class="prod-card"><div class="prod-top">${pill(name,sty.cls)}${sparkSVG(trendData(arr),sty.bg)}</div><div class="prod-nums"><div><div class="prod-num-val">${o}</div><div class="prod-num-lbl">Open</div></div><div><div class="prod-num-val" style="color:#BA7517">${ip}</div><div class="prod-num-lbl">In progress</div></div><div><div class="prod-num-val" style="color:#639922">${r}</div><div class="prod-num-lbl">Resolved</div></div></div></div>`;
+  }).join('');
+  const prods=['All',...Object.keys(PRODUCT_MAP)];
+  document.getElementById('filters').innerHTML=prods.map(p=>{
+    const on=currentFilter===p; const cnt=p!=='All'?' ('+(byProd[p]||[]).filter(i=>i.statusCategory!=='Done').length+')':'';
+    const sty=PRODUCT_MAP[p]; const bg=on?(sty?sty.bg:'var(--midnight)'):'transparent'; const bc=on?(sty?sty.bg:'var(--midnight)'):'var(--border)'; const clr=on?'#fff':'var(--text2)';
+    return `<button class="fbtn${on?' on':''}" style="background:${bg};border-color:${bc};color:${clr}" onclick="setFilter('${p}')">${p}${cnt}</button>`;
+  }).join('')+`<input class="search-input" placeholder="Search issues…" value="${currentSearch}" oninput="setSearch(this.value)">`;
+  renderTable(); renderResolved(resolved);
+}
+
+function renderTable() {
+  const open=ALL_ISSUES.filter(i=>i.statusCategory!=='Done');
+  const filtered=open.filter(i=>{
+    if(currentFilter!=='All'&&i.product!==currentFilter) return false;
+    if(currentSearch&&!i.summary.toLowerCase().includes(currentSearch.toLowerCase())&&!i.key.toLowerCase().includes(currentSearch.toLowerCase())) return false;
+    return true;
+  });
+  const sorted=[...filtered].sort((a,b)=>{
+    let c=0;
+    if(sortKey==='priority') c=(PRI_ORD[a.priority]??9)-(PRI_ORD[b.priority]??9);
+    else if(sortKey==='created') c=new Date(b.created)-new Date(a.created);
+    else if(sortKey==='product') c=a.product.localeCompare(b.product);
+    else if(sortKey==='status') c=a.status.localeCompare(b.status);
+    else if(sortKey==='key') c=a.key.localeCompare(b.key,undefined,{numeric:true});
+    else if(sortKey==='project') c=(a.project||'').localeCompare(b.project||'');
+    return sortDir==='asc'?c:-c;
+  });
+  const arrow=k=>sortKey===k?(sortDir==='asc'?' ↑':' ↓'):'';
+  document.getElementById('thead').innerHTML=`<tr><th onclick="doSort('key')">Key${arrow('key')}</th><th onclick="doSort('summary')">Issue${arrow('summary')}</th><th onclick="doSort('project')">Proj${arrow('project')}</th><th onclick="doSort('product')">Product${arrow('product')}</th><th onclick="doSort('priority')">Pri${arrow('priority')}</th><th onclick="doSort('status')">Status${arrow('status')}</th><th onclick="doSort('created')">Date${arrow('created')}</th><th>Age</th></tr>`;
+  if(sorted.length===0){document.getElementById('tbody').innerHTML='';document.getElementById('empty-msg').style.display='block';}
+  else{document.getElementById('empty-msg').style.display='none';
+    document.getElementById('tbody').innerHTML=sorted.map(i=>{
+      const priCls=PRI_CLS[i.priority]||'pill-p3'; const prodCls=PRODUCT_MAP[i.product]?.cls||'pill-mc';
+      const stCat=i.statusCategory||'To Do'; const stCls=STAT_CLS[stCat]||'pill-todo'; const stIcon=STAT_ICON[stCat]||'◯';
+      return `<tr onclick="showDetail('${i.key}')"><td class="td-key">${i.key}</td><td class="td-sum">${clean(i.summary)}</td><td class="td-proj">${i.project||i.key.split('-')[0]}</td><td>${pill(i.product,prodCls)}</td><td>${pill(i.priority,priCls)}</td><td><span class="pill ${stCls}">${stIcon} ${i.status}</span></td><td class="td-date">${fmtDate(i.created)}</td><td class="td-age">${daysAgo(i.created)}d</td></tr>`;
+    }).join('');
+  }
+}
+
+function renderResolved(resolved) {
+  if(!resolved.length){document.getElementById('resolved-section').innerHTML='';return;}
+  const sorted=[...resolved].sort((a,b)=>new Date(b.updated)-new Date(a.updated)).slice(0,12);
+  document.getElementById('resolved-section').innerHTML=`<div class="resolved-title">Recently resolved</div>${sorted.map(i=>{
+    const prodCls=PRODUCT_MAP[i.product]?.cls||'pill-mc'; const d=Math.max(1,Math.round((new Date(i.updated)-new Date(i.created))/864e5));
+    return `<div class="resolved-row"><span class="key">${i.key}</span>${pill(i.product,prodCls)}<span class="summ">${clean(i.summary)}</span><span class="days">Resolved in ${d}d</span></div>`;
+  }).join('')}`;
+}
+
+function setFilter(f){currentFilter=f;render();}
+function setSearch(s){currentSearch=s;renderTable();}
+function doSort(k){if(sortKey===k)sortDir=sortDir==='asc'?'desc':'asc';else{sortKey=k;sortDir='asc';}renderTable();}
+
+function showDetail(key) {
+  const i=ALL_ISSUES.find(x=>x.key===key); if(!i) return;
+  const el=document.getElementById('detail');
+  const priCls=PRI_CLS[i.priority]||'pill-p3'; const prodCls=PRODUCT_MAP[i.product]?.cls||'pill-mc';
+  el.className='detail show';
+  el.innerHTML=`<button class="detail-close" onclick="hideDetail()">×</button>
+    <div class="detail-top"><span class="key">${i.key}</span>${pill(i.product,prodCls)}${pill(i.priority+' — '+(PRI_LABEL[i.priority]||''),priCls)}<a href="https://thryv.atlassian.net/browse/${i.key}" target="_blank">Open in Jira ↗</a></div>
+    <div class="detail-summary">${clean(i.summary)}</div>
+    <div class="detail-meta"><span>Status: <strong>${i.status}</strong></span><span>Created: <strong>${fmtDate(i.created)}</strong></span><span>Updated: <strong>${fmtDate(i.updated)}</strong></span><span>Age: <strong>${daysAgo(i.created)}d</strong></span>${i.components.length?'<span>Components: <strong>'+i.components.join(', ')+'</strong></span>':''}<span>Project: <strong>${i.project||i.key.split('-')[0]}</strong></span></div>
+    ${i.labels.length?'<div class="detail-labels">'+i.labels.map(l=>pill(l,'pill-label')).join('')+'</div>':''}`;
+  el.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function hideDetail(){document.getElementById('detail').className='detail';}
+function doLookup(){
+  const v=document.getElementById('lookup-input').value.trim(), el=document.getElementById('lookup-result');
+  if(v.length<2){el.innerHTML='';return;}
+  const hit=ALL_ISSUES.find(i=>i.key.toLowerCase().includes(v.toLowerCase()));
+  if(hit){const prodCls=PRODUCT_MAP[hit.product]?.cls||'pill-mc';const priCls=PRI_CLS[hit.priority]||'pill-p3';
+    el.innerHTML=`<div class="lookup-result"><span class="key">${hit.key}</span>${pill(hit.product,prodCls)}${pill(hit.priority,priCls)}<span class="summ">${clean(hit.summary)}</span><span class="st">${hit.status}</span><a href="https://thryv.atlassian.net/browse/${hit.key}" target="_blank">Jira ↗</a></div>`;
+  } else el.innerHTML='<span class="lookup-miss">No match</span>';
+}
+
+document.getElementById('hdr-date').textContent='Advanced Technical Support • '+fmtFull(new Date());
+loadData();
+</script>
+</body>
+</html>
