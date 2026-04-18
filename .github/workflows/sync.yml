@@ -19,34 +19,38 @@ jobs:
           JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
         run: |
           set -e
-          echo "Fetching issues from Jira..."
+          echo "Fetching known client-impacting issues from Jira..."
 
           # Test auth
-          echo "Testing Jira connection..."
           TEST=$(curl -s -w "\nHTTP_CODE:%{http_code}" \
             -u "${JIRA_EMAIL}:${JIRA_TOKEN}" \
             -H "Accept: application/json" \
             "https://thryv.atlassian.net/rest/api/3/myself")
           HTTP_CODE=$(echo "$TEST" | grep "HTTP_CODE:" | cut -d: -f2)
-          echo "Auth test HTTP code: ${HTTP_CODE}"
           if [ "$HTTP_CODE" != "200" ]; then
-            echo "Auth failed!"
-            echo "$TEST" | head -5
+            echo "Auth failed! HTTP ${HTTP_CODE}"
             exit 1
           fi
-          echo "Auth OK!"
+          echo "Auth OK"
 
           ALL_ISSUES="[]"
 
-          for PROJECT in MCB MC MNY TPAY TPS; do
+          # Define queries — focused on techsupport labeled client-impacting issues
+          QUERIES=(
+            "project = MCB AND labels = techsupport AND status != Done ORDER BY priority ASC"
+            "project = MCB AND labels = techsupport AND status = Done AND updated >= -30d ORDER BY updated DESC"
+            "project = TPS AND labels = techsupport AND status != Done ORDER BY priority ASC"
+            "project = TPS AND labels = techsupport AND status = Done AND updated >= -30d ORDER BY updated DESC"
+            "project in (MC, MNY, TPAY) AND labels = techsupport AND status != Done ORDER BY priority ASC"
+            "project in (MC, MNY, TPAY) AND labels = techsupport AND status = Done AND updated >= -30d ORDER BY updated DESC"
+          )
+
+          for JQL in "${QUERIES[@]}"; do
             echo ""
-            echo "=== Fetching ${PROJECT} ==="
+            echo "=== Query: ${JQL:0:80}... ==="
             NEXT_TOKEN=""
-            PAGE=0
 
             while true; do
-              JQL="project=${PROJECT} AND created >= 2026-01-01 ORDER BY created DESC"
-
               if [ -z "$NEXT_TOKEN" ]; then
                 RESPONSE=$(curl -s \
                   -u "${JIRA_EMAIL}:${JIRA_TOKEN}" \
@@ -66,23 +70,17 @@ jobs:
                   --data-urlencode "nextPageToken=${NEXT_TOKEN}")
               fi
 
-              # Check if we got valid JSON with issues
               if ! echo "$RESPONSE" | jq -e '.issues' > /dev/null 2>&1; then
-                echo "  ${PROJECT}: No issues field. First 400 chars:"
-                echo "$RESPONSE" | head -c 400
+                echo "  No issues or error. First 300 chars:"
+                echo "$RESPONSE" | head -c 300
                 echo ""
                 break
               fi
 
               COUNT=$(echo "$RESPONSE" | jq '.issues | length')
-              TOTAL=$(echo "$RESPONSE" | jq '.total // "unknown"')
-              PAGE=$((PAGE + 1))
+              echo "  Fetched ${COUNT} issues"
 
-              echo "  ${PROJECT}: page ${PAGE}, fetched ${COUNT} issues (total: ${TOTAL})"
-
-              if [ "$COUNT" -eq 0 ]; then
-                break
-              fi
+              if [ "$COUNT" -eq 0 ]; then break; fi
 
               BATCH=$(echo "$RESPONSE" | jq '[.issues[] | {
                 key: .key,
@@ -100,31 +98,23 @@ jobs:
 
               ALL_ISSUES=$(echo "$ALL_ISSUES" "$BATCH" | jq -s '.[0] + .[1]')
 
-              # Check for next page token
               NEXT_TOKEN=$(echo "$RESPONSE" | jq -r '.nextPageToken // empty')
-              if [ -z "$NEXT_TOKEN" ]; then
-                echo "  ${PROJECT}: no more pages"
-                break
-              fi
-
-              CURRENT=$(echo "$ALL_ISSUES" | jq 'length')
-              if [ "$CURRENT" -ge 2000 ]; then
-                echo "  Hit 2000 issue cap, stopping."
-                break 2
-              fi
+              if [ -z "$NEXT_TOKEN" ]; then break; fi
             done
           done
+
+          # Deduplicate by key
+          ALL_ISSUES=$(echo "$ALL_ISSUES" | jq '[group_by(.key)[] | .[0]]')
 
           TOTAL_COUNT=$(echo "$ALL_ISSUES" | jq 'length')
           echo ""
           echo "==============================="
-          echo "Total issues fetched: ${TOTAL_COUNT}"
+          echo "Total unique issues: ${TOTAL_COUNT}"
           echo "==============================="
 
           echo "$ALL_ISSUES" | jq "{
             total: length,
             fetchedAt: \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",
-            since: \"2026-01-01\",
             projects: [\"MCB\",\"MC\",\"MNY\",\"TPAY\",\"TPS\"],
             issues: .
           }" > data.json
