@@ -1,6 +1,6 @@
 {
-  "total": 451,
-  "fetchedAt": "2026-04-18T01:13:09Z",
+  "total": 373,
+  "fetchedAt": "2026-04-18T03:04:40Z",
   "projects": [
     "MCB",
     "MC",
@@ -9,2453 +9,6 @@
     "TPS"
   ],
   "issues": [
-    {
-      "key": "MC-142",
-      "project": "MC",
-      "summary": "BC users with MC 'CANCEL' status not updating in LM correctly",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "Reviewed-by-PM",
-        "techsupport"
-      ],
-      "created": "2025-02-24T08:47:44.818-0800",
-      "updated": "2026-03-10T16:59:15.577-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-1558",
-      "project": "MC",
-      "summary": "[Master] Enhanced Profiles Not Saving",
-      "status": "In Progress",
-      "statusCategory": "In Progress",
-      "priority": "P2",
-      "components": [],
-      "labels": [
-        "pending-sprint",
-        "techsupport"
-      ],
-      "created": "2025-05-08T07:07:05.117-0700",
-      "updated": "2026-04-17T08:49:04.658-0700",
-      "type": "Epic"
-    },
-    {
-      "key": "MC-1776",
-      "project": "MC",
-      "summary": "Yahoo Activation Error Persists After Profile Is Disabled",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "HighPriority",
-        "techsupport"
-      ],
-      "created": "2025-05-19T15:47:31.637-0700",
-      "updated": "2026-02-17T11:54:42.125-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-1842",
-      "project": "MC",
-      "summary": "MDM Record is not syncing the user's business hours from Listings Management",
-      "status": "Deployed",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "pending-sprint",
-        "techsupport"
-      ],
-      "created": "2025-05-23T13:39:41.392-0700",
-      "updated": "2026-04-16T07:46:43.433-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-1854",
-      "project": "MC",
-      "summary": "New Installs missing package id in mc_thryv - tr4eqvyyt1tays1w",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Quick Setup"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-05-27T07:50:17.030-0700",
-      "updated": "2025-12-18T09:43:39.903-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-1949",
-      "project": "MC",
-      "summary": "Yahoo – MC UI Not Displaying View Profile Link or Error Message Despite Live Listing",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "pending-sprint",
-        "techsupport"
-      ],
-      "created": "2025-05-30T18:19:43.039-0700",
-      "updated": "2025-09-23T12:36:55.063-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2028",
-      "project": "MC",
-      "summary": "Yelp - Ginger Error Table Mismatch",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-06-05T16:26:47.993-0700",
-      "updated": "2026-02-12T10:17:38.033-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-209",
-      "project": "MC",
-      "summary": "[Master] OLM Content Reversion Issue",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "pending-meeting",
-        "techsupport"
-      ],
-      "created": "2025-02-26T10:52:23.059-0800",
-      "updated": "2026-03-30T17:20:24.750-0700",
-      "type": "Epic"
-    },
-    {
-      "key": "MC-2099",
-      "project": "MC",
-      "summary": "CTN's not being sent to yp on MC + TL accounts",
-      "status": "Backlog",
-      "statusCategory": "To Do",
-      "priority": "P3",
-      "components": [
-        "Thryv Leads"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-06-11T11:37:57.331-0700",
-      "updated": "2025-09-08T15:28:21.533-0700",
-      "type": "Story"
-    },
-    {
-      "key": "MC-2175",
-      "project": "MC",
-      "summary": "Refresh CTN - ua1f3h94npwv71bg",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Backend",
-        "Tools"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-06-12T15:12:15.786-0700",
-      "updated": "2025-09-19T10:45:36.300-0700",
-      "type": "Tech Debt"
-    },
-    {
-      "key": "MC-2266",
-      "project": "MC",
-      "summary": "Backfill Missing Categories (AUS)",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-06-23T14:25:12.764-0700",
-      "updated": "2025-10-16T06:01:18.119-0700",
-      "type": "Tech Debt"
-    },
-    {
-      "key": "MC-2319",
-      "project": "MC",
-      "summary": "[Nextdoor] Develop method to modify profile page URLs",
-      "status": "Backlog",
-      "statusCategory": "To Do",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-06-26T16:12:23.192-0700",
-      "updated": "2025-09-08T15:28:19.559-0700",
-      "type": "Story"
-    },
-    {
-      "key": "MC-2332",
-      "project": "MC",
-      "summary": "Canceling Edit on Google Business Profile Redirects to 404 Page",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-06-27T14:43:03.605-0700",
-      "updated": "2026-03-10T16:57:59.365-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2385",
-      "project": "MC",
-      "summary": "[Master] EP analytics issues",
-      "status": "In Progress",
-      "statusCategory": "In Progress",
-      "priority": "P3",
-      "components": [],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-07-02T12:58:43.277-0700",
-      "updated": "2026-01-22T07:23:39.750-0800",
-      "type": "Epic"
-    },
-    {
-      "key": "MC-2390",
-      "project": "MC",
-      "summary": "Implement Address Standardization for Online Listings in Marketing Center",
-      "status": "To Do",
-      "statusCategory": "To Do",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-07-02T16:53:41.630-0700",
-      "updated": "2025-11-14T07:57:17.074-0800",
-      "type": "Epic"
-    },
-    {
-      "key": "MC-24",
-      "project": "MC",
-      "summary": "Omit address indicator not getting sent through the stack to MDM - aakmihn3p17iksh3",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-02-13T12:48:20.481-0800",
-      "updated": "2026-03-10T16:59:15.228-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2440",
-      "project": "MC",
-      "summary": "[MASTER Yelp] 'View Profile' Link Out Not Populating",
-      "status": "Deployed",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-07-09T16:41:23.432-0700",
-      "updated": "2026-04-16T07:23:52.073-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2441",
-      "project": "MC",
-      "summary": "[MASTER Yahoo] 'View Profile' Link Out Not Populating",
-      "status": "Blocked",
-      "statusCategory": "No Category",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-07-09T18:08:35.037-0700",
-      "updated": "2026-04-16T07:23:52.323-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2444",
-      "project": "MC",
-      "summary": "Account linked to a different business",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-07-10T08:39:53.882-0700",
-      "updated": "2026-03-10T16:57:50.838-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2447",
-      "project": "MC",
-      "summary": "[MASTER Nextdoor] 'View Profile' Link Out Not Populating",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-07-10T09:48:57.861-0700",
-      "updated": "2026-03-16T17:43:55.378-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2451",
-      "project": "MC",
-      "summary": "[Nextdoor] Persisting Error Messaging Post Opt-Out",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-07-10T11:33:45.060-0700",
-      "updated": "2026-01-28T10:09:16.022-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2456",
-      "project": "MC",
-      "summary": "[Yelp] Incorrectly Matched Enhanced Profile",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-07-10T15:16:43.349-0700",
-      "updated": "2026-03-23T16:47:30.964-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2457",
-      "project": "MC",
-      "summary": "[Nextdoor] Incorrectly Matched Enhanced Profile",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-07-10T17:11:33.187-0700",
-      "updated": "2026-04-07T15:53:37.954-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2530",
-      "project": "MC",
-      "summary": "Missing SEO addon - pjnehyimjhg61zkl",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Growth Package",
-        "Integrations Team"
-      ],
-      "labels": [
-        "MC-Sprint-7",
-        "MC-Sprint-8",
-        "techsupport"
-      ],
-      "created": "2025-07-17T12:11:57.289-0700",
-      "updated": "2025-09-19T09:47:50.296-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2544",
-      "project": "MC",
-      "summary": "Remove Call Records and Listen Links from Marketing Center & Command Center |Thryv ID: 288e75xrv3r26334",
-      "status": "Cancelled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "MC Base Product"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-07-21T11:09:01.017-0700",
-      "updated": "2026-04-14T10:17:55.789-0700",
-      "type": "Story"
-    },
-    {
-      "key": "MC-2558",
-      "project": "MC",
-      "summary": "Deleted Competitors persisting ",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Tools"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-07-22T07:42:10.747-0700",
-      "updated": "2025-09-19T14:01:29.249-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2564",
-      "project": "MC",
-      "summary": "[Yahoo] Invalid Address Error Message Displaying for Correct Address (blocked by MC-4765)",
-      "status": "Blocked",
-      "statusCategory": "No Category",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-07-22T16:27:30.906-0700",
-      "updated": "2026-04-16T07:24:09.809-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2586",
-      "project": "MC",
-      "summary": "Reinstallation process - xk3q8ilh1b2qo8zz",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Backend"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-07-24T11:29:49.064-0700",
-      "updated": "2026-03-04T09:45:44.940-0800",
-      "type": "Tech Debt"
-    },
-    {
-      "key": "MC-2602",
-      "project": "MC",
-      "summary": "Disable Thryv Leads Call Filtering When Client Deactivates Thryv Leads",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Analytics",
-        "Growth Package"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-07-25T08:08:23.415-0700",
-      "updated": "2025-11-13T04:35:35.294-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2607",
-      "project": "MC",
-      "summary": "Listings Management - Google Profile Page not found",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-07-25T10:48:21.424-0700",
-      "updated": "2026-03-10T16:57:42.332-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2619",
-      "project": "MC",
-      "summary": "Yelp, Yahoo, and Next Door stuck on Pending - y4ppvzqddttk4r0w",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-07-28T09:49:32.107-0700",
-      "updated": "2026-03-10T16:57:43.579-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2674",
-      "project": "MC",
-      "summary": "Instagram and X handles can't be removed from OLM",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-08-01T13:44:38.536-0700",
-      "updated": "2026-03-10T16:57:30.525-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2675",
-      "project": "MC",
-      "summary": "Can't update business description through Google Profile",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "jira_escalated",
-        "techsupport"
-      ],
-      "created": "2025-08-01T14:09:29.856-0700",
-      "updated": "2026-03-10T16:57:31.307-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2704",
-      "project": "MC",
-      "summary": "New Zealand Update EAID in ESB New ID on Ep analytics - fx5kk60zcbwx8p0h",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Analytics"
-      ],
-      "labels": [
-        "jira_escalated",
-        "techsupport"
-      ],
-      "created": "2025-08-06T15:18:04.500-0700",
-      "updated": "2025-09-29T11:46:36.043-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2708",
-      "project": "MC",
-      "summary": "Update EAID in ESB New ID on Ep analytics - 6jxl49t8qc3xmdwb",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Analytics"
-      ],
-      "labels": [
-        "jira_escalated",
-        "techsupport"
-      ],
-      "created": "2025-08-07T07:57:36.120-0700",
-      "updated": "2025-10-02T06:02:06.732-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2719",
-      "project": "MC",
-      "summary": "EMP Thryv Accounts Disconnected from Yext Sandbox",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-08-07T15:17:07.870-0700",
-      "updated": "2026-03-10T16:57:28.647-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2722",
-      "project": "MC",
-      "summary": "Unable to Publish Listings due to Region Error",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-08-07T16:43:42.299-0700",
-      "updated": "2026-03-10T16:57:27.322-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2723",
-      "project": "MC",
-      "summary": "AUS YP EP link out not working",
-      "status": "Blocked",
-      "statusCategory": "No Category",
-      "priority": "P3",
-      "components": [],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-08-07T18:45:30.144-0700",
-      "updated": "2025-10-13T10:18:00.361-0700",
-      "type": "Task"
-    },
-    {
-      "key": "MC-2729",
-      "project": "MC",
-      "summary": "Phone \"Type\" Selector Fails to Persist for Destination Number Field (AUS | NZ)",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-08-08T14:07:32.024-0700",
-      "updated": "2025-11-26T07:45:11.693-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2730",
-      "project": "MC",
-      "summary": "Missing Leading 0 in Phone Number Fields (AUS | NZ)",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-08-08T16:08:37.554-0700",
-      "updated": "2026-03-10T16:57:27.202-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2761",
-      "project": "MC",
-      "summary": "YP Enhanced Profile Missing from Listings Management",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-08-14T13:11:58.599-0700",
-      "updated": "2025-11-17T10:06:17.173-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2798",
-      "project": "MC",
-      "summary": "\"Enhanced Profile Active\" Counter is Inaccurate",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-08-19T16:22:31.878-0700",
-      "updated": "2026-03-10T16:57:27.281-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2852",
-      "project": "MC",
-      "summary": "Performance analytics not loading - LM App Users",
-      "status": "Deployed",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-08-26T08:06:03.657-0700",
-      "updated": "2026-04-16T07:24:12.947-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2872",
-      "project": "MC",
-      "summary": "Enhanced Profile Not saving in UI- Sprint 18 (week of 9/1/2025)",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-08-27T09:36:30.445-0700",
-      "updated": "2025-11-06T10:41:13.457-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2890",
-      "project": "MC",
-      "summary": "YELP  RAQ Enabled - Not showing on clients YELP Profile",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-08-27T19:00:54.595-0700",
-      "updated": "2026-03-10T16:57:16.191-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2966",
-      "project": "MC",
-      "summary": "Unwarranted Location and Sub-account ID Changes (Yext LM)",
-      "status": "Dev In Progress",
-      "statusCategory": "In Progress",
-      "priority": "P1",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-09-03T10:15:34.392-0700",
-      "updated": "2026-04-07T09:24:51.836-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-297",
-      "project": "MC",
-      "summary": "Trigger webhook to update tables when changes occur in Yext",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-03-03T10:35:03.616-0800",
-      "updated": "2026-03-10T16:59:04.061-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-2997",
-      "project": "MC",
-      "summary": "GP Client with No Calls Since March: C&J Tire & Wheel /\tThryv ID: i12nommhtqozl2is ",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Growth Package"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-09-05T13:21:03.322-0700",
-      "updated": "2025-09-22T20:51:56.842-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3050",
-      "project": "MC",
-      "summary": "LM Receiving Update Failed Error",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P1",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-09-11T11:02:04.468-0700",
-      "updated": "2026-03-10T16:57:15.964-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3081",
-      "project": "MC",
-      "summary": "Cancel CTN - ldeftu5lzc5oc8y6",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-09-15T07:50:25.890-0700",
-      "updated": "2025-10-02T08:27:23.849-0700",
-      "type": "Tech Debt"
-    },
-    {
-      "key": "MC-3087",
-      "project": "MC",
-      "summary": "Email Field Incorrectly Behaving as Required",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-09-15T11:18:54.563-0700",
-      "updated": "2026-03-10T16:57:04.837-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3096",
-      "project": "MC",
-      "summary": "Disable Ep's on Thryv Leads account - 3k25c8wutamveg56",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Growth Package"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-09-15T14:47:50.284-0700",
-      "updated": "2025-09-16T06:43:40.287-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3098",
-      "project": "MC",
-      "summary": "[Yelp] Request a Quote (RAQ) not propagating",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-09-15T18:04:19.600-0700",
-      "updated": "2025-09-23T11:21:35.032-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3119",
-      "project": "MC",
-      "summary": "Enhanced Profile Not saving in UI- Sprint 19 + Sprint 20 (week of 9/15/2025)",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-09-18T07:56:11.260-0700",
-      "updated": "2025-10-16T06:01:17.615-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3150",
-      "project": "MC",
-      "summary": "Google Profile CTA Redirects to Static Page in Business Center",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-09-19T13:37:22.647-0700",
-      "updated": "2026-03-10T16:57:06.922-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3167",
-      "project": "MC",
-      "summary": "LM Additional Phone number adding \"1\" in UI | US Accounts",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-09-23T07:39:46.540-0700",
-      "updated": "2026-03-10T16:57:02.536-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3178",
-      "project": "MC",
-      "summary": "GBP is showing \"Verify Location\" button despite being verified",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-09-23T09:17:55.803-0700",
-      "updated": "2026-03-10T16:57:02.381-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3205",
-      "project": "MC",
-      "summary": "CTN not publishing on Yelp",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-09-25T13:41:59.935-0700",
-      "updated": "2026-03-10T16:57:02.829-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3206",
-      "project": "MC",
-      "summary": "Update OLM Categories",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-09-25T13:58:34.034-0700",
-      "updated": "2026-03-10T16:57:01.904-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3212",
-      "project": "MC",
-      "summary": "Phone Number Field Not Saving (AUS & NZ)",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-09-25T17:10:33.679-0700",
-      "updated": "2026-03-10T16:57:01.253-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3219",
-      "project": "MC",
-      "summary": "Listings Management Not Loading",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-09-26T11:38:05.727-0700",
-      "updated": "2026-03-10T16:57:00.195-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3225",
-      "project": "MC",
-      "summary": "Facebook is missing the Connect Account in Listings Management",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-09-29T05:39:07.428-0700",
-      "updated": "2026-03-10T16:57:01.258-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3242",
-      "project": "MC",
-      "summary": "Yelp EP Feed Data Ingestion Issue",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-09-30T11:13:20.839-0700",
-      "updated": "2026-03-10T16:56:56.712-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3247",
-      "project": "MC",
-      "summary": "Yelp EP Fulfillment Rejection",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-01T05:44:25.148-0700",
-      "updated": "2025-11-13T12:23:28.907-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3274",
-      "project": "MC",
-      "summary": "GBP Missing Services Dropdown",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-02T05:38:52.191-0700",
-      "updated": "2026-03-13T16:03:00.949-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3282",
-      "project": "MC",
-      "summary": "Cancel CTN - 2y38vvnw3e64cp9r",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-02T08:26:52.743-0700",
-      "updated": "2025-11-03T09:40:18.239-0800",
-      "type": "Tech Debt"
-    },
-    {
-      "key": "MC-3291",
-      "project": "MC",
-      "summary": "CTN Provisioning Failure (AUS)",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-02T11:28:20.433-0700",
-      "updated": "2026-03-10T16:56:55.776-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3301",
-      "project": "MC",
-      "summary": "GBP Video Upload Flow Syncing to Wrong Media Gallery in Yext",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-03T07:28:45.641-0700",
-      "updated": "2026-04-07T17:42:29.022-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3308",
-      "project": "MC",
-      "summary": "Yelp EP Feed Data Ingestion Issue",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-03T14:00:48.672-0700",
-      "updated": "2026-03-10T16:56:54.780-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3325",
-      "project": "MC",
-      "summary": "Content from LM is not feeding to YP ",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P1",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-07T10:13:14.093-0700",
-      "updated": "2026-03-10T16:56:54.545-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3326",
-      "project": "MC",
-      "summary": "Unable to Update Holiday Hours in LM",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-07T10:31:26.264-0700",
-      "updated": "2026-03-10T16:56:55.477-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3346",
-      "project": "MC",
-      "summary": "AU Missing GP Add-On- New Batch",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Backend",
-        "Growth Package"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-08T15:09:12.667-0700",
-      "updated": "2026-02-19T06:02:02.384-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3348",
-      "project": "MC",
-      "summary": "Enhanced Profile Not saving in UI - (week of 10/13/2025)",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-09T10:03:25.993-0700",
-      "updated": "2026-02-06T14:21:30.184-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3353",
-      "project": "MC",
-      "summary": "Yelp EP Data Ingestion Issue - jsta8nhrwvnb0xst",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-09T16:37:30.733-0700",
-      "updated": "2026-03-10T16:56:53.392-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3355",
-      "project": "MC",
-      "summary": "Yelp RAQ – Unsupported Category Still Showing RAQ Flow",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-09T17:14:10.801-0700",
-      "updated": "2025-11-14T08:45:18.743-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3390",
-      "project": "MC",
-      "summary": "Yext Integration – Missing External IDs in SP Preventing Publish",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-14T10:42:59.819-0700",
-      "updated": "2026-04-10T08:39:06.059-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3408",
-      "project": "MC",
-      "summary": "YP Listing Mismatch – MC Linked to Incorrect YPID",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-15T11:05:31.529-0700",
-      "updated": "2026-03-10T16:56:53.268-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3455",
-      "project": "MC",
-      "summary": "Yelp Ongoing Advertising After Cancellation",
-      "status": "Dev Backlog",
-      "statusCategory": "To Do",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-16T18:17:41.970-0700",
-      "updated": "2026-04-15T09:45:52.578-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3491",
-      "project": "MC",
-      "summary": "AU Missing GP Add-On- 10/21/2025",
-      "status": "Deployed",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Backend",
-        "Growth Package"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-21T13:25:29.488-0700",
-      "updated": "2025-11-18T08:17:22.178-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3510",
-      "project": "MC",
-      "summary": "Unable to Publish Listings From MC UI",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-23T07:42:36.912-0700",
-      "updated": "2026-03-10T16:56:49.395-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3513",
-      "project": "MC",
-      "summary": "LM and Reputation Failing to Load for Non-Primary Users",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-23T09:08:52.935-0700",
-      "updated": "2026-03-08T17:47:50.000-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3521",
-      "project": "MC",
-      "summary": "AU Missing GP Add-On- 10/23/2025",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Backend",
-        "Growth Package"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-23T18:05:06.594-0700",
-      "updated": "2026-03-04T09:55:46.032-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3525",
-      "project": "MC",
-      "summary": "Nextdoor AUS CTN Not Feeding Over to UI",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Backend",
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-24T08:53:08.613-0700",
-      "updated": "2026-03-10T16:56:49.057-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3530",
-      "project": "MC",
-      "summary": "YELP RAQ not moving past step one - bz9javdnt9m6geqa",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-24T17:48:10.729-0700",
-      "updated": "2025-12-05T12:24:02.875-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3534",
-      "project": "MC",
-      "summary": "Reprovision CTN - xmzijpxxfbdj4qv7",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-27T08:27:22.634-0700",
-      "updated": "2025-12-18T08:25:17.157-0800",
-      "type": "Tech Debt"
-    },
-    {
-      "key": "MC-3537",
-      "project": "MC",
-      "summary": "Disabled BP Program Preventing Yelp RAQ Enablement",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-27T09:23:47.387-0700",
-      "updated": "2026-03-10T16:56:49.602-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3543",
-      "project": "MC",
-      "summary": "ND EP CTN Reversion (AUS)",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-27T11:44:20.404-0700",
-      "updated": "2026-03-10T16:56:50.591-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3552",
-      "project": "MC",
-      "summary": "AUS ND EP CTN Not Being Provisioned, YP Provisioning Successfully",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-28T06:55:00.493-0700",
-      "updated": "2026-03-10T16:56:47.983-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3561",
-      "project": "MC",
-      "summary": "Yelp EP Mismatch in API Feed",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-28T16:18:04.297-0700",
-      "updated": "2026-03-10T16:56:48.097-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3562",
-      "project": "MC",
-      "summary": "CTNs Provisioning with Wrong Area Code",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Backend",
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-29T05:34:24.282-0700",
-      "updated": "2026-03-30T15:53:37.871-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3595",
-      "project": "MC",
-      "summary": "Yelp BP Enabled but Missing BH Program",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-30T08:53:10.628-0700",
-      "updated": "2026-02-11T17:33:14.113-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3596",
-      "project": "MC",
-      "summary": "Yahoo - MC UI Not Displaying EP Errors or Linkouts",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-30T09:01:58.194-0700",
-      "updated": "2026-03-10T16:56:41.644-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3627",
-      "project": "MC",
-      "summary": "(AUS) CTN is being disabled one day after it was enabled",
-      "status": "Dev Backlog",
-      "statusCategory": "To Do",
-      "priority": "P2",
-      "components": [
-        "Growth Package"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-30T12:22:21.499-0700",
-      "updated": "2026-01-15T09:40:36.967-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3628",
-      "project": "MC",
-      "summary": "LM Update Failed",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-30T12:34:52.659-0700",
-      "updated": "2026-03-10T16:56:44.708-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3641",
-      "project": "MC",
-      "summary": "User Redirect issue | LOC18A3191B7",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Overview"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-31T10:31:51.977-0700",
-      "updated": "2026-03-10T16:56:44.711-0700",
-      "type": "Support"
-    },
-    {
-      "key": "MC-3643",
-      "project": "MC",
-      "summary": "Delete Call Recordings from MC UI",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-31T12:52:53.330-0700",
-      "updated": "2025-12-17T12:04:30.149-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3645",
-      "project": "MC",
-      "summary": "Yext Overwriting “Show City/State” Selection on LM Page",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-31T17:10:26.414-0700",
-      "updated": "2026-03-10T16:56:42.613-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3646",
-      "project": "MC",
-      "summary": "Yelp EP Fulfillment – BH Program and CTN Not Fulfilled",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-10-31T18:33:48.111-0700",
-      "updated": "2026-03-10T16:56:40.806-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3657",
-      "project": "MC",
-      "summary": "Cancel CTN - 7fyu8a6ywt560uk0",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-11-03T09:40:15.756-0800",
-      "updated": "2025-11-12T08:18:29.681-0800",
-      "type": "Tech Debt"
-    },
-    {
-      "key": "MC-3771",
-      "project": "MC",
-      "summary": "“Respond to Review” Button on Google Profile Page is Non-Functional",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-11-04T13:46:02.102-0800",
-      "updated": "2026-03-10T16:56:16.856-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3804",
-      "project": "MC",
-      "summary": "Yelp RAQ Connection Flow Stuck on “Claim” Despite Profile Being Claimed",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-11-06T12:18:35.294-0800",
-      "updated": "2025-12-05T12:32:56.156-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3846",
-      "project": "MC",
-      "summary": "US | Yahoo EP missing YP badge",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-11-11T08:52:20.334-0800",
-      "updated": "2026-04-08T20:04:45.607-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3859",
-      "project": "MC",
-      "summary": "Yelp: UI Issues",
-      "status": "In Progress",
-      "statusCategory": "In Progress",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-11-12T10:01:31.294-0800",
-      "updated": "2026-04-16T07:47:02.102-0700",
-      "type": "Epic"
-    },
-    {
-      "key": "MC-3881",
-      "project": "MC",
-      "summary": "Unable to Load Listings and Reputation Pages - LOC2E070BA7",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-11-13T17:28:01.153-0800",
-      "updated": "2026-03-10T16:56:09.498-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3882",
-      "project": "MC",
-      "summary": "Unable to Load Listings and Reputation Pages - LOC1541997F",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-11-13T17:44:19.112-0800",
-      "updated": "2026-03-04T14:06:37.960-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3884",
-      "project": "MC",
-      "summary": "US | Unable to Post Review Responses",
-      "status": "Dev Backlog",
-      "statusCategory": "To Do",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-11-14T05:44:38.609-0800",
-      "updated": "2026-03-10T16:56:09.537-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3892",
-      "project": "MC",
-      "summary": "US | Manage My Listings Redirecting to Wrong Account",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-11-14T12:42:46.715-0800",
-      "updated": "2026-03-10T16:56:09.245-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3900",
-      "project": "MC",
-      "summary": "Global | Unable to add \"/\" in Address field. ",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-11-17T08:47:15.431-0800",
-      "updated": "2026-03-10T16:56:09.103-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3921",
-      "project": "MC",
-      "summary": "RAQ Flow Not Displaying in MC for Eligible Category",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-11-18T09:37:54.335-0800",
-      "updated": "2025-11-25T13:59:56.972-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3943",
-      "project": "MC",
-      "summary": "Yelp RAQ Stuck in Pending Status",
-      "status": "Deployed",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-11-19T13:12:23.203-0800",
-      "updated": "2026-02-10T07:34:27.328-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3945",
-      "project": "MC",
-      "summary": " US | Yelp RAQ stuck in pending status",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-11-20T04:50:50.117-0800",
-      "updated": "2025-12-05T12:27:27.659-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3957",
-      "project": "MC",
-      "summary": "CTN Provisioning Failure (NZ)",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-11-20T14:54:11.758-0800",
-      "updated": "2026-03-10T16:56:06.922-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3958",
-      "project": "MC",
-      "summary": "\"Enhanced Profile Active\" Counter Still Inaccurate",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-11-20T15:39:04.826-0800",
-      "updated": "2026-03-10T16:56:04.955-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3981",
-      "project": "MC",
-      "summary": "US | No CTNs Found Error in MC UI",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P1",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-11-25T04:42:12.836-0800",
-      "updated": "2026-03-10T16:56:01.933-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3989",
-      "project": "MC",
-      "summary": "Yelp RAQ Leads Not Injecting in MC UI",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-11-25T09:18:30.409-0800",
-      "updated": "2026-02-11T16:25:09.115-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-3993",
-      "project": "MC",
-      "summary": "Yelp RAQ Field Not In API Feed/MC UI",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-11-25T10:20:13.745-0800",
-      "updated": "2026-02-11T16:25:27.255-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4009",
-      "project": "MC",
-      "summary": "(US) ND Fulfillment Issues",
-      "status": "Deployed",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Backend",
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-11-26T09:41:53.753-0800",
-      "updated": "2026-04-16T07:23:53.897-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4017",
-      "project": "MC",
-      "summary": "LM & Reputation Not Loading For Primary Admin",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-11-26T11:59:15.453-0800",
-      "updated": "2026-03-04T14:01:57.192-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4021",
-      "project": "MC",
-      "summary": "LM: One Or More Fields Failed Validation error",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-11-27T04:25:47.490-0800",
-      "updated": "2026-03-10T16:55:59.862-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4023",
-      "project": "MC",
-      "summary": "MC UI Not Displaying Yelp RAQ for Eligible Client",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-11-27T05:42:57.072-0800",
-      "updated": "2025-12-05T11:32:08.894-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4036",
-      "project": "MC",
-      "summary": "MC UI Not Displaying Yelp RAQ Flow",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-12-01T05:17:43.280-0800",
-      "updated": "2025-12-05T13:05:05.221-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4037",
-      "project": "MC",
-      "summary": "Unable to Load Listings and Reputation Pages - LOC20AF350BF",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-12-01T06:21:41.675-0800",
-      "updated": "2026-03-04T14:05:07.782-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4038",
-      "project": "MC",
-      "summary": "Unable to Load Listings and Reputation Pages - LOC22A2333BF",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-12-01T06:54:00.279-0800",
-      "updated": "2026-03-04T14:16:05.646-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4041",
-      "project": "MC",
-      "summary": "Verify call recording status- khuxpz048w0eg6uj",
-      "status": "Dev Backlog",
-      "statusCategory": "To Do",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-12-01T08:19:41.518-0800",
-      "updated": "2025-12-18T08:32:30.341-0800",
-      "type": "Tech Debt"
-    },
-    {
-      "key": "MC-4042",
-      "project": "MC",
-      "summary": "Ineligible Category Displaying RAQ Flow",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-12-01T10:20:56.877-0800",
-      "updated": "2026-03-13T19:12:04.153-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4051",
-      "project": "MC",
-      "summary": "Unable to Load Listings and Reputation Pages - LOC6037A573",
-      "status": "Deployed",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-12-01T14:51:59.736-0800",
-      "updated": "2026-03-29T20:06:44.505-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4061",
-      "project": "MC",
-      "summary": "US | Manage My Listings Redirecting to Wrong Account",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-12-02T10:03:08.581-0800",
-      "updated": "2026-03-10T16:56:00.803-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4064",
-      "project": "MC",
-      "summary": "LM: One Or More Fields Failed Validation Error",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-12-02T11:57:11.684-0800",
-      "updated": "2026-03-10T16:55:58.495-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4065",
-      "project": "MC",
-      "summary": "Unable to Load Listings and Reputation Pages - LOC1400AEB1F",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-12-02T12:11:08.138-0800",
-      "updated": "2026-03-04T14:14:37.016-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4093",
-      "project": "MC",
-      "summary": "Reprovision CTN - qw5gsg8euwg2r6iv",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-12-05T08:07:33.857-0800",
-      "updated": "2026-01-28T13:01:32.917-0800",
-      "type": "Tech Debt"
-    },
-    {
-      "key": "MC-4101",
-      "project": "MC",
-      "summary": "Request to Cancel All EP CTNs",
-      "status": "Deployed",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-12-05T15:44:15.017-0800",
-      "updated": "2026-03-10T16:55:56.243-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4103",
-      "project": "MC",
-      "summary": "Unable to Load Listings and Reputation Pages - LOC127737667",
-      "status": "Deployed",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-12-08T04:42:14.539-0800",
-      "updated": "2026-04-10T11:45:25.782-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4118",
-      "project": "MC",
-      "summary": "Unable to Load Listings and Reputation Pages - LOC129E9C9AF",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-12-08T12:37:09.985-0800",
-      "updated": "2026-03-04T14:16:38.204-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4119",
-      "project": "MC",
-      "summary": "Unable to Load Listings and Reputation Pages - LOC1858A4893",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-12-08T12:46:12.814-0800",
-      "updated": "2026-03-10T16:55:56.475-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4121",
-      "project": "MC",
-      "summary": "Unable to Load Listings and Reputation Pages - LOC1B55ECAB7",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-12-09T03:47:05.664-0800",
-      "updated": "2026-03-04T14:07:03.640-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4136",
-      "project": "MC",
-      "summary": "Unable to Load Listings and Reputation Pages - LOC963E4E47",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-12-10T04:15:53.472-0800",
-      "updated": "2026-03-04T14:04:52.283-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4153",
-      "project": "MC",
-      "summary": "Delete Call Recordings from MC UI",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-12-10T11:06:59.048-0800",
-      "updated": "2026-02-19T06:02:02.438-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4154",
-      "project": "MC",
-      "summary": "Unable to Load Listings and Reputation Pages - LOC9F0C0767",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-12-10T14:12:07.062-0800",
-      "updated": "2026-04-09T20:37:30.873-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4156",
-      "project": "MC",
-      "summary": "Unable to Load Listings and Reputation Pages - LOC2156E86B3",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-12-11T03:46:17.283-0800",
-      "updated": "2026-03-04T14:05:19.149-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4176",
-      "project": "MC",
-      "summary": "GBP Share URL Opening an Unrelated Business Listing ",
-      "status": "To Do",
-      "statusCategory": "To Do",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-12-12T12:03:07.191-0800",
-      "updated": "2026-03-10T16:55:54.489-0700",
-      "type": "Support"
-    },
-    {
-      "key": "MC-4180",
-      "project": "MC",
-      "summary": "Unable to save DN in Manage My Listings",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Backend",
-        "Listings Manager"
-      ],
-      "labels": [
-        "jira_escalated",
-        "techsupport"
-      ],
-      "created": "2025-12-15T04:48:46.861-0800",
-      "updated": "2026-03-10T16:55:54.308-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4181",
-      "project": "MC",
-      "summary": "Unable to Load Listings and Reputation Pages - Secondary Users ONLY",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-12-15T06:57:41.678-0800",
-      "updated": "2026-03-04T14:02:11.672-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4222",
-      "project": "MC",
-      "summary": "LM - Page not found - NZ",
-      "status": "Deployed",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2025-12-18T05:16:57.322-0800",
-      "updated": "2026-03-10T16:55:54.085-0700",
-      "type": "Bug"
-    },
     {
       "key": "MC-4262",
       "project": "MC",
@@ -2471,7 +24,22 @@
       ],
       "created": "2026-01-05T08:14:00.178-0800",
       "updated": "2026-03-10T16:55:52.842-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
+    },
+    {
+      "key": "MC-4280",
+      "project": "MC",
+      "summary": "QA - LM: One Or More Fields Failed Validation Error",
+      "status": "Complete",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-01-07T05:45:18.900-0800",
+      "updated": "2026-03-10T16:56:04.693-0700",
+      "type": "QA",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4283",
@@ -2488,7 +56,8 @@
       ],
       "created": "2026-01-07T07:36:27.408-0800",
       "updated": "2026-03-19T06:00:57.141-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MC-4308",
@@ -2505,7 +74,8 @@
       ],
       "created": "2026-01-08T07:53:30.479-0800",
       "updated": "2026-03-10T16:55:51.475-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MC-4309",
@@ -2522,7 +92,22 @@
       ],
       "created": "2026-01-08T10:46:07.194-0800",
       "updated": "2026-03-10T16:55:51.642-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
+    },
+    {
+      "key": "MC-4315",
+      "project": "MC",
+      "summary": "QA - Yext Overwriting “Show City/State” Selection on LM Page",
+      "status": "Complete",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-01-08T12:29:32.795-0800",
+      "updated": "2026-03-10T16:56:47.499-0700",
+      "type": "QA",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MC-4333",
@@ -2539,7 +124,8 @@
       ],
       "created": "2026-01-09T11:14:48.789-0800",
       "updated": "2026-03-10T16:55:22.796-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4334",
@@ -2556,7 +142,8 @@
       ],
       "created": "2026-01-09T12:26:06.543-0800",
       "updated": "2026-03-10T16:55:22.090-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4335",
@@ -2573,7 +160,8 @@
       ],
       "created": "2026-01-09T12:30:18.323-0800",
       "updated": "2026-03-10T16:55:22.430-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MC-4336",
@@ -2590,7 +178,22 @@
       ],
       "created": "2026-01-09T13:05:33.342-0800",
       "updated": "2026-03-10T16:55:22.794-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
+    },
+    {
+      "key": "MC-4342",
+      "project": "MC",
+      "summary": "QA - Global | Unable to add \"/\" in Address field. ",
+      "status": "Complete",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-01-12T07:28:51.361-0800",
+      "updated": "2026-03-10T16:56:14.895-0700",
+      "type": "QA",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4347",
@@ -2607,7 +210,36 @@
       ],
       "created": "2026-01-12T08:58:32.078-0800",
       "updated": "2026-03-10T16:55:21.316-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
+    },
+    {
+      "key": "MC-4352",
+      "project": "MC",
+      "summary": "Deployed - Unable to save DN in Manage My Listings",
+      "status": "Complete",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-01-12T10:44:29.260-0800",
+      "updated": "2026-03-10T16:56:02.010-0700",
+      "type": "QA",
+      "reporter": "Karla Cruz"
+    },
+    {
+      "key": "MC-4356",
+      "project": "MC",
+      "summary": "Deployed - Yext Overwriting “Show City/State” Selection on LM Page",
+      "status": "Complete",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-01-12T12:03:24.591-0800",
+      "updated": "2026-03-10T16:56:47.548-0700",
+      "type": "QA",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MC-4366",
@@ -2625,7 +257,8 @@
       ],
       "created": "2026-01-12T15:23:54.129-0800",
       "updated": "2026-04-08T13:23:22.537-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MC-4367",
@@ -2643,7 +276,8 @@
       ],
       "created": "2026-01-13T04:59:09.876-0800",
       "updated": "2026-03-10T16:55:20.650-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4373",
@@ -2661,7 +295,8 @@
       ],
       "created": "2026-01-13T08:52:18.729-0800",
       "updated": "2026-03-04T10:01:47.799-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MC-4379",
@@ -2678,7 +313,8 @@
       ],
       "created": "2026-01-13T11:43:39.363-0800",
       "updated": "2026-03-10T16:55:20.903-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MC-4388",
@@ -2695,7 +331,22 @@
       ],
       "created": "2026-01-13T12:28:28.883-0800",
       "updated": "2026-04-14T14:15:34.886-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
+    },
+    {
+      "key": "MC-4389",
+      "project": "MC",
+      "summary": "Deployed - Unable to save DN in Manage My Listings",
+      "status": "Complete",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-01-13T15:21:41.634-0800",
+      "updated": "2026-03-10T16:56:01.521-0700",
+      "type": "QA",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4390",
@@ -2712,24 +363,22 @@
       ],
       "created": "2026-01-14T04:28:20.914-0800",
       "updated": "2026-03-10T16:55:20.215-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
-      "key": "MC-4427",
+      "key": "MC-4418",
       "project": "MC",
-      "summary": "Upgraded MCF did not update package - tygm3g37wh4b5lt0",
-      "status": "Released",
+      "summary": "QA - Unable to Disable CTN from Listings Management UI",
+      "status": "Complete",
       "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Growth Package"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-15T09:37:17.691-0800",
-      "updated": "2026-01-16T08:09:06.543-0800",
-      "type": "Bug"
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-01-15T07:16:47.238-0800",
+      "updated": "2026-03-10T16:55:26.819-0700",
+      "type": "QA",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4429",
@@ -2746,7 +395,22 @@
       ],
       "created": "2026-01-15T10:59:05.280-0800",
       "updated": "2026-03-10T16:55:20.297-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
+    },
+    {
+      "key": "MC-4436",
+      "project": "MC",
+      "summary": "Deployed - Unable to Disable CTN from Listings Management UI",
+      "status": "Complete",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-01-16T06:56:24.470-0800",
+      "updated": "2026-03-10T16:55:27.312-0700",
+      "type": "QA",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4437",
@@ -2763,7 +427,8 @@
       ],
       "created": "2026-01-16T07:06:33.436-0800",
       "updated": "2026-03-10T16:55:19.904-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4438",
@@ -2780,7 +445,8 @@
       ],
       "created": "2026-01-16T07:11:37.557-0800",
       "updated": "2026-03-10T16:55:19.520-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MC-4453",
@@ -2797,24 +463,24 @@
       ],
       "created": "2026-01-16T11:15:04.751-0800",
       "updated": "2026-03-10T16:55:19.767-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
-      "key": "MC-4491",
+      "key": "MC-4460",
       "project": "MC",
-      "summary": "Users get blank screen after QS step 1 - Multiple ID's",
+      "summary": "Missing GP Add-On- LOC14CF0090F",
       "status": "Released",
       "statusCategory": "Done",
       "priority": "P3",
       "components": [
-        "Backend"
+        "Growth Package"
       ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-20T10:16:41.381-0800",
-      "updated": "2026-02-05T06:02:05.520-0800",
-      "type": "Tech Debt"
+      "labels": [],
+      "created": "2026-01-19T06:08:57.772-0800",
+      "updated": "2026-01-20T08:49:07.115-0800",
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4496",
@@ -2831,7 +497,22 @@
       ],
       "created": "2026-01-20T11:36:41.363-0800",
       "updated": "2026-03-10T16:55:20.748-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
+    },
+    {
+      "key": "MC-4519",
+      "project": "MC",
+      "summary": "Deployed - Global | Unable to add \"/\" in Address field. ",
+      "status": "Complete",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-01-21T17:31:09.334-0800",
+      "updated": "2026-03-10T16:56:16.737-0700",
+      "type": "QA",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4520",
@@ -2848,7 +529,8 @@
       ],
       "created": "2026-01-21T20:15:12.531-0800",
       "updated": "2026-04-15T12:13:19.632-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MC-4521",
@@ -2865,7 +547,8 @@
       ],
       "created": "2026-01-22T04:25:39.865-0800",
       "updated": "2026-03-10T16:55:22.275-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4527",
@@ -2883,7 +566,8 @@
       ],
       "created": "2026-01-22T07:21:14.194-0800",
       "updated": "2026-03-10T16:55:17.240-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4529",
@@ -2900,24 +584,22 @@
       ],
       "created": "2026-01-22T07:59:38.198-0800",
       "updated": "2026-04-10T20:24:04.948-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
-      "key": "MC-4531",
+      "key": "MC-4533",
       "project": "MC",
-      "summary": "Categories are not displayed during Quick Setup in new MC accounts",
-      "status": "Released",
+      "summary": "QA - Unable to Publish Listings Due To Validation Error",
+      "status": "Complete",
       "statusCategory": "Done",
-      "priority": "P1",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-22T08:41:57.569-0800",
-      "updated": "2026-03-10T16:55:22.095-0700",
-      "type": "Bug"
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-01-22T09:00:20.615-0800",
+      "updated": "2026-03-10T16:55:29.631-0700",
+      "type": "QA",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4562",
@@ -2934,7 +616,8 @@
       ],
       "created": "2026-01-22T12:36:18.209-0800",
       "updated": "2026-03-10T16:55:18.211-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MC-4565",
@@ -2951,7 +634,8 @@
       ],
       "created": "2026-01-22T22:19:41.929-0800",
       "updated": "2026-03-10T16:55:17.862-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MC-4577",
@@ -2968,7 +652,22 @@
       ],
       "created": "2026-01-23T10:19:10.832-0800",
       "updated": "2026-03-10T16:55:17.563-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
+    },
+    {
+      "key": "MC-4580",
+      "project": "MC",
+      "summary": "QA - NEW LM: One Or More Fields Failed Validation Error",
+      "status": "Complete",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-01-23T10:53:41.035-0800",
+      "updated": "2026-03-10T16:55:25.918-0700",
+      "type": "QA",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4604",
@@ -2986,7 +685,8 @@
       ],
       "created": "2026-01-26T09:01:20.604-0800",
       "updated": "2026-03-10T16:55:15.697-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MC-4610",
@@ -3003,7 +703,8 @@
       ],
       "created": "2026-01-27T07:52:28.113-0800",
       "updated": "2026-03-10T16:55:14.406-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4619",
@@ -3020,7 +721,8 @@
       ],
       "created": "2026-01-27T12:10:46.925-0800",
       "updated": "2026-03-10T16:55:14.315-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4621",
@@ -3037,58 +739,8 @@
       ],
       "created": "2026-01-28T10:09:13.459-0800",
       "updated": "2026-04-14T12:37:23.397-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4623",
-      "project": "MC",
-      "summary": "Pull Overview Metric records on a cancelled account - 9tvmu2u442sa4bhy",
-      "status": "Dev Complete",
-      "statusCategory": "In Progress",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-28T13:01:30.216-0800",
-      "updated": "2026-02-09T15:29:37.159-0800",
-      "type": "Tech Debt"
-    },
-    {
-      "key": "MC-4624",
-      "project": "MC",
-      "summary": "Website analytics data discrepancy - 0bcaj1xhths0dez4",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P4",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-28T13:03:09.001-0800",
-      "updated": "2026-03-19T06:00:57.339-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4625",
-      "project": "MC",
-      "summary": "Potential missing calls in analytics - 82o40eiscpl064wh",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-28T13:09:47.494-0800",
-      "updated": "2026-02-13T15:21:14.032-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MC-4628",
@@ -3105,7 +757,8 @@
       ],
       "created": "2026-01-29T07:15:40.095-0800",
       "updated": "2026-03-10T16:55:15.661-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4637",
@@ -3122,7 +775,8 @@
       ],
       "created": "2026-01-29T11:12:09.145-0800",
       "updated": "2026-03-10T16:55:17.570-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4643",
@@ -3139,7 +793,8 @@
       ],
       "created": "2026-01-29T16:03:27.522-0800",
       "updated": "2026-04-16T07:23:53.263-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MC-4645",
@@ -3157,7 +812,8 @@
       ],
       "created": "2026-01-30T06:18:09.656-0800",
       "updated": "2026-03-10T16:55:12.597-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4649",
@@ -3174,7 +830,22 @@
       ],
       "created": "2026-01-30T09:10:50.565-0800",
       "updated": "2026-03-10T16:55:12.221-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
+    },
+    {
+      "key": "MC-4657",
+      "project": "MC",
+      "summary": "QA - YP Validation Error",
+      "status": "Complete",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-02T08:07:11.092-0800",
+      "updated": "2026-03-10T16:55:24.185-0700",
+      "type": "QA",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4665",
@@ -3191,58 +862,8 @@
       ],
       "created": "2026-02-02T19:06:49.618-0800",
       "updated": "2026-02-05T09:06:03.369-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4667",
-      "project": "MC",
-      "summary": "Batch Email DB Update",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-02-03T08:11:17.394-0800",
-      "updated": "2026-03-05T06:01:04.400-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4668",
-      "project": "MC",
-      "summary": "Respond to review throws error - LOCA989AAD7",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-02-03T08:41:49.262-0800",
-      "updated": "2026-03-10T16:55:15.178-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4669",
-      "project": "MC",
-      "summary": "Website analytics data discrepancy - ewfepke7n4ktfgdu",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-02-03T08:44:41.045-0800",
-      "updated": "2026-02-19T09:52:10.394-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MC-4684",
@@ -3259,7 +880,36 @@
       ],
       "created": "2026-02-04T12:55:25.602-0800",
       "updated": "2026-03-25T11:20:04.089-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
+    },
+    {
+      "key": "MC-4685",
+      "project": "MC",
+      "summary": "Deployed - YP Validation Error",
+      "status": "Complete",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-04T13:03:01.312-0800",
+      "updated": "2026-03-10T16:55:24.766-0700",
+      "type": "QA",
+      "reporter": "Karla Cruz"
+    },
+    {
+      "key": "MC-4703",
+      "project": "MC",
+      "summary": "Deployed - Enhanced Profile Not saving in UI - (week of 10/13/2025)",
+      "status": "Complete",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-04T13:47:30.324-0800",
+      "updated": "2026-02-06T14:21:23.972-0800",
+      "type": "QA",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MC-4706",
@@ -3276,7 +926,8 @@
       ],
       "created": "2026-02-05T08:29:29.057-0800",
       "updated": "2026-03-10T16:55:11.064-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4707",
@@ -3293,42 +944,50 @@
       ],
       "created": "2026-02-05T08:38:30.208-0800",
       "updated": "2026-03-10T16:55:12.034-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
-      "key": "MC-4708",
+      "key": "MC-4710",
       "project": "MC",
-      "summary": "Improperly cancelled GP addon - fpcnd7e3b2nvf660",
-      "status": "Released",
+      "summary": "Deployed - Yelp RAQ Stuck in Pending Status",
+      "status": "Complete",
       "statusCategory": "Done",
       "priority": "P3",
-      "components": [
-        "Backend",
-        "Growth Package"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-02-05T09:04:15.151-0800",
-      "updated": "2026-03-05T06:01:04.456-0800",
-      "type": "Bug"
+      "components": [],
+      "labels": [],
+      "created": "2026-02-05T09:08:23.591-0800",
+      "updated": "2026-02-10T07:33:15.403-0800",
+      "type": "QA",
+      "reporter": "Karla Cruz"
     },
     {
-      "key": "MC-4709",
+      "key": "MC-4711",
       "project": "MC",
-      "summary": "Missing TL Add-on - zln0wmcf5pmb0gq2",
-      "status": "Released",
+      "summary": "Deployed - NEW LM: One Or More Fields Failed Validation Error",
+      "status": "Complete",
       "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Thryv Leads"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-02-05T09:06:00.849-0800",
-      "updated": "2026-03-05T06:01:04.356-0800",
-      "type": "Bug"
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-05T09:25:41.898-0800",
+      "updated": "2026-03-10T16:55:25.949-0700",
+      "type": "QA",
+      "reporter": "Karla Cruz"
+    },
+    {
+      "key": "MC-4715",
+      "project": "MC",
+      "summary": "QA - AUS ABN Number Triggering Validation Error in LM",
+      "status": "Complete",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-05T14:12:13.977-0800",
+      "updated": "2026-03-10T16:55:18.762-0700",
+      "type": "QA",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4720",
@@ -3345,7 +1004,8 @@
       ],
       "created": "2026-02-05T19:20:35.205-0800",
       "updated": "2026-04-16T18:45:05.823-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MC-4722",
@@ -3362,24 +1022,8 @@
       ],
       "created": "2026-02-06T06:46:43.992-0800",
       "updated": "2026-03-10T16:55:10.649-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-4727",
-      "project": "MC",
-      "summary": "AU Missing GP Add-On- 0f2r8i2e79yxsye1",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Growth Package"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-02-06T07:55:11.700-0800",
-      "updated": "2026-03-19T06:00:57.210-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MC-4728",
@@ -3397,7 +1041,8 @@
       ],
       "created": "2026-02-06T08:04:41.968-0800",
       "updated": "2026-03-10T16:55:10.208-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4742",
@@ -3414,7 +1059,8 @@
       ],
       "created": "2026-02-06T19:26:59.756-0800",
       "updated": "2026-03-10T16:55:10.983-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MC-4743",
@@ -3431,7 +1077,8 @@
       ],
       "created": "2026-02-06T20:18:20.973-0800",
       "updated": "2026-04-16T07:23:54.260-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MC-4744",
@@ -3448,7 +1095,106 @@
       ],
       "created": "2026-02-09T07:02:30.692-0800",
       "updated": "2026-03-11T09:28:01.887-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
+    },
+    {
+      "key": "MC-4754",
+      "project": "MC",
+      "summary": "QA - Google Profile CTA Redirects to Static Page in Business Center",
+      "status": "Complete",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-11T07:11:53.081-0800",
+      "updated": "2026-03-10T16:57:12.862-0700",
+      "type": "QA",
+      "reporter": "Karla Cruz"
+    },
+    {
+      "key": "MC-4766",
+      "project": "MC",
+      "summary": "QA - Inconsistent Address Selection Flowing Downstream",
+      "status": "Complete",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-12T10:35:53.412-0800",
+      "updated": "2026-03-10T16:55:26.277-0700",
+      "type": "QA",
+      "reporter": "Josh Melgoza"
+    },
+    {
+      "key": "MC-4767",
+      "project": "MC",
+      "summary": "QA - Inconsistent Address Selection Flowing Downstream",
+      "status": "Complete",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-12T11:41:08.103-0800",
+      "updated": "2026-03-10T16:55:26.029-0700",
+      "type": "QA",
+      "reporter": "Josh Melgoza"
+    },
+    {
+      "key": "MC-4775",
+      "project": "MC",
+      "summary": "Deployed - Inconsistent Address Selection Flowing Downstream",
+      "status": "Complete",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-16T09:28:12.665-0800",
+      "updated": "2026-03-10T16:55:26.542-0700",
+      "type": "QA",
+      "reporter": "Josh Melgoza"
+    },
+    {
+      "key": "MC-4786",
+      "project": "MC",
+      "summary": "QA - Facebook URL Invalid in LM",
+      "status": "Complete",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-17T12:23:13.908-0800",
+      "updated": "2026-03-10T16:55:24.884-0700",
+      "type": "QA",
+      "reporter": "Scott Savage"
+    },
+    {
+      "key": "MC-4799",
+      "project": "MC",
+      "summary": "Deployed - Facebook URL Invalid in LM",
+      "status": "Complete",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-19T06:21:55.702-0800",
+      "updated": "2026-03-10T16:55:24.560-0700",
+      "type": "QA",
+      "reporter": "Scott Savage"
+    },
+    {
+      "key": "MC-4801",
+      "project": "MC",
+      "summary": "Deployed - Google Profile CTA Redirects to Static Page in Business Center",
+      "status": "Complete",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-19T06:23:48.807-0800",
+      "updated": "2026-03-10T16:57:12.935-0700",
+      "type": "QA",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MC-4812",
@@ -3465,24 +1211,80 @@
       ],
       "created": "2026-02-20T09:22:33.103-0800",
       "updated": "2026-03-05T06:01:04.323-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
-      "key": "MC-4983",
+      "key": "MC-4813",
       "project": "MC",
-      "summary": "Fix LM and Reputation failing to load by using location_id instead of business_id from Auth0 metadata",
-      "status": "Released",
+      "summary": "QA - YP EP CTN Cannot Be Disabled for LM App Users",
+      "status": "Complete",
       "statusCategory": "Done",
       "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-20T10:20:14.919-0800",
+      "updated": "2026-03-10T16:55:17.940-0700",
+      "type": "QA",
+      "reporter": "Josh Melgoza"
+    },
+    {
+      "key": "MC-4832",
+      "project": "MC",
+      "summary": "QA - LM: Validation Error Due to Payment Type",
+      "status": "Complete",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-23T11:53:17.003-0800",
+      "updated": "2026-03-10T16:55:16.438-0700",
+      "type": "QA",
+      "reporter": "Scott Savage"
+    },
+    {
+      "key": "MC-4869",
+      "project": "MC",
+      "summary": "Restore Yext Sandbox Connectivity for EMP Accounts",
+      "status": "Dev In Progress",
+      "statusCategory": "In Progress",
+      "priority": "P1",
       "components": [
         "Listings Manager"
       ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-03-10T09:16:31.070-0700",
-      "updated": "2026-03-19T09:36:49.615-0700",
-      "type": "Story"
+      "labels": [],
+      "created": "2026-03-03T14:59:38.805-0800",
+      "updated": "2026-04-16T07:23:52.279-0700",
+      "type": "Story",
+      "reporter": "Cory DeBolt"
+    },
+    {
+      "key": "MC-4955",
+      "project": "MC",
+      "summary": "Deployed - YP EP CTN Cannot Be Disabled for LM App Users",
+      "status": "Complete",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-03-06T08:26:28.749-0800",
+      "updated": "2026-03-11T07:38:13.425-0700",
+      "type": "QA",
+      "reporter": "Josh Melgoza"
+    },
+    {
+      "key": "MC-4970",
+      "project": "MC",
+      "summary": "Deployed - LM: Validation Error Due to Payment Type",
+      "status": "Complete",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-03-09T11:49:15.045-0700",
+      "updated": "2026-03-11T09:27:23.134-0700",
+      "type": "QA",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MC-5046",
@@ -3500,7 +1302,8 @@
       ],
       "created": "2026-03-17T07:14:41.088-0700",
       "updated": "2026-04-15T10:13:32.499-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Erika Galindo"
     },
     {
       "key": "MC-5087",
@@ -3517,7 +1320,8 @@
       ],
       "created": "2026-03-20T08:28:28.817-0700",
       "updated": "2026-04-15T12:13:19.958-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Erika Galindo"
     },
     {
       "key": "MC-5111",
@@ -3535,7 +1339,8 @@
       ],
       "created": "2026-03-24T12:42:22.042-0700",
       "updated": "2026-04-16T15:26:06.391-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Erika Galindo"
     },
     {
       "key": "MC-5260",
@@ -3552,26 +1357,8 @@
       ],
       "created": "2026-04-15T07:48:05.646-0700",
       "updated": "2026-04-17T09:12:22.170-0700",
-      "type": "Bug"
-    },
-    {
-      "key": "MC-5286",
-      "project": "MC",
-      "summary": "(RCA) MCSTARTER Fulfillment With Incorrect YPO Product",
-      "status": "Dev Backlog",
-      "statusCategory": "To Do",
-      "priority": "P1",
-      "components": [
-        "Backend",
-        "Listings Manager"
-      ],
-      "labels": [
-        "cohort",
-        "techsupport"
-      ],
-      "created": "2026-04-15T12:13:16.871-0700",
-      "updated": "2026-04-15T12:27:42.124-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-100",
@@ -3589,7 +1376,8 @@
       ],
       "created": "2026-03-02T08:48:35.620-0800",
       "updated": "2026-04-16T07:23:52.077-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-101",
@@ -3606,7 +1394,8 @@
       ],
       "created": "2026-03-02T10:53:58.370-0800",
       "updated": "2026-04-07T12:19:13.770-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-102",
@@ -3623,7 +1412,8 @@
       ],
       "created": "2026-03-02T18:52:13.380-0800",
       "updated": "2026-03-05T22:47:12.131-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-103",
@@ -3640,7 +1430,8 @@
       ],
       "created": "2026-03-02T21:56:32.088-0800",
       "updated": "2026-03-24T17:15:45.009-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-104",
@@ -3657,7 +1448,8 @@
       ],
       "created": "2026-03-03T07:30:13.713-0800",
       "updated": "2026-04-16T07:41:25.759-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-105",
@@ -3675,7 +1467,8 @@
       ],
       "created": "2026-03-03T08:30:48.532-0800",
       "updated": "2026-04-15T10:18:32.587-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-106",
@@ -3692,7 +1485,8 @@
       ],
       "created": "2026-03-03T10:16:43.857-0800",
       "updated": "2026-04-03T12:46:30.024-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-107",
@@ -3710,7 +1504,8 @@
       ],
       "created": "2026-03-03T10:47:55.238-0800",
       "updated": "2026-04-16T07:46:38.861-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-108",
@@ -3725,7 +1520,8 @@
       ],
       "created": "2026-03-03T11:09:54.727-0800",
       "updated": "2026-04-16T12:17:12.605-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-109",
@@ -3743,7 +1539,8 @@
       ],
       "created": "2026-03-03T12:29:23.293-0800",
       "updated": "2026-03-03T14:26:08.403-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-110",
@@ -3761,7 +1558,8 @@
       ],
       "created": "2026-03-03T16:36:58.915-0800",
       "updated": "2026-04-09T08:55:48.602-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-111",
@@ -3778,7 +1576,8 @@
       ],
       "created": "2026-03-03T18:54:34.713-0800",
       "updated": "2026-03-13T17:41:10.607-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-112",
@@ -3795,7 +1594,8 @@
       ],
       "created": "2026-03-04T06:41:25.534-0800",
       "updated": "2026-03-23T17:25:47.248-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-113",
@@ -3815,7 +1615,8 @@
       ],
       "created": "2026-03-04T09:50:27.700-0800",
       "updated": "2026-04-16T07:46:39.697-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-114",
@@ -3832,7 +1633,8 @@
       ],
       "created": "2026-03-04T11:46:05.957-0800",
       "updated": "2026-03-23T17:25:55.567-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-115",
@@ -3850,7 +1652,8 @@
       ],
       "created": "2026-03-04T20:48:29.778-0800",
       "updated": "2026-04-03T12:50:31.269-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-116",
@@ -3867,7 +1670,8 @@
       ],
       "created": "2026-03-05T06:23:38.721-0800",
       "updated": "2026-03-25T07:54:17.223-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Naomi Caraballo Jiminian"
     },
     {
       "key": "MCB-117",
@@ -3884,7 +1688,8 @@
       ],
       "created": "2026-03-05T12:00:30.455-0800",
       "updated": "2026-04-16T07:23:52.573-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-118",
@@ -3901,7 +1706,8 @@
       ],
       "created": "2026-03-05T14:23:10.124-0800",
       "updated": "2026-03-24T13:22:06.739-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-119",
@@ -3919,7 +1725,8 @@
       ],
       "created": "2026-03-06T03:53:17.177-0800",
       "updated": "2026-03-16T16:36:25.877-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-120",
@@ -3936,7 +1743,8 @@
       ],
       "created": "2026-03-06T10:31:02.776-0800",
       "updated": "2026-03-13T17:40:16.354-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Naomi Caraballo Jiminian"
     },
     {
       "key": "MCB-121",
@@ -3953,7 +1761,8 @@
       ],
       "created": "2026-03-06T12:12:02.793-0800",
       "updated": "2026-03-23T17:25:45.715-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-122",
@@ -3968,7 +1777,8 @@
       ],
       "created": "2026-03-06T12:16:34.982-0800",
       "updated": "2026-04-16T07:22:36.652-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-123",
@@ -3985,7 +1795,8 @@
       ],
       "created": "2026-03-06T16:00:09.613-0800",
       "updated": "2026-04-16T07:23:53.342-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-124",
@@ -4002,7 +1813,8 @@
       ],
       "created": "2026-03-09T05:45:06.870-0700",
       "updated": "2026-04-03T17:30:59.567-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-125",
@@ -4019,7 +1831,8 @@
       ],
       "created": "2026-03-09T07:26:36.715-0700",
       "updated": "2026-03-09T07:40:14.736-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-126",
@@ -4036,7 +1849,8 @@
       ],
       "created": "2026-03-09T08:54:07.969-0700",
       "updated": "2026-03-27T14:32:14.927-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-127",
@@ -4053,7 +1867,8 @@
       ],
       "created": "2026-03-09T12:57:24.681-0700",
       "updated": "2026-03-31T07:10:13.431-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-128",
@@ -4070,7 +1885,8 @@
       ],
       "created": "2026-03-09T13:03:20.839-0700",
       "updated": "2026-03-23T17:25:53.412-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-129",
@@ -4088,7 +1904,8 @@
       ],
       "created": "2026-03-09T15:46:10.416-0700",
       "updated": "2026-04-16T10:46:34.826-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Naomi Caraballo Jiminian"
     },
     {
       "key": "MCB-130",
@@ -4108,7 +1925,8 @@
       ],
       "created": "2026-03-09T16:25:33.345-0700",
       "updated": "2026-04-16T16:39:52.724-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-131",
@@ -4125,7 +1943,8 @@
       ],
       "created": "2026-03-10T07:04:24.637-0700",
       "updated": "2026-03-23T17:25:49.610-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-132",
@@ -4143,7 +1962,8 @@
       ],
       "created": "2026-03-10T11:59:08.558-0700",
       "updated": "2026-03-23T18:52:54.539-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-133",
@@ -4161,7 +1981,8 @@
       ],
       "created": "2026-03-10T12:52:20.507-0700",
       "updated": "2026-03-19T21:06:11.446-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-134",
@@ -4179,7 +2000,8 @@
       ],
       "created": "2026-03-10T13:27:07.578-0700",
       "updated": "2026-03-23T18:55:25.910-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Erika Galindo"
     },
     {
       "key": "MCB-135",
@@ -4197,7 +2019,8 @@
       ],
       "created": "2026-03-10T13:33:06.934-0700",
       "updated": "2026-04-16T07:46:41.544-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-136",
@@ -4215,7 +2038,8 @@
       ],
       "created": "2026-03-11T08:16:02.854-0700",
       "updated": "2026-04-17T12:48:46.586-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-137",
@@ -4233,7 +2057,8 @@
       ],
       "created": "2026-03-11T13:40:17.071-0700",
       "updated": "2026-04-16T12:57:43.182-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-138",
@@ -4250,7 +2075,8 @@
       ],
       "created": "2026-03-11T13:43:52.157-0700",
       "updated": "2026-04-16T07:23:54.098-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Naomi Caraballo Jiminian"
     },
     {
       "key": "MCB-139",
@@ -4269,7 +2095,8 @@
       ],
       "created": "2026-03-11T15:46:29.410-0700",
       "updated": "2026-04-17T06:13:57.682-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-14",
@@ -4284,7 +2111,8 @@
       ],
       "created": "2026-02-09T08:11:27.796-0800",
       "updated": "2026-03-06T11:03:27.525-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-140",
@@ -4302,7 +2130,8 @@
       ],
       "created": "2026-03-12T11:52:48.235-0700",
       "updated": "2026-04-14T12:42:53.920-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-141",
@@ -4319,7 +2148,8 @@
       ],
       "created": "2026-03-12T13:50:56.246-0700",
       "updated": "2026-04-07T08:31:54.182-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-142",
@@ -4336,7 +2166,8 @@
       ],
       "created": "2026-03-13T04:11:51.381-0700",
       "updated": "2026-03-24T13:30:51.966-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-143",
@@ -4351,7 +2182,8 @@
       ],
       "created": "2026-03-13T07:44:15.990-0700",
       "updated": "2026-03-18T12:23:35.441-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-144",
@@ -4368,7 +2200,8 @@
       ],
       "created": "2026-03-13T11:08:40.798-0700",
       "updated": "2026-03-24T05:52:10.571-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-145",
@@ -4383,7 +2216,8 @@
       ],
       "created": "2026-03-13T11:28:32.606-0700",
       "updated": "2026-04-14T11:16:05.339-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-146",
@@ -4400,7 +2234,8 @@
       ],
       "created": "2026-03-13T12:26:59.750-0700",
       "updated": "2026-03-17T14:10:52.929-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-147",
@@ -4417,7 +2252,8 @@
       ],
       "created": "2026-03-13T13:29:51.355-0700",
       "updated": "2026-04-03T07:05:00.236-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-148",
@@ -4435,7 +2271,8 @@
       ],
       "created": "2026-03-13T15:19:45.598-0700",
       "updated": "2026-03-18T15:26:00.351-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-149",
@@ -4452,7 +2289,8 @@
       ],
       "created": "2026-03-16T06:09:53.446-0700",
       "updated": "2026-04-16T07:23:51.715-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-15",
@@ -4470,7 +2308,8 @@
       ],
       "created": "2026-02-09T11:07:29.574-0800",
       "updated": "2026-03-06T16:31:16.468-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-150",
@@ -4488,7 +2327,8 @@
       ],
       "created": "2026-03-16T12:56:32.308-0700",
       "updated": "2026-04-16T07:46:39.457-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-151",
@@ -4506,7 +2346,8 @@
       ],
       "created": "2026-03-16T15:13:14.311-0700",
       "updated": "2026-04-02T13:41:16.016-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Erika Galindo"
     },
     {
       "key": "MCB-152",
@@ -4525,7 +2366,8 @@
       ],
       "created": "2026-03-17T10:28:52.593-0700",
       "updated": "2026-04-03T12:47:56.895-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Erika Galindo"
     },
     {
       "key": "MCB-153",
@@ -4542,7 +2384,8 @@
       ],
       "created": "2026-03-17T11:49:01.820-0700",
       "updated": "2026-04-06T14:36:05.194-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-154",
@@ -4559,7 +2402,8 @@
       ],
       "created": "2026-03-18T05:12:56.531-0700",
       "updated": "2026-03-31T16:45:54.617-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-156",
@@ -4576,7 +2420,8 @@
       ],
       "created": "2026-03-18T10:11:06.508-0700",
       "updated": "2026-03-30T14:51:50.906-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Erika Galindo"
     },
     {
       "key": "MCB-157",
@@ -4593,7 +2438,8 @@
       ],
       "created": "2026-03-18T11:51:28.071-0700",
       "updated": "2026-04-03T07:35:12.721-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-159",
@@ -4611,7 +2457,8 @@
       ],
       "created": "2026-03-19T06:17:07.681-0700",
       "updated": "2026-03-23T19:02:14.500-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Erika Galindo"
     },
     {
       "key": "MCB-16",
@@ -4629,7 +2476,8 @@
       ],
       "created": "2026-02-09T13:01:21.185-0800",
       "updated": "2026-03-04T11:57:35.852-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-160",
@@ -4646,7 +2494,8 @@
       ],
       "created": "2026-03-19T09:11:36.938-0700",
       "updated": "2026-03-24T15:13:17.797-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-161",
@@ -4665,7 +2514,8 @@
       ],
       "created": "2026-03-19T12:48:33.976-0700",
       "updated": "2026-04-16T09:56:23.256-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-162",
@@ -4683,7 +2533,8 @@
       ],
       "created": "2026-03-19T13:00:58.158-0700",
       "updated": "2026-03-31T15:53:33.899-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-163",
@@ -4701,7 +2552,8 @@
       ],
       "created": "2026-03-19T13:38:17.756-0700",
       "updated": "2026-04-17T06:48:27.013-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-164",
@@ -4718,7 +2570,8 @@
       ],
       "created": "2026-03-20T07:38:34.696-0700",
       "updated": "2026-03-23T17:59:28.833-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-165",
@@ -4735,7 +2588,8 @@
       ],
       "created": "2026-03-20T07:48:41.066-0700",
       "updated": "2026-03-23T18:14:44.028-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-166",
@@ -4752,7 +2606,8 @@
       ],
       "created": "2026-03-20T07:51:23.082-0700",
       "updated": "2026-04-09T19:51:41.713-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-167",
@@ -4769,7 +2624,8 @@
       ],
       "created": "2026-03-20T10:34:05.834-0700",
       "updated": "2026-03-20T10:51:40.611-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-168",
@@ -4787,7 +2643,8 @@
       ],
       "created": "2026-03-20T12:02:30.106-0700",
       "updated": "2026-04-17T08:48:30.155-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Naomi Caraballo Jiminian"
     },
     {
       "key": "MCB-169",
@@ -4804,7 +2661,8 @@
       ],
       "created": "2026-03-23T15:00:02.347-0700",
       "updated": "2026-04-17T16:42:05.334-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Erika Galindo"
     },
     {
       "key": "MCB-17",
@@ -4819,7 +2677,8 @@
       ],
       "created": "2026-02-09T13:02:23.614-0800",
       "updated": "2026-03-02T10:54:00.238-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-170",
@@ -4836,7 +2695,8 @@
       ],
       "created": "2026-03-23T17:52:03.243-0700",
       "updated": "2026-03-30T21:03:20.390-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-171",
@@ -4853,7 +2713,8 @@
       ],
       "created": "2026-03-23T18:11:04.750-0700",
       "updated": "2026-03-30T06:39:54.141-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-172",
@@ -4870,7 +2731,8 @@
       ],
       "created": "2026-03-24T05:52:07.779-0700",
       "updated": "2026-03-31T08:18:34.046-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-173",
@@ -4887,7 +2749,8 @@
       ],
       "created": "2026-03-24T13:08:03.994-0700",
       "updated": "2026-03-30T05:08:07.014-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-174",
@@ -4904,7 +2767,8 @@
       ],
       "created": "2026-03-24T13:30:49.117-0700",
       "updated": "2026-04-03T10:29:24.793-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-175",
@@ -4921,7 +2785,8 @@
       ],
       "created": "2026-03-24T14:01:02.630-0700",
       "updated": "2026-04-08T20:12:54.027-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-176",
@@ -4938,7 +2803,8 @@
       ],
       "created": "2026-03-24T15:32:56.204-0700",
       "updated": "2026-04-13T08:13:19.962-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-177",
@@ -4955,7 +2821,8 @@
       ],
       "created": "2026-03-24T16:20:01.352-0700",
       "updated": "2026-04-16T07:23:52.481-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-178",
@@ -4973,7 +2840,8 @@
       ],
       "created": "2026-03-24T17:15:42.295-0700",
       "updated": "2026-04-01T13:50:25.575-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-179",
@@ -4991,7 +2859,8 @@
       ],
       "created": "2026-03-24T18:09:10.760-0700",
       "updated": "2026-04-17T09:22:22.070-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-18",
@@ -5006,7 +2875,8 @@
       ],
       "created": "2026-02-09T13:26:00.261-0800",
       "updated": "2026-04-10T12:16:56.222-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-180",
@@ -5024,7 +2894,8 @@
       ],
       "created": "2026-03-25T05:09:44.312-0700",
       "updated": "2026-04-08T18:45:43.420-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-181",
@@ -5041,7 +2912,8 @@
       ],
       "created": "2026-03-25T07:54:14.402-0700",
       "updated": "2026-04-09T07:42:08.747-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Naomi Caraballo Jiminian"
     },
     {
       "key": "MCB-182",
@@ -5058,7 +2930,8 @@
       ],
       "created": "2026-03-25T10:02:46.719-0700",
       "updated": "2026-04-08T11:43:06.170-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-184",
@@ -5076,7 +2949,8 @@
       ],
       "created": "2026-03-25T11:23:56.322-0700",
       "updated": "2026-04-16T08:36:21.736-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-185",
@@ -5093,7 +2967,8 @@
       ],
       "created": "2026-03-25T16:30:57.942-0700",
       "updated": "2026-04-16T13:04:03.048-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-186",
@@ -5111,7 +2986,8 @@
       ],
       "created": "2026-03-25T18:33:44.643-0700",
       "updated": "2026-04-03T20:37:35.004-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-187",
@@ -5128,7 +3004,8 @@
       ],
       "created": "2026-03-26T07:08:35.657-0700",
       "updated": "2026-04-09T04:54:03.612-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-188",
@@ -5145,7 +3022,8 @@
       ],
       "created": "2026-03-26T11:23:09.235-0700",
       "updated": "2026-03-30T14:36:50.777-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-189",
@@ -5162,7 +3040,8 @@
       ],
       "created": "2026-03-26T22:24:45.432-0700",
       "updated": "2026-04-08T18:41:28.140-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-19",
@@ -5177,7 +3056,8 @@
       ],
       "created": "2026-02-10T05:57:59.840-0800",
       "updated": "2026-03-23T17:25:21.740-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-192",
@@ -5194,7 +3074,8 @@
       ],
       "created": "2026-03-27T09:22:16.361-0700",
       "updated": "2026-04-01T07:42:14.681-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-193",
@@ -5211,7 +3092,8 @@
       ],
       "created": "2026-03-27T12:45:21.326-0700",
       "updated": "2026-04-07T06:56:06.719-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-197",
@@ -5228,7 +3110,8 @@
       ],
       "created": "2026-03-27T14:32:11.728-0700",
       "updated": "2026-04-16T14:28:45.385-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-20",
@@ -5246,7 +3129,8 @@
       ],
       "created": "2026-02-10T08:23:57.809-0800",
       "updated": "2026-03-16T09:41:51.038-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-203",
@@ -5263,7 +3147,8 @@
       ],
       "created": "2026-03-30T15:20:39.389-0700",
       "updated": "2026-04-05T16:30:59.141-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-204",
@@ -5280,7 +3165,8 @@
       ],
       "created": "2026-03-30T16:20:36.278-0700",
       "updated": "2026-04-02T13:40:05.814-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-205",
@@ -5298,7 +3184,8 @@
       ],
       "created": "2026-03-30T19:01:58.218-0700",
       "updated": "2026-04-16T07:22:38.717-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-206",
@@ -5315,7 +3202,8 @@
       ],
       "created": "2026-03-31T07:10:10.882-0700",
       "updated": "2026-04-14T13:36:28.947-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-207",
@@ -5332,7 +3220,8 @@
       ],
       "created": "2026-03-31T08:20:12.142-0700",
       "updated": "2026-04-15T09:39:52.774-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-208",
@@ -5350,7 +3239,8 @@
       ],
       "created": "2026-03-31T09:39:32.289-0700",
       "updated": "2026-04-06T09:20:16.021-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-209",
@@ -5368,7 +3258,8 @@
       ],
       "created": "2026-03-31T11:09:37.020-0700",
       "updated": "2026-04-03T12:54:38.097-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Naomi Caraballo Jiminian"
     },
     {
       "key": "MCB-21",
@@ -5386,7 +3277,8 @@
       ],
       "created": "2026-02-10T08:51:51.037-0800",
       "updated": "2026-03-04T14:01:08.852-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-210",
@@ -5401,7 +3293,8 @@
       ],
       "created": "2026-03-31T11:30:01.683-0700",
       "updated": "2026-04-16T07:22:38.543-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Naomi Caraballo Jiminian"
     },
     {
       "key": "MCB-211",
@@ -5418,7 +3311,8 @@
       ],
       "created": "2026-03-31T13:31:33.485-0700",
       "updated": "2026-04-06T08:50:28.946-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-212",
@@ -5437,7 +3331,8 @@
       ],
       "created": "2026-04-01T07:05:13.785-0700",
       "updated": "2026-04-17T11:58:16.623-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-213",
@@ -5454,7 +3349,8 @@
       ],
       "created": "2026-04-01T12:30:43.910-0700",
       "updated": "2026-04-07T05:42:50.019-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-216",
@@ -5471,7 +3367,8 @@
       ],
       "created": "2026-04-02T05:18:04.677-0700",
       "updated": "2026-04-07T07:55:37.805-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-217",
@@ -5488,7 +3385,8 @@
       ],
       "created": "2026-04-02T07:39:18.391-0700",
       "updated": "2026-04-16T13:24:54.616-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-218",
@@ -5506,7 +3404,8 @@
       ],
       "created": "2026-04-02T13:22:28.440-0700",
       "updated": "2026-04-16T07:46:38.853-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Erika Galindo"
     },
     {
       "key": "MCB-219",
@@ -5523,7 +3422,8 @@
       ],
       "created": "2026-04-02T16:21:42.489-0700",
       "updated": "2026-04-13T21:15:44.205-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-22",
@@ -5538,7 +3438,8 @@
       ],
       "created": "2026-02-10T10:24:37.708-0800",
       "updated": "2026-03-10T16:57:52.278-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-220",
@@ -5555,7 +3456,8 @@
       ],
       "created": "2026-04-03T06:41:07.935-0700",
       "updated": "2026-04-17T09:40:00.912-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Erika Galindo"
     },
     {
       "key": "MCB-224",
@@ -5572,7 +3474,8 @@
       ],
       "created": "2026-04-03T11:31:33.853-0700",
       "updated": "2026-04-13T09:00:11.259-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-225",
@@ -5589,7 +3492,24 @@
       ],
       "created": "2026-04-03T15:00:07.938-0700",
       "updated": "2026-04-06T10:43:30.828-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
+    },
+    {
+      "key": "MCB-226",
+      "project": "MCB",
+      "summary": "LM Surfacing Incorrect Account for Listings – MC Pulling Wrong LOC ID",
+      "status": "Canceled",
+      "statusCategory": "Done",
+      "priority": "P2",
+      "components": [
+        "Listings Manager"
+      ],
+      "labels": [],
+      "created": "2026-04-03T15:19:25.171-0700",
+      "updated": "2026-04-03T16:25:33.821-0700",
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-227",
@@ -5606,7 +3526,8 @@
       ],
       "created": "2026-04-06T08:50:26.157-0700",
       "updated": "2026-04-09T08:53:59.789-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-228",
@@ -5623,7 +3544,8 @@
       ],
       "created": "2026-04-06T12:30:21.241-0700",
       "updated": "2026-04-07T19:20:42.356-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-23",
@@ -5640,7 +3562,8 @@
       ],
       "created": "2026-02-10T10:37:30.330-0800",
       "updated": "2026-02-17T11:35:36.510-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-230",
@@ -5657,7 +3580,8 @@
       ],
       "created": "2026-04-07T07:53:56.107-0700",
       "updated": "2026-04-16T07:06:33.549-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-231",
@@ -5674,7 +3598,8 @@
       ],
       "created": "2026-04-07T08:58:23.338-0700",
       "updated": "2026-04-08T14:17:12.991-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-232",
@@ -5691,7 +3616,8 @@
       ],
       "created": "2026-04-07T12:19:10.833-0700",
       "updated": "2026-04-16T15:27:17.344-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-233",
@@ -5708,7 +3634,8 @@
       ],
       "created": "2026-04-07T19:20:46.648-0700",
       "updated": "2026-04-10T05:27:56.839-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-234",
@@ -5725,7 +3652,8 @@
       ],
       "created": "2026-04-08T09:13:46.868-0700",
       "updated": "2026-04-17T07:32:43.298-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Ryan Lann"
     },
     {
       "key": "MCB-235",
@@ -5742,7 +3670,8 @@
       ],
       "created": "2026-04-08T10:12:51.343-0700",
       "updated": "2026-04-17T16:31:29.380-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Erika Galindo"
     },
     {
       "key": "MCB-236",
@@ -5759,7 +3688,8 @@
       ],
       "created": "2026-04-08T11:30:29.748-0700",
       "updated": "2026-04-10T12:31:43.745-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-237",
@@ -5777,7 +3707,8 @@
       ],
       "created": "2026-04-08T11:32:28.115-0700",
       "updated": "2026-04-09T08:52:51.354-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-239",
@@ -5794,7 +3725,8 @@
       ],
       "created": "2026-04-08T13:10:46.303-0700",
       "updated": "2026-04-14T11:03:07.143-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-24",
@@ -5809,7 +3741,8 @@
       ],
       "created": "2026-02-10T10:47:28.741-0800",
       "updated": "2026-03-23T17:25:59.926-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-240",
@@ -5826,7 +3759,8 @@
       ],
       "created": "2026-04-08T13:14:52.624-0700",
       "updated": "2026-04-15T08:19:42.797-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-241",
@@ -5843,7 +3777,8 @@
       ],
       "created": "2026-04-08T13:16:36.644-0700",
       "updated": "2026-04-09T21:24:19.156-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-242",
@@ -5860,7 +3795,8 @@
       ],
       "created": "2026-04-08T13:17:55.420-0700",
       "updated": "2026-04-14T15:25:11.143-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-243",
@@ -5877,7 +3813,8 @@
       ],
       "created": "2026-04-08T13:19:00.272-0700",
       "updated": "2026-04-15T11:57:23.743-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-244",
@@ -5894,7 +3831,8 @@
       ],
       "created": "2026-04-08T13:20:15.177-0700",
       "updated": "2026-04-09T21:23:36.535-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-245",
@@ -5911,7 +3849,8 @@
       ],
       "created": "2026-04-09T04:54:01.082-0700",
       "updated": "2026-04-09T19:36:27.163-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-246",
@@ -5929,7 +3868,24 @@
       ],
       "created": "2026-04-09T06:01:28.557-0700",
       "updated": "2026-04-10T10:00:30.869-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
+    },
+    {
+      "key": "MCB-247",
+      "project": "MCB",
+      "summary": "AUS - GUMP distribution error",
+      "status": "In Review",
+      "statusCategory": "In Progress",
+      "priority": "P3",
+      "components": [
+        "Listings Manager"
+      ],
+      "labels": [],
+      "created": "2026-04-09T06:54:54.474-0700",
+      "updated": "2026-04-17T09:09:17.435-0700",
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-248",
@@ -5944,7 +3900,8 @@
       ],
       "created": "2026-04-09T08:40:37.903-0700",
       "updated": "2026-04-15T05:14:44.401-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-249",
@@ -5961,7 +3918,8 @@
       ],
       "created": "2026-04-09T09:46:08.229-0700",
       "updated": "2026-04-17T07:33:15.042-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-25",
@@ -5978,7 +3936,8 @@
       ],
       "created": "2026-02-10T11:08:52.982-0800",
       "updated": "2026-02-24T14:39:18.051-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-251",
@@ -5995,7 +3954,8 @@
       ],
       "created": "2026-04-09T11:20:53.649-0700",
       "updated": "2026-04-17T09:31:33.250-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Vanessa Angelina Garcia"
     },
     {
       "key": "MCB-252",
@@ -6012,7 +3972,8 @@
       ],
       "created": "2026-04-09T15:33:40.943-0700",
       "updated": "2026-04-09T16:52:41.186-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Erika Galindo"
     },
     {
       "key": "MCB-253",
@@ -6029,7 +3990,8 @@
       ],
       "created": "2026-04-09T18:05:36.297-0700",
       "updated": "2026-04-09T21:18:49.592-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Ryan Lann"
     },
     {
       "key": "MCB-254",
@@ -6047,7 +4009,8 @@
       ],
       "created": "2026-04-09T22:39:09.865-0700",
       "updated": "2026-04-10T12:23:54.771-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-255",
@@ -6064,7 +4027,8 @@
       ],
       "created": "2026-04-08T12:34:30.699-0700",
       "updated": "2026-04-14T08:01:19.421-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-256",
@@ -6082,7 +4046,8 @@
       ],
       "created": "2026-04-10T10:00:28.154-0700",
       "updated": "2026-04-14T06:09:24.108-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-257",
@@ -6099,7 +4064,8 @@
       ],
       "created": "2026-04-10T10:39:12.092-0700",
       "updated": "2026-04-14T07:45:52.216-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Naomi Caraballo Jiminian"
     },
     {
       "key": "MCB-258",
@@ -6117,7 +4083,8 @@
       ],
       "created": "2026-04-10T10:52:46.512-0700",
       "updated": "2026-04-14T13:32:39.775-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-259",
@@ -6132,7 +4099,8 @@
       ],
       "created": "2026-04-10T12:16:53.511-0700",
       "updated": "2026-04-14T08:27:38.930-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Vanessa Angelina Garcia"
     },
     {
       "key": "MCB-26",
@@ -6147,7 +4115,8 @@
       ],
       "created": "2026-02-10T13:33:51.902-0800",
       "updated": "2026-02-25T09:33:09.331-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-260",
@@ -6164,7 +4133,8 @@
       ],
       "created": "2026-04-13T10:00:28.354-0700",
       "updated": "2026-04-15T13:51:03.898-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-261",
@@ -6182,7 +4152,8 @@
       ],
       "created": "2026-04-13T10:23:14.177-0700",
       "updated": "2026-04-16T14:53:41.207-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-262",
@@ -6199,7 +4170,8 @@
       ],
       "created": "2026-04-13T12:19:26.924-0700",
       "updated": "2026-04-13T12:20:09.477-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Erika Galindo"
     },
     {
       "key": "MCB-263",
@@ -6216,7 +4188,8 @@
       ],
       "created": "2026-04-13T13:00:03.096-0700",
       "updated": "2026-04-13T13:00:22.292-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-265",
@@ -6233,7 +4206,8 @@
       ],
       "created": "2026-04-14T06:19:17.669-0700",
       "updated": "2026-04-17T11:19:10.440-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-266",
@@ -6250,7 +4224,8 @@
       ],
       "created": "2026-04-14T08:22:47.745-0700",
       "updated": "2026-04-15T13:20:11.063-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Vanessa Angelina Garcia"
     },
     {
       "key": "MCB-267",
@@ -6267,7 +4242,8 @@
       ],
       "created": "2026-04-14T09:56:27.630-0700",
       "updated": "2026-04-17T12:31:34.502-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-268",
@@ -6284,7 +4260,8 @@
       ],
       "created": "2026-04-14T11:45:56.388-0700",
       "updated": "2026-04-16T11:13:43.023-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Vanessa Angelina Garcia"
     },
     {
       "key": "MCB-269",
@@ -6302,7 +4279,8 @@
       ],
       "created": "2026-04-14T13:32:37.185-0700",
       "updated": "2026-04-15T10:28:03.867-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-27",
@@ -6320,7 +4298,8 @@
       ],
       "created": "2026-02-10T17:22:35.969-0800",
       "updated": "2026-04-17T06:12:50.826-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-270",
@@ -6337,7 +4316,8 @@
       ],
       "created": "2026-04-14T13:36:26.196-0700",
       "updated": "2026-04-16T11:13:05.663-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-271",
@@ -6355,7 +4335,8 @@
       ],
       "created": "2026-04-14T14:49:49.672-0700",
       "updated": "2026-04-16T10:15:59.829-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-272",
@@ -6372,7 +4353,8 @@
       ],
       "created": "2026-04-15T04:55:48.043-0700",
       "updated": "2026-04-17T10:26:32.360-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-273",
@@ -6389,7 +4371,8 @@
       ],
       "created": "2026-04-15T08:12:20.286-0700",
       "updated": "2026-04-15T12:40:20.553-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Naomi Caraballo Jiminian"
     },
     {
       "key": "MCB-274",
@@ -6406,7 +4389,8 @@
       ],
       "created": "2026-04-15T09:39:50.249-0700",
       "updated": "2026-04-15T11:41:47.083-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Naomi Caraballo Jiminian"
     },
     {
       "key": "MCB-276",
@@ -6423,7 +4407,8 @@
       ],
       "created": "2026-04-15T11:51:46.124-0700",
       "updated": "2026-04-15T22:25:35.116-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Vanessa Angelina Garcia"
     },
     {
       "key": "MCB-28",
@@ -6438,7 +4423,8 @@
       ],
       "created": "2026-02-11T05:22:41.221-0800",
       "updated": "2026-03-10T16:56:58.417-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-284",
@@ -6455,7 +4441,8 @@
       ],
       "created": "2026-04-16T07:41:19.421-0700",
       "updated": "2026-04-17T10:30:21.826-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Erika Galindo"
     },
     {
       "key": "MCB-285",
@@ -6472,7 +4459,8 @@
       ],
       "created": "2026-04-16T09:12:34.215-0700",
       "updated": "2026-04-16T09:51:58.959-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-286",
@@ -6490,7 +4478,8 @@
       ],
       "created": "2026-04-16T10:46:32.173-0700",
       "updated": "2026-04-17T17:12:15.107-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Vanessa Angelina Garcia"
     },
     {
       "key": "MCB-287",
@@ -6507,7 +4496,8 @@
       ],
       "created": "2026-04-16T11:13:40.448-0700",
       "updated": "2026-04-16T14:30:13.528-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-288",
@@ -6524,7 +4514,8 @@
       ],
       "created": "2026-04-16T12:57:31.722-0700",
       "updated": "2026-04-16T14:24:57.261-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-289",
@@ -6541,7 +4532,8 @@
       ],
       "created": "2026-04-16T13:24:56.202-0700",
       "updated": "2026-04-17T10:33:57.511-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-29",
@@ -6558,7 +4550,8 @@
       ],
       "created": "2026-02-11T06:03:42.248-0800",
       "updated": "2026-03-16T16:31:33.711-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-290",
@@ -6575,7 +4568,8 @@
       ],
       "created": "2026-04-17T06:35:13.780-0700",
       "updated": "2026-04-17T10:37:29.174-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-291",
@@ -6592,7 +4586,8 @@
       ],
       "created": "2026-04-17T07:19:19.932-0700",
       "updated": "2026-04-17T07:24:14.344-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-292",
@@ -6609,7 +4604,8 @@
       ],
       "created": "2026-04-17T09:31:30.715-0700",
       "updated": "2026-04-17T09:32:39.015-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Naomi Caraballo Jiminian"
     },
     {
       "key": "MCB-293",
@@ -6626,7 +4622,8 @@
       ],
       "created": "2026-04-17T11:00:32.776-0700",
       "updated": "2026-04-17T12:44:02.412-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-294",
@@ -6645,7 +4642,8 @@
       ],
       "created": "2026-04-17T11:46:07.108-0700",
       "updated": "2026-04-17T11:50:00.074-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-295",
@@ -6663,7 +4661,8 @@
       ],
       "created": "2026-04-17T17:12:12.384-0700",
       "updated": "2026-04-17T17:14:57.236-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-30",
@@ -6678,7 +4677,25 @@
       ],
       "created": "2026-02-11T06:33:05.736-0800",
       "updated": "2026-03-23T17:25:35.447-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
+    },
+    {
+      "key": "MCB-31",
+      "project": "MCB",
+      "summary": "LM Update Failed – 504 Timeout",
+      "status": "Released",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [
+        "Backend",
+        "Listings Manager"
+      ],
+      "labels": [],
+      "created": "2026-02-11T12:05:29.008-0800",
+      "updated": "2026-03-10T16:55:08.677-0700",
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-32",
@@ -6695,7 +4712,8 @@
       ],
       "created": "2026-02-11T12:28:38.382-0800",
       "updated": "2026-03-13T17:34:29.471-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-33",
@@ -6713,7 +4731,8 @@
       ],
       "created": "2026-02-11T13:18:22.671-0800",
       "updated": "2026-02-25T04:56:52.021-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-34",
@@ -6729,7 +4748,8 @@
       ],
       "created": "2026-02-12T12:03:22.511-0800",
       "updated": "2026-02-13T14:13:44.916-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-35",
@@ -6744,7 +4764,8 @@
       ],
       "created": "2026-02-12T13:22:15.405-0800",
       "updated": "2026-03-23T17:52:05.952-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-36",
@@ -6761,7 +4782,8 @@
       ],
       "created": "2026-02-12T14:26:21.798-0800",
       "updated": "2026-03-10T16:56:58.021-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-37",
@@ -6777,7 +4799,8 @@
       ],
       "created": "2026-02-12T19:17:52.867-0800",
       "updated": "2026-02-13T11:48:00.809-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-38",
@@ -6795,7 +4818,8 @@
       ],
       "created": "2026-02-13T08:31:51.336-0800",
       "updated": "2026-04-16T07:46:38.866-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-39",
@@ -6813,7 +4837,8 @@
       ],
       "created": "2026-02-13T08:49:41.386-0800",
       "updated": "2026-02-17T12:59:15.978-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-40",
@@ -6831,7 +4856,8 @@
       ],
       "created": "2026-02-13T10:57:22.832-0800",
       "updated": "2026-04-15T06:31:54.233-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-41",
@@ -6849,7 +4875,8 @@
       ],
       "created": "2026-02-13T11:47:58.848-0800",
       "updated": "2026-03-13T17:37:02.652-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-42",
@@ -6867,7 +4894,8 @@
       ],
       "created": "2026-02-13T12:35:10.488-0800",
       "updated": "2026-04-16T07:46:39.169-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-43",
@@ -6882,7 +4910,8 @@
       ],
       "created": "2026-02-16T04:59:38.555-0800",
       "updated": "2026-03-10T07:49:20.267-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-44",
@@ -6900,7 +4929,8 @@
       ],
       "created": "2026-02-16T06:29:44.794-0800",
       "updated": "2026-02-25T14:36:36.068-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-45",
@@ -6917,7 +4947,8 @@
       ],
       "created": "2026-02-17T04:11:55.276-0800",
       "updated": "2026-03-04T09:50:30.192-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-46",
@@ -6934,7 +4965,8 @@
       ],
       "created": "2026-02-17T06:14:34.806-0800",
       "updated": "2026-03-13T17:38:25.710-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-47",
@@ -6952,7 +4984,22 @@
       ],
       "created": "2026-02-17T06:22:00.110-0800",
       "updated": "2026-03-24T19:59:14.100-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
+    },
+    {
+      "key": "MCB-48",
+      "project": "MCB",
+      "summary": "Request to Cancel CTN",
+      "status": "Canceled",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-17T10:15:26.053-0800",
+      "updated": "2026-02-17T10:58:37.291-0800",
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-49",
@@ -6969,22 +5016,8 @@
       ],
       "created": "2026-02-17T11:35:33.884-0800",
       "updated": "2026-02-17T11:41:16.565-0800",
-      "type": "Bug"
-    },
-    {
-      "key": "MCB-50",
-      "project": "MCB",
-      "summary": "(BE)Yelp | EP Rejected without UI Event (fixed by MC-4984)",
-      "status": "In Review",
-      "statusCategory": "In Progress",
-      "priority": "P3",
-      "components": [],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-02-17T13:34:42.774-0800",
-      "updated": "2026-04-16T07:23:53.407-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-51",
@@ -7002,7 +5035,8 @@
       ],
       "created": "2026-02-17T14:18:28.366-0800",
       "updated": "2026-04-16T07:46:39.409-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-52",
@@ -7017,7 +5051,8 @@
       ],
       "created": "2026-02-17T15:04:33.766-0800",
       "updated": "2026-03-13T04:11:53.989-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-53",
@@ -7035,7 +5070,8 @@
       ],
       "created": "2026-02-18T04:01:20.210-0800",
       "updated": "2026-04-07T19:09:49.231-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-56",
@@ -7050,7 +5086,8 @@
       ],
       "created": "2026-02-18T06:53:29.518-0800",
       "updated": "2026-02-27T07:46:14.081-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-58",
@@ -7065,7 +5102,8 @@
       ],
       "created": "2026-02-18T12:11:40.921-0800",
       "updated": "2026-03-10T16:55:07.370-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-59",
@@ -7083,7 +5121,8 @@
       ],
       "created": "2026-02-19T05:13:55.097-0800",
       "updated": "2026-03-10T16:55:04.695-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-60",
@@ -7100,7 +5139,8 @@
       ],
       "created": "2026-02-19T09:29:50.624-0800",
       "updated": "2026-03-23T18:37:56.255-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-61",
@@ -7115,7 +5155,8 @@
       ],
       "created": "2026-02-19T10:38:41.212-0800",
       "updated": "2026-03-23T17:25:19.529-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-63",
@@ -7132,7 +5173,8 @@
       ],
       "created": "2026-02-19T13:05:00.138-0800",
       "updated": "2026-03-27T18:20:21.770-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-64",
@@ -7149,7 +5191,8 @@
       ],
       "created": "2026-02-19T13:33:37.090-0800",
       "updated": "2026-04-14T10:05:00.414-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-65",
@@ -7167,7 +5210,8 @@
       ],
       "created": "2026-02-19T14:15:06.511-0800",
       "updated": "2026-03-30T13:56:03.456-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-66",
@@ -7184,7 +5228,8 @@
       ],
       "created": "2026-02-20T04:33:24.013-0800",
       "updated": "2026-03-24T14:01:05.571-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-67",
@@ -7201,7 +5246,8 @@
       ],
       "created": "2026-02-20T08:57:53.136-0800",
       "updated": "2026-03-19T07:41:08.797-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-68",
@@ -7216,7 +5262,8 @@
       ],
       "created": "2026-02-20T10:33:08.598-0800",
       "updated": "2026-03-23T17:26:00.587-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-69",
@@ -7231,7 +5278,8 @@
       ],
       "created": "2026-02-23T05:06:33.023-0800",
       "updated": "2026-04-16T07:23:53.642-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-70",
@@ -7246,7 +5294,8 @@
       ],
       "created": "2026-02-23T06:34:30.818-0800",
       "updated": "2026-03-23T17:25:54.187-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-72",
@@ -7264,7 +5313,8 @@
       ],
       "created": "2026-02-23T07:57:31.307-0800",
       "updated": "2026-04-16T09:15:39.339-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-73",
@@ -7281,7 +5331,8 @@
       ],
       "created": "2026-02-23T09:50:31.421-0800",
       "updated": "2026-03-23T17:25:57.719-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-74",
@@ -7296,7 +5347,8 @@
       ],
       "created": "2026-02-24T05:17:07.725-0800",
       "updated": "2026-03-12T07:32:36.237-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-75",
@@ -7311,7 +5363,8 @@
       ],
       "created": "2026-02-24T07:22:50.056-0800",
       "updated": "2026-03-23T17:25:40.070-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-76",
@@ -7328,7 +5381,8 @@
       ],
       "created": "2026-02-24T09:02:03.073-0800",
       "updated": "2026-04-03T12:47:16.360-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-77",
@@ -7345,7 +5399,8 @@
       ],
       "created": "2026-02-24T10:03:57.207-0800",
       "updated": "2026-04-16T07:23:53.878-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-78",
@@ -7362,7 +5417,8 @@
       ],
       "created": "2026-02-24T10:27:12.064-0800",
       "updated": "2026-03-16T16:36:45.720-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-79",
@@ -7379,7 +5435,8 @@
       ],
       "created": "2026-02-25T04:51:42.070-0800",
       "updated": "2026-03-16T08:50:50.041-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-80",
@@ -7397,7 +5454,8 @@
       ],
       "created": "2026-02-25T04:56:49.240-0800",
       "updated": "2026-03-03T12:29:25.625-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-81",
@@ -7414,7 +5472,8 @@
       ],
       "created": "2026-02-25T05:26:24.934-0800",
       "updated": "2026-04-16T07:46:41.201-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-82",
@@ -7429,7 +5488,8 @@
       ],
       "created": "2026-02-25T09:33:06.999-0800",
       "updated": "2026-04-16T07:22:38.216-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-83",
@@ -7446,7 +5506,8 @@
       ],
       "created": "2026-02-25T10:27:51.042-0800",
       "updated": "2026-04-03T15:57:40.805-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-84",
@@ -7463,7 +5524,8 @@
       ],
       "created": "2026-02-25T11:47:11.414-0800",
       "updated": "2026-03-11T10:14:48.935-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-85",
@@ -7478,7 +5540,8 @@
       ],
       "created": "2026-02-25T11:56:46.543-0800",
       "updated": "2026-04-02T08:09:30.984-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-86",
@@ -7493,7 +5556,8 @@
       ],
       "created": "2026-02-25T12:00:54.260-0800",
       "updated": "2026-03-23T17:25:13.640-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-87",
@@ -7510,7 +5574,8 @@
       ],
       "created": "2026-02-25T14:06:45.959-0800",
       "updated": "2026-03-02T21:56:34.904-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-88",
@@ -7527,7 +5592,8 @@
       ],
       "created": "2026-02-25T17:05:12.851-0800",
       "updated": "2026-03-10T16:55:04.894-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
       "key": "MCB-89",
@@ -7544,7 +5610,8 @@
       ],
       "created": "2026-02-26T07:01:33.126-0800",
       "updated": "2026-03-23T17:25:26.213-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-90",
@@ -7561,7 +5628,8 @@
       ],
       "created": "2026-02-26T09:27:11.865-0800",
       "updated": "2026-03-02T10:52:45.906-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-91",
@@ -7576,7 +5644,8 @@
       ],
       "created": "2026-02-26T11:50:28.538-0800",
       "updated": "2026-03-10T16:55:04.336-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-92",
@@ -7591,7 +5660,8 @@
       ],
       "created": "2026-02-26T11:58:22.605-0800",
       "updated": "2026-03-31T09:39:32.551-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-93",
@@ -7608,7 +5678,8 @@
       ],
       "created": "2026-02-26T14:34:32.916-0800",
       "updated": "2026-03-10T04:33:31.072-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-94",
@@ -7625,7 +5696,24 @@
       ],
       "created": "2026-02-27T07:30:21.445-0800",
       "updated": "2026-02-27T12:25:42.016-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
+    },
+    {
+      "key": "MCB-96",
+      "project": "MCB",
+      "summary": "Update Alpha Template - brookeststaffing.com",
+      "status": "Released",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [
+        "SEO"
+      ],
+      "labels": [],
+      "created": "2026-02-27T08:27:00.941-0800",
+      "updated": "2026-03-23T17:25:46.558-0700",
+      "type": "Bug",
+      "reporter": "Esteban Zapata"
     },
     {
       "key": "MCB-97",
@@ -7643,7 +5731,8 @@
       ],
       "created": "2026-02-27T18:25:14.373-0800",
       "updated": "2026-03-02T09:34:17.796-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Scott Savage"
     },
     {
       "key": "MCB-98",
@@ -7662,7 +5751,8 @@
       ],
       "created": "2026-03-02T03:54:00.234-0800",
       "updated": "2026-03-19T21:02:26.631-0700",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Karla Cruz"
     },
     {
       "key": "MCB-99",
@@ -7680,43 +5770,666 @@
       ],
       "created": "2026-03-02T07:55:41.522-0800",
       "updated": "2026-03-02T09:08:22.866-0800",
-      "type": "Bug"
+      "type": "Bug",
+      "reporter": "Josh Melgoza"
     },
     {
-      "key": "TPAY-2265",
-      "project": "TPAY",
-      "summary": "Mobile Charge Inserting non-succeeded records in completed_txn",
-      "status": "Canceled",
-      "statusCategory": "Done",
+      "key": "TPS-168",
+      "project": "TPS",
+      "summary": "Checkout Payments are getting stuck in payment processing - udxlkqb3mesovcp1",
+      "status": "W/ Product",
+      "statusCategory": "In Progress",
       "priority": "P3",
-      "components": [
-        "Card Reader"
-      ],
-      "labels": [
-        "KMob",
-        "techsupport"
-      ],
-      "created": "2025-08-21T10:46:53.536-0700",
-      "updated": "2026-02-24T10:55:26.661-0800",
-      "type": "Bug"
+      "components": [],
+      "labels": [],
+      "created": "2026-01-06T10:34:48.551-0800",
+      "updated": "2026-01-22T11:33:52.715-0800",
+      "type": "Incident",
+      "reporter": "Erika Galindo"
     },
     {
-      "key": "TPAY-2332",
-      "project": "TPAY",
-      "summary": "Checkout Payments failing to record",
-      "status": "Released",
+      "key": "TPS-169",
+      "project": "TPS",
+      "summary": "The Boltakke Law Group, P.C.: Missing ACH Payment/Incorrect Processing Fee Charged - ThryvID/Merchant ID: 43zhxzb0r00at8mp / acct_1L86UYR5gdNu1PQe - 43zhxzb0r00at8mp",
+      "status": "Resolved",
       "statusCategory": "Done",
       "priority": "P3",
-      "components": [
-        "Checkout"
-      ],
-      "labels": [
-        "ThryvPay",
-        "techsupport"
-      ],
-      "created": "2025-09-08T06:54:07.804-0700",
-      "updated": "2025-11-24T07:30:31.989-0800",
-      "type": "Support"
+      "components": [],
+      "labels": [],
+      "created": "2026-01-13T13:30:07.982-0800",
+      "updated": "2026-01-21T13:55:01.760-0800",
+      "type": "Incident",
+      "reporter": "Ryan Lann"
+    },
+    {
+      "key": "TPS-170",
+      "project": "TPS",
+      "summary": "FRANCHISE ACCOUNT (NEAT Method) | RIsk unable to reset Franchise ThryvPay Application for new owners to apply - ZD #4292843 - fopokeye7zg7ggiz",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-01-15T15:40:51.880-0800",
+      "updated": "2026-01-21T11:01:49.177-0800",
+      "type": "Incident",
+      "reporter": "Ryan Lann"
+    },
+    {
+      "key": "TPS-171",
+      "project": "TPS",
+      "summary": "ThryvPay Transactions Export Formatting Issues - 0yqgkwl6rpt5ulyx",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-01-16T14:22:06.401-0800",
+      "updated": "2026-01-28T14:04:51.360-0800",
+      "type": "Incident",
+      "reporter": "Scott Savage"
+    },
+    {
+      "key": "TPS-172",
+      "project": "TPS",
+      "summary": "ACH fees onetime refund request | Davis fence Co LLC - acct_1SUW4zJVzovZPinL - 88hk5zz6ygspxna9 - ZD#4320441 - 88hk5zz6ygspxna9 ",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-01-20T12:16:53.142-0800",
+      "updated": "2026-01-21T11:16:57.042-0800",
+      "type": "Incident",
+      "reporter": "Ryan Lann"
+    },
+    {
+      "key": "TPS-173",
+      "project": "TPS",
+      "summary": "YTD Transactions - 54kd9vm2jwcut6rz",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-01-20T15:21:49.569-0800",
+      "updated": "2026-01-21T11:08:12.229-0800",
+      "type": "Incident",
+      "reporter": "Erika Galindo"
+    },
+    {
+      "key": "TPS-174",
+      "project": "TPS",
+      "summary": "**Franchise Account** Class 101 Flower Mound TX | Merchant unable to sign up for ThryvPay and is presented with indefinite loading screen - ThryvID: 226myoymkmj7zuj1 - 226myoymkmj7zuj1",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-01-21T09:01:58.102-0800",
+      "updated": "2026-01-21T10:58:11.729-0800",
+      "type": "Incident",
+      "reporter": "Ryan Lann"
+    },
+    {
+      "key": "TPS-175",
+      "project": "TPS",
+      "summary": "2 Issues: 1. Wrong Processing Fee Billed 2. Processing fee showing wrong within TP Transaction Table - fet6mk5aezugcgx6",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-01-23T10:19:33.216-0800",
+      "updated": "2026-03-09T07:19:56.527-0700",
+      "type": "Incident",
+      "reporter": "Erika Galindo"
+    },
+    {
+      "key": "TPS-176",
+      "project": "TPS",
+      "summary": "Reset Wisetack Application for Merchant - bjnsrp2lfip2drla",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-01-30T13:38:40.451-0800",
+      "updated": "2026-03-09T07:20:19.433-0700",
+      "type": "Incident",
+      "reporter": "Erika Galindo"
+    },
+    {
+      "key": "TPS-177",
+      "project": "TPS",
+      "summary": "Wisetack Payment Stuck in Processing - 1gnlt88bgv5uvwzj",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-03T11:57:04.550-0800",
+      "updated": "2026-02-03T13:51:20.468-0800",
+      "type": "Incident",
+      "reporter": "Erika Galindo"
+    },
+    {
+      "key": "TPS-178",
+      "project": "TPS",
+      "summary": "Invoice is Stuck in Processing for Wisetack Payment - 3y5onx1snd2zkeaf",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-03T12:54:43.127-0800",
+      "updated": "2026-02-03T13:59:24.665-0800",
+      "type": "Incident",
+      "reporter": "Erika Galindo"
+    },
+    {
+      "key": "TPS-179",
+      "project": "TPS",
+      "summary": "Unable to change the email address in TP Settings - yocpc4gyo8fnzwm8",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-03T15:01:53.159-0800",
+      "updated": "2026-03-17T13:38:38.451-0700",
+      "type": "Incident",
+      "reporter": "Erika Galindo"
+    },
+    {
+      "key": "TPS-180",
+      "project": "TPS",
+      "summary": "Risk is not able to reset Thryvpay Application - 7hbre4jtico7mgdg",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-04T09:02:26.211-0800",
+      "updated": "2026-02-04T11:33:41.404-0800",
+      "type": "Incident",
+      "reporter": "Erika Galindo"
+    },
+    {
+      "key": "TPS-181",
+      "project": "TPS",
+      "summary": "Database Change & Overdraft Fee Reversal - t5ltp4rvzwfwd9hk",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-05T07:18:13.034-0800",
+      "updated": "2026-02-12T14:03:57.052-0800",
+      "type": "Incident",
+      "reporter": "Erika Galindo"
+    },
+    {
+      "key": "TPS-182",
+      "project": "TPS",
+      "summary": "Command Center Request - 1324561324651324",
+      "status": "W/ Devs",
+      "statusCategory": "In Progress",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-11T09:14:09.426-0800",
+      "updated": "2026-04-01T09:42:21.324-0700",
+      "type": "Issue",
+      "reporter": "Scott Savage"
+    },
+    {
+      "key": "TPS-183",
+      "project": "TPS",
+      "summary": " Dev issue - ",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-11T09:16:57.660-0800",
+      "updated": "2026-02-11T09:27:27.452-0800",
+      "type": "Sub-task",
+      "reporter": "Scott Savage"
+    },
+    {
+      "key": "TPS-184",
+      "project": "TPS",
+      "summary": " dev work - ",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-12T08:04:50.387-0800",
+      "updated": "2026-02-12T08:05:44.426-0800",
+      "type": "Sub-task",
+      "reporter": "Scott Savage"
+    },
+    {
+      "key": "TPS-186",
+      "project": "TPS",
+      "summary": "Payout Went to Wrong Bank Account  - 3ma5s13n5uyt1woa",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-13T15:09:33.960-0800",
+      "updated": "2026-03-09T07:21:02.580-0700",
+      "type": "Incident",
+      "reporter": "Erika Galindo"
+    },
+    {
+      "key": "TPS-188",
+      "project": "TPS",
+      "summary": "ThryvPay Merchant Approved for Financing but is not reflecting on their end | FAST TRACK MOVERS -  ZD#4383853 - acct_1R5CPzQoZE3oN9Vd - vflsx4tnbndsnlok - vflsx4tnbndsnlok",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-18T14:32:00.649-0800",
+      "updated": "2026-02-24T14:00:59.005-0800",
+      "type": "Incident",
+      "reporter": "Ryan Lann"
+    },
+    {
+      "key": "TPS-189",
+      "project": "TPS",
+      "summary": "Refund Processing fees Request | *Franchise*  NEAT Method Charlotte - MerchantID: acct_1QAFcXQvEZYD8cwS - ThryvID: ps0xqck0izjiqkat - ps0xqck0izjiqkat",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-23T07:19:00.154-0800",
+      "updated": "2026-02-23T13:44:35.739-0800",
+      "type": "Incident",
+      "reporter": "Ryan Lann"
+    },
+    {
+      "key": "TPS-191",
+      "project": "TPS",
+      "summary": "Risk unable to do a Post Onboarding Decline via Admin Dashboard - go6bngiaxp5xcj8p",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-24T06:54:51.824-0800",
+      "updated": "2026-03-20T13:52:21.492-0700",
+      "type": "Incident",
+      "reporter": "Erika Galindo"
+    },
+    {
+      "key": "TPS-192",
+      "project": "TPS",
+      "summary": " Dev Issue -  - ",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-24T09:49:48.350-0800",
+      "updated": "2026-02-24T09:52:03.705-0800",
+      "type": "Sub-task",
+      "reporter": "Scott Savage"
+    },
+    {
+      "key": "TPS-193",
+      "project": "TPS",
+      "summary": "Scheduled Payment Posted twice to V and failed to post to completed transaction table - bl42tq0cjogkd2mn",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-25T07:43:55.907-0800",
+      "updated": "2026-03-02T14:15:05.816-0800",
+      "type": "Incident",
+      "reporter": "Erika Galindo"
+    },
+    {
+      "key": "TPS-194",
+      "project": "TPS",
+      "summary": "Payment stuck in 'preparing' status and no association to customer | Tailored Health - acct_1LMhjeQuiOA77qV7 - b31rpwohv56k2m3w - b31rpwohv56k2m3w",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-26T11:14:56.476-0800",
+      "updated": "2026-03-06T17:52:10.648-0800",
+      "type": "Incident",
+      "reporter": "Ryan Lann"
+    },
+    {
+      "key": "TPS-195",
+      "project": "TPS",
+      "summary": "Merchant charged incorrect processing fee via ThryvPay App mobile charge | Columbia Glass, LLC - acct_1NiLkTQvRyrri3yE - 40vqe4jolq1h9quf - 40vqe4jolq1h9quf",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-02-26T11:54:15.779-0800",
+      "updated": "2026-03-05T07:33:00.748-0800",
+      "type": "Incident",
+      "reporter": "Ryan Lann"
+    },
+    {
+      "key": "TPS-196",
+      "project": "TPS",
+      "summary": "Duplicate Entries for Scheduled Payments Processed 2/15/2026 | *Franchise Accounts* Class 101 Fort Mill, SC (ThryvID ijyty5uz1k6vmo9t) / Class 101 of the Treasure Coast (Thryv ID g960i6jktzvflxsi) - g960i6jktzvflxsi",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-03-02T11:35:00.808-0800",
+      "updated": "2026-03-09T07:09:05.420-0700",
+      "type": "Incident",
+      "reporter": "Ryan Lann"
+    },
+    {
+      "key": "TPS-197",
+      "project": "TPS",
+      "summary": "Card Declining for NSF but Showing Wrong ZipCode Error Message - yhcp4wt8k4jy02li",
+      "status": "W/ Devs",
+      "statusCategory": "In Progress",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-03-02T15:19:35.674-0800",
+      "updated": "2026-03-03T06:26:25.928-0800",
+      "type": "Incident",
+      "reporter": "Erika Galindo"
+    },
+    {
+      "key": "TPS-198",
+      "project": "TPS",
+      "summary": "Multiple payments show twice on PayOut - f5lqc21b3jd8bdar",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-03-06T07:01:55.247-0800",
+      "updated": "2026-03-10T13:33:43.628-0700",
+      "type": "Incident",
+      "reporter": "Erika Galindo"
+    },
+    {
+      "key": "TPS-199",
+      "project": "TPS",
+      "summary": "Refund Request - Client cancelled Thryv but SPs continued to process resulted in disputed payments - acct_1S0AGaJbJp8XS2vI -  - nspjkh1cto1wct96",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-03-06T08:38:54.887-0800",
+      "updated": "2026-03-09T07:06:35.241-0700",
+      "type": "Incident",
+      "reporter": "Ryan Lann"
+    },
+    {
+      "key": "TPS-200",
+      "project": "TPS",
+      "summary": "Request to refund failed withdrawal fee of $30 | acct_1QpxKXQwh4rUg5lX  - 0r4m4n80uw47o7k6 - 0r4m4n80uw47o7k6",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-03-06T13:53:13.983-0800",
+      "updated": "2026-03-09T06:14:46.512-0700",
+      "type": "Incident",
+      "reporter": "Ryan Lann"
+    },
+    {
+      "key": "TPS-201",
+      "project": "TPS",
+      "summary": "Refund Request | Epic Commercial Door Repair / acct_1KsJBKQudOXhzIPj / 8usol7h975zm7tn7 - 8usol7h975zm7tn7",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-03-11T07:53:11.255-0700",
+      "updated": "2026-03-11T15:29:16.927-0700",
+      "type": "Incident",
+      "reporter": "Ryan Lann"
+    },
+    {
+      "key": "TPS-202",
+      "project": "TPS",
+      "summary": "Risk is Unable to Approve TP Account via Admin DashBoard - y0kzga29asb6avme",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-03-11T13:05:20.575-0700",
+      "updated": "2026-03-19T12:41:49.768-0700",
+      "type": "Incident",
+      "reporter": "Erika Galindo"
+    },
+    {
+      "key": "TPS-203",
+      "project": "TPS",
+      "summary": "Refund processing fees as a one-time courtesy | The Beauty Suite - MerchantID acct_1Q5ppOR01oMgq3yQ - tzlz9rmzn4dhrost",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-03-17T14:19:11.402-0700",
+      "updated": "2026-03-19T12:12:59.338-0700",
+      "type": "Incident",
+      "reporter": "Ryan Lann"
+    },
+    {
+      "key": "TPS-204",
+      "project": "TPS",
+      "summary": "Refund processing fees as a one-time courtesy | Borla Painting - MerchantID acct_1PJlVSR2sHfCZOg3 - yx46mi5hyvohu798",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-03-18T11:52:25.916-0700",
+      "updated": "2026-03-19T12:12:46.996-0700",
+      "type": "Incident",
+      "reporter": "Ryan Lann"
+    },
+    {
+      "key": "TPS-205",
+      "project": "TPS",
+      "summary": "Refund processing fees as a one-time courtesy | American Bath Works In - acct_1NQVLQR5YtHuc5jS - rkve1qpro6yw1y1u",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-03-19T09:41:59.147-0700",
+      "updated": "2026-03-19T12:55:41.100-0700",
+      "type": "Incident",
+      "reporter": "Ryan Lann"
+    },
+    {
+      "key": "TPS-207",
+      "project": "TPS",
+      "summary": "Replacement Card Reader Request | Restore and More LLC - acct_1T80FLJ8xJSypVol / LOC7DD4E31B -  - 3knhawn8o720b5qg",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-03-27T14:25:54.556-0700",
+      "updated": "2026-03-30T12:33:55.161-0700",
+      "type": "Incident",
+      "reporter": "Ryan Lann"
+    },
+    {
+      "key": "TPS-208",
+      "project": "TPS",
+      "summary": "Database Change Required - mv69sq9qx0mcw5qd",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-03-31T12:45:03.218-0700",
+      "updated": "2026-04-02T12:39:45.514-0700",
+      "type": "Incident",
+      "reporter": "Erika Galindo"
+    },
+    {
+      "key": "TPS-209",
+      "project": "TPS",
+      "summary": "Risk is Unable to Reset TP Application - v5o4ev1gjstu4fdm",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-04-01T10:56:24.514-0700",
+      "updated": "2026-04-03T08:12:34.261-0700",
+      "type": "Incident",
+      "reporter": "Erika Galindo"
+    },
+    {
+      "key": "TPS-210",
+      "project": "TPS",
+      "summary": "ACH payments stuck in processing state | Quinn Windows - acct_1PByZjR2UYcSQRbT  - k4ay0tjqhebcgts0",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-04-01T15:10:48.742-0700",
+      "updated": "2026-04-02T10:06:34.177-0700",
+      "type": "Incident",
+      "reporter": "Ryan Lann"
+    },
+    {
+      "key": "TPS-213",
+      "project": "TPS",
+      "summary": "Risk Application Reset Failure | Neat Method Lakewood - acct_1QDWVSR3VuxldHEZ - avmj1cj6t1fyvngn",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-04-03T06:18:35.883-0700",
+      "updated": "2026-04-03T08:12:36.481-0700",
+      "type": "Incident",
+      "reporter": "Ryan Lann"
+    },
+    {
+      "key": "TPS-214",
+      "project": "TPS",
+      "summary": "Unable to checkout Using ACH  - fk8t03ykf4ots6xc",
+      "status": "W/ Product",
+      "statusCategory": "In Progress",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-04-07T10:20:10.094-0700",
+      "updated": "2026-04-13T07:12:07.841-0700",
+      "type": "Incident",
+      "reporter": "Erika Galindo"
+    },
+    {
+      "key": "TPS-215",
+      "project": "TPS",
+      "summary": "Agents in ZD login set up 2FA and stronger password - ",
+      "status": "Open",
+      "statusCategory": "To Do",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-04-08T07:40:59.501-0700",
+      "updated": "2026-04-16T13:58:49.614-0700",
+      "type": "Issue",
+      "reporter": "Roval Eleazar"
+    },
+    {
+      "key": "TPS-220",
+      "project": "TPS",
+      "summary": "*FRANCHISE*  Unable to Add Card on File in Business Center – No Error Returned | Class 101 San Antonio West TX - acct_1S5UNJR3NxeyPzxN - js3pcu7hngru3pgo",
+      "status": "W/ Devs",
+      "statusCategory": "In Progress",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-04-09T07:34:01.139-0700",
+      "updated": "2026-04-15T07:12:03.565-0700",
+      "type": "Incident",
+      "reporter": "Ryan Lann"
+    },
+    {
+      "key": "TPS-221",
+      "project": "TPS",
+      "summary": "*Escalation* ThryvPay Application Reset Error – Unable to Clear Existing Application for New Owner | Fluff n Fold Laundry - acct_1NFsuKR6LUsJXeWf - thna67na58cbi6g5",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-04-09T08:48:11.254-0700",
+      "updated": "2026-04-09T09:15:14.437-0700",
+      "type": "Incident",
+      "reporter": "Ryan Lann"
+    },
+    {
+      "key": "TPS-222",
+      "project": "TPS",
+      "summary": "Merchant unable to Disconnect Wisetack - adwkffpqmxmz23nn",
+      "status": "W/ Product",
+      "statusCategory": "In Progress",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-04-09T09:20:06.169-0700",
+      "updated": "2026-04-13T06:36:39.841-0700",
+      "type": "Incident",
+      "reporter": "Erika Galindo"
+    },
+    {
+      "key": "TPS-223",
+      "project": "TPS",
+      "summary": "DB Updates Needed  - nrvy30uwhg9c0cdq",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-04-09T15:09:39.005-0700",
+      "updated": "2026-04-10T13:25:18.573-0700",
+      "type": "Incident",
+      "reporter": "Erika Galindo"
+    },
+    {
+      "key": "TPS-227",
+      "project": "TPS",
+      "summary": "Unable to reset ThryvPay Application in Admin Dashboard - uy995v4rx9rvnsj7",
+      "status": "Resolved",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [],
+      "labels": [],
+      "created": "2026-04-14T15:21:19.400-0700",
+      "updated": "2026-04-15T08:21:32.316-0700",
+      "type": "Incident",
+      "reporter": "Erika Galindo"
     }
   ]
 }
