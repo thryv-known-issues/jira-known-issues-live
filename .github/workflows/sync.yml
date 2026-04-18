@@ -2,8 +2,8 @@ name: Sync Jira Data
 
 on:
   schedule:
-    - cron: '0 */2 * * *'  # Every 2 hours
-  workflow_dispatch: {}     # Manual trigger button
+    - cron: '0 */2 * * *'
+  workflow_dispatch: {}
 
 jobs:
   sync:
@@ -19,24 +19,41 @@ jobs:
           JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
         run: |
           echo "Fetching issues from Jira..."
-          
+
           ALL_ISSUES="[]"
-          
+
           for PROJECT in MCB MC MNY TPAY TPS; do
             START=0
             TOTAL=999999
-            
+
             while [ $START -lt $TOTAL ]; do
-              RESPONSE=$(curl -s -u "${JIRA_EMAIL}:${JIRA_TOKEN}" \
+              JQL="project=${PROJECT} AND created >= 2026-01-01 ORDER BY created DESC"
+
+              RESPONSE=$(curl -s --fail-with-body \
+                -u "${JIRA_EMAIL}:${JIRA_TOKEN}" \
                 -H "Accept: application/json" \
-                "https://thryv.atlassian.net/rest/api/3/search?jql=project=${PROJECT}+AND+created>=%272026-01-01%27+ORDER+BY+created+DESC&fields=summary,status,priority,components,labels,created,updated,issuetype&maxResults=100&startAt=${START}")
-              
+                --data-urlencode "jql=${JQL}" \
+                --data-urlencode "fields=summary,status,priority,components,labels,created,updated,issuetype" \
+                --data-urlencode "maxResults=100" \
+                --data-urlencode "startAt=${START}" \
+                -G "https://thryv.atlassian.net/rest/api/3/search")
+
+              # Check if we got valid JSON
+              if ! echo "$RESPONSE" | jq -e '.issues' > /dev/null 2>&1; then
+                echo "  ${PROJECT}: API error or no issues field in response"
+                echo "  Response: $(echo "$RESPONSE" | head -c 500)"
+                break
+              fi
+
               TOTAL=$(echo "$RESPONSE" | jq '.total // 0')
               COUNT=$(echo "$RESPONSE" | jq '.issues | length')
-              
+
               echo "  ${PROJECT}: fetched ${COUNT} issues (startAt=${START}, total=${TOTAL})"
-              
-              # Normalize each issue into flat shape
+
+              if [ "$COUNT" -eq 0 ]; then
+                break
+              fi
+
               BATCH=$(echo "$RESPONSE" | jq '[.issues[] | {
                 key: .key,
                 project: (.key | split("-")[0]),
@@ -50,23 +67,21 @@ jobs:
                 updated: (.fields.updated // ""),
                 type: (.fields.issuetype.name // "")
               }]')
-              
+
               ALL_ISSUES=$(echo "$ALL_ISSUES" "$BATCH" | jq -s '.[0] + .[1]')
-              
+
               START=$((START + 100))
-              
-              # Safety cap
+
               if [ $(echo "$ALL_ISSUES" | jq 'length') -ge 2000 ]; then
                 echo "  Hit 2000 issue cap, stopping."
                 break 2
               fi
             done
           done
-          
+
           TOTAL_COUNT=$(echo "$ALL_ISSUES" | jq 'length')
           echo "Total issues fetched: ${TOTAL_COUNT}"
-          
-          # Write final JSON
+
           echo "$ALL_ISSUES" | jq "{
             total: length,
             fetchedAt: \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",
@@ -74,7 +89,7 @@ jobs:
             projects: [\"MCB\",\"MC\",\"MNY\",\"TPAY\",\"TPS\"],
             issues: .
           }" > data.json
-          
+
           echo "data.json written ($(wc -c < data.json) bytes)"
 
       - name: Commit and push
