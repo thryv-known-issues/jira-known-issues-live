@@ -8,11 +8,8 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'DM Sans',-apple-system,sans-serif;background:#F4F6FB;color:#121212;font-size:13px;line-height:1.5}
-a{color:#5378FC;text-decoration:none;font-weight:500}
-a:hover{text-decoration:underline}
+a{color:#5378FC;text-decoration:none;font-weight:500}a:hover{text-decoration:underline}
 .wrap{max-width:1140px;margin:0 auto;padding:24px}
-
-/* NAV */
 .nav{display:flex;align-items:center;gap:8px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid #ECEEF1}
 .nav-dot{width:10px;height:10px;border-radius:2px;background:#FF5000;flex-shrink:0}
 .nav-brand{font-size:15px;font-weight:600;color:#29355D}
@@ -22,22 +19,16 @@ a:hover{text-decoration:underline}
 .nav-sync{text-align:right}
 .nav-sync-label{font-size:9px;color:#808080;text-transform:uppercase;letter-spacing:.6px}
 .nav-sync-time{font-size:11px;color:#4D4D4D;font-weight:500}
-
-/* STATUS */
 .status-bar{padding:10px 16px;border-radius:8px;margin-bottom:14px;font-size:12px;display:none;align-items:center;gap:8px}
 .status-bar.loading{display:flex;background:#E8F0FE;color:#185FA5;border:1px solid #B5D4F4}
 .status-bar.error{display:flex;background:#FFF3E0;color:#854F0B;border:1px solid #FAC775}
 .status-bar.success{display:flex;background:#EAF3DE;color:#3B6D11;border:1px solid #C0DD97}
 .spinner{width:14px;height:14px;border:2px solid #B5D4F4;border-top-color:#185FA5;border-radius:50%;animation:spin .6s linear infinite;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* ALERT */
 .alert{background:#FFF3E0;border:1px solid #FFB74D;border-left:4px solid #FF5000;border-radius:8px;padding:12px 16px;margin-bottom:16px;display:none}
 .alert.show{display:block}
 .alert b{color:#854F0B;font-size:13px}
 .alert p{color:#854F0B;font-size:12px;margin-top:4px;line-height:1.5}
-
-/* SUMMARY CARDS */
 .sum-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px}
 .sum-card{background:#fff;border:1px solid #ECEEF1;border-radius:10px;padding:14px 16px;border-top:3px solid #ccc}
 .sum-card[data-type="improving"]{border-top-color:#4CAF50}
@@ -48,8 +39,6 @@ a:hover{text-decoration:underline}
 .sum-card[data-type="trending"] .sum-title{color:#FF5000}
 .sum-card[data-type="resolved"] .sum-title{color:#5378FC}
 .sum-text{font-size:12px;color:#4D4D4D;line-height:1.6}
-
-/* PRODUCT CARDS */
 .prod-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:20px}
 .pcard{background:#fff;border:1px solid #ECEEF1;border-radius:10px;padding:16px}
 .pcard-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
@@ -60,8 +49,6 @@ a:hover{text-decoration:underline}
 .pcard-l{font-size:10px;color:#808080;margin-top:2px}
 .pcard-spark{border-top:1px solid #F4F6FB;padding-top:8px;margin-top:4px}
 .pcard-trend{font-size:10px;margin-top:4px}
-
-/* PILLS */
 .p{display:inline-block;padding:2px 10px;border-radius:100px;font-size:10.5px;font-weight:600;letter-spacing:.2px;white-space:nowrap;line-height:18px;border:1.5px solid;vertical-align:middle}
 .p-mc{background:#3C3489;border-color:#9B8FFF;color:#fff}
 .p-ol{background:#29355D;border-color:#5378FC;color:#fff}
@@ -75,9 +62,9 @@ a:hover{text-decoration:underline}
 .p-done{background:#EAF3DE;border-color:#C0DD97;color:#27500A}
 .p-tag{background:#F4F6FB;border-color:#ECEEF1;color:#4D4D4D}
 .p-cnt{background:#F4F6FB;border-color:#D0D0D0;color:#4D4D4D;font-size:10px}
-.trend-up{color:#FF5000;font-weight:600} .trend-down{color:#4CAF50;font-weight:600} .trend-flat{color:#808080}
-
-/* LOOKUP */
+.trend-up{color:#FF5000;font-weight:600}
+.trend-down{color:#4CAF50;font-weight:600}
+.trend-flat{color:#808080}
 .lookup{background:#fff;border:1px solid #ECEEF1;border-radius:8px;padding:10px 14px;margin-bottom:16px}
 .lookup-row{display:flex;align-items:center;gap:10px}
 .lookup-lbl{font-size:11px;font-weight:600;color:#808080;flex-shrink:0}
@@ -86,20 +73,15 @@ a:hover{text-decoration:underline}
 .lookup-out{display:flex;align-items:center;gap:6px;font-size:12px;overflow:hidden;min-width:0}
 .lookup-out .lk{font-family:'SF Mono',Consolas,monospace;color:#5378FC;font-weight:600;flex-shrink:0}
 .lookup-out .ls{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
-
-/* SECTION HDR */
 .shdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .stitle{font-size:16px;font-weight:600;color:#29355D}
 .scount{font-size:12px;color:#808080;background:#ECEEF1;padding:2px 10px;border-radius:100px;font-weight:600}
-
-/* FILTERS */
 .filters{display:flex;align-items:center;gap:8px;margin-bottom:14px}
 .fb{padding:5px 14px;border-radius:100px;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0;border:1.5px solid #ECEEF1;background:#fff;color:#808080;font-family:inherit}
-.fb:hover{border-color:#D0D0D0;color:#4D4D4D} .fb.on{color:#fff}
+.fb:hover{border-color:#D0D0D0;color:#4D4D4D}
+.fb.on{color:#fff}
 .sinput{margin-left:auto;padding:5px 14px;border-radius:100px;font-size:11px;border:1px solid #ECEEF1;width:180px;flex-shrink:0;background:#fff;color:#121212;font-family:inherit}
 .sinput:focus{outline:none;border-color:#5378FC}
-
-/* ISSUE TABLE */
 .tbl-wrap{background:#fff;border:1px solid #ECEEF1;border-radius:10px;overflow:hidden;margin-bottom:20px}
 table{width:100%;border-collapse:collapse}
 thead th{padding:10px 12px;font-size:10.5px;font-weight:700;color:#808080;text-transform:uppercase;letter-spacing:.5px;text-align:left;white-space:nowrap;border-bottom:2px solid #ECEEF1;background:#FAFBFD;cursor:pointer;user-select:none}
@@ -109,14 +91,11 @@ tbody tr:last-child{border-bottom:none}
 tbody td{padding:12px 12px;vertical-align:top}
 .td-issue{max-width:360px}
 .td-issue-name{font-size:13px;font-weight:600;color:#121212;margin-bottom:3px}
-.td-issue-desc{font-size:11.5px;color:#808080;line-height:1.5;margin-bottom:4px}
 .td-issue-keys{font-size:10.5px;color:#808080;font-family:'SF Mono',Consolas,monospace}
 .td-issue-keys a{font-weight:400;font-size:10.5px}
 .td-tickets{white-space:nowrap;font-size:12px;font-weight:600;color:#4D4D4D}
 .td-tickets .dir{font-size:10px;font-weight:500;display:block;margin-top:1px}
 .empty-msg{text-align:center;padding:40px;color:#808080;font-size:13px}
-
-/* INCIDENT COMMS */
 .incident{background:#fff;border:1px solid #ECEEF1;border-left:4px solid #FF5000;border-radius:10px;padding:18px 20px;margin-bottom:20px}
 .inc-hdr{display:flex;align-items:center;gap:8px;margin-bottom:12px}
 .inc-icon{font-size:16px}
@@ -127,26 +106,20 @@ tbody td{padding:12px 12px;vertical-align:top}
 .inc-section{margin-top:12px}
 .inc-section-title{font-size:12px;font-weight:700;color:#29355D;margin-bottom:4px}
 .inc-section-text{font-size:12px;color:#4D4D4D;line-height:1.6}
-
-/* RESOLVED */
 .rrow{display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:8px;background:#fff;border:1px solid #ECEEF1;font-size:12px;overflow:hidden;margin-bottom:6px}
 .rrow .rk{font-family:'SF Mono',Consolas,monospace;font-size:11px;color:#808080;min-width:68px;flex-shrink:0;white-space:nowrap}
 .rrow .rs{flex:1 1 0%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;font-weight:500}
 .rrow .rd{font-size:10.5px;color:#27500A;background:#EAF3DE;padding:3px 10px;border-radius:100px;border:1px solid #C0DD97;flex-shrink:0;white-space:nowrap;font-weight:600}
-
-/* LEGEND */
 .legend{display:flex;gap:24px;padding:14px 18px;background:#fff;border:1px solid #ECEEF1;border-radius:10px;font-size:11px;color:#808080;margin-bottom:16px;flex-wrap:wrap}
 .lg{display:flex;align-items:center;gap:8px;white-space:nowrap}
 .lg b{font-weight:700;color:#4D4D4D}
 .li{display:inline-flex;align-items:center;gap:4px}
 .li span:last-child{font-size:10.5px;color:#4D4D4D}
-
 .footer{text-align:center;padding:16px 0 8px;font-size:11px;color:#808080}
 </style>
 </head>
 <body>
 <div class="wrap">
-
 <div class="nav">
   <div class="nav-dot"></div>
   <span class="nav-brand">thryv</span>
@@ -155,29 +128,23 @@ tbody td{padding:12px 12px;vertical-align:top}
   <div class="nav-spacer"></div>
   <div class="nav-sync"><div class="nav-sync-label">Last synced</div><div class="nav-sync-time" id="sync-time">—</div></div>
 </div>
-
 <div class="status-bar" id="sbar"><div class="spinner" id="spin"></div><span id="smsg"></span></div>
 <div class="alert" id="alert"><b id="atitle"></b><p id="atext"></p></div>
 <div class="sum-row" id="sumrow"></div>
 <div class="prod-row" id="prodrow"></div>
-
 <div class="lookup"><div class="lookup-row"><span class="lookup-lbl">Ticket lookup</span><input class="lookup-in" id="lin" placeholder="MCB-290" oninput="doLookup()"><span id="lout"></span></div></div>
-
 <div class="shdr"><span class="stitle">Known Issues</span><span class="scount" id="icnt">0</span></div>
 <div class="filters" id="flt"></div>
 <div class="tbl-wrap"><table><thead id="th"></thead><tbody id="tb"></tbody></table><div class="empty-msg" id="empty" style="display:none">No issues match your filters.</div></div>
-
 <div id="incident"></div>
 <div id="resolved"></div>
-
 <div class="legend">
   <div class="lg"><b>Priority:</b><span class="li"><span class="p p-p1">P1</span><span>Critical</span></span><span class="li"><span class="p p-p2">P2</span><span>High</span></span><span class="li"><span class="p p-p3">P3</span><span>Medium</span></span><span class="li"><span class="p p-p4">P4</span><span>Low</span></span></div>
   <div class="lg"><b>Status:</b><span class="li"><span class="p p-todo">To Do</span></span><span class="li"><span class="p p-prog">In Progress</span></span><span class="li"><span class="p p-done">Done</span></span></div>
   <div class="lg"><b>Product:</b><span class="li"><span class="p p-mc">Marketing Center</span></span><span class="li"><span class="p p-ol">Online Listings</span></span><span class="li"><span class="p p-tp">ThryvPay</span></span></div>
 </div>
-<div class="footer">Thryv Advanced Technical Support · Known Issues Dashboard · Live from Jira<br>Updated every 2 hours · Reported by ATS team · <span id="fdate"></span></div>
+<div class="footer">Thryv Advanced Technical Support · Known Issues Dashboard · Live from Jira<br>Updated every 2 hours · Reported by ATS team · Issues with 3+ tickets only · <span id="fdate"></span></div>
 </div>
-
 <script>
 const D='data.json';
 const PM={'Marketing Center':{c:'p-mc',bg:'#3C3489',a:'#3C3489'},'Online Listings':{c:'p-ol',bg:'#29355D',a:'#29355D'},'ThryvPay':{c:'p-tp',bg:'#5378FC',a:'#5378FC'}};
@@ -189,11 +156,10 @@ let ALL=[],GRP=[],flt='All',src='',sKey='priority',sDir='asc';
 
 function cls(i){
   const c=(i.components||[]).join(' ').toLowerCase(),s=(i.summary||'').toLowerCase(),p=i.project||i.key.split('-')[0];
-  if(['TPAY','MNY'].includes(p)) return 'ThryvPay';
-  // TPS and MCB: classify by content
-  if(s.includes('thryvpay')||s.includes('stripe')||s.includes('ach ')||s.includes('card reader')||s.includes('payment')||s.includes('payout')||s.includes('merchant')) return 'ThryvPay';
-  if(c.includes('listings manager')||s.includes('listing')||s.includes('yext')||s.includes('yelp')||s.includes('olm')||s.includes('gump')||s.includes('publish')) return 'Online Listings';
-  return 'Marketing Center';
+  if(['TPAY','MNY'].includes(p))return'ThryvPay';
+  if(s.includes('thryvpay')||s.includes('stripe')||s.includes('ach ')||s.includes('card reader')||s.includes('payment')||s.includes('payout')||s.includes('merchant'))return'ThryvPay';
+  if(c.includes('listings manager')||s.includes('listing')||s.includes('yext')||s.includes('yelp')||s.includes('olm')||s.includes('gump')||s.includes('publish'))return'Online Listings';
+  return'Marketing Center';
 }
 function cln(s){return(s||'').replace(/\s*-\s*[a-z0-9]{16,}$/i,'').replace(/\s*-\s*LOC[A-Z0-9]+$/i,'').replace(/\s*-\s*acct_[^\s]+(\s*-\s*[a-z0-9]+)?$/i,'').replace(/\s*\|\s*[^|]+\s*-\s*acct_.*$/i,'').replace(/^\*[A-Z]+\*\s*/i,'').replace(/\s*-\s*www\.\S+$/i,'').replace(/\s*-\s*\S+\.com$/i,'').trim();}
 function gk(s){return cln(s).replace(/\s*[-–—]\s*V\d+$/i,'').replace(/\s*V\d+$/i,'').replace(/\s*[-–—]\s*#?\d+$/,'').replace(/\s*\(.*?\)\s*$/,'').replace(/\s+/g,' ').trim().toLowerCase();}
@@ -204,30 +170,39 @@ function pl(t,c){return'<span class="p '+c+'">'+t+'</span>';}
 function spk(data,color){const w=90,h=28;if(!data||data.length<2)return'';const mx=Math.max(...data,1),mn=Math.min(...data,0),r=mx-mn||1;const pts=data.map((v,i)=>`${(i/(data.length-1))*w},${h-((v-mn)/r)*(h-4)-2}`).join(' ');return`<svg width="${w}" height="${h}" style="display:block"><polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/></svg>`;}
 function tr(arr){const now=Date.now();return Array.from({length:14},(_,i)=>{const d=new Date(now-(13-i)*864e5);d.setHours(0,0,0,0);const e=new Date(d);e.setHours(23,59,59,999);return arr.filter(x=>{const c=new Date(x.created);return c>=d&&c<=e;}).length;});}
 
+// MIN_TICKETS: only show grouped issues with this many or more tickets
+const MIN_TICKETS = 3;
+
 function buildGroups(issues){
   const m={};
   issues.forEach(i=>{const k=gk(i.summary)+'||'+i.product;if(!m[k])m[k]={issues:[]};m[k].issues.push(i);});
   return Object.values(m).map(g=>{
     g.issues.sort((a,b)=>new Date(b.created)-new Date(a.created));
     const lt=g.issues[0];
-    // Detect version trend: count versions
     const vers=g.issues.map(i=>{const m=i.summary.match(/V(\d+)/i);return m?parseInt(m[1]):0;}).filter(v=>v>0);
     const maxV=vers.length?Math.max(...vers):0;
     return{
-      id:lt.key, label:cln(lt.summary), product:lt.product,
+      id:lt.key,label:cln(lt.summary),product:lt.product,
       priority:g.issues.reduce((b,i)=>(POR[i.priority]??9)<(POR[b]??9)?i.priority:b,lt.priority),
       status:g.issues.some(i=>i.statusCategory==='In Progress')?'In Progress':g.issues.some(i=>i.statusCategory==='To Do')?'To Do':'Done',
       statusLabel:g.issues[0].status,
-      tickets:g.issues, count:g.issues.length,
-      first:g.issues[g.issues.length-1].created, last:lt.updated,
+      tickets:g.issues,count:g.issues.length,
+      first:g.issues[g.issues.length-1].created,last:lt.updated,
       comps:[...new Set(g.issues.flatMap(i=>i.components))],
       labels:[...new Set(g.issues.flatMap(i=>i.labels))],
-      versions:maxV, versionCount:vers.length
+      versions:maxV,versionCount:vers.length
     };
-  }).sort((a,b)=>{const p=(POR[a.priority]??9)-(POR[b.priority]??9);return p!==0?p:b.count-a.count;});
+  })
+  .filter(g => g.count >= MIN_TICKETS)
+  .sort((a,b)=>{const p=(POR[a.priority]??9)-(POR[b.priority]??9);return p!==0?p:b.count-a.count;});
 }
 
 function showS(t,m){const b=document.getElementById('sbar'),s=document.getElementById('spin'),g=document.getElementById('smsg');b.className='status-bar '+t;s.style.display=t==='loading'?'block':'none';g.textContent=m;if(t==='success')setTimeout(()=>{b.className='status-bar';},4000);}
+
+function trendArrow(g){
+  if(g.versionCount>=2)return'<span class="trend-up">↑ '+g.count+' tickets (V'+g.versions+')</span>';
+  return'<span class="trend-flat">'+g.count+' open</span>';
+}
 
 async function load(){
   showS('loading','Loading known issues from Jira…');
@@ -237,15 +212,9 @@ async function load(){
     ALL=(d.issues||[]).map(i=>({...i,product:cls(i)}));
     const t=d.fetchedAt?new Date(d.fetchedAt):new Date();
     document.getElementById('sync-time').textContent=t.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
-    showS('success','Loaded '+ALL.length+' tickets');
+    showS('success','Loaded '+ALL.length+' tickets — showing issues with '+MIN_TICKETS+'+ reports');
     render();
   }catch(e){showS('error','Failed — '+e.message);}
-}
-
-function trendArrow(g){
-  if(g.count<=1) return '<span class="trend-flat">→ new</span>';
-  if(g.versionCount>=2) return '<span class="trend-up">↑ '+g.count+' tickets (V'+g.versions+')</span>';
-  return '<span class="trend-flat">'+g.count+' open</span>';
 }
 
 function render(){
@@ -255,26 +224,25 @@ function render(){
   const rGRP=buildGroups(res);
   document.getElementById('fdate').textContent='Data through '+ff(new Date());
 
-  // Alert
+  // Alert — based on top issue
   const top=GRP[0];
   const al=document.getElementById('alert');
   if(top&&(top.priority==='P1'||top.priority==='P2')){al.className='alert show';document.getElementById('atitle').textContent='⚠ Active alert: '+top.label;document.getElementById('atext').textContent=top.count+' ticket'+(top.count>1?'s':'')+' · '+top.priority+' '+PLA[top.priority]+' · Status: '+top.statusLabel;}
   else if(top){al.className='alert show';document.getElementById('atitle').textContent='Top issue: '+top.label;document.getElementById('atext').textContent=top.count+' ticket'+(top.count>1?'s':'')+' · Priority '+top.priority+' · Status: '+top.statusLabel;}
   else al.className='alert';
 
-  // Summary
+  // Summary cards
   const prog=GRP.filter(g=>g.status==='In Progress'),back=GRP.filter(g=>g.status==='To Do');
   document.getElementById('sumrow').innerHTML=`
-    <div class="sum-card" data-type="improving"><div class="sum-title">In progress</div><div class="sum-text">${prog.length} known issue${prog.length!==1?'s':''} actively being worked (${open.filter(i=>i.statusCategory==='In Progress').length} total tickets).${prog[0]?' Top: '+prog[0].label+'.':''}</div></div>
-    <div class="sum-card" data-type="trending"><div class="sum-title">Backlog</div><div class="sum-text">${back.length} known issue${back.length!==1?'s':''} in dev backlog (${open.filter(i=>i.statusCategory==='To Do').length} tickets).${back[0]?' Top: '+back[0].label+'.':''}</div></div>
-    <div class="sum-card" data-type="resolved"><div class="sum-title">Recently resolved</div><div class="sum-text">${rGRP.length} issue group${rGRP.length!==1?'s':''} resolved in the last 30 days (${res.length} tickets).</div></div>`;
+    <div class="sum-card" data-type="improving"><div class="sum-title">In progress</div><div class="sum-text">${prog.length} known issue${prog.length!==1?'s':''} actively being worked (${prog.reduce((s,g)=>s+g.count,0)} total tickets).${prog[0]?' Top: '+prog[0].label+'.':''}</div></div>
+    <div class="sum-card" data-type="trending"><div class="sum-title">Backlog</div><div class="sum-text">${back.length} known issue${back.length!==1?'s':''} in dev backlog (${back.reduce((s,g)=>s+g.count,0)} tickets).${back[0]?' Top: '+back[0].label+'.':''}</div></div>
+    <div class="sum-card" data-type="resolved"><div class="sum-title">Recently resolved</div><div class="sum-text">${rGRP.length} issue group${rGRP.length!==1?'s':''} resolved in the last 30 days (${res.length} tickets total).</div></div>`;
 
   // Product cards
   document.getElementById('prodrow').innerHTML=Object.entries(PM).map(([n,s])=>{
     const a=byP[n]||[],o=a.filter(i=>i.statusCategory!=='Done'),ip=a.filter(i=>i.statusCategory==='In Progress'),r=a.filter(i=>i.statusCategory==='Done');
     const og=buildGroups(o);
     const h=o.length===0?['All clear','#4CAF50']:o.some(i=>i.priority==='P1')?['Critical','#FF5000']:o.some(i=>i.priority==='P2')?['Needs attention','#FF9800']:['Monitoring','#5378FC'];
-    // Simple trend: compare last 7d vs prior 7d
     const td=tr(a),recent=td.slice(7).reduce((a,b)=>a+b,0),prior=td.slice(0,7).reduce((a,b)=>a+b,0);
     const tdir=recent>prior?'<span class="trend-up">↑ trending up</span>':recent<prior?'<span class="trend-down">↓ improving</span>':'<span class="trend-flat">→ steady</span>';
     return`<div class="pcard"><div class="pcard-top"><span class="pcard-name">${n}</span><span class="pcard-badge" style="background:${h[1]}15;color:${h[1]};border-color:${h[1]}40">${h[0]}</span></div><div class="pcard-stats"><div><div class="pcard-n" style="color:${s.a}">${og.length}</div><div class="pcard-l">known issues</div></div><div><div class="pcard-n" style="color:#BA7517">${o.length}</div><div class="pcard-l">total tickets</div></div><div><div class="pcard-n" style="color:#639922">${r.length}</div><div class="pcard-l">resolved</div></div></div><div class="pcard-spark">${spk(td,s.a)}</div><div class="pcard-trend">${tdir}</div></div>`;
@@ -322,7 +290,7 @@ function renderTable(){
 
 function renderInc(top){
   if(!top){document.getElementById('incident').innerHTML='';return;}
-  const sev=top.priority==='P1'?'Critical — Severe disruption':top.priority==='P2'?'High — Major function down for subset':'Medium — Moderate impact, feature not working as expected';
+  const sev=top.priority==='P1'?'Critical — Severe disruption to essential business functions':top.priority==='P2'?'High — Major function down for a subset of users':'Medium — Moderate impact, feature not working as expected';
   document.getElementById('incident').innerHTML=`
   <div class="incident">
     <div class="inc-hdr"><span class="inc-icon">⚠</span><span class="inc-title">Incident Communication — ${top.label}</span></div>
@@ -333,9 +301,9 @@ function renderInc(top){
       <span class="inc-label">Tickets:</span><span class="inc-val">${top.count} open${top.versionCount>=2?' (V'+top.versions+')':''}</span>
       <span class="inc-label">Reported:</span><span class="inc-val">${fd(top.first)} (${da(top.first)} days ago)</span>
     </div>
-    <div class="inc-section"><div class="inc-section-title">Impact Summary</div><div class="inc-section-text">${top.label} — affecting ${top.count} client account${top.count>1?'s':''}. Product area: ${top.product}. ${top.comps.length?'Components: '+top.comps.join(', ')+'.':''} This issue has been reported ${top.count} time${top.count>1?'s':''} since ${fd(top.first)} and is currently in "${top.statusLabel||top.status}" status.</div></div>
+    <div class="inc-section"><div class="inc-section-title">Impact summary</div><div class="inc-section-text">${top.label} — affecting ${top.count} reported account${top.count>1?'s':''}. Product area: ${top.product}. ${top.comps.length?'Components: '+top.comps.join(', ')+'.':''} This issue has been reported ${top.count} time${top.count>1?'s':''} since ${fd(top.first)} and is currently in "${top.statusLabel||top.status}" status.</div></div>
     <div class="inc-section"><div class="inc-section-title">Client-facing message</div><div class="inc-section-text">"We're aware of a technical issue affecting ${top.product.toLowerCase()} functionality. Your subscription is active and no data has been lost. Our engineering team has prioritized this and a fix is in progress. We'll follow up once resolved."</div></div>
-    <div class="inc-section"><div class="inc-section-title">Internal notes</div><div class="inc-section-text">Latest ticket: <a href="https://thryv.atlassian.net/browse/${top.id}" target="_blank">${top.id}</a>. ${top.count} total reports from ATS team. ${top.versionCount>=2?'Issue has been reported across '+top.versionCount+' versions (up to V'+top.versions+').':''}Submit new occurrences as additional tickets referencing this known issue.</div></div>
+    <div class="inc-section"><div class="inc-section-title">Internal notes</div><div class="inc-section-text">Latest ticket: <a href="https://thryv.atlassian.net/browse/${top.id}" target="_blank">${top.id}</a>. ${top.count} total reports from ATS team. ${top.versionCount>=2?'Issue has been reported across '+top.versionCount+' versions (up to V'+top.versions+'). ':''}Submit new occurrences as additional tickets referencing this known issue.</div></div>
   </div>`;
 }
 
@@ -344,7 +312,7 @@ function renderRes(groups){
   const s=[...groups].sort((a,b)=>new Date(b.last)-new Date(a.last)).slice(0,10);
   document.getElementById('resolved').innerHTML=`<div class="shdr" style="margin-top:4px"><span class="stitle">Recently Resolved</span><span class="scount">${groups.length}</span></div>${s.map(g=>{
     const d=Math.max(1,Math.round((new Date(g.last)-new Date(g.first))/864e5));
-    return`<div class="rrow"><span class="rk">${g.id}</span>${pl(g.product,PM[g.product]?.c||'p-mc')}${g.count>1?pl(g.count+' tickets','p-cnt'):''}<span class="rs">${g.label}</span><span class="rd">Resolved in ${d}d</span></div>`;
+    return`<div class="rrow"><span class="rk">${g.id}</span>${pl(g.product,PM[g.product]?.c||'p-mc')}${pl(g.count+' tickets','p-cnt')}<span class="rs">${g.label}</span><span class="rd">Resolved in ${d}d</span></div>`;
   }).join('')}`;
 }
 
