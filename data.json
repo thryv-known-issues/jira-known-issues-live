@@ -1,6 +1,6 @@
 {
   "total": 373,
-  "fetchedAt": "2026-04-18T14:26:01Z",
+  "fetchedAt": "2026-04-18T17:55:33Z",
   "projects": [
     "MCB",
     "MC",
@@ -3659,8 +3659,8 @@
       "key": "MCB-235",
       "project": "MCB",
       "summary": "Clarify the criteria for answered calls vs. missed calls",
-      "status": "In Review",
-      "statusCategory": "In Progress",
+      "status": "Deployed",
+      "statusCategory": "Done",
       "priority": "P3",
       "components": [
         "Thryv Leads"
@@ -3669,7 +3669,7 @@
         "techsupport"
       ],
       "created": "2026-04-08T10:12:51.343-0700",
-      "updated": "2026-04-17T16:31:29.380-0700",
+      "updated": "2026-04-18T07:41:13.189-0700",
       "type": "Bug",
       "reporter": "Erika Galindo"
     },
