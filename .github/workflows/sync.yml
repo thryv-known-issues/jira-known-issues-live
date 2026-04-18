@@ -20,20 +20,17 @@ jobs:
         run: |
           set -e
           echo "Fetching issues from Jira..."
-          echo "Using email: ${JIRA_EMAIL}"
 
-          # Test auth first
+          # Test auth
           echo "Testing Jira connection..."
           TEST=$(curl -s -w "\nHTTP_CODE:%{http_code}" \
             -u "${JIRA_EMAIL}:${JIRA_TOKEN}" \
             -H "Accept: application/json" \
             "https://thryv.atlassian.net/rest/api/3/myself")
-          
           HTTP_CODE=$(echo "$TEST" | grep "HTTP_CODE:" | cut -d: -f2)
           echo "Auth test HTTP code: ${HTTP_CODE}"
-          
           if [ "$HTTP_CODE" != "200" ]; then
-            echo "Auth failed! Response:"
+            echo "Auth failed!"
             echo "$TEST" | head -5
             exit 1
           fi
@@ -44,33 +41,44 @@ jobs:
           for PROJECT in MCB MC MNY TPAY TPS; do
             echo ""
             echo "=== Fetching ${PROJECT} ==="
-            START=0
-            TOTAL=999999
+            NEXT_TOKEN=""
+            PAGE=0
 
-            while [ $START -lt $TOTAL ]; do
+            while true; do
               JQL="project=${PROJECT} AND created >= 2026-01-01 ORDER BY created DESC"
 
-              RESPONSE=$(curl -s \
-                -u "${JIRA_EMAIL}:${JIRA_TOKEN}" \
-                -H "Accept: application/json" \
-                -G "https://thryv.atlassian.net/rest/api/3/search" \
-                --data-urlencode "jql=${JQL}" \
-                --data-urlencode "fields=summary,status,priority,components,labels,created,updated,issuetype" \
-                --data-urlencode "maxResults=100" \
-                --data-urlencode "startAt=${START}")
+              if [ -z "$NEXT_TOKEN" ]; then
+                RESPONSE=$(curl -s \
+                  -u "${JIRA_EMAIL}:${JIRA_TOKEN}" \
+                  -H "Accept: application/json" \
+                  -G "https://thryv.atlassian.net/rest/api/3/search/jql" \
+                  --data-urlencode "jql=${JQL}" \
+                  --data-urlencode "fields=summary,status,priority,components,labels,created,updated,issuetype" \
+                  --data-urlencode "maxResults=100")
+              else
+                RESPONSE=$(curl -s \
+                  -u "${JIRA_EMAIL}:${JIRA_TOKEN}" \
+                  -H "Accept: application/json" \
+                  -G "https://thryv.atlassian.net/rest/api/3/search/jql" \
+                  --data-urlencode "jql=${JQL}" \
+                  --data-urlencode "fields=summary,status,priority,components,labels,created,updated,issuetype" \
+                  --data-urlencode "maxResults=100" \
+                  --data-urlencode "nextPageToken=${NEXT_TOKEN}")
+              fi
 
               # Check if we got valid JSON with issues
               if ! echo "$RESPONSE" | jq -e '.issues' > /dev/null 2>&1; then
-                echo "  ${PROJECT}: No issues field in response. First 300 chars:"
-                echo "$RESPONSE" | head -c 300
+                echo "  ${PROJECT}: No issues field. First 400 chars:"
+                echo "$RESPONSE" | head -c 400
                 echo ""
                 break
               fi
 
-              TOTAL=$(echo "$RESPONSE" | jq '.total // 0')
               COUNT=$(echo "$RESPONSE" | jq '.issues | length')
+              TOTAL=$(echo "$RESPONSE" | jq '.total // "unknown"')
+              PAGE=$((PAGE + 1))
 
-              echo "  ${PROJECT}: fetched ${COUNT} issues (startAt=${START}, total=${TOTAL})"
+              echo "  ${PROJECT}: page ${PAGE}, fetched ${COUNT} issues (total: ${TOTAL})"
 
               if [ "$COUNT" -eq 0 ]; then
                 break
@@ -92,7 +100,12 @@ jobs:
 
               ALL_ISSUES=$(echo "$ALL_ISSUES" "$BATCH" | jq -s '.[0] + .[1]')
 
-              START=$((START + 100))
+              # Check for next page token
+              NEXT_TOKEN=$(echo "$RESPONSE" | jq -r '.nextPageToken // empty')
+              if [ -z "$NEXT_TOKEN" ]; then
+                echo "  ${PROJECT}: no more pages"
+                break
+              fi
 
               CURRENT=$(echo "$ALL_ISSUES" | jq 'length')
               if [ "$CURRENT" -ge 2000 ]; then
@@ -104,7 +117,9 @@ jobs:
 
           TOTAL_COUNT=$(echo "$ALL_ISSUES" | jq 'length')
           echo ""
+          echo "==============================="
           echo "Total issues fetched: ${TOTAL_COUNT}"
+          echo "==============================="
 
           echo "$ALL_ISSUES" | jq "{
             total: length,
