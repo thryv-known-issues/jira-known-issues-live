@@ -18,30 +18,52 @@ jobs:
           JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
           JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
         run: |
+          set -e
           echo "Fetching issues from Jira..."
+          echo "Using email: ${JIRA_EMAIL}"
+
+          # Test auth first
+          echo "Testing Jira connection..."
+          TEST=$(curl -s -w "\nHTTP_CODE:%{http_code}" \
+            -u "${JIRA_EMAIL}:${JIRA_TOKEN}" \
+            -H "Accept: application/json" \
+            "https://thryv.atlassian.net/rest/api/3/myself")
+          
+          HTTP_CODE=$(echo "$TEST" | grep "HTTP_CODE:" | cut -d: -f2)
+          echo "Auth test HTTP code: ${HTTP_CODE}"
+          
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "Auth failed! Response:"
+            echo "$TEST" | head -5
+            exit 1
+          fi
+          echo "Auth OK!"
 
           ALL_ISSUES="[]"
 
           for PROJECT in MCB MC MNY TPAY TPS; do
+            echo ""
+            echo "=== Fetching ${PROJECT} ==="
             START=0
             TOTAL=999999
 
             while [ $START -lt $TOTAL ]; do
               JQL="project=${PROJECT} AND created >= 2026-01-01 ORDER BY created DESC"
 
-              RESPONSE=$(curl -s --fail-with-body \
+              RESPONSE=$(curl -s \
                 -u "${JIRA_EMAIL}:${JIRA_TOKEN}" \
                 -H "Accept: application/json" \
+                -G "https://thryv.atlassian.net/rest/api/3/search" \
                 --data-urlencode "jql=${JQL}" \
                 --data-urlencode "fields=summary,status,priority,components,labels,created,updated,issuetype" \
                 --data-urlencode "maxResults=100" \
-                --data-urlencode "startAt=${START}" \
-                -G "https://thryv.atlassian.net/rest/api/3/search")
+                --data-urlencode "startAt=${START}")
 
-              # Check if we got valid JSON
+              # Check if we got valid JSON with issues
               if ! echo "$RESPONSE" | jq -e '.issues' > /dev/null 2>&1; then
-                echo "  ${PROJECT}: API error or no issues field in response"
-                echo "  Response: $(echo "$RESPONSE" | head -c 500)"
+                echo "  ${PROJECT}: No issues field in response. First 300 chars:"
+                echo "$RESPONSE" | head -c 300
+                echo ""
                 break
               fi
 
@@ -72,7 +94,8 @@ jobs:
 
               START=$((START + 100))
 
-              if [ $(echo "$ALL_ISSUES" | jq 'length') -ge 2000 ]; then
+              CURRENT=$(echo "$ALL_ISSUES" | jq 'length')
+              if [ "$CURRENT" -ge 2000 ]; then
                 echo "  Hit 2000 issue cap, stopping."
                 break 2
               fi
@@ -80,6 +103,7 @@ jobs:
           done
 
           TOTAL_COUNT=$(echo "$ALL_ISSUES" | jq 'length')
+          echo ""
           echo "Total issues fetched: ${TOTAL_COUNT}"
 
           echo "$ALL_ISSUES" | jq "{
