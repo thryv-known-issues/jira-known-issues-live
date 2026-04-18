@@ -21,25 +21,18 @@ jobs:
           set -e
           echo "Fetching known issues reported by ATS team..."
 
-          # Test auth
           TEST=$(curl -s -w "\nHTTP_CODE:%{http_code}" \
             -u "${JIRA_EMAIL}:${JIRA_TOKEN}" \
             -H "Accept: application/json" \
             "https://thryv.atlassian.net/rest/api/3/myself")
           HTTP_CODE=$(echo "$TEST" | grep "HTTP_CODE:" | cut -d: -f2)
-          if [ "$HTTP_CODE" != "200" ]; then
-            echo "Auth failed! HTTP ${HTTP_CODE}"
-            exit 1
-          fi
+          if [ "$HTTP_CODE" != "200" ]; then echo "Auth failed!"; exit 1; fi
           echo "Auth OK"
 
-          # 13 ATS team reporter account IDs
           REPORTERS="62b21b5cb8e499e567e91be6,62b21f2567dff38e098787c4,62b21771dcafd965c5de0c22,62b2144e0c77011bdfdc8dd5,62b20c71b8e499e567e91379,62b21c5adcafd965c5de0edd,5f282db0bedd1000155357e8,62f4416f5111209f4fe0ff17,70121:54822783-467e-4f7b-bb2c-6d8fdd5e344e,62b21aaecebad33432f713a1,62b20b1284d73c720167a10c,62b21324f38b4dcf73d9393a,63bf451924db796721242be7"
 
           ALL_ISSUES="[]"
 
-          # Query 1: Open issues reported by team
-          # Query 2: Recently resolved (30d) reported by team
           QUERIES=(
             "project in (MCB, MC, MNY, TPAY, TPS) AND reporter in (${REPORTERS}) AND status != Done AND created >= 2026-01-01 ORDER BY priority ASC, created DESC"
             "project in (MCB, MC, MNY, TPAY, TPS) AND reporter in (${REPORTERS}) AND status = Done AND updated >= -30d AND created >= 2026-01-01 ORDER BY updated DESC"
@@ -49,7 +42,7 @@ jobs:
           for JQL in "${QUERIES[@]}"; do
             QNUM=$((QNUM + 1))
             echo ""
-            echo "=== Query ${QNUM}: ${JQL:0:90}... ==="
+            echo "=== Query ${QNUM} ==="
             NEXT_TOKEN=""
 
             while true; do
@@ -73,7 +66,7 @@ jobs:
               fi
 
               if ! echo "$RESPONSE" | jq -e '.issues' > /dev/null 2>&1; then
-                echo "  Error or no issues. First 400 chars:"
+                echo "  Error. First 400 chars:"
                 echo "$RESPONSE" | head -c 400
                 echo ""
                 break
@@ -81,7 +74,6 @@ jobs:
 
               COUNT=$(echo "$RESPONSE" | jq '.issues | length')
               echo "  Fetched ${COUNT} issues"
-
               if [ "$COUNT" -eq 0 ]; then break; fi
 
               BATCH=$(echo "$RESPONSE" | jq '[.issues[] | {
@@ -105,25 +97,17 @@ jobs:
               if [ -z "$NEXT_TOKEN" ]; then break; fi
 
               CURRENT=$(echo "$ALL_ISSUES" | jq 'length')
-              if [ "$CURRENT" -ge 2000 ]; then
-                echo "  Hit 2000 cap, stopping."
-                break 2
-              fi
+              if [ "$CURRENT" -ge 2000 ]; then echo "  Hit cap."; break 2; fi
             done
           done
 
-          # Deduplicate by key
           ALL_ISSUES=$(echo "$ALL_ISSUES" | jq '[group_by(.key)[] | .[0]]')
-
           TOTAL_COUNT=$(echo "$ALL_ISSUES" | jq 'length')
-          OPEN_COUNT=$(echo "$ALL_ISSUES" | jq '[.[] | select(.statusCategory != "Done")] | length')
-          DONE_COUNT=$(echo "$ALL_ISSUES" | jq '[.[] | select(.statusCategory == "Done")] | length')
-
+          OPEN=$(echo "$ALL_ISSUES" | jq '[.[] | select(.statusCategory != "Done")] | length')
+          DONE=$(echo "$ALL_ISSUES" | jq '[.[] | select(.statusCategory == "Done")] | length')
           echo ""
           echo "==============================="
-          echo "Total unique issues: ${TOTAL_COUNT}"
-          echo "  Open: ${OPEN_COUNT}"
-          echo "  Resolved (30d): ${DONE_COUNT}"
+          echo "Total: ${TOTAL_COUNT} (Open: ${OPEN}, Resolved: ${DONE})"
           echo "==============================="
 
           echo "$ALL_ISSUES" | jq "{
@@ -132,7 +116,6 @@ jobs:
             projects: [\"MCB\",\"MC\",\"MNY\",\"TPAY\",\"TPS\"],
             issues: .
           }" > data.json
-
           echo "data.json written ($(wc -c < data.json) bytes)"
 
       - name: Commit and push
