@@ -1,6 +1,6 @@
 {
   "total": 373,
-  "fetchedAt": "2026-04-18T03:37:28Z",
+  "fetchedAt": "2026-04-18T05:53:21Z",
   "projects": [
     "MCB",
     "MC",
@@ -4603,7 +4603,7 @@
         "techsupport"
       ],
       "created": "2026-04-17T09:31:30.715-0700",
-      "updated": "2026-04-17T09:32:39.015-0700",
+      "updated": "2026-04-17T21:44:32.082-0700",
       "type": "Bug",
       "reporter": "Naomi Caraballo Jiminian"
     },
@@ -4649,8 +4649,8 @@
       "key": "MCB-295",
       "project": "MCB",
       "summary": "Update Alpha Template - expertcarcare.com",
-      "status": "In Review",
-      "statusCategory": "In Progress",
+      "status": "Released",
+      "statusCategory": "Done",
       "priority": "P3",
       "components": [
         "SEO"
@@ -4660,7 +4660,7 @@
         "techsupport"
       ],
       "created": "2026-04-17T17:12:12.384-0700",
-      "updated": "2026-04-17T17:14:57.236-0700",
+      "updated": "2026-04-17T21:38:48.397-0700",
       "type": "Bug",
       "reporter": "Scott Savage"
     },
@@ -4844,8 +4844,8 @@
       "key": "MCB-40",
       "project": "MCB",
       "summary": "Missing Alpha Template - southportselfstorage.net.au",
-      "status": "Blocked",
-      "statusCategory": "No Category",
+      "status": "Deployed",
+      "statusCategory": "Done",
       "priority": "P3",
       "components": [
         "SEO"
@@ -4855,7 +4855,7 @@
         "techsupport"
       ],
       "created": "2026-02-13T10:57:22.832-0800",
-      "updated": "2026-04-15T06:31:54.233-0700",
+      "updated": "2026-04-17T21:32:53.097-0700",
       "type": "Bug",
       "reporter": "Karla Cruz"
     },
