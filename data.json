@@ -1,6 +1,6 @@
 {
   "total": 373,
-  "fetchedAt": "2026-04-19T23:56:19Z",
+  "fetchedAt": "2026-04-20T07:29:53Z",
   "projects": [
     "MCB",
     "MC",
@@ -2037,7 +2037,7 @@
         "techsupport"
       ],
       "created": "2026-03-11T08:16:02.854-0700",
-      "updated": "2026-04-17T12:48:46.586-0700",
+      "updated": "2026-04-19T23:52:42.536-0700",
       "type": "Bug",
       "reporter": "Karla Cruz"
     },
@@ -2094,7 +2094,7 @@
         "techsupport"
       ],
       "created": "2026-03-11T15:46:29.410-0700",
-      "updated": "2026-04-17T06:13:57.682-0700",
+      "updated": "2026-04-19T18:39:10.398-0700",
       "type": "Bug",
       "reporter": "Josh Melgoza"
     },
