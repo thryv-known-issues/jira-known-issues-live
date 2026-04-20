@@ -1,1364 +1,27 @@
 {
-  "total": 374,
-  "fetchedAt": "2026-04-20T16:21:18Z",
+  "total": 276,
+  "fetchedAt": "2026-04-20T19:21:44Z",
   "projects": [
-    "MCB",
-    "MC",
-    "MNY",
-    "TPAY",
-    "TPS"
+    "MCB"
   ],
   "issues": [
     {
-      "key": "MC-4262",
-      "project": "MC",
-      "summary": "US - New Users receiving error when validating yext",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P1",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-05T08:14:00.178-0800",
-      "updated": "2026-03-10T16:55:52.842-0700",
-      "type": "Bug",
-      "reporter": "Scott Savage"
-    },
-    {
-      "key": "MC-4280",
-      "project": "MC",
-      "summary": "QA - LM: One Or More Fields Failed Validation Error",
-      "status": "Complete",
+      "key": "MCB-10",
+      "project": "MCB",
+      "summary": "Test Bug1",
+      "status": "Won't Do",
       "statusCategory": "Done",
       "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-01-07T05:45:18.900-0800",
-      "updated": "2026-03-10T16:56:04.693-0700",
-      "type": "QA",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4283",
-      "project": "MC",
-      "summary": "Enhanced Profile Not saving in UI - (week of 01/05/2026)",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-07T07:36:27.408-0800",
-      "updated": "2026-03-19T06:00:57.141-0700",
-      "type": "Bug",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4308",
-      "project": "MC",
-      "summary": "(AUS) MC Updates not going to ginger",
-      "status": "Deployed",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-08T07:53:30.479-0800",
-      "updated": "2026-03-10T16:55:51.475-0700",
-      "type": "Bug",
-      "reporter": "Scott Savage"
-    },
-    {
-      "key": "MC-4309",
-      "project": "MC",
-      "summary": "(AUS) Incorrect source customer ID being sent to Ginger",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-08T10:46:07.194-0800",
-      "updated": "2026-03-10T16:55:51.642-0700",
-      "type": "Bug",
-      "reporter": "Scott Savage"
-    },
-    {
-      "key": "MC-4315",
-      "project": "MC",
-      "summary": "QA - Yext Overwriting “Show City/State” Selection on LM Page",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-01-08T12:29:32.795-0800",
-      "updated": "2026-03-10T16:56:47.499-0700",
-      "type": "QA",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4333",
-      "project": "MC",
-      "summary": "No CTNs Found Error in MC UI",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P1",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-09T11:14:48.789-0800",
-      "updated": "2026-03-10T16:55:22.796-0700",
-      "type": "Bug",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4334",
-      "project": "MC",
-      "summary": "Unable to Disable CTN from Listings Management UI",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-09T12:26:06.543-0800",
-      "updated": "2026-03-10T16:55:22.090-0700",
-      "type": "Bug",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4335",
-      "project": "MC",
-      "summary": "LM Publish Fails With “External IDs already used” Error",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-09T12:30:18.323-0800",
-      "updated": "2026-03-10T16:55:22.430-0700",
-      "type": "Bug",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4336",
-      "project": "MC",
-      "summary": "LM UI Reverts Content After Save Despite Successful Sync to Yext",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-09T13:05:33.342-0800",
-      "updated": "2026-03-10T16:55:22.794-0700",
-      "type": "Bug",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4342",
-      "project": "MC",
-      "summary": "QA - Global | Unable to add \"/\" in Address field. ",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-01-12T07:28:51.361-0800",
-      "updated": "2026-03-10T16:56:14.895-0700",
-      "type": "QA",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4347",
-      "project": "MC",
-      "summary": "Unable to Publish Listings From MC UI",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-12T08:58:32.078-0800",
-      "updated": "2026-03-10T16:55:21.316-0700",
-      "type": "Bug",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4352",
-      "project": "MC",
-      "summary": "Deployed - Unable to save DN in Manage My Listings",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-01-12T10:44:29.260-0800",
-      "updated": "2026-03-10T16:56:02.010-0700",
-      "type": "QA",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4356",
-      "project": "MC",
-      "summary": "Deployed - Yext Overwriting “Show City/State” Selection on LM Page",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-01-12T12:03:24.591-0800",
-      "updated": "2026-03-10T16:56:47.548-0700",
-      "type": "QA",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4366",
-      "project": "MC",
-      "summary": "MC Not Installed",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P2",
       "components": [
         "MC Base Product"
       ],
       "labels": [
-        "jira_escalated",
-        "techsupport"
+        "MCB"
       ],
-      "created": "2026-01-12T15:23:54.129-0800",
-      "updated": "2026-04-08T13:23:22.537-0700",
+      "created": "2026-01-26T07:46:36.956-0800",
+      "updated": "2026-01-29T15:00:08.122-0800",
       "type": "Bug",
-      "reporter": "Scott Savage"
-    },
-    {
-      "key": "MC-4367",
-      "project": "MC",
-      "summary": "LM | Multi-Service Areas Saving as a Single Input",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Backend",
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-13T04:59:09.876-0800",
-      "updated": "2026-03-10T16:55:20.650-0700",
-      "type": "Bug",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4373",
-      "project": "MC",
-      "summary": "Enhanced Profile Not saving in UI - (week of 01/12/2026)",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Backend",
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-13T08:52:18.729-0800",
-      "updated": "2026-03-04T10:01:47.799-0800",
-      "type": "Bug",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4379",
-      "project": "MC",
-      "summary": "Incorrect Yext Profile Displayed in MC LM",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-13T11:43:39.363-0800",
-      "updated": "2026-03-10T16:55:20.903-0700",
-      "type": "Bug",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4388",
-      "project": "MC",
-      "summary": "YELP RAQ Connected without active BP",
-      "status": "Dev Backlog",
-      "statusCategory": "To Do",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-13T12:28:28.883-0800",
-      "updated": "2026-04-14T14:15:34.886-0700",
-      "type": "Bug",
-      "reporter": "Scott Savage"
-    },
-    {
-      "key": "MC-4389",
-      "project": "MC",
-      "summary": "Deployed - Unable to save DN in Manage My Listings",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-01-13T15:21:41.634-0800",
-      "updated": "2026-03-10T16:56:01.521-0700",
-      "type": "QA",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4390",
-      "project": "MC",
-      "summary": "Service Area Not Saving Correctly in Manage My Listings",
-      "status": "Deployed",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-14T04:28:20.914-0800",
-      "updated": "2026-03-10T16:55:20.215-0700",
-      "type": "Bug",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4418",
-      "project": "MC",
-      "summary": "QA - Unable to Disable CTN from Listings Management UI",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-01-15T07:16:47.238-0800",
-      "updated": "2026-03-10T16:55:26.819-0700",
-      "type": "QA",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4429",
-      "project": "MC",
-      "summary": "Reputation Tab Displaying \"You Have An Existing Yext Account\" Error",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-15T10:59:05.280-0800",
-      "updated": "2026-03-10T16:55:20.297-0700",
-      "type": "Bug",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4436",
-      "project": "MC",
-      "summary": "Deployed - Unable to Disable CTN from Listings Management UI",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-01-16T06:56:24.470-0800",
-      "updated": "2026-03-10T16:55:27.312-0700",
-      "type": "QA",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4437",
-      "project": "MC",
-      "summary": "Holiday Hours Not Persisting in Manage My Listings UI",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-16T07:06:33.436-0800",
-      "updated": "2026-03-10T16:55:19.904-0700",
-      "type": "Bug",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4438",
-      "project": "MC",
-      "summary": "Facebook URL Invalid in LM",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-16T07:11:37.557-0800",
-      "updated": "2026-03-10T16:55:19.520-0700",
-      "type": "Bug",
-      "reporter": "Scott Savage"
-    },
-    {
-      "key": "MC-4453",
-      "project": "MC",
-      "summary": "NEW LM: One Or More Fields Failed Validation Error",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P1",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-16T11:15:04.751-0800",
-      "updated": "2026-03-10T16:55:19.767-0700",
-      "type": "Bug",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4460",
-      "project": "MC",
-      "summary": "Missing GP Add-On- LOC14CF0090F",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Growth Package"
-      ],
-      "labels": [],
-      "created": "2026-01-19T06:08:57.772-0800",
-      "updated": "2026-01-20T08:49:07.115-0800",
-      "type": "Bug",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4496",
-      "project": "MC",
-      "summary": "Inconsistent Address Selection Flowing Downstream",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-20T11:36:41.363-0800",
-      "updated": "2026-03-10T16:55:20.748-0700",
-      "type": "Bug",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4519",
-      "project": "MC",
-      "summary": "Deployed - Global | Unable to add \"/\" in Address field. ",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-01-21T17:31:09.334-0800",
-      "updated": "2026-03-10T16:56:16.737-0700",
-      "type": "QA",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4520",
-      "project": "MC",
-      "summary": "MCF AU Cohort YPO Provisioned Incorrectly",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P1",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-21T20:15:12.531-0800",
-      "updated": "2026-04-15T12:13:19.632-0700",
-      "type": "Bug",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4521",
-      "project": "MC",
-      "summary": "Unable to Publish Listings Due To Validation Error",
-      "status": "Deployed",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-22T04:25:39.865-0800",
-      "updated": "2026-03-10T16:55:22.275-0700",
-      "type": "Bug",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4527",
-      "project": "MC",
-      "summary": "Yahoo CTN Not Being Provisioned",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Backend",
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-22T07:21:14.194-0800",
-      "updated": "2026-03-10T16:55:17.240-0700",
-      "type": "Bug",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4529",
-      "project": "MC",
-      "summary": "Respond to Reviews CTA in GBP Tab Not Working",
-      "status": "Dev Backlog",
-      "statusCategory": "To Do",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-22T07:59:38.198-0800",
-      "updated": "2026-04-10T20:24:04.948-0700",
-      "type": "Bug",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4533",
-      "project": "MC",
-      "summary": "QA - Unable to Publish Listings Due To Validation Error",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-01-22T09:00:20.615-0800",
-      "updated": "2026-03-10T16:55:29.631-0700",
-      "type": "QA",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4562",
-      "project": "MC",
-      "summary": "Clients are unable to view GBP analytics",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Analytics"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-22T12:36:18.209-0800",
-      "updated": "2026-03-10T16:55:18.211-0700",
-      "type": "Bug",
-      "reporter": "Scott Savage"
-    },
-    {
-      "key": "MC-4565",
-      "project": "MC",
-      "summary": "MC Listings Fails Due to Existing Yext Entity on Same Thryv ID",
-      "status": "Deployed",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-22T22:19:41.929-0800",
-      "updated": "2026-03-10T16:55:17.862-0700",
-      "type": "Bug",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4577",
-      "project": "MC",
-      "summary": "MC Listings Fails Due to Existing Yext Entity on Same Thryv ID - 7xxu843k6gd14c8x",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-23T10:19:10.832-0800",
-      "updated": "2026-03-10T16:55:17.563-0700",
-      "type": "Bug",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4580",
-      "project": "MC",
-      "summary": "QA - NEW LM: One Or More Fields Failed Validation Error",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-01-23T10:53:41.035-0800",
-      "updated": "2026-03-10T16:55:25.918-0700",
-      "type": "QA",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4604",
-      "project": "MC",
-      "summary": "MC Updates Not Going to Ginger (All Countries) ",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Backend",
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-26T09:01:20.604-0800",
-      "updated": "2026-03-10T16:55:15.697-0700",
-      "type": "Bug",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4610",
-      "project": "MC",
-      "summary": "Unable to Publish and Update Listings From BC UI",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-27T07:52:28.113-0800",
-      "updated": "2026-03-10T16:55:14.406-0700",
-      "type": "Bug",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4619",
-      "project": "MC",
-      "summary": "MC Listings Fails Due to Existing Yext Entity on Same Thryv ID - 077qokfq4ujvxqyy",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-27T12:10:46.925-0800",
-      "updated": "2026-03-10T16:55:14.315-0700",
-      "type": "Bug",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4621",
-      "project": "MC",
-      "summary": "Master - Nextdoor Error Handling Not Aligned With Fulfillment Status",
-      "status": "Blocked",
-      "statusCategory": "No Category",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-28T10:09:13.459-0800",
-      "updated": "2026-04-14T12:37:23.397-0700",
-      "type": "Bug",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4628",
-      "project": "MC",
-      "summary": "AUS | Unable to Publish/Update LM",
-      "status": "Deployed",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-29T07:15:40.095-0800",
-      "updated": "2026-03-10T16:55:15.661-0700",
-      "type": "Bug",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4637",
-      "project": "MC",
-      "summary": "YP Validation Error",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P1",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-29T11:12:09.145-0800",
-      "updated": "2026-03-10T16:55:17.570-0700",
-      "type": "Bug",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4643",
-      "project": "MC",
-      "summary": "MC to LUI (Angular) Sync Overwrote Existing LUI Fields",
-      "status": "Blocked",
-      "statusCategory": "No Category",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-29T16:03:27.522-0800",
-      "updated": "2026-04-16T07:23:53.263-0700",
-      "type": "Bug",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4645",
-      "project": "MC",
-      "summary": "Yahoo CTN Not Being Provisioned",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Backend",
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-30T06:18:09.656-0800",
-      "updated": "2026-03-10T16:55:12.597-0700",
-      "type": "Bug",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4649",
-      "project": "MC",
-      "summary": "YP EP CTN Cannot Be Disabled for LM App Users",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-01-30T09:10:50.565-0800",
-      "updated": "2026-03-10T16:55:12.221-0700",
-      "type": "Bug",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4657",
-      "project": "MC",
-      "summary": "QA - YP Validation Error",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-02T08:07:11.092-0800",
-      "updated": "2026-03-10T16:55:24.185-0700",
-      "type": "QA",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4665",
-      "project": "MC",
-      "summary": "Missing TL Add-on - LOCF69F5EF7",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Thryv Leads"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-02-02T19:06:49.618-0800",
-      "updated": "2026-02-05T09:06:03.369-0800",
-      "type": "Bug",
-      "reporter": "Scott Savage"
-    },
-    {
-      "key": "MC-4684",
-      "project": "MC",
-      "summary": "Enhanced Profiles Shown for Ineligible MC Package",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-02-04T12:55:25.602-0800",
-      "updated": "2026-03-25T11:20:04.089-0700",
-      "type": "Bug",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4685",
-      "project": "MC",
-      "summary": "Deployed - YP Validation Error",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-04T13:03:01.312-0800",
-      "updated": "2026-03-10T16:55:24.766-0700",
-      "type": "QA",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4703",
-      "project": "MC",
-      "summary": "Deployed - Enhanced Profile Not saving in UI - (week of 10/13/2025)",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-04T13:47:30.324-0800",
-      "updated": "2026-02-06T14:21:23.972-0800",
-      "type": "QA",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4706",
-      "project": "MC",
-      "summary": "MC AI Review Responses Are Identical",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-02-05T08:29:29.057-0800",
-      "updated": "2026-03-10T16:55:11.064-0700",
-      "type": "Bug",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4707",
-      "project": "MC",
-      "summary": "AUS ABN Number Triggering Validation Error in LM",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-02-05T08:38:30.208-0800",
-      "updated": "2026-03-10T16:55:12.034-0700",
-      "type": "Bug",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4710",
-      "project": "MC",
-      "summary": "Deployed - Yelp RAQ Stuck in Pending Status",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-05T09:08:23.591-0800",
-      "updated": "2026-02-10T07:33:15.403-0800",
-      "type": "QA",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4711",
-      "project": "MC",
-      "summary": "Deployed - NEW LM: One Or More Fields Failed Validation Error",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-05T09:25:41.898-0800",
-      "updated": "2026-03-10T16:55:25.949-0700",
-      "type": "QA",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4715",
-      "project": "MC",
-      "summary": "QA - AUS ABN Number Triggering Validation Error in LM",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-05T14:12:13.977-0800",
-      "updated": "2026-03-10T16:55:18.762-0700",
-      "type": "QA",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4720",
-      "project": "MC",
-      "summary": "Yelp EP Rejection Not Reflected in LM UI",
-      "status": "Dev In Progress",
-      "statusCategory": "In Progress",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-02-05T19:20:35.205-0800",
-      "updated": "2026-04-16T18:45:05.823-0700",
-      "type": "Bug",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4722",
-      "project": "MC",
-      "summary": "LM: Validation Error Due to Payment Type",
-      "status": "Deployed",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-02-06T06:46:43.992-0800",
-      "updated": "2026-03-10T16:55:10.649-0700",
-      "type": "Bug",
-      "reporter": "Scott Savage"
-    },
-    {
-      "key": "MC-4728",
-      "project": "MC",
-      "summary": "New CTN Provisioning Failure - All Regions",
-      "status": "Canceled",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Backend",
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-02-06T08:04:41.968-0800",
-      "updated": "2026-03-10T16:55:10.208-0700",
-      "type": "Bug",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4742",
-      "project": "MC",
-      "summary": "LM Publish Fails – “Entity Not Found” Error",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-02-06T19:26:59.756-0800",
-      "updated": "2026-03-10T16:55:10.983-0700",
-      "type": "Bug",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4743",
-      "project": "MC",
-      "summary": "(BE)EP Linkouts Missing Despite Fulfillment",
-      "status": "Dev In Progress",
-      "statusCategory": "In Progress",
-      "priority": "P2",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-02-06T20:18:20.973-0800",
-      "updated": "2026-04-16T07:23:54.260-0700",
-      "type": "Bug",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4744",
-      "project": "MC",
-      "summary": "LM: Validation Error Due to Payment Type",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P2",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-02-09T07:02:30.692-0800",
-      "updated": "2026-03-11T09:28:01.887-0700",
-      "type": "Bug",
-      "reporter": "Scott Savage"
-    },
-    {
-      "key": "MC-4754",
-      "project": "MC",
-      "summary": "QA - Google Profile CTA Redirects to Static Page in Business Center",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-11T07:11:53.081-0800",
-      "updated": "2026-03-10T16:57:12.862-0700",
-      "type": "QA",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4766",
-      "project": "MC",
-      "summary": "QA - Inconsistent Address Selection Flowing Downstream",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-12T10:35:53.412-0800",
-      "updated": "2026-03-10T16:55:26.277-0700",
-      "type": "QA",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4767",
-      "project": "MC",
-      "summary": "QA - Inconsistent Address Selection Flowing Downstream",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-12T11:41:08.103-0800",
-      "updated": "2026-03-10T16:55:26.029-0700",
-      "type": "QA",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4775",
-      "project": "MC",
-      "summary": "Deployed - Inconsistent Address Selection Flowing Downstream",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-16T09:28:12.665-0800",
-      "updated": "2026-03-10T16:55:26.542-0700",
-      "type": "QA",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4786",
-      "project": "MC",
-      "summary": "QA - Facebook URL Invalid in LM",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-17T12:23:13.908-0800",
-      "updated": "2026-03-10T16:55:24.884-0700",
-      "type": "QA",
-      "reporter": "Scott Savage"
-    },
-    {
-      "key": "MC-4799",
-      "project": "MC",
-      "summary": "Deployed - Facebook URL Invalid in LM",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-19T06:21:55.702-0800",
-      "updated": "2026-03-10T16:55:24.560-0700",
-      "type": "QA",
-      "reporter": "Scott Savage"
-    },
-    {
-      "key": "MC-4801",
-      "project": "MC",
-      "summary": "Deployed - Google Profile CTA Redirects to Static Page in Business Center",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-19T06:23:48.807-0800",
-      "updated": "2026-03-10T16:57:12.935-0700",
-      "type": "QA",
-      "reporter": "Karla Cruz"
-    },
-    {
-      "key": "MC-4812",
-      "project": "MC",
-      "summary": "Batch Email DB Update 2",
-      "status": "Released",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-02-20T09:22:33.103-0800",
-      "updated": "2026-03-05T06:01:04.323-0800",
-      "type": "Bug",
-      "reporter": "Scott Savage"
-    },
-    {
-      "key": "MC-4813",
-      "project": "MC",
-      "summary": "QA - YP EP CTN Cannot Be Disabled for LM App Users",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-20T10:20:14.919-0800",
-      "updated": "2026-03-10T16:55:17.940-0700",
-      "type": "QA",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4832",
-      "project": "MC",
-      "summary": "QA - LM: Validation Error Due to Payment Type",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-23T11:53:17.003-0800",
-      "updated": "2026-03-10T16:55:16.438-0700",
-      "type": "QA",
-      "reporter": "Scott Savage"
-    },
-    {
-      "key": "MC-4869",
-      "project": "MC",
-      "summary": "Restore Yext Sandbox Connectivity for EMP Accounts",
-      "status": "Dev In Progress",
-      "statusCategory": "In Progress",
-      "priority": "P1",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [],
-      "created": "2026-03-03T14:59:38.805-0800",
-      "updated": "2026-04-16T07:23:52.279-0700",
-      "type": "Story",
-      "reporter": "Cory DeBolt"
-    },
-    {
-      "key": "MC-4955",
-      "project": "MC",
-      "summary": "Deployed - YP EP CTN Cannot Be Disabled for LM App Users",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-03-06T08:26:28.749-0800",
-      "updated": "2026-03-11T07:38:13.425-0700",
-      "type": "QA",
-      "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "MC-4970",
-      "project": "MC",
-      "summary": "Deployed - LM: Validation Error Due to Payment Type",
-      "status": "Complete",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-03-09T11:49:15.045-0700",
-      "updated": "2026-03-11T09:27:23.134-0700",
-      "type": "QA",
-      "reporter": "Scott Savage"
-    },
-    {
-      "key": "MC-5046",
-      "project": "MC",
-      "summary": "RPP CTN is not being provisioned",
-      "status": "Dev Backlog",
-      "statusCategory": "To Do",
-      "priority": "P3",
-      "components": [
-        "Backend",
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-03-17T07:14:41.088-0700",
-      "updated": "2026-04-15T10:13:32.499-0700",
-      "type": "Bug",
-      "reporter": "Erika Galindo"
-    },
-    {
-      "key": "MC-5087",
-      "project": "MC",
-      "summary": "MCF AU Cohort YPO Provisioned Incorrectly - V2",
-      "status": "Dev Backlog",
-      "statusCategory": "To Do",
-      "priority": "P3",
-      "components": [
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-03-20T08:28:28.817-0700",
-      "updated": "2026-04-15T12:13:19.958-0700",
-      "type": "Bug",
-      "reporter": "Erika Galindo"
-    },
-    {
-      "key": "MC-5111",
-      "project": "MC",
-      "summary": "Category Mapping Issue: Attorneys Syncing Incorrectly to Yext",
-      "status": "Dev In Progress",
-      "statusCategory": "In Progress",
-      "priority": "P3",
-      "components": [
-        "Backend",
-        "Listings Manager"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-03-24T12:42:22.042-0700",
-      "updated": "2026-04-16T15:26:06.391-0700",
-      "type": "Bug",
-      "reporter": "Erika Galindo"
-    },
-    {
-      "key": "MC-5260",
-      "project": "MC",
-      "summary": "YELP - GUMP status not aligned with fulfillment",
-      "status": "Dev Backlog",
-      "statusCategory": "To Do",
-      "priority": "P3",
-      "components": [
-        "Backend"
-      ],
-      "labels": [
-        "techsupport"
-      ],
-      "created": "2026-04-15T07:48:05.646-0700",
-      "updated": "2026-04-17T09:12:22.170-0700",
-      "type": "Bug",
-      "reporter": "Scott Savage"
+      "reporter": "Maya Venugopal"
     },
     {
       "key": "MCB-100",
@@ -2406,6 +1069,22 @@
       "reporter": "Karla Cruz"
     },
     {
+      "key": "MCB-155",
+      "project": "MCB",
+      "summary": "MC sending incorrect phone number on GP",
+      "status": "Released",
+      "statusCategory": "Done",
+      "priority": "P2",
+      "components": [
+        "Backend"
+      ],
+      "labels": [],
+      "created": "2026-03-18T09:17:16.279-0700",
+      "updated": "2026-03-30T19:01:58.433-0700",
+      "type": "Bug",
+      "reporter": "Tyler Foreman"
+    },
+    {
       "key": "MCB-156",
       "project": "MCB",
       "summary": "Unable to Confirm/Publish Listings -  “Zip Code Error\"",
@@ -2440,6 +1119,22 @@
       "updated": "2026-04-03T07:35:12.721-0700",
       "type": "Bug",
       "reporter": "Karla Cruz"
+    },
+    {
+      "key": "MCB-158",
+      "project": "MCB",
+      "summary": "Overview Pricing & Plans bug",
+      "status": "Released",
+      "statusCategory": "Done",
+      "priority": "P2",
+      "components": [
+        "MC Base Product"
+      ],
+      "labels": [],
+      "created": "2026-03-18T12:36:32.586-0700",
+      "updated": "2026-03-18T18:21:45.956-0700",
+      "type": "Bug",
+      "reporter": "Jens Larsen"
     },
     {
       "key": "MCB-159",
@@ -2642,7 +1337,7 @@
         "techsupport"
       ],
       "created": "2026-03-20T12:02:30.106-0700",
-      "updated": "2026-04-17T08:48:30.155-0700",
+      "updated": "2026-04-20T11:23:36.044-0700",
       "type": "Bug",
       "reporter": "Naomi Caraballo Jiminian"
     },
@@ -2650,8 +1345,8 @@
       "key": "MCB-169",
       "project": "MCB",
       "summary": "Yelp CPC Fulfillment Issue -LOC233B6772F",
-      "status": "In Review",
-      "statusCategory": "In Progress",
+      "status": "Released",
+      "statusCategory": "Done",
       "priority": "P2",
       "components": [
         "Growth Package"
@@ -2660,7 +1355,7 @@
         "techsupport"
       ],
       "created": "2026-03-23T15:00:02.347-0700",
-      "updated": "2026-04-17T16:42:05.334-0700",
+      "updated": "2026-04-20T11:04:44.217-0700",
       "type": "Bug",
       "reporter": "Erika Galindo"
     },
@@ -3060,6 +1755,38 @@
       "reporter": "Karla Cruz"
     },
     {
+      "key": "MCB-190",
+      "project": "MCB",
+      "summary": "Marchex DNI Workflow failures",
+      "status": "Dev In Progress",
+      "statusCategory": "In Progress",
+      "priority": "P1",
+      "components": [
+        "MC Base Product"
+      ],
+      "labels": [],
+      "created": "2026-03-27T07:36:46.950-0700",
+      "updated": "2026-04-16T07:46:40.428-0700",
+      "type": "Bug",
+      "reporter": "Sravanthi Janga"
+    },
+    {
+      "key": "MCB-191",
+      "project": "MCB",
+      "summary": "Shopify failures in the Zendesk API",
+      "status": "Released",
+      "statusCategory": "Done",
+      "priority": "P1",
+      "components": [
+        "MC Base Product"
+      ],
+      "labels": [],
+      "created": "2026-03-27T07:42:55.192-0700",
+      "updated": "2026-04-16T13:05:11.285-0700",
+      "type": "Bug",
+      "reporter": "Sravanthi Janga"
+    },
+    {
       "key": "MCB-192",
       "project": "MCB",
       "summary": "Yelp CPC Fulfillment Issue - LOCF616FD4B",
@@ -3096,6 +1823,38 @@
       "reporter": "Karla Cruz"
     },
     {
+      "key": "MCB-194",
+      "project": "MCB",
+      "summary": "Marchex Failure Endpoint",
+      "status": "Dev Backlog",
+      "statusCategory": "To Do",
+      "priority": "P2",
+      "components": [
+        "MC Base Product"
+      ],
+      "labels": [],
+      "created": "2026-03-27T14:10:32.198-0700",
+      "updated": "2026-04-09T09:15:51.911-0700",
+      "type": "Bug",
+      "reporter": "Sravanthi Janga"
+    },
+    {
+      "key": "MCB-196",
+      "project": "MCB",
+      "summary": "POST lead to Thryv inbox API HTTP",
+      "status": "Dev In Progress",
+      "statusCategory": "In Progress",
+      "priority": "P2",
+      "components": [
+        "MC Base Product"
+      ],
+      "labels": [],
+      "created": "2026-03-27T14:16:15.582-0700",
+      "updated": "2026-03-31T09:40:07.749-0700",
+      "type": "Bug",
+      "reporter": "Sravanthi Janga"
+    },
+    {
       "key": "MCB-197",
       "project": "MCB",
       "summary": "LM Yext Integration Failures – External ID Conflict - V2",
@@ -3109,9 +1868,41 @@
         "techsupport"
       ],
       "created": "2026-03-27T14:32:11.728-0700",
-      "updated": "2026-04-20T08:12:27.484-0700",
+      "updated": "2026-04-20T11:38:26.454-0700",
       "type": "Bug",
       "reporter": "Karla Cruz"
+    },
+    {
+      "key": "MCB-198",
+      "project": "MCB",
+      "summary": "Add Monitoring for group cancels in Machex",
+      "status": "In Review",
+      "statusCategory": "In Progress",
+      "priority": "P2",
+      "components": [
+        "MC Base Product"
+      ],
+      "labels": [],
+      "created": "2026-03-27T15:22:48.768-0700",
+      "updated": "2026-04-01T09:46:53.661-0700",
+      "type": "Bug",
+      "reporter": "Sravanthi Janga"
+    },
+    {
+      "key": "MCB-199",
+      "project": "MCB",
+      "summary": "MC Addon:  MC Addon Services Broken ",
+      "status": "Canceled",
+      "statusCategory": "Done",
+      "priority": "P3",
+      "components": [
+        "Backend"
+      ],
+      "labels": [],
+      "created": "2026-03-28T10:13:18.352-0700",
+      "updated": "2026-03-30T06:06:56.896-0700",
+      "type": "Bug",
+      "reporter": "Neil Symes"
     },
     {
       "key": "MCB-20",
@@ -3131,6 +1922,56 @@
       "updated": "2026-03-16T09:41:51.038-0700",
       "type": "Bug",
       "reporter": "Karla Cruz"
+    },
+    {
+      "key": "MCB-200",
+      "project": "MCB",
+      "summary": "Tray.io MC YP Product Create — Ginger Layer 1 provisioning failures generating sustained Zendesk alert spike",
+      "status": "Deployed",
+      "statusCategory": "Done",
+      "priority": "P2",
+      "components": [
+        "Integrations Team"
+      ],
+      "labels": [
+        "zendesk-report"
+      ],
+      "created": "2026-03-29T10:38:37.702-0700",
+      "updated": "2026-04-20T08:07:51.206-0700",
+      "type": "Bug",
+      "reporter": "Christopher Dixon"
+    },
+    {
+      "key": "MCB-201",
+      "project": "MCB",
+      "summary": "Cloud Campaign SP Errors — sustained Zendesk alert spike (+65% WoW)",
+      "status": "Released",
+      "statusCategory": "Done",
+      "priority": "P2",
+      "components": [],
+      "labels": [
+        "zendesk-report"
+      ],
+      "created": "2026-03-30T14:52:42.957-0700",
+      "updated": "2026-04-07T15:18:12.254-0700",
+      "type": "Bug",
+      "reporter": "Joseph Mask"
+    },
+    {
+      "key": "MCB-202",
+      "project": "MCB",
+      "summary": "MC Master Update Service — NEW error cluster generating Zendesk alerts (13 tickets)",
+      "status": "Deployed",
+      "statusCategory": "Done",
+      "priority": "P2",
+      "components": [],
+      "labels": [
+        "zendesk-report"
+      ],
+      "created": "2026-03-30T14:52:50.467-0700",
+      "updated": "2026-04-16T07:46:41.601-0700",
+      "type": "Bug",
+      "reporter": "Joseph Mask"
     },
     {
       "key": "MCB-203",
@@ -3353,6 +2194,40 @@
       "reporter": "Karla Cruz"
     },
     {
+      "key": "MCB-214",
+      "project": "MCB",
+      "summary": "MC Addon Services — residual Zendesk alert cluster persisting post-storm (~67 tickets/day)",
+      "status": "Deployed",
+      "statusCategory": "Done",
+      "priority": "P2",
+      "components": [
+        "Integrations Team"
+      ],
+      "labels": [
+        "zendesk-report"
+      ],
+      "created": "2026-04-01T14:41:19.482-0700",
+      "updated": "2026-04-16T07:46:38.591-0700",
+      "type": "Bug",
+      "reporter": "Joseph Mask"
+    },
+    {
+      "key": "MCB-215",
+      "project": "MCB",
+      "summary": "Create Recurly Account (MC) — persistent weekly Zendesk alert pattern (~35 tickets/day)",
+      "status": "Deployed",
+      "statusCategory": "Done",
+      "priority": "P2",
+      "components": [],
+      "labels": [
+        "zendesk-report"
+      ],
+      "created": "2026-04-01T14:41:31.099-0700",
+      "updated": "2026-04-20T08:07:33.030-0700",
+      "type": "Bug",
+      "reporter": "Joseph Mask"
+    },
+    {
       "key": "MCB-216",
       "project": "MCB",
       "summary": " Missing Alpha Template - wisdomseniorcarecary.com",
@@ -3460,6 +2335,54 @@
       "reporter": "Erika Galindo"
     },
     {
+      "key": "MCB-221",
+      "project": "MCB",
+      "summary": "Cloud Campaign Error (SP/thryv-service) — Regression After MCB-201 Release",
+      "status": "In Review",
+      "statusCategory": "In Progress",
+      "priority": "P2",
+      "components": [],
+      "labels": [
+        "zendesk-report"
+      ],
+      "created": "2026-04-03T09:02:17.898-0700",
+      "updated": "2026-04-16T10:04:19.943-0700",
+      "type": "Bug",
+      "reporter": "Joseph Mask"
+    },
+    {
+      "key": "MCB-222",
+      "project": "MCB",
+      "summary": "MC Growth Packages (Plus MC Package) — Employee Notifications Creating Untracked Zendesk Tickets",
+      "status": "In Review",
+      "statusCategory": "In Progress",
+      "priority": "P3",
+      "components": [],
+      "labels": [
+        "zendesk-report"
+      ],
+      "created": "2026-04-03T09:02:47.427-0700",
+      "updated": "2026-04-08T10:04:26.205-0700",
+      "type": "Bug",
+      "reporter": "Joseph Mask"
+    },
+    {
+      "key": "MCB-223",
+      "project": "MCB",
+      "summary": "Listings — Existing Listing Error (United States) Generating High-Volume Automated Tickets",
+      "status": "In Review",
+      "statusCategory": "In Progress",
+      "priority": "P3",
+      "components": [],
+      "labels": [
+        "zendesk-report"
+      ],
+      "created": "2026-04-03T09:03:49.834-0700",
+      "updated": "2026-04-07T15:41:33.371-0700",
+      "type": "Bug",
+      "reporter": "Joseph Mask"
+    },
+    {
       "key": "MCB-224",
       "project": "MCB",
       "summary": "Quantum - Multiple keap tasks being created as AI Action Item",
@@ -3548,6 +2471,22 @@
       "reporter": "Karla Cruz"
     },
     {
+      "key": "MCB-229",
+      "project": "MCB",
+      "summary": "Tray.io MC — YP Feature Services workflow errors generating recurring alert tickets",
+      "status": "Deployed",
+      "statusCategory": "Done",
+      "priority": "P2",
+      "components": [],
+      "labels": [
+        "zendesk-report"
+      ],
+      "created": "2026-04-06T13:28:55.959-0700",
+      "updated": "2026-04-20T08:07:30.201-0700",
+      "type": "Bug",
+      "reporter": "Joseph Mask"
+    },
+    {
       "key": "MCB-23",
       "project": "MCB",
       "summary": "SEO Report Link Not Available",
@@ -3579,7 +2518,7 @@
         "techsupport"
       ],
       "created": "2026-04-07T07:53:56.107-0700",
-      "updated": "2026-04-16T07:06:33.549-0700",
+      "updated": "2026-04-20T10:45:50.015-0700",
       "type": "Bug",
       "reporter": "Karla Cruz"
     },
@@ -3615,7 +2554,7 @@
         "techsupport"
       ],
       "created": "2026-04-07T12:19:10.833-0700",
-      "updated": "2026-04-20T08:05:06.466-0700",
+      "updated": "2026-04-20T12:21:19.169-0700",
       "type": "Bug",
       "reporter": "Karla Cruz"
     },
@@ -3709,6 +2648,24 @@
       "updated": "2026-04-09T08:52:51.354-0700",
       "type": "Bug",
       "reporter": "Karla Cruz"
+    },
+    {
+      "key": "MCB-238",
+      "project": "MCB",
+      "summary": "Marchex DNI — Multi-workflow production failure: Lead Injection (US/CA, AU/NZ), API Calls, Features (~78 tickets/day)",
+      "status": "Dev In Progress",
+      "statusCategory": "In Progress",
+      "priority": "P2",
+      "components": [
+        "Integrations Team"
+      ],
+      "labels": [
+        "zendesk-report"
+      ],
+      "created": "2026-04-08T11:34:05.320-0700",
+      "updated": "2026-04-20T08:07:20.645-0700",
+      "type": "Bug",
+      "reporter": "Joseph Mask"
     },
     {
       "key": "MCB-239",
@@ -3940,6 +2897,24 @@
       "reporter": "Karla Cruz"
     },
     {
+      "key": "MCB-250",
+      "project": "MCB",
+      "summary": "MC YP Product Create — Ginger Layer 2 production errors",
+      "status": "Dev In Progress",
+      "statusCategory": "In Progress",
+      "priority": "P2",
+      "components": [
+        "Integrations Team"
+      ],
+      "labels": [
+        "zendesk-report"
+      ],
+      "created": "2026-04-09T09:54:13.475-0700",
+      "updated": "2026-04-20T09:41:40.686-0700",
+      "type": "Bug",
+      "reporter": "Joseph Mask"
+    },
+    {
       "key": "MCB-251",
       "project": "MCB",
       "summary": "MC Not Installed - gqx3psrnoee6rdsp",
@@ -4151,7 +3126,7 @@
         "techsupport"
       ],
       "created": "2026-04-13T10:23:14.177-0700",
-      "updated": "2026-04-16T14:53:41.207-0700",
+      "updated": "2026-04-20T11:23:04.418-0700",
       "type": "Bug",
       "reporter": "Josh Melgoza"
     },
@@ -4192,6 +3167,27 @@
       "reporter": "Karla Cruz"
     },
     {
+      "key": "MCB-264",
+      "project": "MCB",
+      "summary": "P0 — Marchex DNI Lead Injection: Snowflake step failing on missing contact.sk1 (645 tickets/24h, +3,931% WoW)",
+      "status": "Deployed",
+      "statusCategory": "Done",
+      "priority": "P1",
+      "components": [],
+      "labels": [
+        "marchex",
+        "marketing-center",
+        "p0",
+        "snowflake",
+        "tray-io",
+        "zendesk-report"
+      ],
+      "created": "2026-04-14T04:36:51.430-0700",
+      "updated": "2026-04-16T07:46:49.418-0700",
+      "type": "Bug",
+      "reporter": "Christopher Dixon"
+    },
+    {
       "key": "MCB-265",
       "project": "MCB",
       "summary": "Visitor Tagging and/or Heatmap HTML Not Tracking Website Analytics - V7",
@@ -4205,7 +3201,7 @@
         "techsupport"
       ],
       "created": "2026-04-14T06:19:17.669-0700",
-      "updated": "2026-04-20T08:14:04.591-0700",
+      "updated": "2026-04-20T10:43:15.176-0700",
       "type": "Bug",
       "reporter": "Karla Cruz"
     },
@@ -4393,6 +3389,24 @@
       "reporter": "Naomi Caraballo Jiminian"
     },
     {
+      "key": "MCB-275",
+      "project": "MCB",
+      "summary": "MC Addon Services — re-emergence post MCB-214 Deployed (~204 tickets/day, ▲ +179% WoW)",
+      "status": "Dev In Progress",
+      "statusCategory": "In Progress",
+      "priority": "P2",
+      "components": [
+        "Integrations Team"
+      ],
+      "labels": [
+        "zendesk-report"
+      ],
+      "created": "2026-04-15T10:17:31.638-0700",
+      "updated": "2026-04-16T09:55:16.117-0700",
+      "type": "Bug",
+      "reporter": "Joseph Mask"
+    },
+    {
       "key": "MCB-276",
       "project": "MCB",
       "summary": "MC Not Installed - u6pe1oq04og0g5g8",
@@ -4427,11 +3441,53 @@
       "reporter": "Karla Cruz"
     },
     {
+      "key": "MCB-281",
+      "project": "MCB",
+      "summary": "Security Issues in Prototype pt. 1",
+      "status": "In Review",
+      "statusCategory": "In Progress",
+      "priority": "P1",
+      "components": [],
+      "labels": [],
+      "created": "2026-04-16T07:31:08.070-0700",
+      "updated": "2026-04-16T07:31:11.413-0700",
+      "type": "Bug",
+      "reporter": "Andrew Dye"
+    },
+    {
+      "key": "MCB-282",
+      "project": "MCB",
+      "summary": "Security Issues in Prototype pt. 2",
+      "status": "Canceled",
+      "statusCategory": "Done",
+      "priority": "P1",
+      "components": [],
+      "labels": [],
+      "created": "2026-04-16T07:32:39.273-0700",
+      "updated": "2026-04-20T09:32:02.642-0700",
+      "type": "Bug",
+      "reporter": "Andrew Dye"
+    },
+    {
+      "key": "MCB-283",
+      "project": "MCB",
+      "summary": "Security Issues in Prototype pt 3",
+      "status": "In Review",
+      "statusCategory": "In Progress",
+      "priority": "P1",
+      "components": [],
+      "labels": [],
+      "created": "2026-04-16T07:33:49.944-0700",
+      "updated": "2026-04-16T07:33:52.760-0700",
+      "type": "Bug",
+      "reporter": "Andrew Dye"
+    },
+    {
       "key": "MCB-284",
       "project": "MCB",
       "summary": "Unable to Publish Listings -  “isBcStaging is not defined\"",
-      "status": "Dev Backlog",
-      "statusCategory": "To Do",
+      "status": "Dev Complete",
+      "statusCategory": "In Progress",
       "priority": "P3",
       "components": [
         "Listings Manager"
@@ -4440,7 +3496,7 @@
         "techsupport"
       ],
       "created": "2026-04-16T07:41:19.421-0700",
-      "updated": "2026-04-20T08:39:30.442-0700",
+      "updated": "2026-04-20T10:39:09.151-0700",
       "type": "Bug",
       "reporter": "Erika Galindo"
     },
@@ -4567,7 +3623,7 @@
         "techsupport"
       ],
       "created": "2026-04-17T06:35:13.780-0700",
-      "updated": "2026-04-20T08:39:12.027-0700",
+      "updated": "2026-04-20T09:44:29.999-0700",
       "type": "Bug",
       "reporter": "Karla Cruz"
     },
@@ -4641,7 +3697,7 @@
         "zendesk-report"
       ],
       "created": "2026-04-17T11:46:07.108-0700",
-      "updated": "2026-04-17T11:50:00.074-0700",
+      "updated": "2026-04-20T09:55:18.598-0700",
       "type": "Bug",
       "reporter": "Karla Cruz"
     },
@@ -4671,14 +3727,66 @@
       "status": "In Review",
       "statusCategory": "In Progress",
       "priority": "P3",
+      "components": [],
+      "labels": [
+        "techsupport"
+      ],
+      "created": "2026-04-20T08:26:42.584-0700",
+      "updated": "2026-04-20T12:01:02.724-0700",
+      "type": "Bug",
+      "reporter": "Naomi Caraballo Jiminian"
+    },
+    {
+      "key": "MCB-297",
+      "project": "MCB",
+      "summary": "Cloud Campaign — Create New Users workflow producing recurring production error alerts",
+      "status": "In Review",
+      "statusCategory": "In Progress",
+      "priority": "P3",
+      "components": [],
+      "labels": [
+        "zendesk-report"
+      ],
+      "created": "2026-04-20T09:42:15.338-0700",
+      "updated": "2026-04-20T09:42:18.119-0700",
+      "type": "Bug",
+      "reporter": "Joseph Mask"
+    },
+    {
+      "key": "MCB-298",
+      "project": "MCB",
+      "summary": "RPP CTN Missing in Gump - bp07oj0billzv1iy",
+      "status": "Dev Backlog",
+      "statusCategory": "To Do",
+      "priority": "P3",
       "components": [
+        "Backend",
+        "Growth Package",
         "Listings Manager"
       ],
       "labels": [
         "techsupport"
       ],
-      "created": "2026-04-20T08:26:42.584-0700",
-      "updated": "2026-04-20T08:41:58.882-0700",
+      "created": "2026-04-20T11:33:23.619-0700",
+      "updated": "2026-04-20T12:17:53.983-0700",
+      "type": "Bug",
+      "reporter": "Naomi Caraballo Jiminian"
+    },
+    {
+      "key": "MCB-299",
+      "project": "MCB",
+      "summary": "MC Leads Not Showing In BC Inbox - nkvkhu9gz8r6p89u",
+      "status": "In Review",
+      "statusCategory": "In Progress",
+      "priority": "P3",
+      "components": [
+        "MC Base Product"
+      ],
+      "labels": [
+        "techsupport"
+      ],
+      "created": "2026-04-20T12:12:01.219-0700",
+      "updated": "2026-04-20T12:13:25.305-0700",
       "type": "Bug",
       "reporter": "Naomi Caraballo Jiminian"
     },
@@ -5038,6 +4146,22 @@
       "reporter": "Karla Cruz"
     },
     {
+      "key": "MCB-50",
+      "project": "MCB",
+      "summary": "(BE)Yelp | EP Rejected without UI Event (fixed by MC-4984)",
+      "status": "In Review",
+      "statusCategory": "In Progress",
+      "priority": "P3",
+      "components": [],
+      "labels": [
+        "techsupport"
+      ],
+      "created": "2026-02-17T13:34:42.774-0800",
+      "updated": "2026-04-18T17:05:09.927-0700",
+      "type": "Bug",
+      "reporter": "Josh Pizarro"
+    },
+    {
       "key": "MCB-51",
       "project": "MCB",
       "summary": "MC Geo Updates Not Going to Ginger - LOCC4823CC3",
@@ -5314,6 +4438,22 @@
       "updated": "2026-03-23T17:25:54.187-0700",
       "type": "Bug",
       "reporter": "Karla Cruz"
+    },
+    {
+      "key": "MCB-71",
+      "project": "MCB",
+      "summary": "Deep link from my account not working for Upgrade flow. ",
+      "status": "QA Backlog",
+      "statusCategory": "In Progress",
+      "priority": "P3",
+      "components": [
+        "MC Base Product"
+      ],
+      "labels": [],
+      "created": "2026-02-23T07:10:34.329-0800",
+      "updated": "2026-03-10T16:55:04.270-0700",
+      "type": "Bug",
+      "reporter": "Tyler Foreman"
     },
     {
       "key": "MCB-72",
@@ -5790,664 +4930,6 @@
       "updated": "2026-03-02T09:08:22.866-0800",
       "type": "Bug",
       "reporter": "Josh Melgoza"
-    },
-    {
-      "key": "TPS-168",
-      "project": "TPS",
-      "summary": "Checkout Payments are getting stuck in payment processing - udxlkqb3mesovcp1",
-      "status": "W/ Product",
-      "statusCategory": "In Progress",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-01-06T10:34:48.551-0800",
-      "updated": "2026-01-22T11:33:52.715-0800",
-      "type": "Incident",
-      "reporter": "Erika Galindo"
-    },
-    {
-      "key": "TPS-169",
-      "project": "TPS",
-      "summary": "The Boltakke Law Group, P.C.: Missing ACH Payment/Incorrect Processing Fee Charged - ThryvID/Merchant ID: 43zhxzb0r00at8mp / acct_1L86UYR5gdNu1PQe - 43zhxzb0r00at8mp",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-01-13T13:30:07.982-0800",
-      "updated": "2026-01-21T13:55:01.760-0800",
-      "type": "Incident",
-      "reporter": "Ryan Lann"
-    },
-    {
-      "key": "TPS-170",
-      "project": "TPS",
-      "summary": "FRANCHISE ACCOUNT (NEAT Method) | RIsk unable to reset Franchise ThryvPay Application for new owners to apply - ZD #4292843 - fopokeye7zg7ggiz",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-01-15T15:40:51.880-0800",
-      "updated": "2026-01-21T11:01:49.177-0800",
-      "type": "Incident",
-      "reporter": "Ryan Lann"
-    },
-    {
-      "key": "TPS-171",
-      "project": "TPS",
-      "summary": "ThryvPay Transactions Export Formatting Issues - 0yqgkwl6rpt5ulyx",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-01-16T14:22:06.401-0800",
-      "updated": "2026-01-28T14:04:51.360-0800",
-      "type": "Incident",
-      "reporter": "Scott Savage"
-    },
-    {
-      "key": "TPS-172",
-      "project": "TPS",
-      "summary": "ACH fees onetime refund request | Davis fence Co LLC - acct_1SUW4zJVzovZPinL - 88hk5zz6ygspxna9 - ZD#4320441 - 88hk5zz6ygspxna9 ",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-01-20T12:16:53.142-0800",
-      "updated": "2026-01-21T11:16:57.042-0800",
-      "type": "Incident",
-      "reporter": "Ryan Lann"
-    },
-    {
-      "key": "TPS-173",
-      "project": "TPS",
-      "summary": "YTD Transactions - 54kd9vm2jwcut6rz",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-01-20T15:21:49.569-0800",
-      "updated": "2026-01-21T11:08:12.229-0800",
-      "type": "Incident",
-      "reporter": "Erika Galindo"
-    },
-    {
-      "key": "TPS-174",
-      "project": "TPS",
-      "summary": "**Franchise Account** Class 101 Flower Mound TX | Merchant unable to sign up for ThryvPay and is presented with indefinite loading screen - ThryvID: 226myoymkmj7zuj1 - 226myoymkmj7zuj1",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-01-21T09:01:58.102-0800",
-      "updated": "2026-01-21T10:58:11.729-0800",
-      "type": "Incident",
-      "reporter": "Ryan Lann"
-    },
-    {
-      "key": "TPS-175",
-      "project": "TPS",
-      "summary": "2 Issues: 1. Wrong Processing Fee Billed 2. Processing fee showing wrong within TP Transaction Table - fet6mk5aezugcgx6",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-01-23T10:19:33.216-0800",
-      "updated": "2026-03-09T07:19:56.527-0700",
-      "type": "Incident",
-      "reporter": "Erika Galindo"
-    },
-    {
-      "key": "TPS-176",
-      "project": "TPS",
-      "summary": "Reset Wisetack Application for Merchant - bjnsrp2lfip2drla",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-01-30T13:38:40.451-0800",
-      "updated": "2026-03-09T07:20:19.433-0700",
-      "type": "Incident",
-      "reporter": "Erika Galindo"
-    },
-    {
-      "key": "TPS-177",
-      "project": "TPS",
-      "summary": "Wisetack Payment Stuck in Processing - 1gnlt88bgv5uvwzj",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-03T11:57:04.550-0800",
-      "updated": "2026-02-03T13:51:20.468-0800",
-      "type": "Incident",
-      "reporter": "Erika Galindo"
-    },
-    {
-      "key": "TPS-178",
-      "project": "TPS",
-      "summary": "Invoice is Stuck in Processing for Wisetack Payment - 3y5onx1snd2zkeaf",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-03T12:54:43.127-0800",
-      "updated": "2026-02-03T13:59:24.665-0800",
-      "type": "Incident",
-      "reporter": "Erika Galindo"
-    },
-    {
-      "key": "TPS-179",
-      "project": "TPS",
-      "summary": "Unable to change the email address in TP Settings - yocpc4gyo8fnzwm8",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-03T15:01:53.159-0800",
-      "updated": "2026-03-17T13:38:38.451-0700",
-      "type": "Incident",
-      "reporter": "Erika Galindo"
-    },
-    {
-      "key": "TPS-180",
-      "project": "TPS",
-      "summary": "Risk is not able to reset Thryvpay Application - 7hbre4jtico7mgdg",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-04T09:02:26.211-0800",
-      "updated": "2026-02-04T11:33:41.404-0800",
-      "type": "Incident",
-      "reporter": "Erika Galindo"
-    },
-    {
-      "key": "TPS-181",
-      "project": "TPS",
-      "summary": "Database Change & Overdraft Fee Reversal - t5ltp4rvzwfwd9hk",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-05T07:18:13.034-0800",
-      "updated": "2026-02-12T14:03:57.052-0800",
-      "type": "Incident",
-      "reporter": "Erika Galindo"
-    },
-    {
-      "key": "TPS-182",
-      "project": "TPS",
-      "summary": "Command Center Request - 1324561324651324",
-      "status": "W/ Devs",
-      "statusCategory": "In Progress",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-11T09:14:09.426-0800",
-      "updated": "2026-04-01T09:42:21.324-0700",
-      "type": "Issue",
-      "reporter": "Scott Savage"
-    },
-    {
-      "key": "TPS-183",
-      "project": "TPS",
-      "summary": " Dev issue - ",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-11T09:16:57.660-0800",
-      "updated": "2026-02-11T09:27:27.452-0800",
-      "type": "Sub-task",
-      "reporter": "Scott Savage"
-    },
-    {
-      "key": "TPS-184",
-      "project": "TPS",
-      "summary": " dev work - ",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-12T08:04:50.387-0800",
-      "updated": "2026-02-12T08:05:44.426-0800",
-      "type": "Sub-task",
-      "reporter": "Scott Savage"
-    },
-    {
-      "key": "TPS-186",
-      "project": "TPS",
-      "summary": "Payout Went to Wrong Bank Account  - 3ma5s13n5uyt1woa",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-13T15:09:33.960-0800",
-      "updated": "2026-03-09T07:21:02.580-0700",
-      "type": "Incident",
-      "reporter": "Erika Galindo"
-    },
-    {
-      "key": "TPS-188",
-      "project": "TPS",
-      "summary": "ThryvPay Merchant Approved for Financing but is not reflecting on their end | FAST TRACK MOVERS -  ZD#4383853 - acct_1R5CPzQoZE3oN9Vd - vflsx4tnbndsnlok - vflsx4tnbndsnlok",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-18T14:32:00.649-0800",
-      "updated": "2026-02-24T14:00:59.005-0800",
-      "type": "Incident",
-      "reporter": "Ryan Lann"
-    },
-    {
-      "key": "TPS-189",
-      "project": "TPS",
-      "summary": "Refund Processing fees Request | *Franchise*  NEAT Method Charlotte - MerchantID: acct_1QAFcXQvEZYD8cwS - ThryvID: ps0xqck0izjiqkat - ps0xqck0izjiqkat",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-23T07:19:00.154-0800",
-      "updated": "2026-02-23T13:44:35.739-0800",
-      "type": "Incident",
-      "reporter": "Ryan Lann"
-    },
-    {
-      "key": "TPS-191",
-      "project": "TPS",
-      "summary": "Risk unable to do a Post Onboarding Decline via Admin Dashboard - go6bngiaxp5xcj8p",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-24T06:54:51.824-0800",
-      "updated": "2026-03-20T13:52:21.492-0700",
-      "type": "Incident",
-      "reporter": "Erika Galindo"
-    },
-    {
-      "key": "TPS-192",
-      "project": "TPS",
-      "summary": " Dev Issue -  - ",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-24T09:49:48.350-0800",
-      "updated": "2026-02-24T09:52:03.705-0800",
-      "type": "Sub-task",
-      "reporter": "Scott Savage"
-    },
-    {
-      "key": "TPS-193",
-      "project": "TPS",
-      "summary": "Scheduled Payment Posted twice to V and failed to post to completed transaction table - bl42tq0cjogkd2mn",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-25T07:43:55.907-0800",
-      "updated": "2026-03-02T14:15:05.816-0800",
-      "type": "Incident",
-      "reporter": "Erika Galindo"
-    },
-    {
-      "key": "TPS-194",
-      "project": "TPS",
-      "summary": "Payment stuck in 'preparing' status and no association to customer | Tailored Health - acct_1LMhjeQuiOA77qV7 - b31rpwohv56k2m3w - b31rpwohv56k2m3w",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-26T11:14:56.476-0800",
-      "updated": "2026-03-06T17:52:10.648-0800",
-      "type": "Incident",
-      "reporter": "Ryan Lann"
-    },
-    {
-      "key": "TPS-195",
-      "project": "TPS",
-      "summary": "Merchant charged incorrect processing fee via ThryvPay App mobile charge | Columbia Glass, LLC - acct_1NiLkTQvRyrri3yE - 40vqe4jolq1h9quf - 40vqe4jolq1h9quf",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-02-26T11:54:15.779-0800",
-      "updated": "2026-03-05T07:33:00.748-0800",
-      "type": "Incident",
-      "reporter": "Ryan Lann"
-    },
-    {
-      "key": "TPS-196",
-      "project": "TPS",
-      "summary": "Duplicate Entries for Scheduled Payments Processed 2/15/2026 | *Franchise Accounts* Class 101 Fort Mill, SC (ThryvID ijyty5uz1k6vmo9t) / Class 101 of the Treasure Coast (Thryv ID g960i6jktzvflxsi) - g960i6jktzvflxsi",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-03-02T11:35:00.808-0800",
-      "updated": "2026-03-09T07:09:05.420-0700",
-      "type": "Incident",
-      "reporter": "Ryan Lann"
-    },
-    {
-      "key": "TPS-197",
-      "project": "TPS",
-      "summary": "Card Declining for NSF but Showing Wrong ZipCode Error Message - yhcp4wt8k4jy02li",
-      "status": "W/ Devs",
-      "statusCategory": "In Progress",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-03-02T15:19:35.674-0800",
-      "updated": "2026-03-03T06:26:25.928-0800",
-      "type": "Incident",
-      "reporter": "Erika Galindo"
-    },
-    {
-      "key": "TPS-198",
-      "project": "TPS",
-      "summary": "Multiple payments show twice on PayOut - f5lqc21b3jd8bdar",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-03-06T07:01:55.247-0800",
-      "updated": "2026-03-10T13:33:43.628-0700",
-      "type": "Incident",
-      "reporter": "Erika Galindo"
-    },
-    {
-      "key": "TPS-199",
-      "project": "TPS",
-      "summary": "Refund Request - Client cancelled Thryv but SPs continued to process resulted in disputed payments - acct_1S0AGaJbJp8XS2vI -  - nspjkh1cto1wct96",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-03-06T08:38:54.887-0800",
-      "updated": "2026-03-09T07:06:35.241-0700",
-      "type": "Incident",
-      "reporter": "Ryan Lann"
-    },
-    {
-      "key": "TPS-200",
-      "project": "TPS",
-      "summary": "Request to refund failed withdrawal fee of $30 | acct_1QpxKXQwh4rUg5lX  - 0r4m4n80uw47o7k6 - 0r4m4n80uw47o7k6",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-03-06T13:53:13.983-0800",
-      "updated": "2026-03-09T06:14:46.512-0700",
-      "type": "Incident",
-      "reporter": "Ryan Lann"
-    },
-    {
-      "key": "TPS-201",
-      "project": "TPS",
-      "summary": "Refund Request | Epic Commercial Door Repair / acct_1KsJBKQudOXhzIPj / 8usol7h975zm7tn7 - 8usol7h975zm7tn7",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-03-11T07:53:11.255-0700",
-      "updated": "2026-03-11T15:29:16.927-0700",
-      "type": "Incident",
-      "reporter": "Ryan Lann"
-    },
-    {
-      "key": "TPS-202",
-      "project": "TPS",
-      "summary": "Risk is Unable to Approve TP Account via Admin DashBoard - y0kzga29asb6avme",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-03-11T13:05:20.575-0700",
-      "updated": "2026-03-19T12:41:49.768-0700",
-      "type": "Incident",
-      "reporter": "Erika Galindo"
-    },
-    {
-      "key": "TPS-203",
-      "project": "TPS",
-      "summary": "Refund processing fees as a one-time courtesy | The Beauty Suite - MerchantID acct_1Q5ppOR01oMgq3yQ - tzlz9rmzn4dhrost",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-03-17T14:19:11.402-0700",
-      "updated": "2026-03-19T12:12:59.338-0700",
-      "type": "Incident",
-      "reporter": "Ryan Lann"
-    },
-    {
-      "key": "TPS-204",
-      "project": "TPS",
-      "summary": "Refund processing fees as a one-time courtesy | Borla Painting - MerchantID acct_1PJlVSR2sHfCZOg3 - yx46mi5hyvohu798",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-03-18T11:52:25.916-0700",
-      "updated": "2026-03-19T12:12:46.996-0700",
-      "type": "Incident",
-      "reporter": "Ryan Lann"
-    },
-    {
-      "key": "TPS-205",
-      "project": "TPS",
-      "summary": "Refund processing fees as a one-time courtesy | American Bath Works In - acct_1NQVLQR5YtHuc5jS - rkve1qpro6yw1y1u",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-03-19T09:41:59.147-0700",
-      "updated": "2026-03-19T12:55:41.100-0700",
-      "type": "Incident",
-      "reporter": "Ryan Lann"
-    },
-    {
-      "key": "TPS-207",
-      "project": "TPS",
-      "summary": "Replacement Card Reader Request | Restore and More LLC - acct_1T80FLJ8xJSypVol / LOC7DD4E31B -  - 3knhawn8o720b5qg",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-03-27T14:25:54.556-0700",
-      "updated": "2026-03-30T12:33:55.161-0700",
-      "type": "Incident",
-      "reporter": "Ryan Lann"
-    },
-    {
-      "key": "TPS-208",
-      "project": "TPS",
-      "summary": "Database Change Required - mv69sq9qx0mcw5qd",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-03-31T12:45:03.218-0700",
-      "updated": "2026-04-02T12:39:45.514-0700",
-      "type": "Incident",
-      "reporter": "Erika Galindo"
-    },
-    {
-      "key": "TPS-209",
-      "project": "TPS",
-      "summary": "Risk is Unable to Reset TP Application - v5o4ev1gjstu4fdm",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-04-01T10:56:24.514-0700",
-      "updated": "2026-04-03T08:12:34.261-0700",
-      "type": "Incident",
-      "reporter": "Erika Galindo"
-    },
-    {
-      "key": "TPS-210",
-      "project": "TPS",
-      "summary": "ACH payments stuck in processing state | Quinn Windows - acct_1PByZjR2UYcSQRbT  - k4ay0tjqhebcgts0",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-04-01T15:10:48.742-0700",
-      "updated": "2026-04-02T10:06:34.177-0700",
-      "type": "Incident",
-      "reporter": "Ryan Lann"
-    },
-    {
-      "key": "TPS-213",
-      "project": "TPS",
-      "summary": "Risk Application Reset Failure | Neat Method Lakewood - acct_1QDWVSR3VuxldHEZ - avmj1cj6t1fyvngn",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-04-03T06:18:35.883-0700",
-      "updated": "2026-04-03T08:12:36.481-0700",
-      "type": "Incident",
-      "reporter": "Ryan Lann"
-    },
-    {
-      "key": "TPS-214",
-      "project": "TPS",
-      "summary": "Unable to checkout Using ACH  - fk8t03ykf4ots6xc",
-      "status": "W/ Product",
-      "statusCategory": "In Progress",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-04-07T10:20:10.094-0700",
-      "updated": "2026-04-13T07:12:07.841-0700",
-      "type": "Incident",
-      "reporter": "Erika Galindo"
-    },
-    {
-      "key": "TPS-215",
-      "project": "TPS",
-      "summary": "Agents in ZD login set up 2FA and stronger password - ",
-      "status": "Open",
-      "statusCategory": "To Do",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-04-08T07:40:59.501-0700",
-      "updated": "2026-04-16T13:58:49.614-0700",
-      "type": "Issue",
-      "reporter": "Roval Eleazar"
-    },
-    {
-      "key": "TPS-220",
-      "project": "TPS",
-      "summary": "*FRANCHISE*  Unable to Add Card on File in Business Center – No Error Returned | Class 101 San Antonio West TX - acct_1S5UNJR3NxeyPzxN - js3pcu7hngru3pgo",
-      "status": "W/ Devs",
-      "statusCategory": "In Progress",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-04-09T07:34:01.139-0700",
-      "updated": "2026-04-15T07:12:03.565-0700",
-      "type": "Incident",
-      "reporter": "Ryan Lann"
-    },
-    {
-      "key": "TPS-221",
-      "project": "TPS",
-      "summary": "*Escalation* ThryvPay Application Reset Error – Unable to Clear Existing Application for New Owner | Fluff n Fold Laundry - acct_1NFsuKR6LUsJXeWf - thna67na58cbi6g5",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-04-09T08:48:11.254-0700",
-      "updated": "2026-04-09T09:15:14.437-0700",
-      "type": "Incident",
-      "reporter": "Ryan Lann"
-    },
-    {
-      "key": "TPS-222",
-      "project": "TPS",
-      "summary": "Merchant unable to Disconnect Wisetack - adwkffpqmxmz23nn",
-      "status": "W/ Product",
-      "statusCategory": "In Progress",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-04-09T09:20:06.169-0700",
-      "updated": "2026-04-13T06:36:39.841-0700",
-      "type": "Incident",
-      "reporter": "Erika Galindo"
-    },
-    {
-      "key": "TPS-223",
-      "project": "TPS",
-      "summary": "DB Updates Needed  - nrvy30uwhg9c0cdq",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-04-09T15:09:39.005-0700",
-      "updated": "2026-04-10T13:25:18.573-0700",
-      "type": "Incident",
-      "reporter": "Erika Galindo"
-    },
-    {
-      "key": "TPS-227",
-      "project": "TPS",
-      "summary": "Unable to reset ThryvPay Application in Admin Dashboard - uy995v4rx9rvnsj7",
-      "status": "Resolved",
-      "statusCategory": "Done",
-      "priority": "P3",
-      "components": [],
-      "labels": [],
-      "created": "2026-04-14T15:21:19.400-0700",
-      "updated": "2026-04-15T08:21:32.316-0700",
-      "type": "Incident",
-      "reporter": "Erika Galindo"
     }
   ]
 }
