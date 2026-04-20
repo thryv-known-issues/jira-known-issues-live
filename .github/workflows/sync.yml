@@ -19,7 +19,7 @@ jobs:
           JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
         run: |
           set -e
-          echo "Fetching known issues reported by ATS team..."
+          echo "Fetching MCB board issues..."
 
           TEST=$(curl -s -w "\nHTTP_CODE:%{http_code}" \
             -u "${JIRA_EMAIL}:${JIRA_TOKEN}" \
@@ -29,13 +29,11 @@ jobs:
           if [ "$HTTP_CODE" != "200" ]; then echo "Auth failed!"; exit 1; fi
           echo "Auth OK"
 
-          REPORTERS="62b21b5cb8e499e567e91be6,62b21f2567dff38e098787c4,62b21771dcafd965c5de0c22,62b2144e0c77011bdfdc8dd5,62b20c71b8e499e567e91379,62b21c5adcafd965c5de0edd,5f282db0bedd1000155357e8,62f4416f5111209f4fe0ff17,70121:54822783-467e-4f7b-bb2c-6d8fdd5e344e,62b21aaecebad33432f713a1,62b20b1284d73c720167a10c,62b21324f38b4dcf73d9393a,63bf451924db796721242be7"
-
           ALL_ISSUES="[]"
 
           QUERIES=(
-            "project in (MCB, MC, MNY, TPAY, TPS) AND reporter in (${REPORTERS}) AND status != Done AND created >= 2026-01-01 ORDER BY priority ASC, created DESC"
-            "project in (MCB, MC, MNY, TPAY, TPS) AND reporter in (${REPORTERS}) AND status = Done AND updated >= -30d AND created >= 2026-01-01 ORDER BY updated DESC"
+            "project = MCB AND status != Done AND created >= 2026-01-01 ORDER BY priority ASC, created DESC"
+            "project = MCB AND status = Done AND updated >= -30d AND created >= 2026-01-01 ORDER BY updated DESC"
           )
 
           QNUM=0
@@ -113,7 +111,7 @@ jobs:
           echo "$ALL_ISSUES" | jq "{
             total: length,
             fetchedAt: \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",
-            projects: [\"MCB\",\"MC\",\"MNY\",\"TPAY\",\"TPS\"],
+            projects: [\"MCB\"],
             issues: .
           }" > data.json
           echo "data.json written ($(wc -c < data.json) bytes)"
