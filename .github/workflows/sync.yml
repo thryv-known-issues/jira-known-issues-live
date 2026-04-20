@@ -50,7 +50,7 @@ jobs:
                   -H "Accept: application/json" \
                   -G "https://thryv.atlassian.net/rest/api/3/search/jql" \
                   --data-urlencode "jql=${JQL}" \
-                  --data-urlencode "fields=summary,status,priority,components,labels,created,updated,issuetype,reporter" \
+                  --data-urlencode "fields=summary,status,priority,components,labels,created,updated,issuetype,reporter,description" \
                   --data-urlencode "maxResults=100")
               else
                 RESPONSE=$(curl -s \
@@ -58,7 +58,7 @@ jobs:
                   -H "Accept: application/json" \
                   -G "https://thryv.atlassian.net/rest/api/3/search/jql" \
                   --data-urlencode "jql=${JQL}" \
-                  --data-urlencode "fields=summary,status,priority,components,labels,created,updated,issuetype,reporter" \
+                  --data-urlencode "fields=summary,status,priority,components,labels,created,updated,issuetype,reporter,description" \
                   --data-urlencode "maxResults=100" \
                   --data-urlencode "nextPageToken=${NEXT_TOKEN}")
               fi
@@ -86,7 +86,41 @@ jobs:
                 created: (.fields.created // ""),
                 updated: (.fields.updated // ""),
                 type: (.fields.issuetype.name // ""),
-                reporter: (.fields.reporter.displayName // "")
+                reporter: (.fields.reporter.displayName // ""),
+                brief: (
+                  (.fields.description // "") |
+                  # Extract text after **Description** or **Description of Issue** heading
+                  gsub("!\\[.*?\\]\\(.*?\\)"; "") |
+                  gsub("\\*\\*"; "") |
+                  gsub("\\[([^\\]]+)\\]\\([^)]+\\)"; "\(.[:0])") |
+                  gsub("<[^>]+>"; "") |
+                  split("\n") |
+                  map(select(
+                    test("^\\s*$") | not
+                  )) |
+                  map(select(
+                    test("^\\|") | not
+                  )) |
+                  map(select(
+                    test("^\\s*\\d+\\.\\s") | not
+                  )) |
+                  map(select(
+                    test("^#+\\s") | not
+                  )) |
+                  map(select(
+                    test("^\\s*\\*\\s*\\*") | not
+                  )) |
+                  map(gsub("^\\s+|\\s+$"; "")) |
+                  map(select(length > 10)) |
+                  if length > 0 then .[0] else "" end |
+                  if length > 200 then .[:200] + "..." else . end
+                ),
+                affectedAccounts: (
+                  (.fields.description // "") |
+                  split("\n") |
+                  map(select(test("^\\|\\s*[^-]") and (test("Thryv ID|Country|Tech Agent|Zendesk") | not))) |
+                  length
+                )
               }]')
 
               ALL_ISSUES=$(echo "$ALL_ISSUES" "$BATCH" | jq -s '.[0] + .[1]')
