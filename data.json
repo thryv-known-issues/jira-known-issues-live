@@ -1,6 +1,6 @@
 {
   "total": 276,
-  "fetchedAt": "2026-04-20T19:21:44Z",
+  "fetchedAt": "2026-04-20T20:11:38Z",
   "projects": [
     "MCB"
   ],
@@ -2616,17 +2616,18 @@
       "key": "MCB-236",
       "project": "MCB",
       "summary": "Yelp EP Link Provisioning Issue - iut2is0c2vyps42x",
-      "status": "In Review",
-      "statusCategory": "In Progress",
+      "status": "Dev Backlog",
+      "statusCategory": "To Do",
       "priority": "P3",
       "components": [
+        "Backend",
         "Listings Manager"
       ],
       "labels": [
         "techsupport"
       ],
       "created": "2026-04-08T11:30:29.748-0700",
-      "updated": "2026-04-20T09:18:30.280-0700",
+      "updated": "2026-04-20T12:54:42.803-0700",
       "type": "Bug",
       "reporter": "Karla Cruz"
     },
@@ -2840,7 +2841,7 @@
       ],
       "labels": [],
       "created": "2026-04-09T06:54:54.474-0700",
-      "updated": "2026-04-17T09:09:17.435-0700",
+      "updated": "2026-04-20T12:25:47.321-0700",
       "type": "Bug",
       "reporter": "Scott Savage"
     },
@@ -3697,7 +3698,7 @@
         "zendesk-report"
       ],
       "created": "2026-04-17T11:46:07.108-0700",
-      "updated": "2026-04-20T09:55:18.598-0700",
+      "updated": "2026-04-20T12:22:15.237-0700",
       "type": "Bug",
       "reporter": "Karla Cruz"
     },
@@ -3732,7 +3733,7 @@
         "techsupport"
       ],
       "created": "2026-04-20T08:26:42.584-0700",
-      "updated": "2026-04-20T12:01:02.724-0700",
+      "updated": "2026-04-20T12:22:53.973-0700",
       "type": "Bug",
       "reporter": "Naomi Caraballo Jiminian"
     },
