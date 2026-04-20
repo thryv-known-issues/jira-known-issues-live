@@ -87,40 +87,7 @@ jobs:
                 updated: (.fields.updated // ""),
                 type: (.fields.issuetype.name // ""),
                 reporter: (.fields.reporter.displayName // ""),
-                brief: (
-                  (.fields.description // "") |
-                  # Extract text after **Description** or **Description of Issue** heading
-                  gsub("!\\[.*?\\]\\(.*?\\)"; "") |
-                  gsub("\\*\\*"; "") |
-                  gsub("\\[([^\\]]+)\\]\\([^)]+\\)"; "\(.[:0])") |
-                  gsub("<[^>]+>"; "") |
-                  split("\n") |
-                  map(select(
-                    test("^\\s*$") | not
-                  )) |
-                  map(select(
-                    test("^\\|") | not
-                  )) |
-                  map(select(
-                    test("^\\s*\\d+\\.\\s") | not
-                  )) |
-                  map(select(
-                    test("^#+\\s") | not
-                  )) |
-                  map(select(
-                    test("^\\s*\\*\\s*\\*") | not
-                  )) |
-                  map(gsub("^\\s+|\\s+$"; "")) |
-                  map(select(length > 10)) |
-                  if length > 0 then .[0] else "" end |
-                  if length > 200 then .[:200] + "..." else . end
-                ),
-                affectedAccounts: (
-                  (.fields.description // "") |
-                  split("\n") |
-                  map(select(test("^\\|\\s*[^-]") and (test("Thryv ID|Country|Tech Agent|Zendesk") | not))) |
-                  length
-                )
+                rawDescription: (.fields.description // null)
               }]')
 
               ALL_ISSUES=$(echo "$ALL_ISSUES" "$BATCH" | jq -s '.[0] + .[1]')
@@ -142,13 +109,25 @@ jobs:
           echo "Total: ${TOTAL_COUNT} (Open: ${OPEN}, Resolved: ${DONE})"
           echo "==============================="
 
+          # Build initial data.json with rawDescription included
           echo "$ALL_ISSUES" | jq "{
             total: length,
             fetchedAt: \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",
             projects: [\"MCB\"],
             issues: .
-          }" > data.json
+          }" > data_raw.json
+          echo "data_raw.json written ($(wc -c < data_raw.json) bytes)"
+
+          # Run Python parser to extract brief + affectedAccounts, strip rawDescription
+          echo "Parsing descriptions..."
+          python3 parse_descriptions.py < data_raw.json > data.json
+          rm -f data_raw.json
           echo "data.json written ($(wc -c < data.json) bytes)"
+
+          # Show a few examples
+          echo ""
+          echo "Sample briefs:"
+          jq -r '.issues[:5][] | "\(.key): brief=\(.brief[:80]// "none") | accounts=\(.affectedAccounts)"' data.json
 
       - name: Commit and push
         run: |
