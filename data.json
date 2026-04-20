@@ -1,6 +1,6 @@
 {
-  "total": 373,
-  "fetchedAt": "2026-04-20T11:58:30Z",
+  "total": 374,
+  "fetchedAt": "2026-04-20T16:21:18Z",
   "projects": [
     "MCB",
     "MC",
@@ -1492,8 +1492,8 @@
       "key": "MCB-107",
       "project": "MCB",
       "summary": "Yelp EP Not Getting Disabled in Halo",
-      "status": "Dev In Progress",
-      "statusCategory": "In Progress",
+      "status": "Deployed",
+      "statusCategory": "Done",
       "priority": "P3",
       "components": [
         "Backend",
@@ -1503,7 +1503,7 @@
         "techsupport"
       ],
       "created": "2026-03-03T10:47:55.238-0800",
-      "updated": "2026-04-16T07:46:38.861-0700",
+      "updated": "2026-04-20T09:06:20.547-0700",
       "type": "Bug",
       "reporter": "Karla Cruz"
     },
@@ -2037,7 +2037,7 @@
         "techsupport"
       ],
       "created": "2026-03-11T08:16:02.854-0700",
-      "updated": "2026-04-19T23:52:42.536-0700",
+      "updated": "2026-04-20T09:13:10.557-0700",
       "type": "Bug",
       "reporter": "Karla Cruz"
     },
@@ -2074,7 +2074,7 @@
         "techsupport"
       ],
       "created": "2026-03-11T13:43:52.157-0700",
-      "updated": "2026-04-16T07:23:54.098-0700",
+      "updated": "2026-04-20T07:48:19.618-0700",
       "type": "Bug",
       "reporter": "Naomi Caraballo Jiminian"
     },
@@ -2094,7 +2094,7 @@
         "techsupport"
       ],
       "created": "2026-03-11T15:46:29.410-0700",
-      "updated": "2026-04-19T18:39:10.398-0700",
+      "updated": "2026-04-20T08:02:56.647-0700",
       "type": "Bug",
       "reporter": "Josh Melgoza"
     },
@@ -2858,7 +2858,7 @@
         "techsupport"
       ],
       "created": "2026-03-24T18:09:10.760-0700",
-      "updated": "2026-04-17T09:22:22.070-0700",
+      "updated": "2026-04-20T08:02:55.066-0700",
       "type": "Bug",
       "reporter": "Scott Savage"
     },
@@ -3109,7 +3109,7 @@
         "techsupport"
       ],
       "created": "2026-03-27T14:32:11.728-0700",
-      "updated": "2026-04-16T14:28:45.385-0700",
+      "updated": "2026-04-20T08:12:27.484-0700",
       "type": "Bug",
       "reporter": "Karla Cruz"
     },
@@ -3445,8 +3445,8 @@
       "key": "MCB-220",
       "project": "MCB",
       "summary": "Visitor Tagging and/or Heatmap HTML Not Tracking Website Analytics - V6",
-      "status": "Dev In Progress",
-      "statusCategory": "In Progress",
+      "status": "Released",
+      "statusCategory": "Done",
       "priority": "P3",
       "components": [
         "Analytics"
@@ -3455,7 +3455,7 @@
         "techsupport"
       ],
       "created": "2026-04-03T06:41:07.935-0700",
-      "updated": "2026-04-17T09:40:00.912-0700",
+      "updated": "2026-04-20T08:12:46.561-0700",
       "type": "Bug",
       "reporter": "Erika Galindo"
     },
@@ -3605,8 +3605,8 @@
       "key": "MCB-232",
       "project": "MCB",
       "summary": "TL Report Button Greyed Out - V3",
-      "status": "Dev Backlog",
-      "statusCategory": "To Do",
+      "status": "Dev In Progress",
+      "statusCategory": "In Progress",
       "priority": "P3",
       "components": [
         "Thryv Leads"
@@ -3615,7 +3615,7 @@
         "techsupport"
       ],
       "created": "2026-04-07T12:19:10.833-0700",
-      "updated": "2026-04-16T15:27:17.344-0700",
+      "updated": "2026-04-20T08:05:06.466-0700",
       "type": "Bug",
       "reporter": "Karla Cruz"
     },
@@ -3641,7 +3641,7 @@
       "key": "MCB-234",
       "project": "MCB",
       "summary": "Website Analytics and Conversions Do Not Match Editor Stats in MC |  ThryvID dxollcvdxex1uguw",
-      "status": "Deployed",
+      "status": "Released",
       "statusCategory": "Done",
       "priority": "P2",
       "components": [
@@ -3651,7 +3651,7 @@
         "techsupport"
       ],
       "created": "2026-04-08T09:13:46.868-0700",
-      "updated": "2026-04-17T07:32:43.298-0700",
+      "updated": "2026-04-20T06:09:52.714-0700",
       "type": "Bug",
       "reporter": "Ryan Lann"
     },
@@ -3687,7 +3687,7 @@
         "techsupport"
       ],
       "created": "2026-04-08T11:30:29.748-0700",
-      "updated": "2026-04-10T12:31:43.745-0700",
+      "updated": "2026-04-20T09:18:30.280-0700",
       "type": "Bug",
       "reporter": "Karla Cruz"
     },
@@ -4195,8 +4195,8 @@
       "key": "MCB-265",
       "project": "MCB",
       "summary": "Visitor Tagging and/or Heatmap HTML Not Tracking Website Analytics - V7",
-      "status": "Dev Backlog",
-      "statusCategory": "To Do",
+      "status": "Dev In Progress",
+      "statusCategory": "In Progress",
       "priority": "P3",
       "components": [
         "Analytics"
@@ -4205,7 +4205,7 @@
         "techsupport"
       ],
       "created": "2026-04-14T06:19:17.669-0700",
-      "updated": "2026-04-17T11:19:10.440-0700",
+      "updated": "2026-04-20T08:14:04.591-0700",
       "type": "Bug",
       "reporter": "Karla Cruz"
     },
@@ -4297,7 +4297,7 @@
         "techsupport"
       ],
       "created": "2026-02-10T17:22:35.969-0800",
-      "updated": "2026-04-17T06:12:50.826-0700",
+      "updated": "2026-04-20T08:02:55.845-0700",
       "type": "Bug",
       "reporter": "Josh Melgoza"
     },
@@ -4388,7 +4388,7 @@
         "techsupport"
       ],
       "created": "2026-04-15T09:39:50.249-0700",
-      "updated": "2026-04-15T11:41:47.083-0700",
+      "updated": "2026-04-20T08:02:31.657-0700",
       "type": "Bug",
       "reporter": "Naomi Caraballo Jiminian"
     },
@@ -4440,7 +4440,7 @@
         "techsupport"
       ],
       "created": "2026-04-16T07:41:19.421-0700",
-      "updated": "2026-04-17T10:30:21.826-0700",
+      "updated": "2026-04-20T08:39:30.442-0700",
       "type": "Bug",
       "reporter": "Erika Galindo"
     },
@@ -4477,7 +4477,7 @@
         "techsupport"
       ],
       "created": "2026-04-16T10:46:32.173-0700",
-      "updated": "2026-04-17T17:12:15.107-0700",
+      "updated": "2026-04-20T07:37:17.603-0700",
       "type": "Bug",
       "reporter": "Vanessa Angelina Garcia"
     },
@@ -4557,8 +4557,8 @@
       "key": "MCB-290",
       "project": "MCB",
       "summary": "Unable to Publish Listings: Entity Not Found - LOC97A9F083",
-      "status": "Dev Backlog",
-      "statusCategory": "To Do",
+      "status": "Dev In Progress",
+      "statusCategory": "In Progress",
       "priority": "P3",
       "components": [
         "Listings Manager"
@@ -4567,7 +4567,7 @@
         "techsupport"
       ],
       "created": "2026-04-17T06:35:13.780-0700",
-      "updated": "2026-04-17T10:37:29.174-0700",
+      "updated": "2026-04-20T08:39:12.027-0700",
       "type": "Bug",
       "reporter": "Karla Cruz"
     },
@@ -4621,7 +4621,7 @@
         "techsupport"
       ],
       "created": "2026-04-17T11:00:32.776-0700",
-      "updated": "2026-04-17T12:44:02.412-0700",
+      "updated": "2026-04-20T07:06:12.697-0700",
       "type": "Bug",
       "reporter": "Karla Cruz"
     },
@@ -4663,6 +4663,24 @@
       "updated": "2026-04-17T21:38:48.397-0700",
       "type": "Bug",
       "reporter": "Scott Savage"
+    },
+    {
+      "key": "MCB-296",
+      "project": "MCB",
+      "summary": "Multi location BNI - Wrong Account Sent to Ginger",
+      "status": "In Review",
+      "statusCategory": "In Progress",
+      "priority": "P3",
+      "components": [
+        "Listings Manager"
+      ],
+      "labels": [
+        "techsupport"
+      ],
+      "created": "2026-04-20T08:26:42.584-0700",
+      "updated": "2026-04-20T08:41:58.882-0700",
+      "type": "Bug",
+      "reporter": "Naomi Caraballo Jiminian"
     },
     {
       "key": "MCB-30",
