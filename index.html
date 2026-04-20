@@ -56,7 +56,7 @@ a{color:#5378FC;text-decoration:none;font-weight:500}a:hover{text-decoration:und
 .filters{display:flex;align-items:center;gap:8px;margin-bottom:14px}
 .fb{padding:5px 14px;border-radius:100px;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0;border:1.5px solid #ECEEF1;background:#fff;color:#808080;font-family:inherit}
 .fb:hover{border-color:#D0D0D0;color:#4D4D4D}.fb.on{color:#fff}
-.sinput{margin-left:auto;padding:5px 14px;border-radius:100px;font-size:11px;border:1px solid #ECEEF1;width:180px;flex-shrink:0;background:#fff;color:#121212;font-family:inherit}
+.sinput{margin-left:auto;padding:5px 14px;border-radius:100px;font-size:11px;border:1px solid #ECEEF1;width:220px;flex-shrink:0;background:#fff;color:#121212;font-family:inherit}
 .sinput:focus{outline:none;border-color:#5378FC}
 .tbl-wrap{background:#fff;border:1px solid #ECEEF1;border-radius:10px;overflow:hidden;margin-bottom:20px}
 table{width:100%;border-collapse:collapse}
@@ -67,11 +67,13 @@ tbody td{padding:12px 12px;vertical-align:top}
 .td-issue{max-width:420px}
 .td-issue-name{font-size:13px;font-weight:600;color:#121212;margin-bottom:2px}
 .td-issue-brief{font-size:11.5px;color:#808080;line-height:1.4;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.td-issue-keys{font-size:10.5px;color:#808080;font-family:'SF Mono',Consolas,monospace}
-.td-issue-keys a{font-weight:400;font-size:10.5px}
-.td-tickets{white-space:nowrap;font-size:12px;font-weight:600;color:#4D4D4D}
-.td-tickets .dir{font-size:10px;font-weight:500;display:block;margin-top:1px}
-.td-tickets .accts{font-size:10px;color:#FF5000;font-weight:600;display:block;margin-top:1px}
+.td-issue-keys{font-size:10.5px;color:#AAAAAA;font-family:'SF Mono',Consolas,monospace}
+.td-issue-keys a{font-weight:400;font-size:10.5px;color:#AAAAAA}
+.td-issue-keys a:hover{color:#5378FC}
+.td-tickets{white-space:nowrap;font-size:12px;color:#4D4D4D}
+.td-accts{font-size:18px;font-weight:700;color:#FF5000;line-height:1}
+.td-accts-label{font-size:10px;color:#808080;font-weight:500}
+.td-accts-sub{font-size:10px;color:#808080;margin-top:2px}
 .empty-msg{text-align:center;padding:40px;color:#808080;font-size:13px}
 .incident{background:#fff;border:1px solid #ECEEF1;border-left:4px solid #FF5000;border-radius:10px;padding:18px 20px;margin-bottom:20px}
 .inc-hdr{display:flex;align-items:center;gap:8px;margin-bottom:12px}.inc-icon{font-size:16px}.inc-title{font-size:14px;font-weight:600;color:#29355D}
@@ -95,7 +97,7 @@ tbody td{padding:12px 12px;vertical-align:top}
 <div class="alert" id="alert"><b id="atitle"></b><p id="atext"></p></div>
 <div class="sum-row" id="sumrow"></div>
 <div class="prod-row" id="prodrow"></div>
-<div class="lookup"><div class="lookup-row"><span class="lookup-lbl">Ticket lookup</span><input class="lookup-in" id="lin" placeholder="MCB-290" oninput="doLookup()"><span id="lout"></span></div></div>
+<div class="lookup"><div class="lookup-row"><span class="lookup-lbl">Ticket lookup</span><input class="lookup-in" id="lin" placeholder="Search by ticket #, Thryv ID, or keyword..." oninput="doLookup()"><span id="lout"></span></div></div>
 <div class="shdr"><span class="stitle">Known Issues</span><span class="scount" id="icnt">0</span></div>
 <div class="filters" id="flt"></div>
 <div class="tbl-wrap"><table><thead id="th"></thead><tbody id="tb"></tbody></table><div class="empty-msg" id="empty" style="display:none">No issues match your filters.</div></div>
@@ -109,20 +111,12 @@ tbody td{padding:12px 12px;vertical-align:top}
 <div class="footer">Thryv Advanced Technical Support &middot; Known Issues Dashboard &middot; Live from Jira (MCB)<br>Updated every 2 hours &middot; Issues with 3+ tickets only &middot; <span id="fdate"></span></div>
 </div>
 <script>
-var D='data.json';
-var PM={'Marketing Center':{c:'p-mc',bg:'#3C3489',a:'#3C3489'},'Online Listings':{c:'p-ol',bg:'#29355D',a:'#29355D'},'ThryvPay':{c:'p-tp',bg:'#5378FC',a:'#5378FC'}};
-var PCL={P1:'p-p1',P2:'p-p2',P3:'p-p3',P4:'p-p4'};
-var PLA={P1:'Critical',P2:'High',P3:'Medium',P4:'Low'};
-var POR={P1:0,P2:1,P3:2,P4:3};
-function stPill(sc){if(sc==='Done')return'p-done';if(sc==='In Progress')return'p-prog';return'p-todo';}
+var D='data.json',PM={'Marketing Center':{c:'p-mc',bg:'#3C3489',a:'#3C3489'},'Online Listings':{c:'p-ol',bg:'#29355D',a:'#29355D'},'ThryvPay':{c:'p-tp',bg:'#5378FC',a:'#5378FC'}};
+var PCL={P1:'p-p1',P2:'p-p2',P3:'p-p3',P4:'p-p4'},PLA={P1:'Critical',P2:'High',P3:'Medium',P4:'Low'},POR={P1:0,P2:1,P3:2,P4:3};
+function stPill(sc){return sc==='Done'?'p-done':sc==='In Progress'?'p-prog':'p-todo';}
 var ALL=[],GRP=[],flt='All',src='',sKey='priority',sDir='asc';
 
-function cls(i){
-  var c=(i.components||[]).join(' ').toLowerCase(),s=(i.summary||'').toLowerCase();
-  if(s.indexOf('thryvpay')>=0||s.indexOf('stripe')>=0||s.indexOf('ach ')>=0||s.indexOf('card reader')>=0||s.indexOf('payment')>=0||s.indexOf('payout')>=0||s.indexOf('merchant')>=0||s.indexOf('checkout')>=0||s.indexOf('wisetack')>=0||s.indexOf('processing fee')>=0||s.indexOf('card on file')>=0||s.indexOf('tp application')>=0||s.indexOf('tp account')>=0)return'ThryvPay';
-  if(c.indexOf('listings manager')>=0||c.indexOf('growth package')>=0||s.indexOf('listing')>=0||s.indexOf('yext')>=0||s.indexOf('yelp')>=0||s.indexOf('gump')>=0||s.indexOf('ginger')>=0||s.indexOf('publish')>=0||s.indexOf('lm ')>=0||s.indexOf('ctn')>=0||s.indexOf('ep ')>=0||s.indexOf('enhanced profile')>=0||s.indexOf('ypo')>=0||s.indexOf('linkout')>=0||s.indexOf('gp ')>=0||s.indexOf('growth package')>=0)return'Online Listings';
-  return'Marketing Center';
-}
+function cls(i){var c=(i.components||[]).join(' ').toLowerCase(),s=(i.summary||'').toLowerCase();if(s.indexOf('thryvpay')>=0||s.indexOf('stripe')>=0||s.indexOf('ach ')>=0||s.indexOf('card reader')>=0||s.indexOf('payment')>=0||s.indexOf('payout')>=0||s.indexOf('merchant')>=0||s.indexOf('checkout')>=0||s.indexOf('wisetack')>=0||s.indexOf('processing fee')>=0||s.indexOf('card on file')>=0||s.indexOf('tp application')>=0||s.indexOf('tp account')>=0)return'ThryvPay';if(c.indexOf('listings manager')>=0||c.indexOf('growth package')>=0||s.indexOf('listing')>=0||s.indexOf('yext')>=0||s.indexOf('yelp')>=0||s.indexOf('gump')>=0||s.indexOf('ginger')>=0||s.indexOf('publish')>=0||s.indexOf('lm ')>=0||s.indexOf('ctn')>=0||s.indexOf('ep ')>=0||s.indexOf('enhanced profile')>=0||s.indexOf('ypo')>=0||s.indexOf('linkout')>=0||s.indexOf('gp ')>=0||s.indexOf('growth package')>=0)return'Online Listings';return'Marketing Center';}
 function cln(s){s=(s||'').trim();s=s.replace(/^\*[^*]+\*\s*/,'');s=s.replace(/\s*\|.*$/,'');s=s.replace(/\s*-\s*https?:\/\/\S+$/i,'');s=s.replace(/\s*-\s*www\.\S+$/i,'');s=s.replace(/\s*-\s*\S+\.\S{2,6}(\/\S*)?$/,'');s=s.replace(/\s*-\s*LOC[A-Z0-9]+$/i,'');s=s.replace(/\s*-\s*acct_\S+.*$/i,'');s=s.replace(/\s*-\s*[a-z0-9]{16,}(\s*\/\s*[a-z0-9]{16,})?$/i,'');s=s.replace(/\s*-\s*ZD\s*#?\d+.*$/i,'');s=s.replace(/\s*[-\u2013\u2014]\s*V\d+$/i,'');s=s.replace(/\s*V\d+$/i,'');return s.trim();}
 
 var SYNONYMS=[
@@ -138,41 +132,19 @@ var SYNONYMS=[
   {key:'yelp ep link / linkout issue',patterns:['yelp ep link provisioning issue','yelp ep linkout issue']},
   {key:'yelp cpc fulfillment issue',patterns:['yelp cpc fulfillment issue','yelp fulfillment issue']},
   {key:'manual yelp re-order request',patterns:['manual re-order request for yelp business listing']},
-  {key:'ep-ypo installation issues',patterns:['ep-ypo installation issues']},
+  {key:'ep-ypo installation issues',patterns:['ep-ypo installation issues','enhanced profiles not auto-enabling']},
   {key:'qr code google reviews broken url',patterns:['qr code for google reviews redirects to broken url','qr code for google reviews']},
   {key:'mcf upgrade failed',patterns:['mcf to mcplus upgrade failed','mcf to mcpro upgrade failed']},
   {key:'o & o ctn reprovision request',patterns:['o & o ctn reprovision request']},
   {key:'unable to update dn in mc',patterns:['unable to update dn in mc']},
-  {key:'tl report button greyed out',patterns:['tl report button greyed out']},
+  {key:'tl report button greyed out',patterns:['tl report button greyed out','thryv leads button grayed out']},
   {key:'tl calls not injecting to mc',patterns:['tl calls not injecting','tl calls not appearing','eligible tl calls not injecting']},
   {key:'gbp analytics not syncing',patterns:['gbp analytics not syncing','gbp analytics stopped syncing','ep analytics not flowing']},
   {key:'lm & reputation failing to load',patterns:['lm and reputation failing to load','lm & reputation not loading']},
   {key:'mc addon services issue',patterns:['mc addon','mc addon services']},
   {key:'security issues in prototype',patterns:['security issues in prototype']},
 ];
-var LABELS={
-  'alpha template issue':'Alpha Template Issue (Missing / Update)',
-  'missing gp add on':'Missing GP Add On',
-  'missing tl add on in mc':'Missing TL Add On in MC',
-  'seo report link not available':'SEO Report Link Not Available',
-  'mc not installed':'MC Not Installed',
-  'mc updates not going to ginger':'MC Updates Not Going to Ginger / Gump',
-  'unable to publish listings':'Unable to Publish Listings',
-  'lm yext integration failures':'LM Yext Integration Failures (External ID / Existing Account)',
-  'visitor tagging / heatmap analytics':'Visitor Tagging / Heatmap Not Tracking Analytics',
-  'yelp ep link / linkout issue':'Yelp EP Link Provisioning / Linkout Issue',
-  'yelp cpc fulfillment issue':'Yelp CPC Fulfillment Issue',
-  'manual yelp re-order request':'Manual Re-order Request for Yelp Listing',
-  'ep-ypo installation issues':'EP-YPO Installation Issues',
-  'qr code google reviews broken url':'QR Code for Google Reviews \u2014 Broken URL',
-  'mcf upgrade failed':'MCF Upgrade Failed',
-  'tl report button greyed out':'TL Report Button Greyed Out',
-  'tl calls not injecting to mc':'TL Calls Not Injecting to MC',
-  'gbp analytics not syncing':'GBP Analytics Not Syncing',
-  'lm & reputation failing to load':'LM & Reputation Failing to Load for Non-Primary Users',
-  'mc addon services issue':'MC Addon Services Issue',
-  'security issues in prototype':'Security Issues in Prototype',
-};
+var LABELS={'alpha template issue':'Alpha Template Issue (Missing / Update)','missing gp add on':'Missing GP add-on \u2014 not appearing in MC','missing tl add on in mc':'Missing TL Add On in MC','seo report link not available':'SEO Report Link Not Available','mc not installed':'MC Not Installed','mc updates not going to ginger':'MC Updates Not Going to Ginger / Gump','unable to publish listings':'Unable to Publish Listings','lm yext integration failures':'LM Yext Integration Failures','visitor tagging / heatmap analytics':'Website Analytics / Visitor Tagging Not Tracking','yelp ep link / linkout issue':'Yelp EP Link Provisioning / Linkout Issue','yelp cpc fulfillment issue':'Yelp CPC Fulfillment Issue','manual yelp re-order request':'Manual Re-order Request for Yelp Listing','ep-ypo installation issues':'Enhanced Profiles Not Auto-Enabling / GP Not Generating','qr code google reviews broken url':'QR Code for Google Reviews \u2014 Broken URL','mcf upgrade failed':'MCF Upgrade Failed','tl report button greyed out':'Thryv Leads Button Grayed Out / Report Unavailable','tl calls not injecting to mc':'TL Calls Not Injecting to MC','gbp analytics not syncing':'GBP Analytics Not Syncing','lm & reputation failing to load':'LM & Reputation Failing to Load','mc addon services issue':'MC Addon Services Issue','security issues in prototype':'Security Issues in Prototype'};
 
 function gk(s){s=cln(s);s=s.replace(/\s*[-\u2013\u2014]\s*V\d+$/i,'');s=s.replace(/\s*V\d+$/i,'');s=s.replace(/\s*[-\u2013\u2014]\s*#?\d+$/,'');s=s.replace(/\s*\(.*?\)\s*$/,'');s=s.replace(/\s+/g,' ').trim().toLowerCase();for(var i=0;i<SYNONYMS.length;i++){var syn=SYNONYMS[i];for(var j=0;j<syn.patterns.length;j++){if(s.indexOf(syn.patterns[j])===0||s===syn.patterns[j])return syn.key;}}return s;}
 function da(d){return Math.max(0,Math.floor((Date.now()-new Date(d).getTime())/864e5));}
@@ -184,34 +156,21 @@ function tr(arr){var now=Date.now();var out=[];for(var i=0;i<14;i++){var d=new D
 var MIN_TICKETS=3;
 
 function buildGroups(issues){
-  var m={};
-  for(var i=0;i<issues.length;i++){var x=issues[i];var k=gk(x.summary)+'||'+x.product;if(!m[k])m[k]={issues:[],gkey:gk(x.summary)};m[k].issues.push(x);}
+  var m={};for(var i=0;i<issues.length;i++){var x=issues[i];var k=gk(x.summary)+'||'+x.product;if(!m[k])m[k]={issues:[],gkey:gk(x.summary)};m[k].issues.push(x);}
   var result=[];var keys=Object.keys(m);
   for(var ki=0;ki<keys.length;ki++){
-    var g=m[keys[ki]];
-    g.issues.sort(function(a,b){return new Date(b.created)-new Date(a.created);});
+    var g=m[keys[ki]];g.issues.sort(function(a,b){return new Date(b.created)-new Date(a.created);});
     var lt=g.issues[0];
     var vers=[];for(var vi=0;vi<g.issues.length;vi++){var vm=g.issues[vi].summary.match(/V(\d+)/i);if(vm)vers.push(parseInt(vm[1]));}
     var maxV=vers.length?Math.max.apply(null,vers):0;
     var pri=lt.priority;for(var pi=0;pi<g.issues.length;pi++){if((POR[g.issues[pi].priority]||9)<(POR[pri]||9))pri=g.issues[pi].priority;}
-    var hasIP=false,hasTD=false;
-    for(var si=0;si<g.issues.length;si++){var sc=g.issues[si].statusCategory;if(sc==='In Progress')hasIP=true;if(sc==='To Do'||sc==='No Category')hasTD=true;}
+    var hasIP=false,hasTD=false;for(var si=0;si<g.issues.length;si++){var sc=g.issues[si].statusCategory;if(sc==='In Progress')hasIP=true;if(sc==='To Do'||sc==='No Category')hasTD=true;}
     var statusCat=hasIP?'In Progress':hasTD?'To Do':'Done';
     var comps={},labs={};for(var ci=0;ci<g.issues.length;ci++){var gi=g.issues[ci];for(var cc=0;cc<(gi.components||[]).length;cc++)comps[gi.components[cc]]=1;for(var ll=0;ll<(gi.labels||[]).length;ll++)labs[gi.labels[ll]]=1;}
     var label=LABELS[g.gkey]||cln(lt.summary);
-    /* Sum affected accounts across all tickets in group */
     var totalAccts=0;for(var ai=0;ai<g.issues.length;ai++){totalAccts+=(g.issues[ai].affectedAccounts||0);}
-    /* Get best brief from the group (longest non-empty brief) */
     var brief='';for(var bi=0;bi<g.issues.length;bi++){var b=g.issues[bi].brief||'';if(b.length>brief.length)brief=b;}
-    result.push({
-      id:lt.key,label:label,brief:brief,product:lt.product,
-      priority:pri,statusCat:statusCat,statusLabel:lt.status,
-      tickets:g.issues,count:g.issues.length,
-      affectedAccounts:totalAccts,
-      first:g.issues[g.issues.length-1].created,last:lt.updated,
-      comps:Object.keys(comps),labels:Object.keys(labs),
-      versions:maxV,versionCount:vers.length
-    });
+    result.push({id:lt.key,label:label,brief:brief,product:lt.product,priority:pri,statusCat:statusCat,statusLabel:lt.status,tickets:g.issues,count:g.issues.length,affectedAccounts:totalAccts,first:g.issues[g.issues.length-1].created,last:lt.updated,comps:Object.keys(comps),labels:Object.keys(labs),versions:maxV,versionCount:vers.length});
   }
   result=result.filter(function(g){return g.count>=MIN_TICKETS;});
   result.sort(function(a,b){var p=(POR[a.priority]||9)-(POR[b.priority]||9);return p!==0?p:b.count-a.count;});
@@ -219,11 +178,6 @@ function buildGroups(issues){
 }
 
 function showS(t,m){var b=document.getElementById('sbar'),s=document.getElementById('spin'),g=document.getElementById('smsg');b.className='status-bar '+t;s.style.display=t==='loading'?'block':'none';g.textContent=m;if(t==='success')setTimeout(function(){b.className='status-bar';},4000);}
-function trendArrow(g){
-  if(g.versionCount>=2)return'<span class="trend-up">&uarr; '+g.count+' tickets (V'+g.versions+')</span>';
-  if(g.count>=5)return'<span class="trend-up">&uarr; '+g.count+' reports</span>';
-  return'<span class="trend-flat">'+g.count+' open</span>';
-}
 
 function load(){
   showS('loading','Loading known issues from Jira (MCB)...');
@@ -231,7 +185,7 @@ function load(){
     ALL=(d.issues||[]).map(function(i){i.product=cls(i);return i;});
     var t=d.fetchedAt?new Date(d.fetchedAt):new Date();
     document.getElementById('sync-time').textContent=t.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
-    showS('success','Loaded '+ALL.length+' MCB tickets \u2014 showing issues with '+MIN_TICKETS+'+ reports');
+    showS('success','Loaded '+ALL.length+' MCB tickets');
     render();
   }).catch(function(e){showS('error','Failed \u2014 '+e.message);});
 }
@@ -240,45 +194,46 @@ function render(){
   var open=ALL.filter(function(i){return i.statusCategory!=='Done';});
   var res=ALL.filter(function(i){return i.statusCategory==='Done';});
   var byP={};Object.keys(PM).forEach(function(p){byP[p]=ALL.filter(function(i){return i.product===p;});});
-  GRP=buildGroups(open);
-  var rGRP=buildGroups(res);
+  GRP=buildGroups(open);var rGRP=buildGroups(res);
   document.getElementById('fdate').textContent='Data through '+ff(new Date());
 
+  /* Total affected accounts across all open grouped issues */
+  var totalOpenAccts=GRP.reduce(function(s,g){return s+g.affectedAccounts;},0);
+
   var top=GRP[0];var al=document.getElementById('alert');
-  if(top&&(top.priority==='P1'||top.priority==='P2')){al.className='alert show';document.getElementById('atitle').textContent='\u26A0 Active alert: '+top.label;document.getElementById('atext').textContent=top.count+' ticket'+(top.count>1?'s':'')+' \u00B7 '+top.priority+' '+PLA[top.priority]+(top.affectedAccounts?' \u00B7 '+top.affectedAccounts+' affected accounts':'')+' \u00B7 Status: '+top.statusLabel;}
-  else if(top){al.className='alert show';document.getElementById('atitle').textContent='Top issue: '+top.label;document.getElementById('atext').textContent=top.count+' ticket'+(top.count>1?'s':'')+' \u00B7 Priority '+top.priority+(top.affectedAccounts?' \u00B7 '+top.affectedAccounts+' affected accounts':'')+' \u00B7 Status: '+top.statusLabel;}
+  if(top&&(top.priority==='P1'||top.priority==='P2')){al.className='alert show';document.getElementById('atitle').textContent='\u26A0 Active alert: '+top.label;document.getElementById('atext').textContent=(top.affectedAccounts?top.affectedAccounts+' affected accounts':top.count+' tickets')+' \u00B7 '+top.priority+' '+PLA[top.priority]+' \u00B7 Status: '+top.statusLabel;}
+  else if(top){al.className='alert show';document.getElementById('atitle').textContent='Top issue: '+top.label;document.getElementById('atext').textContent=(top.affectedAccounts?top.affectedAccounts+' affected accounts':top.count+' tickets')+' \u00B7 '+top.priority+' \u00B7 Status: '+top.statusLabel;}
   else al.className='alert';
 
-  /* Summary cards count TICKETS by statusCategory, not groups */
   var ipTickets=open.filter(function(i){return i.statusCategory==='In Progress';}).length;
   var blTickets=open.filter(function(i){return i.statusCategory==='To Do'||i.statusCategory==='No Category';}).length;
-  document.getElementById('sumrow').innerHTML='<div class="sum-card" data-type="improving"><div class="sum-title">In progress</div><div class="sum-text">'+ipTickets+' ticket'+(ipTickets!==1?'s':'')+' actively being worked across '+GRP.filter(function(g){return g.statusCat==='In Progress';}).length+' known issues.'+(GRP[0]?' Top: '+GRP[0].label+'.':'')+'</div></div><div class="sum-card" data-type="trending"><div class="sum-title">Backlog</div><div class="sum-text">'+blTickets+' ticket'+(blTickets!==1?'s':'')+' in dev backlog across '+GRP.filter(function(g){return g.statusCat==='To Do';}).length+' known issues.</div></div><div class="sum-card" data-type="resolved"><div class="sum-title">Recently resolved</div><div class="sum-text">'+rGRP.length+' issue group'+(rGRP.length!==1?'s':'')+' resolved in the last 30 days ('+res.length+' tickets total).</div></div>';
+  document.getElementById('sumrow').innerHTML='<div class="sum-card" data-type="improving"><div class="sum-title">In progress</div><div class="sum-text">'+ipTickets+' ticket'+(ipTickets!==1?'s':'')+' actively being worked across '+GRP.filter(function(g){return g.statusCat==='In Progress';}).length+' known issues.'+(GRP[0]?' Top: '+GRP[0].label+'.':'')+'</div></div><div class="sum-card" data-type="trending"><div class="sum-title">Backlog</div><div class="sum-text">'+blTickets+' ticket'+(blTickets!==1?'s':'')+' in dev backlog across '+GRP.filter(function(g){return g.statusCat==='To Do';}).length+' known issues.</div></div><div class="sum-card" data-type="resolved"><div class="sum-title">Recently resolved</div><div class="sum-text">'+rGRP.length+' issue group'+(rGRP.length!==1?'s':'')+' resolved in the last 30 days ('+res.length+' tickets).</div></div>';
 
   document.getElementById('prodrow').innerHTML=Object.keys(PM).map(function(n){
     var s=PM[n],a=byP[n]||[],o=a.filter(function(i){return i.statusCategory!=='Done';}),r=a.filter(function(i){return i.statusCategory==='Done';});
-    var og=buildGroups(o);
+    var og=buildGroups(o);var totalA=og.reduce(function(s,g){return s+g.affectedAccounts;},0);
     var h=o.length===0?['All clear','#4CAF50']:o.some(function(i){return i.priority==='P1';})?['Critical','#FF5000']:o.some(function(i){return i.priority==='P2';})?['Needs attention','#FF9800']:['Monitoring','#5378FC'];
     var td=tr(a),recent=td.slice(7).reduce(function(a,b){return a+b;},0),prior=td.slice(0,7).reduce(function(a,b){return a+b;},0);
     var tdir=recent>prior?'<span class="trend-up">&uarr; trending up</span>':recent<prior?'<span class="trend-down">&darr; improving</span>':'<span class="trend-flat">&rarr; steady</span>';
-    return'<div class="pcard"><div class="pcard-top"><span class="pcard-name">'+n+'</span><span class="pcard-badge" style="background:'+h[1]+'15;color:'+h[1]+';border-color:'+h[1]+'40">'+h[0]+'</span></div><div class="pcard-stats"><div><div class="pcard-n" style="color:'+s.a+'">'+og.length+'</div><div class="pcard-l">known issues</div></div><div><div class="pcard-n" style="color:#BA7517">'+o.length+'</div><div class="pcard-l">total tickets</div></div><div><div class="pcard-n" style="color:#639922">'+r.length+'</div><div class="pcard-l">resolved</div></div></div><div class="pcard-spark">'+spk(td,s.a)+'</div><div class="pcard-trend">'+tdir+'</div></div>';
+    return'<div class="pcard"><div class="pcard-top"><span class="pcard-name">'+n+'</span><span class="pcard-badge" style="background:'+h[1]+'15;color:'+h[1]+';border-color:'+h[1]+'40">'+h[0]+'</span></div><div class="pcard-stats"><div><div class="pcard-n" style="color:'+s.a+'">'+og.length+'</div><div class="pcard-l">known issues</div></div><div><div class="pcard-n" style="color:#BA7517">'+o.length+'</div><div class="pcard-l">open tickets</div></div><div><div class="pcard-n" style="color:#FF5000">'+(totalA||'\u2014')+'</div><div class="pcard-l">affected accts</div></div></div><div class="pcard-spark">'+spk(td,s.a)+'</div><div class="pcard-trend">'+tdir+'</div></div>';
   }).join('');
 
   document.getElementById('flt').innerHTML=['All'].concat(Object.keys(PM)).map(function(p){
     var on=flt===p,cnt=p!=='All'?' ('+buildGroups((byP[p]||[]).filter(function(i){return i.statusCategory!=='Done';})).length+')':'';
     var s=PM[p],bg=on?(s?s.bg:'#29355D'):'#fff',bc=on?(s?s.bg:'#29355D'):'#ECEEF1',cl=on?'#fff':'#808080';
     return'<button class="fb'+(on?' on':'')+'" style="background:'+bg+';border-color:'+bc+';color:'+cl+'" onclick="sf(\''+p+'\')">'+p+cnt+'</button>';
-  }).join('')+'<input class="sinput" placeholder="Search issues..." value="'+src+'" oninput="ss(this.value)">';
+  }).join('')+'<input class="sinput" placeholder="Search by ticket #, Thryv ID, or keyword..." value="'+src+'" oninput="ss(this.value)">';
   renderTable();renderInc(top);renderRes(rGRP);
 }
 
 function renderTable(){
   var g=GRP.slice();
   if(flt!=='All')g=g.filter(function(x){return x.product===flt;});
-  if(src)g=g.filter(function(x){return x.label.toLowerCase().indexOf(src.toLowerCase())>=0||x.tickets.some(function(t){return t.key.toLowerCase().indexOf(src.toLowerCase())>=0;});});
-  document.getElementById('icnt').textContent=g.length+' issues ('+g.reduce(function(s,x){return s+x.count;},0)+' tickets)';
+  if(src)g=g.filter(function(x){return x.label.toLowerCase().indexOf(src.toLowerCase())>=0||x.brief.toLowerCase().indexOf(src.toLowerCase())>=0||x.tickets.some(function(t){return t.key.toLowerCase().indexOf(src.toLowerCase())>=0;});});
+  document.getElementById('icnt').textContent=g.length+' issues';
   var ar=function(k){return sKey===k?(sDir==='asc'?' \u2191':' \u2193'):'';};
-  document.getElementById('th').innerHTML='<tr><th onclick="ds(\'issue\')" style="width:42%">Issue'+ar('issue')+'</th><th onclick="ds(\'product\')" style="width:11%">Product'+ar('product')+'</th><th onclick="ds(\'priority\')" style="width:7%">Priority'+ar('priority')+'</th><th onclick="ds(\'tickets\')" style="width:11%">Tickets'+ar('tickets')+'</th><th onclick="ds(\'status\')" style="width:13%">Status'+ar('status')+'</th><th onclick="ds(\'date\')" style="width:9%">Reported'+ar('date')+'</th><th style="width:7%">Age</th></tr>';
-  if(sKey==='tickets')g.sort(function(a,b){return sDir==='asc'?a.count-b.count:b.count-a.count;});
+  document.getElementById('th').innerHTML='<tr><th onclick="ds(\'issue\')" style="width:44%">Issue'+ar('issue')+'</th><th onclick="ds(\'product\')" style="width:11%">Product'+ar('product')+'</th><th onclick="ds(\'priority\')" style="width:7%">Priority'+ar('priority')+'</th><th onclick="ds(\'tickets\')" style="width:11%">Affected'+ar('tickets')+'</th><th onclick="ds(\'status\')" style="width:12%">Status'+ar('status')+'</th><th onclick="ds(\'date\')" style="width:8%">Reported'+ar('date')+'</th><th style="width:7%">Age</th></tr>';
+  if(sKey==='tickets')g.sort(function(a,b){var aa=a.affectedAccounts||a.count,bb=b.affectedAccounts||b.count;return sDir==='asc'?aa-bb:bb-aa;});
   else if(sKey==='product')g.sort(function(a,b){return sDir==='asc'?a.product.localeCompare(b.product):b.product.localeCompare(a.product);});
   else if(sKey==='date')g.sort(function(a,b){return sDir==='asc'?new Date(a.first)-new Date(b.first):new Date(b.first)-new Date(a.first);});
   else if(sKey==='status')g.sort(function(a,b){return sDir==='asc'?a.statusCat.localeCompare(b.statusCat):b.statusCat.localeCompare(a.statusCat);});
@@ -287,16 +242,19 @@ function renderTable(){
   document.getElementById('tb').innerHTML=g.map(function(x){
     var keys=x.tickets.map(function(t){return'<a href="https://thryv.atlassian.net/browse/'+t.key+'" target="_blank">'+t.key+'</a>';}).join(' ');
     var briefHtml=x.brief?'<div class="td-issue-brief">'+x.brief+'</div>':'';
-    var acctsHtml=x.affectedAccounts>0?'<span class="accts">'+x.affectedAccounts+' affected accounts</span>':'';
-    return'<tr><td class="td-issue"><div class="td-issue-name">'+x.label+'</div>'+briefHtml+'<div class="td-issue-keys">'+keys+'</div></td><td>'+pl(x.product,(PM[x.product]||{}).c||'p-mc')+'</td><td>'+pl(x.priority,PCL[x.priority]||'p-p3')+'</td><td class="td-tickets">'+x.count+' open<div class="dir">'+trendArrow(x)+'</div>'+acctsHtml+'</td><td>'+pl(x.statusLabel,stPill(x.statusCat))+'</td><td style="font-size:11px;color:#808080;white-space:nowrap">'+fd(x.first)+'</td><td style="font-size:11px;color:#808080;white-space:nowrap">'+da(x.first)+'d</td></tr>';
+    var accts=x.affectedAccounts;
+    var acctsCell=accts>0?'<div class="td-accts">'+accts+'</div><div class="td-accts-label">affected accounts</div><div class="td-accts-sub">'+x.count+' tickets</div>':'<div class="td-accts" style="color:#4D4D4D">'+x.count+'</div><div class="td-accts-label">open tickets</div>';
+    return'<tr><td class="td-issue"><div class="td-issue-name">'+x.label+'</div>'+briefHtml+'<div class="td-issue-keys">'+keys+'</div></td><td>'+pl(x.product,(PM[x.product]||{}).c||'p-mc')+'</td><td>'+pl(x.priority,PCL[x.priority]||'p-p3')+'</td><td class="td-tickets">'+acctsCell+'</td><td>'+pl(x.statusLabel,stPill(x.statusCat))+'</td><td style="font-size:11px;color:#808080;white-space:nowrap">'+fd(x.first)+'</td><td style="font-size:11px;color:#808080;white-space:nowrap">'+da(x.first)+'d</td></tr>';
   }).join('');
 }
 
 function renderInc(top){
   if(!top){document.getElementById('incident').innerHTML='';return;}
   var sev=top.priority==='P1'?'Critical \u2014 Severe disruption to essential business functions':top.priority==='P2'?'High \u2014 Major function down for a subset of users':'Medium \u2014 Moderate impact, feature not working as expected';
-  var acctsNote=top.affectedAccounts>0?' Across all tickets, '+top.affectedAccounts+' client accounts have been reported as affected.':'';
-  document.getElementById('incident').innerHTML='<div class="incident"><div class="inc-hdr"><span class="inc-icon">\u26A0</span><span class="inc-title">Incident Communication \u2014 '+top.label+'</span></div><div class="inc-grid"><span class="inc-label">Priority:</span><span class="inc-val">'+pl(top.priority,PCL[top.priority])+' '+PLA[top.priority]+'</span><span class="inc-label">Severity:</span><span class="inc-val">'+sev+'</span><span class="inc-label">Status:</span><span class="inc-val">'+top.statusLabel+'</span><span class="inc-label">Tickets:</span><span class="inc-val">'+top.count+' open'+(top.versionCount>=2?' (V'+top.versions+')':'')+'</span>'+(top.affectedAccounts>0?'<span class="inc-label">Affected:</span><span class="inc-val" style="color:#FF5000;font-weight:600">'+top.affectedAccounts+' accounts</span>':'')+'<span class="inc-label">Reported:</span><span class="inc-val">'+fd(top.first)+' ('+da(top.first)+' days ago)</span></div><div class="inc-section"><div class="inc-section-title">Impact summary</div><div class="inc-section-text">'+(top.brief||top.label)+acctsNote+' Product area: '+top.product+'. '+(top.comps.length?'Components: '+top.comps.join(', ')+'.':'')+' This issue has been reported '+top.count+' time'+(top.count>1?'s':'')+' since '+fd(top.first)+' and is currently in "'+top.statusLabel+'" status.</div></div><div class="inc-section"><div class="inc-section-title">Client-facing message</div><div class="inc-section-text">"We\'re aware of a technical issue affecting '+top.product.toLowerCase()+' functionality. Your subscription is active and no data has been lost. Our engineering team has prioritized this and a fix is in progress. We\'ll follow up once resolved."</div></div><div class="inc-section"><div class="inc-section-title">Internal notes</div><div class="inc-section-text">Latest ticket: <a href="https://thryv.atlassian.net/browse/'+top.id+'" target="_blank">'+top.id+'</a>. '+top.count+' total reports from ATS team. '+(top.versionCount>=2?'Issue has been reported across '+top.versionCount+' versions (up to V'+top.versions+'). ':'')+'Submit new occurrences as additional tickets referencing this known issue.</div></div></div>';
+  var impactText=top.brief||top.label;
+  if(top.affectedAccounts)impactText+=' Across all tickets, '+top.affectedAccounts+' client accounts have been reported as affected.';
+  impactText+=' Product area: '+top.product+'. '+(top.comps.length?'Components: '+top.comps.join(', ')+'.':'')+' This issue has been reported '+top.count+' time'+(top.count>1?'s':'')+' since '+fd(top.first)+' and is currently in "'+top.statusLabel+'" status.';
+  document.getElementById('incident').innerHTML='<div class="incident"><div class="inc-hdr"><span class="inc-icon">\u26A0</span><span class="inc-title">Incident Communication \u2014 '+top.label+'</span></div><div class="inc-grid"><span class="inc-label">Priority:</span><span class="inc-val">'+pl(top.priority,PCL[top.priority])+' '+PLA[top.priority]+'</span><span class="inc-label">Severity:</span><span class="inc-val">'+sev+'</span><span class="inc-label">Status:</span><span class="inc-val">'+top.statusLabel+'</span><span class="inc-label">Tickets:</span><span class="inc-val">'+top.count+(top.versionCount>=2?' (V'+top.versions+')':'')+'</span>'+(top.affectedAccounts?'<span class="inc-label">Affected:</span><span class="inc-val" style="color:#FF5000;font-weight:700">'+top.affectedAccounts+' accounts</span>':'')+'<span class="inc-label">Reported:</span><span class="inc-val">'+fd(top.first)+' ('+da(top.first)+' days ago)</span></div><div class="inc-section"><div class="inc-section-title">Impact summary</div><div class="inc-section-text">'+impactText+'</div></div><div class="inc-section"><div class="inc-section-title">Client-facing message</div><div class="inc-section-text">"We\'re aware of a technical issue affecting '+top.product.toLowerCase()+' functionality. Your subscription is active and no data has been lost. Our engineering team has prioritized this and a fix is in progress. We\'ll follow up once resolved."</div></div><div class="inc-section"><div class="inc-section-title">Internal notes</div><div class="inc-section-text">Latest ticket: <a href="https://thryv.atlassian.net/browse/'+top.id+'" target="_blank">'+top.id+'</a>. '+top.count+' total reports from ATS team. '+(top.versionCount>=2?'Issue has been reported across '+top.versionCount+' versions (up to V'+top.versions+'). ':'')+'Submit new occurrences as additional tickets referencing this known issue.</div></div></div>';
 }
 
 function renderRes(groups){
@@ -304,7 +262,7 @@ function renderRes(groups){
   var s=groups.slice().sort(function(a,b){return new Date(b.last)-new Date(a.last);}).slice(0,10);
   document.getElementById('resolved').innerHTML='<div class="shdr" style="margin-top:4px"><span class="stitle">Recently Resolved</span><span class="scount">'+groups.length+'</span></div>'+s.map(function(g){
     var d=Math.max(1,Math.round((new Date(g.last)-new Date(g.first))/864e5));
-    return'<div class="rrow"><span class="rk">'+g.id+'</span>'+pl(g.product,(PM[g.product]||{}).c||'p-mc')+pl(g.count+' tickets','p-cnt')+'<span class="rs">'+g.label+'</span><span class="rd">Resolved in '+d+'d</span></div>';
+    return'<div class="rrow"><span class="rk">'+g.id+'</span>'+pl(g.product,(PM[g.product]||{}).c||'p-mc')+'<span class="rs">'+g.label+(g.affectedAccounts?' ('+g.affectedAccounts+' accounts)':'')+'</span><span class="rd">Resolved in '+d+'d</span></div>';
   }).join('');
 }
 
@@ -314,7 +272,7 @@ function ds(k){if(sKey===k)sDir=sDir==='asc'?'desc':'asc';else{sKey=k;sDir=k==='
 function doLookup(){
   var v=document.getElementById('lin').value.trim(),el=document.getElementById('lout');
   if(v.length<2){el.innerHTML='';return;}
-  var h=null;for(var i=0;i<ALL.length;i++){if(ALL[i].key.toLowerCase().indexOf(v.toLowerCase())>=0){h=ALL[i];break;}}
+  var h=null;for(var i=0;i<ALL.length;i++){if(ALL[i].key.toLowerCase().indexOf(v.toLowerCase())>=0||ALL[i].summary.toLowerCase().indexOf(v.toLowerCase())>=0){h=ALL[i];break;}}
   if(h)el.innerHTML='<div class="lookup-out"><span class="lk">'+h.key+'</span>'+pl(h.product,(PM[h.product]||{}).c||'p-mc')+pl(h.priority,PCL[h.priority]||'p-p3')+'<span class="ls">'+cln(h.summary)+'</span><a href="https://thryv.atlassian.net/browse/'+h.key+'" target="_blank">Jira \u2197</a></div>';
   else el.innerHTML='<span style="font-size:11px;color:#808080">No match</span>';
 }
