@@ -143,7 +143,7 @@ tbody td{padding:12px 12px;vertical-align:top}
   <div class="lg"><b>Status:</b><span class="li"><span class="p p-todo">To Do</span></span><span class="li"><span class="p p-prog">In Progress</span></span><span class="li"><span class="p p-done">Done</span></span></div>
   <div class="lg"><b>Product:</b><span class="li"><span class="p p-mc">Marketing Center</span></span><span class="li"><span class="p p-ol">Online Listings</span></span><span class="li"><span class="p p-tp">ThryvPay</span></span></div>
 </div>
-<div class="footer">Thryv Advanced Technical Support &middot; Known Issues Dashboard &middot; Live from Jira<br>Updated every 2 hours &middot; Reported by ATS team &middot; Issues with 3+ tickets only &middot; <span id="fdate"></span></div>
+<div class="footer">Thryv Advanced Technical Support &middot; Known Issues Dashboard &middot; Live from Jira (MCB)<br>Updated every 2 hours &middot; Issues with 3+ tickets only &middot; <span id="fdate"></span></div>
 </div>
 <script>
 var D='data.json';
@@ -155,14 +155,12 @@ var SCL={'To Do':'p-todo','In Progress':'p-prog','Done':'p-done'};
 var ALL=[],GRP=[],flt='All',src='',sKey='priority',sDir='asc';
 
 function cls(i){
-  var c=(i.components||[]).join(' ').toLowerCase(),s=(i.summary||'').toLowerCase(),p=i.project||i.key.split('-')[0];
-  if(p==='TPAY'||p==='MNY') return 'ThryvPay';
+  var c=(i.components||[]).join(' ').toLowerCase(),s=(i.summary||'').toLowerCase();
   if(s.indexOf('thryvpay')>=0||s.indexOf('stripe')>=0||s.indexOf('ach ')>=0||s.indexOf('card reader')>=0||s.indexOf('payment')>=0||s.indexOf('payout')>=0||s.indexOf('merchant')>=0||s.indexOf('checkout')>=0||s.indexOf('wisetack')>=0||s.indexOf('processing fee')>=0||s.indexOf('card on file')>=0||s.indexOf('tp application')>=0||s.indexOf('tp account')>=0) return 'ThryvPay';
-  if(c.indexOf('listings manager')>=0||s.indexOf('listing')>=0||s.indexOf('yext')>=0||s.indexOf('yelp')>=0||s.indexOf('olm')>=0||s.indexOf('gump')>=0||s.indexOf('ginger')>=0||s.indexOf('publish')>=0||s.indexOf('lm ')>=0||s.indexOf('ctn')>=0||s.indexOf('ep ')>=0||s.indexOf('enhanced profile')>=0||s.indexOf('ypo')>=0) return 'Online Listings';
+  if(c.indexOf('listings manager')>=0||c.indexOf('growth package')>=0||s.indexOf('listing')>=0||s.indexOf('yext')>=0||s.indexOf('yelp')>=0||s.indexOf('gump')>=0||s.indexOf('ginger')>=0||s.indexOf('publish')>=0||s.indexOf('lm ')>=0||s.indexOf('ctn')>=0||s.indexOf('ep ')>=0||s.indexOf('enhanced profile')>=0||s.indexOf('ypo')>=0||s.indexOf('linkout')>=0||s.indexOf('gp ')>=0||s.indexOf('growth package')>=0) return 'Online Listings';
   return 'Marketing Center';
 }
 
-/* ── Clean display name ── */
 function cln(s){
   s=(s||'').trim();
   s=s.replace(/^\*[^*]+\*\s*/,'');
@@ -174,71 +172,78 @@ function cln(s){
   s=s.replace(/\s*-\s*acct_\S+.*$/i,'');
   s=s.replace(/\s*-\s*[a-z0-9]{16,}(\s*\/\s*[a-z0-9]{16,})?$/i,'');
   s=s.replace(/\s*-\s*ZD\s*#?\d+.*$/i,'');
-  s=s.replace(/\s*[-–—]\s*V\d+$/i,'');
+  s=s.replace(/\s*[-\u2013\u2014]\s*V\d+$/i,'');
   s=s.replace(/\s*V\d+$/i,'');
   return s.trim();
 }
 
-/* ── SYNONYM MAP: merge related issue patterns into canonical keys ── */
+/* ── SYNONYM MAP ── */
 var SYNONYMS=[
-  {key:'alpha template issue',patterns:['missing alpha template','template missing in alpha','update alpha template','missing alpha template -']},
-  {key:'missing gp add on',patterns:['missing gp add on','missing gp add-on','gp fulfillment issue']},
-  {key:'missing tl add on in mc',patterns:['missing tl add on in mc','missing tl add-on','missing tl add on']},
+  {key:'alpha template issue',patterns:['missing alpha template','template missing in alpha','update alpha template']},
+  {key:'missing gp add on',patterns:['missing gp add on','missing gp add-on','gp fulfillment issue','gp stats']},
+  {key:'missing tl add on in mc',patterns:['missing tl add on in mc','missing tl add-on','missing tl add on','remove tl add on']},
   {key:'seo report link not available',patterns:['seo report link not available','seo reporting issue']},
   {key:'mc not installed',patterns:['mc not installed','mc reinstall request']},
-  {key:'mc updates not going to ginger',patterns:['mc updates not going to ginger','mc geo updates not going to ginger','mc updates partially going to ginger','(aus) mc updates not going to ginger']},
+  {key:'mc updates not going to ginger',patterns:['mc updates not going to ginger','mc geo updates not going to ginger','mc updates partially going to ginger','(aus) mc updates not going to ginger','multi location bni - wrong account sent to ginger','rpp ctn missing in gump','aus - gump distribution error']},
   {key:'unable to publish listings',patterns:['unable to publish listings','unable to confirm/publish listings','unable to publish and update listings']},
-  {key:'mc listings fails due to existing yext entity',patterns:['mc listings fails due to existing yext entity','mc listings fails due to existing yext entity on same thryv id']},
-  {key:'lm yext integration failures',patterns:['lm yext integration failures','lm yext integration failures – external id conflict','lm yext integration failures – external id conflict & existing account']},
-  {key:'thryvpay application reset issue',patterns:['risk application reset failure','unable to reset thryvpay application','risk is not able to reset thryvpay application','risk is unable to reset tp application','thryvpay application reset error','risk unable to reset franchise thryvpay application','franchise account']},
+  {key:'mc listings fails - existing yext entity',patterns:['mc listings fails due to existing yext entity','lm yext integration failures','lm duplicate yext account error','lm not syncing with active yext account','active yext account disconnected']},
+  {key:'visitor tagging / heatmap analytics',patterns:['visitor tagging and/or heatmap html not tracking website analytics']},
+  {key:'yelp ep link / linkout issue',patterns:['yelp ep link provisioning issue','yelp ep linkout issue']},
+  {key:'yelp cpc fulfillment issue',patterns:['yelp cpc fulfillment issue','yelp fulfillment issue']},
+  {key:'manual yelp re-order request',patterns:['manual re-order request for yelp business listing']},
+  {key:'ep-ypo installation issues',patterns:['ep-ypo installation issues']},
+  {key:'qr code google reviews broken url',patterns:['qr code for google reviews redirects to broken url','qr code for google reviews']},
   {key:'mcf upgrade failed',patterns:['mcf to mcplus upgrade failed','mcf to mcpro upgrade failed']},
-  {key:'unable to claim trackable phone number',patterns:['unable to claim trackable phone number']},
-  {key:'qr code for google reviews redirects to broken url',patterns:['qr code for google reviews redirects to broken url']},
-  {key:'yelp ep link provisioning issue',patterns:['yelp ep link provisioning issue','yelp ep linkout issue']},
-  {key:'yelp cpc fulfillment issue',patterns:['yelp cpc fulfillment issue']},
   {key:'o & o ctn reprovision request',patterns:['o & o ctn reprovision request']},
   {key:'unable to update dn in mc',patterns:['unable to update dn in mc']},
-  {key:'risk admin dashboard issue',patterns:['risk unable to do a post onboarding decline via admin dashboard','risk is unable to approve tp account via admin dashboard']},
+  {key:'tl report button greyed out',patterns:['tl report button greyed out']},
+  {key:'tl calls not injecting to mc',patterns:['tl calls not injecting','tl calls not appearing','eligible tl calls not injecting']},
+  {key:'gbp analytics not syncing',patterns:['gbp analytics not syncing','gbp analytics stopped syncing','ep analytics not flowing']},
+  {key:'lm & reputation failing to load',patterns:['lm and reputation failing to load','lm & reputation not loading']},
+  {key:'mc addon services issue',patterns:['mc addon','mc addon services']},
+  {key:'security issues in prototype',patterns:['security issues in prototype']},
+  {key:'mc not installed',patterns:['mc not installed']},
 ];
 
-function gk(s){
-  /* Step 1: basic cleaning */
-  s=cln(s);
-  s=s.replace(/\s*[-–—]\s*V\d+$/i,'');
-  s=s.replace(/\s*V\d+$/i,'');
-  s=s.replace(/\s*[-–—]\s*#?\d+$/,'');
-  s=s.replace(/\s*\(.*?\)\s*$/,'');
-  s=s.replace(/\s+/g,' ').trim().toLowerCase();
-
-  /* Step 2: check synonym map */
-  for(var i=0;i<SYNONYMS.length;i++){
-    var syn=SYNONYMS[i];
-    for(var j=0;j<syn.patterns.length;j++){
-      if(s.indexOf(syn.patterns[j])===0||s===syn.patterns[j]){
-        return syn.key;
-      }
-    }
-  }
-  return s;
-}
-
-/* ── CANONICAL LABELS: prettier display names for synonym groups ── */
 var LABELS={
   'alpha template issue':'Alpha Template Issue (Missing / Update)',
   'missing gp add on':'Missing GP Add On',
   'missing tl add on in mc':'Missing TL Add On in MC',
   'seo report link not available':'SEO Report Link Not Available',
   'mc not installed':'MC Not Installed',
-  'mc updates not going to ginger':'MC Updates Not Going to Ginger',
+  'mc updates not going to ginger':'MC Updates Not Going to Ginger / Gump',
   'unable to publish listings':'Unable to Publish Listings',
-  'mc listings fails due to existing yext entity':'MC Listings Fails — Existing Yext Entity',
-  'lm yext integration failures':'LM Yext Integration Failures — External ID Conflict',
-  'thryvpay application reset issue':'ThryvPay Application Reset Issue',
+  'mc listings fails - existing yext entity':'LM Yext Integration Failures (External ID / Existing Account)',
+  'visitor tagging / heatmap analytics':'Visitor Tagging / Heatmap Not Tracking Analytics',
+  'yelp ep link / linkout issue':'Yelp EP Link Provisioning / Linkout Issue',
+  'yelp cpc fulfillment issue':'Yelp CPC Fulfillment Issue',
+  'manual yelp re-order request':'Manual Re-order Request for Yelp Listing',
+  'ep-ypo installation issues':'EP-YPO Installation Issues',
+  'qr code google reviews broken url':'QR Code for Google Reviews \u2014 Broken URL',
   'mcf upgrade failed':'MCF Upgrade Failed',
-  'qr code for google reviews redirects to broken url':'QR Code for Google Reviews — Broken URL',
-  'yelp ep link provisioning issue':'Yelp EP Link Provisioning / Linkout Issue',
-  'risk admin dashboard issue':'Risk Admin Dashboard Issue',
+  'tl report button greyed out':'TL Report Button Greyed Out',
+  'tl calls not injecting to mc':'TL Calls Not Injecting to MC',
+  'gbp analytics not syncing':'GBP Analytics Not Syncing',
+  'lm & reputation failing to load':'LM & Reputation Failing to Load for Non-Primary Users',
+  'mc addon services issue':'MC Addon Services Issue',
+  'security issues in prototype':'Security Issues in Prototype',
 };
+
+function gk(s){
+  s=cln(s);
+  s=s.replace(/\s*[-\u2013\u2014]\s*V\d+$/i,'');
+  s=s.replace(/\s*V\d+$/i,'');
+  s=s.replace(/\s*[-\u2013\u2014]\s*#?\d+$/,'');
+  s=s.replace(/\s*\(.*?\)\s*$/,'');
+  s=s.replace(/\s+/g,' ').trim().toLowerCase();
+  for(var i=0;i<SYNONYMS.length;i++){
+    var syn=SYNONYMS[i];
+    for(var j=0;j<syn.patterns.length;j++){
+      if(s.indexOf(syn.patterns[j])===0||s===syn.patterns[j]) return syn.key;
+    }
+  }
+  return s;
+}
 
 function da(d){return Math.max(0,Math.floor((Date.now()-new Date(d).getTime())/864e5));}
 function fd(d){return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric'});}
@@ -264,7 +269,6 @@ function buildGroups(issues){
     var hasIP=false,hasTD=false;for(var si=0;si<g.issues.length;si++){if(g.issues[si].statusCategory==='In Progress')hasIP=true;if(g.issues[si].statusCategory==='To Do')hasTD=true;}
     var stat=hasIP?'In Progress':hasTD?'To Do':'Done';
     var comps={},labs={};for(var ci=0;ci<g.issues.length;ci++){var gi=g.issues[ci];for(var cc=0;cc<(gi.components||[]).length;cc++)comps[gi.components[cc]]=1;for(var ll=0;ll<(gi.labels||[]).length;ll++)labs[gi.labels[ll]]=1;}
-    /* Use canonical label if available, otherwise clean the latest summary */
     var label=LABELS[g.gkey]||cln(lt.summary);
     result.push({
       id:lt.key,label:label,product:lt.product,
@@ -281,7 +285,6 @@ function buildGroups(issues){
 }
 
 function showS(t,m){var b=document.getElementById('sbar'),s=document.getElementById('spin'),g=document.getElementById('smsg');b.className='status-bar '+t;s.style.display=t==='loading'?'block':'none';g.textContent=m;if(t==='success')setTimeout(function(){b.className='status-bar';},4000);}
-
 function trendArrow(g){
   if(g.versionCount>=2)return '<span class="trend-up">&uarr; '+g.count+' tickets (V'+g.versions+')</span>';
   if(g.count>=5)return '<span class="trend-up">&uarr; '+g.count+' reports</span>';
@@ -289,14 +292,14 @@ function trendArrow(g){
 }
 
 function load(){
-  showS('loading','Loading known issues from Jira...');
+  showS('loading','Loading known issues from Jira (MCB)...');
   fetch(D+'?t='+Date.now()).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).then(function(d){
     ALL=(d.issues||[]).map(function(i){i.product=cls(i);return i;});
     var t=d.fetchedAt?new Date(d.fetchedAt):new Date();
     document.getElementById('sync-time').textContent=t.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
-    showS('success','Loaded '+ALL.length+' tickets — showing issues with '+MIN_TICKETS+'+ reports');
+    showS('success','Loaded '+ALL.length+' MCB tickets \u2014 showing issues with '+MIN_TICKETS+'+ reports');
     render();
-  }).catch(function(e){showS('error','Failed — '+e.message);});
+  }).catch(function(e){showS('error','Failed \u2014 '+e.message);});
 }
 
 function render(){
@@ -338,16 +341,13 @@ function renderTable(){
   var g=GRP.slice();
   if(flt!=='All')g=g.filter(function(x){return x.product===flt;});
   if(src)g=g.filter(function(x){return x.label.toLowerCase().indexOf(src.toLowerCase())>=0||x.tickets.some(function(t){return t.key.toLowerCase().indexOf(src.toLowerCase())>=0;});});
-
   document.getElementById('icnt').textContent=g.length+' issues ('+g.reduce(function(s,x){return s+x.count;},0)+' tickets)';
   var ar=function(k){return sKey===k?(sDir==='asc'?' \u2191':' \u2193'):'';};
   document.getElementById('th').innerHTML='<tr><th onclick="ds(\'issue\')" style="width:40%">Issue'+ar('issue')+'</th><th onclick="ds(\'product\')" style="width:12%">Product'+ar('product')+'</th><th onclick="ds(\'priority\')" style="width:8%">Priority'+ar('priority')+'</th><th onclick="ds(\'tickets\')" style="width:10%">Tickets'+ar('tickets')+'</th><th onclick="ds(\'status\')" style="width:14%">Status'+ar('status')+'</th><th onclick="ds(\'date\')" style="width:9%">Reported'+ar('date')+'</th><th style="width:7%">Age</th></tr>';
-
   if(sKey==='tickets')g.sort(function(a,b){return sDir==='asc'?a.count-b.count:b.count-a.count;});
   else if(sKey==='product')g.sort(function(a,b){return sDir==='asc'?a.product.localeCompare(b.product):b.product.localeCompare(a.product);});
   else if(sKey==='date')g.sort(function(a,b){return sDir==='asc'?new Date(a.first)-new Date(b.first):new Date(b.first)-new Date(a.first);});
   else if(sKey==='status')g.sort(function(a,b){return sDir==='asc'?a.status.localeCompare(b.status):b.status.localeCompare(a.status);});
-
   if(!g.length){document.getElementById('tb').innerHTML='';document.getElementById('empty').style.display='block';return;}
   document.getElementById('empty').style.display='none';
   document.getElementById('tb').innerHTML=g.map(function(x){
