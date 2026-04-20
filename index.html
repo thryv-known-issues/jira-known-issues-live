@@ -140,7 +140,7 @@ tbody td{padding:12px 12px;vertical-align:top}
 <div id="resolved"></div>
 <div class="legend">
   <div class="lg"><b>Priority:</b><span class="li"><span class="p p-p1">P1</span><span>Critical</span></span><span class="li"><span class="p p-p2">P2</span><span>High</span></span><span class="li"><span class="p p-p3">P3</span><span>Medium</span></span><span class="li"><span class="p p-p4">P4</span><span>Low</span></span></div>
-  <div class="lg"><b>Status:</b><span class="li"><span class="p p-todo">To Do</span></span><span class="li"><span class="p p-prog">In Progress</span></span><span class="li"><span class="p p-done">Done</span></span></div>
+  <div class="lg"><b>Status:</b><span class="li"><span class="p p-todo">Backlog</span></span><span class="li"><span class="p p-prog">In Progress</span></span><span class="li"><span class="p p-done">Done</span></span></div>
   <div class="lg"><b>Product:</b><span class="li"><span class="p p-mc">Marketing Center</span></span><span class="li"><span class="p p-ol">Online Listings</span></span><span class="li"><span class="p p-tp">ThryvPay</span></span></div>
 </div>
 <div class="footer">Thryv Advanced Technical Support &middot; Known Issues Dashboard &middot; Live from Jira (MCB)<br>Updated every 2 hours &middot; Issues with 3+ tickets only &middot; <span id="fdate"></span></div>
@@ -151,7 +151,14 @@ var PM={'Marketing Center':{c:'p-mc',bg:'#3C3489',a:'#3C3489'},'Online Listings'
 var PCL={P1:'p-p1',P2:'p-p2',P3:'p-p3',P4:'p-p4'};
 var PLA={P1:'Critical',P2:'High',P3:'Medium',P4:'Low'};
 var POR={P1:0,P2:1,P3:2,P4:3};
-var SCL={'To Do':'p-todo','In Progress':'p-prog','Done':'p-done'};
+
+/* Status pill class is determined by statusCategory, NOT status name */
+function stPill(statusCategory){
+  if(statusCategory==='Done') return 'p-done';
+  if(statusCategory==='In Progress') return 'p-prog';
+  return 'p-todo'; /* To Do, No Category, etc */
+}
+
 var ALL=[],GRP=[],flt='All',src='',sKey='priority',sDir='asc';
 
 function cls(i){
@@ -177,7 +184,6 @@ function cln(s){
   return s.trim();
 }
 
-/* ── SYNONYM MAP ── */
 var SYNONYMS=[
   {key:'alpha template issue',patterns:['missing alpha template','template missing in alpha','update alpha template']},
   {key:'missing gp add on',patterns:['missing gp add on','missing gp add-on','gp fulfillment issue','gp stats']},
@@ -186,7 +192,7 @@ var SYNONYMS=[
   {key:'mc not installed',patterns:['mc not installed','mc reinstall request']},
   {key:'mc updates not going to ginger',patterns:['mc updates not going to ginger','mc geo updates not going to ginger','mc updates partially going to ginger','(aus) mc updates not going to ginger','multi location bni - wrong account sent to ginger','rpp ctn missing in gump','aus - gump distribution error']},
   {key:'unable to publish listings',patterns:['unable to publish listings','unable to confirm/publish listings','unable to publish and update listings']},
-  {key:'mc listings fails - existing yext entity',patterns:['mc listings fails due to existing yext entity','lm yext integration failures','lm duplicate yext account error','lm not syncing with active yext account','active yext account disconnected']},
+  {key:'lm yext integration failures',patterns:['mc listings fails due to existing yext entity','lm yext integration failures','lm duplicate yext account error','lm not syncing with active yext account','active yext account disconnected']},
   {key:'visitor tagging / heatmap analytics',patterns:['visitor tagging and/or heatmap html not tracking website analytics']},
   {key:'yelp ep link / linkout issue',patterns:['yelp ep link provisioning issue','yelp ep linkout issue']},
   {key:'yelp cpc fulfillment issue',patterns:['yelp cpc fulfillment issue','yelp fulfillment issue']},
@@ -202,7 +208,6 @@ var SYNONYMS=[
   {key:'lm & reputation failing to load',patterns:['lm and reputation failing to load','lm & reputation not loading']},
   {key:'mc addon services issue',patterns:['mc addon','mc addon services']},
   {key:'security issues in prototype',patterns:['security issues in prototype']},
-  {key:'mc not installed',patterns:['mc not installed']},
 ];
 
 var LABELS={
@@ -213,7 +218,7 @@ var LABELS={
   'mc not installed':'MC Not Installed',
   'mc updates not going to ginger':'MC Updates Not Going to Ginger / Gump',
   'unable to publish listings':'Unable to Publish Listings',
-  'mc listings fails - existing yext entity':'LM Yext Integration Failures (External ID / Existing Account)',
+  'lm yext integration failures':'LM Yext Integration Failures (External ID / Existing Account)',
   'visitor tagging / heatmap analytics':'Visitor Tagging / Heatmap Not Tracking Analytics',
   'yelp ep link / linkout issue':'Yelp EP Link Provisioning / Linkout Issue',
   'yelp cpc fulfillment issue':'Yelp CPC Fulfillment Issue',
@@ -266,13 +271,21 @@ function buildGroups(issues){
     var vers=[];for(var vi=0;vi<g.issues.length;vi++){var vm=g.issues[vi].summary.match(/V(\d+)/i);if(vm)vers.push(parseInt(vm[1]));}
     var maxV=vers.length?Math.max.apply(null,vers):0;
     var pri=lt.priority;for(var pi=0;pi<g.issues.length;pi++){if((POR[g.issues[pi].priority]||9)<(POR[pri]||9))pri=g.issues[pi].priority;}
-    var hasIP=false,hasTD=false;for(var si=0;si<g.issues.length;si++){if(g.issues[si].statusCategory==='In Progress')hasIP=true;if(g.issues[si].statusCategory==='To Do')hasTD=true;}
-    var stat=hasIP?'In Progress':hasTD?'To Do':'Done';
+    /* Use statusCategory for grouping — this is what Jira normalizes */
+    var hasIP=false,hasTD=false;
+    for(var si=0;si<g.issues.length;si++){
+      var sc=g.issues[si].statusCategory;
+      if(sc==='In Progress')hasIP=true;
+      if(sc==='To Do'||sc==='No Category')hasTD=true;
+    }
+    var statusCat=hasIP?'In Progress':hasTD?'To Do':'Done';
     var comps={},labs={};for(var ci=0;ci<g.issues.length;ci++){var gi=g.issues[ci];for(var cc=0;cc<(gi.components||[]).length;cc++)comps[gi.components[cc]]=1;for(var ll=0;ll<(gi.labels||[]).length;ll++)labs[gi.labels[ll]]=1;}
     var label=LABELS[g.gkey]||cln(lt.summary);
     result.push({
       id:lt.key,label:label,product:lt.product,
-      priority:pri,status:stat,statusLabel:lt.status,
+      priority:pri,
+      statusCat:statusCat,        /* "To Do", "In Progress", or "Done" */
+      statusLabel:lt.status,      /* display name like "Dev Backlog", "In Review" */
       tickets:g.issues,count:g.issues.length,
       first:g.issues[g.issues.length-1].created,last:lt.updated,
       comps:Object.keys(comps),labels:Object.keys(labs),
@@ -316,7 +329,9 @@ function render(){
   else if(top){al.className='alert show';document.getElementById('atitle').textContent='Top issue: '+top.label;document.getElementById('atext').textContent=top.count+' ticket'+(top.count>1?'s':'')+' \u00B7 Priority '+top.priority+' \u00B7 Status: '+top.statusLabel;}
   else al.className='alert';
 
-  var prog=GRP.filter(function(g){return g.status==='In Progress';}),back=GRP.filter(function(g){return g.status==='To Do';});
+  /* Summary cards use statusCat from grouped data */
+  var prog=GRP.filter(function(g){return g.statusCat==='In Progress';});
+  var back=GRP.filter(function(g){return g.statusCat==='To Do';});
   document.getElementById('sumrow').innerHTML='<div class="sum-card" data-type="improving"><div class="sum-title">In progress</div><div class="sum-text">'+prog.length+' known issue'+(prog.length!==1?'s':'')+' actively being worked ('+prog.reduce(function(s,g){return s+g.count;},0)+' total tickets).'+(prog[0]?' Top: '+prog[0].label+'.':'')+'</div></div><div class="sum-card" data-type="trending"><div class="sum-title">Backlog</div><div class="sum-text">'+back.length+' known issue'+(back.length!==1?'s':'')+' in dev backlog ('+back.reduce(function(s,g){return s+g.count;},0)+' tickets).'+(back[0]?' Top: '+back[0].label+'.':'')+'</div></div><div class="sum-card" data-type="resolved"><div class="sum-title">Recently resolved</div><div class="sum-text">'+rGRP.length+' issue group'+(rGRP.length!==1?'s':'')+' resolved in the last 30 days ('+res.length+' tickets total).</div></div>';
 
   document.getElementById('prodrow').innerHTML=Object.keys(PM).map(function(n){
@@ -347,19 +362,21 @@ function renderTable(){
   if(sKey==='tickets')g.sort(function(a,b){return sDir==='asc'?a.count-b.count:b.count-a.count;});
   else if(sKey==='product')g.sort(function(a,b){return sDir==='asc'?a.product.localeCompare(b.product):b.product.localeCompare(a.product);});
   else if(sKey==='date')g.sort(function(a,b){return sDir==='asc'?new Date(a.first)-new Date(b.first):new Date(b.first)-new Date(a.first);});
-  else if(sKey==='status')g.sort(function(a,b){return sDir==='asc'?a.status.localeCompare(b.status):b.status.localeCompare(a.status);});
+  else if(sKey==='status')g.sort(function(a,b){return sDir==='asc'?a.statusCat.localeCompare(b.statusCat):b.statusCat.localeCompare(a.statusCat);});
   if(!g.length){document.getElementById('tb').innerHTML='';document.getElementById('empty').style.display='block';return;}
   document.getElementById('empty').style.display='none';
   document.getElementById('tb').innerHTML=g.map(function(x){
     var keys=x.tickets.map(function(t){return '<a href="https://thryv.atlassian.net/browse/'+t.key+'" target="_blank">'+t.key+'</a>';}).join(' ');
-    return '<tr><td class="td-issue"><div class="td-issue-name">'+x.label+'</div><div class="td-issue-keys">'+keys+'</div></td><td>'+pl(x.product,(PM[x.product]||{}).c||'p-mc')+'</td><td>'+pl(x.priority,PCL[x.priority]||'p-p3')+'</td><td class="td-tickets">'+x.count+' open<div class="dir">'+trendArrow(x)+'</div></td><td><span class="p '+(SCL[x.status]||'p-todo')+'">'+(x.statusLabel||x.status)+'</span></td><td style="font-size:11px;color:#808080;white-space:nowrap">'+fd(x.first)+'</td><td style="font-size:11px;color:#808080;white-space:nowrap">'+da(x.first)+'d</td></tr>';
+    /* Status pill uses statusCategory for color, status name for label */
+    var sPill=stPill(x.statusCat);
+    return '<tr><td class="td-issue"><div class="td-issue-name">'+x.label+'</div><div class="td-issue-keys">'+keys+'</div></td><td>'+pl(x.product,(PM[x.product]||{}).c||'p-mc')+'</td><td>'+pl(x.priority,PCL[x.priority]||'p-p3')+'</td><td class="td-tickets">'+x.count+' open<div class="dir">'+trendArrow(x)+'</div></td><td>'+pl(x.statusLabel,sPill)+'</td><td style="font-size:11px;color:#808080;white-space:nowrap">'+fd(x.first)+'</td><td style="font-size:11px;color:#808080;white-space:nowrap">'+da(x.first)+'d</td></tr>';
   }).join('');
 }
 
 function renderInc(top){
   if(!top){document.getElementById('incident').innerHTML='';return;}
   var sev=top.priority==='P1'?'Critical \u2014 Severe disruption to essential business functions':top.priority==='P2'?'High \u2014 Major function down for a subset of users':'Medium \u2014 Moderate impact, feature not working as expected';
-  document.getElementById('incident').innerHTML='<div class="incident"><div class="inc-hdr"><span class="inc-icon">\u26A0</span><span class="inc-title">Incident Communication \u2014 '+top.label+'</span></div><div class="inc-grid"><span class="inc-label">Priority:</span><span class="inc-val">'+pl(top.priority,PCL[top.priority])+' '+PLA[top.priority]+'</span><span class="inc-label">Severity:</span><span class="inc-val">'+sev+'</span><span class="inc-label">Status:</span><span class="inc-val">'+(top.statusLabel||top.status)+'</span><span class="inc-label">Tickets:</span><span class="inc-val">'+top.count+' open'+(top.versionCount>=2?' (V'+top.versions+')':'')+'</span><span class="inc-label">Reported:</span><span class="inc-val">'+fd(top.first)+' ('+da(top.first)+' days ago)</span></div><div class="inc-section"><div class="inc-section-title">Impact summary</div><div class="inc-section-text">'+top.label+' \u2014 affecting '+top.count+' reported account'+(top.count>1?'s':'')+'. Product area: '+top.product+'. '+(top.comps.length?'Components: '+top.comps.join(', ')+'.':'')+' This issue has been reported '+top.count+' time'+(top.count>1?'s':'')+' since '+fd(top.first)+' and is currently in "'+(top.statusLabel||top.status)+'" status.</div></div><div class="inc-section"><div class="inc-section-title">Client-facing message</div><div class="inc-section-text">"We\'re aware of a technical issue affecting '+top.product.toLowerCase()+' functionality. Your subscription is active and no data has been lost. Our engineering team has prioritized this and a fix is in progress. We\'ll follow up once resolved."</div></div><div class="inc-section"><div class="inc-section-title">Internal notes</div><div class="inc-section-text">Latest ticket: <a href="https://thryv.atlassian.net/browse/'+top.id+'" target="_blank">'+top.id+'</a>. '+top.count+' total reports from ATS team. '+(top.versionCount>=2?'Issue has been reported across '+top.versionCount+' versions (up to V'+top.versions+'). ':'')+'Submit new occurrences as additional tickets referencing this known issue.</div></div></div>';
+  document.getElementById('incident').innerHTML='<div class="incident"><div class="inc-hdr"><span class="inc-icon">\u26A0</span><span class="inc-title">Incident Communication \u2014 '+top.label+'</span></div><div class="inc-grid"><span class="inc-label">Priority:</span><span class="inc-val">'+pl(top.priority,PCL[top.priority])+' '+PLA[top.priority]+'</span><span class="inc-label">Severity:</span><span class="inc-val">'+sev+'</span><span class="inc-label">Status:</span><span class="inc-val">'+top.statusLabel+'</span><span class="inc-label">Tickets:</span><span class="inc-val">'+top.count+' open'+(top.versionCount>=2?' (V'+top.versions+')':'')+'</span><span class="inc-label">Reported:</span><span class="inc-val">'+fd(top.first)+' ('+da(top.first)+' days ago)</span></div><div class="inc-section"><div class="inc-section-title">Impact summary</div><div class="inc-section-text">'+top.label+' \u2014 affecting '+top.count+' reported account'+(top.count>1?'s':'')+'. Product area: '+top.product+'. '+(top.comps.length?'Components: '+top.comps.join(', ')+'.':'')+' This issue has been reported '+top.count+' time'+(top.count>1?'s':'')+' since '+fd(top.first)+' and is currently in "'+top.statusLabel+'" status.</div></div><div class="inc-section"><div class="inc-section-title">Client-facing message</div><div class="inc-section-text">"We\'re aware of a technical issue affecting '+top.product.toLowerCase()+' functionality. Your subscription is active and no data has been lost. Our engineering team has prioritized this and a fix is in progress. We\'ll follow up once resolved."</div></div><div class="inc-section"><div class="inc-section-title">Internal notes</div><div class="inc-section-text">Latest ticket: <a href="https://thryv.atlassian.net/browse/'+top.id+'" target="_blank">'+top.id+'</a>. '+top.count+' total reports from ATS team. '+(top.versionCount>=2?'Issue has been reported across '+top.versionCount+' versions (up to V'+top.versions+'). ':'')+'Submit new occurrences as additional tickets referencing this known issue.</div></div></div>';
 }
 
 function renderRes(groups){
