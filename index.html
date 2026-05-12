@@ -579,7 +579,6 @@ a { color: inherit; }
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
-  overflow: hidden;
   margin-bottom: 24px;
 }
 .issues-head {
@@ -603,7 +602,8 @@ a { color: inherit; }
 }
 .issues-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 .issues-table thead th {
   background: var(--mist);
@@ -620,6 +620,9 @@ a { color: inherit; }
   top: 57px;
   z-index: 20;
 }
+/* First/last th — round to match parent card edge */
+.issues-table thead th:first-child { border-top-left-radius: 0; }
+.issues-table thead th:last-child { border-top-right-radius: 0; }
 .issues-table thead th::after {
   content: '';
   position: absolute;
@@ -628,16 +631,16 @@ a { color: inherit; }
   background: var(--border);
 }
 .issues-table tbody tr {
-  border-bottom: 1px solid var(--border);
   transition: background 0.1s;
 }
-.issues-table tbody tr:last-child { border-bottom: 0; }
 .issues-table tbody tr:hover { background: var(--mist); }
 .issues-table td {
   padding: 14px 16px;
   vertical-align: top;
   font-size: 13px;
+  border-bottom: 1px solid var(--border);
 }
+.issues-table tbody tr:last-child td { border-bottom: 0; }
 .issue-name {
   font-weight: 600;
   color: var(--black);
@@ -663,20 +666,42 @@ a { color: inherit; }
   flex-wrap: wrap;
 }
 .issue-key-pill {
-  background: var(--mist);
-  color: var(--text-muted);
-  padding: 2px 7px;
+  background: var(--sapphire-soft);
+  color: var(--sapphire);
+  padding: 3px 8px;
   border-radius: 4px;
   text-decoration: none;
   font-family: 'DM Mono', monospace;
   font-size: 10.5px;
-  border: 1px solid var(--border);
-  transition: all 0.1s;
+  font-weight: 600;
+  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.12s ease;
+  cursor: pointer;
+}
+.issue-key-pill::after {
+  content: '↗';
+  font-size: 9px;
+  opacity: 0.6;
 }
 .issue-key-pill:hover {
-  background: var(--midnight-soft);
-  color: var(--midnight);
-  border-color: var(--midnight-soft);
+  background: var(--sapphire);
+  color: var(--white);
+  border-color: var(--sapphire);
+  transform: translateY(-1px);
+}
+.issue-key-pill:hover::after {
+  opacity: 1;
+}
+.issue-key-more {
+  background: var(--cloud);
+  color: var(--text-muted);
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 10.5px;
+  font-weight: 600;
 }
 
 /* Product pills */
@@ -1752,7 +1777,7 @@ function renderIssuesTable(groups) {
     const keys = openTickets.slice(0, 4).map(t =>
       `<a href="${tagForKey(t.key)}" target="_blank" rel="noopener" class="issue-key-pill mono">${escapeHtml(t.key)}</a>`
     ).join('');
-    const moreKeys = openTickets.length > 4 ? `<span class="issue-key-pill">+${openTickets.length - 4}</span>` : '';
+    const moreKeys = openTickets.length > 4 ? `<span class="issue-key-more mono">+${openTickets.length - 4}</span>` : '';
 
     return `
       <tr class="prio-${prioClass}">
@@ -1895,13 +1920,17 @@ document.getElementById('refreshBtn').addEventListener('click', async () => {
   const btn = document.getElementById('scrollTop');
   if (!btn) return;
   const onScroll = () => {
-    if (window.scrollY > 400) btn.classList.add('show');
+    if (window.scrollY > 200) btn.classList.add('show');
     else btn.classList.remove('show');
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   btn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+  // Re-check after data loads + on resize, in case page becomes scrollable later
+  window.addEventListener('resize', onScroll);
+  setTimeout(onScroll, 800);
+  setTimeout(onScroll, 2000);
 })();
 
 // ---------------------------------------------------------
