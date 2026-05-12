@@ -10,48 +10,52 @@
 body{font-family:'DM Sans',-apple-system,sans-serif;background:#F4F6FB;color:#121212;font-size:13px;line-height:1.5}
 a{color:#5378FC;text-decoration:none;font-weight:500}a:hover{text-decoration:underline}
 .w{max-width:1180px;margin:0 auto;padding:24px 24px 12px}
-/* NAV */
 .nav{display:flex;align-items:center;gap:8px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid #ECEEF1}
 .nav-dot{width:10px;height:10px;border-radius:2px;background:#FF5000;flex-shrink:0}
 .nav-b{font-size:15px;font-weight:600;color:#29355D}.nav-a{color:#808080;font-size:12px}.nav-p{font-size:15px;font-weight:600;color:#121212}
-.nav-sp{flex:1}.nav-sy{text-align:right}.nav-sl{font-size:9px;color:#808080;text-transform:uppercase;letter-spacing:.6px}.nav-st{font-size:11px;color:#4D4D4D;font-weight:500}
-/* STATUS */
+.nav-sp{flex:1}
+.nav-right{display:flex;align-items:center;gap:12px}
+.nav-sy{text-align:right}.nav-sl{font-size:9px;color:#808080;text-transform:uppercase;letter-spacing:.6px}.nav-st{font-size:11px;color:#4D4D4D;font-weight:500}
+.rbtn{padding:5px 14px;border-radius:100px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid #ECEEF1;background:#fff;color:#808080;font-family:inherit;transition:all .15s}
+.rbtn:hover{border-color:#5378FC;color:#5378FC;background:#E8F0FE}
+.rbtn:active{background:#D0E0FD}
 .sb{padding:10px 16px;border-radius:8px;margin-bottom:14px;font-size:12px;display:none;align-items:center;gap:8px}
 .sb.loading{display:flex;background:#E8F0FE;color:#185FA5;border:1px solid #B5D4F4}
 .sb.error{display:flex;background:#FFF3E0;color:#854F0B;border:1px solid #FAC775}
 .sb.success{display:flex;background:#EAF3DE;color:#3B6D11;border:1px solid #C0DD97}
 .spin{width:14px;height:14px;border:2px solid #B5D4F4;border-top-color:#185FA5;border-radius:50%;animation:sp .6s linear infinite;flex-shrink:0}
 @keyframes sp{to{transform:rotate(360deg)}}
-/* ALERT */
 .alert{background:#FFF3E0;border:1px solid #FFB74D;border-left:4px solid #FF5000;border-radius:8px;padding:12px 16px;margin-bottom:16px;display:none}
 .alert.show{display:block}.alert b{color:#854F0B;font-size:13px}.alert p{color:#854F0B;font-size:12px;margin-top:4px;line-height:1.5}
-/* SUMMARY ROW */
 .sr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px}
 .sc{background:#fff;border:1px solid #ECEEF1;border-radius:10px;padding:14px 16px;border-top:3px solid #ccc}
 .sc[data-t="ip"]{border-top-color:#4CAF50}.sc[data-t="bl"]{border-top-color:#FF5000}.sc[data-t="rv"]{border-top-color:#5378FC}
 .sc-h{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
 .sc[data-t="ip"] .sc-h{color:#4CAF50}.sc[data-t="bl"] .sc-h{color:#FF5000}.sc[data-t="rv"] .sc-h{color:#5378FC}
 .sc-x{font-size:12px;color:#4D4D4D;line-height:1.6}
-/* BOARD TABS */
+.lk{background:#fff;border:1px solid #ECEEF1;border-radius:8px;padding:10px 14px;margin-bottom:16px}
+.lk-r{display:flex;align-items:center;gap:10px}
+.lk-lb{font-size:11px;font-weight:600;color:#808080;flex-shrink:0}
+.lk-in{padding:6px 12px;border-radius:6px;border:1px solid #ECEEF1;font-size:12px;width:280px;flex-shrink:0;background:#F4F6FB;color:#121212;font-family:inherit}
+.lk-in:focus{outline:none;border-color:#5378FC;background:#fff}
+.lk-o{display:flex;align-items:center;gap:6px;font-size:12px;overflow:hidden;min-width:0}
+.lk-o .k{font-family:'SF Mono',Consolas,monospace;color:#5378FC;font-weight:600;flex-shrink:0}
+.lk-o .s{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .tabs{display:flex;gap:0;margin-bottom:0;border-bottom:2px solid #ECEEF1;overflow-x:auto}
-.tab{padding:10px 20px;font-size:12px;font-weight:600;color:#808080;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s;font-family:inherit;background:none;border-top:none;border-left:none;border-right:none;position:relative}
+.tab{padding:10px 20px;font-size:12px;font-weight:600;color:#808080;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s;font-family:inherit;background:none;border-top:none;border-left:none;border-right:none}
 .tab:hover{color:#29355D}
 .tab.on{color:#FF5000;border-bottom-color:#FF5000}
 .tab .cnt{font-size:10px;font-weight:700;background:#ECEEF1;color:#808080;padding:1px 7px;border-radius:100px;margin-left:6px}
 .tab.on .cnt{background:#FF5000;color:#fff}
-/* BOARD PANEL */
 .panel{display:none;padding-top:20px}
 .panel.on{display:block}
-/* BOARD HEADER */
 .bh{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .bh-left{display:flex;align-items:center;gap:10px}
 .bh-title{font-size:16px;font-weight:600;color:#29355D}
 .bh-badge{font-size:10.5px;font-weight:600;padding:3px 12px;border-radius:100px;border:1px solid}
 .bh-assignee{font-size:11px;color:#808080}
-.bh-right{display:flex;align-items:center;gap:8px}
 .si{padding:5px 14px;border-radius:100px;font-size:11px;border:1px solid #ECEEF1;width:240px;background:#fff;color:#121212;font-family:inherit}
 .si:focus{outline:none;border-color:#5378FC}
-/* TABLE */
 .tw{background:#fff;border:1px solid #ECEEF1;border-radius:10px;overflow:hidden;margin-bottom:20px}
 table{width:100%;border-collapse:collapse}
 thead th{padding:10px 12px;font-size:10.5px;font-weight:700;color:#808080;text-transform:uppercase;letter-spacing:.5px;text-align:left;white-space:nowrap;border-bottom:2px solid #ECEEF1;background:#FAFBFD;cursor:pointer;user-select:none}
@@ -67,32 +71,19 @@ tbody td{padding:12px 12px;vertical-align:top}
 .ta-l{font-size:10px;color:#808080;font-weight:500}
 .ta-s{font-size:10px;color:#808080;margin-top:2px}
 .em{text-align:center;padding:40px;color:#808080;font-size:13px}
-/* PILLS */
 .p{display:inline-block;padding:2px 10px;border-radius:100px;font-size:10.5px;font-weight:600;letter-spacing:.2px;white-space:nowrap;line-height:18px;border:1.5px solid;vertical-align:middle}
 .p-mc{background:#3C3489;border-color:#9B8FFF;color:#fff}.p-ol{background:#29355D;border-color:#5378FC;color:#fff}.p-tp{background:#5378FC;border-color:#A8C0FF;color:#fff}
 .p-p1{background:#FFE0D0;border-color:#F0997B;color:#993C1D}.p-p2{background:#FAEEDA;border-color:#FAC775;color:#854F0B}.p-p3{background:#E6F1FB;border-color:#85B7EB;color:#185FA5}.p-p4{background:#EAF3DE;border-color:#C0DD97;color:#3B6D11}
 .p-todo{background:#E8F0FE;border-color:#B5D4F4;color:#0C447C}.p-prog{background:#FFF3E0;border-color:#FAC775;color:#633806}.p-done{background:#EAF3DE;border-color:#C0DD97;color:#27500A}
-/* INCIDENT */
 .inc{background:#fff;border:1px solid #ECEEF1;border-left:4px solid #FF5000;border-radius:10px;padding:18px 20px;margin-bottom:20px}
 .inc-h{display:flex;align-items:center;gap:8px;margin-bottom:12px}.inc-i{font-size:16px}.inc-t{font-size:14px;font-weight:600;color:#29355D}
 .inc-g{display:grid;grid-template-columns:120px 1fr;gap:6px 16px;font-size:12px;margin-bottom:12px}
 .inc-lb{color:#808080;font-weight:600}.inc-v{color:#121212}
 .inc-s{margin-top:12px}.inc-st{font-size:12px;font-weight:700;color:#29355D;margin-bottom:4px}.inc-sx{font-size:12px;color:#4D4D4D;line-height:1.6}
-/* RESOLVED */
 .rr{display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:8px;background:#fff;border:1px solid #ECEEF1;font-size:12px;overflow:hidden;margin-bottom:6px}
 .rr .rk{font-family:'SF Mono',Consolas,monospace;font-size:11px;color:#808080;min-width:68px;flex-shrink:0;white-space:nowrap}
 .rr .rs{flex:1 1 0%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;font-weight:500}
 .rr .rd{font-size:10.5px;color:#27500A;background:#EAF3DE;padding:3px 10px;border-radius:100px;border:1px solid #C0DD97;flex-shrink:0;white-space:nowrap;font-weight:600}
-/* LOOKUP */
-.lk{background:#fff;border:1px solid #ECEEF1;border-radius:8px;padding:10px 14px;margin-bottom:16px}
-.lk-r{display:flex;align-items:center;gap:10px}
-.lk-lb{font-size:11px;font-weight:600;color:#808080;flex-shrink:0}
-.lk-in{padding:6px 12px;border-radius:6px;border:1px solid #ECEEF1;font-size:12px;width:280px;flex-shrink:0;background:#F4F6FB;color:#121212;font-family:inherit}
-.lk-in:focus{outline:none;border-color:#5378FC;background:#fff}
-.lk-o{display:flex;align-items:center;gap:6px;font-size:12px;overflow:hidden;min-width:0}
-.lk-o .k{font-family:'SF Mono',Consolas,monospace;color:#5378FC;font-weight:600;flex-shrink:0}
-.lk-o .s{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
-/* MISC */
 .sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .stt{font-size:16px;font-weight:600;color:#29355D}
 .sn{font-size:12px;color:#808080;background:#ECEEF1;padding:2px 10px;border-radius:100px;font-weight:600}
@@ -104,7 +95,14 @@ tbody td{padding:12px 12px;vertical-align:top}
 </head>
 <body>
 <div class="w">
-<div class="nav"><div class="nav-dot"></div><span class="nav-b">thryv</span><span class="nav-a">&#9658;</span><span class="nav-p">Compass</span><div class="nav-sp"></div><div class="nav-sy"><div class="nav-sl">Last synced</div><div class="nav-st" id="sync-time">&mdash;</div></div></div>
+<div class="nav">
+  <div class="nav-dot"></div><span class="nav-b">thryv</span><span class="nav-a">&#9658;</span><span class="nav-p">Compass</span>
+  <div class="nav-sp"></div>
+  <div class="nav-right">
+    <button class="rbtn" onclick="load()" title="Reload data">&#8635; Refresh</button>
+    <div class="nav-sy"><div class="nav-sl">Last synced</div><div class="nav-st" id="sync-time">&mdash;</div></div>
+  </div>
+</div>
 <div class="sb" id="sbar"><div class="spin" id="spin"></div><span id="smsg"></span></div>
 <div class="alert" id="alert"><b id="atitle"></b><p id="atext"></p></div>
 <div class="sr" id="sumrow"></div>
@@ -127,18 +125,17 @@ function da(d){return Math.max(0,Math.floor((Date.now()-new Date(d).getTime())/8
 function fd(d){return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric'});}
 function ff(d){return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
 
-/* Board definitions */
 var BOARDS=[
   {id:'MCB',label:'MC Bugs',assignee:'ATS Team',color:'#FF5000'},
-  {id:'TP-base',label:'MC Base',assignee:'Tyler Foreman',color:'#3C3489',match:function(i){return i.project==='TP'&&!isTPListings(i);}},
-  {id:'TP-listings',label:'Listings',assignee:'Tyler Foreman',color:'#29355D',match:function(i){return i.project==='TP'&&isTPListings(i);}},
+  {id:'TP-base',label:'MC Base',assignee:'Tyler Foreman',color:'#3C3489',match:function(i){return i.project==='TP'&&!isTPL(i);}},
+  {id:'TP-listings',label:'Listings',assignee:'Tyler Foreman',color:'#29355D',match:function(i){return i.project==='TP'&&isTPL(i);}},
   {id:'LEADS',label:'TL + LL',assignee:'Divya Kumari',color:'#4CAF50'},
   {id:'SEO',label:'SEO',assignee:'Tyler Foreman',color:'#FF9800'},
   {id:'CCPT',label:'O&O',assignee:'Matthew Schnell',color:'#5378FC'},
   {id:'OTHER',label:'Other',assignee:'Various',color:'#808080'},
 ];
-function isTPListings(i){var c=(i.components||[]).join(' ').toLowerCase(),s=(i.summary||'').toLowerCase();return c.indexOf('listings')>=0||c.indexOf('lm')>=0||c.indexOf('yext')>=0||c.indexOf('yelp')>=0||c.indexOf('gump')>=0||c.indexOf('ginger')>=0||c.indexOf('ep ')>=0||c.indexOf('growth package')>=0||c.indexOf('ypo')>=0||s.indexOf('listing')>=0||s.indexOf('yext')>=0||s.indexOf('yelp')>=0||s.indexOf('gump')>=0||s.indexOf('ginger')>=0||s.indexOf('lm ')>=0||s.indexOf('ep ')>=0||s.indexOf('linkout')>=0||s.indexOf('publish')>=0;}
-function getBoard(i){var p=i.project;if(p==='MCB')return'MCB';if(p==='TP')return isTPListings(i)?'TP-listings':'TP-base';if(p==='LEADS')return'LEADS';if(p==='SEO')return'SEO';if(p==='CCPT')return'CCPT';return'OTHER';}
+function isTPL(i){var c=(i.components||[]).join(' ').toLowerCase(),s=(i.summary||'').toLowerCase();return c.indexOf('listings')>=0||c.indexOf('lm')>=0||c.indexOf('yext')>=0||c.indexOf('yelp')>=0||c.indexOf('gump')>=0||c.indexOf('ginger')>=0||c.indexOf('ep ')>=0||c.indexOf('growth package')>=0||c.indexOf('ypo')>=0||s.indexOf('listing')>=0||s.indexOf('yext')>=0||s.indexOf('yelp')>=0||s.indexOf('gump')>=0||s.indexOf('ginger')>=0||s.indexOf('lm ')>=0||s.indexOf('ep ')>=0||s.indexOf('linkout')>=0||s.indexOf('publish')>=0;}
+function getBoard(i){var p=i.project;if(p==='MCB')return'MCB';if(p==='TP')return isTPL(i)?'TP-listings':'TP-base';if(p==='LEADS')return'LEADS';if(p==='SEO')return'SEO';if(p==='CCPT')return'CCPT';return'OTHER';}
 
 function cln(s){s=(s||'').trim();s=s.replace(/^\*[^*]+\*\s*/,'');s=s.replace(/\s*\|.*$/,'');s=s.replace(/\s*-\s*https?:\/\/\S+$/i,'');s=s.replace(/\s*-\s*www\.\S+$/i,'');s=s.replace(/\s*-\s*\S+\.\S{2,6}(\/\S*)?$/,'');s=s.replace(/\s*-\s*LOC[A-Z0-9]+$/i,'');s=s.replace(/\s*-\s*acct_\S+.*$/i,'');s=s.replace(/\s*-\s*[a-z0-9]{16,}(\s*\/\s*[a-z0-9]{16,})?$/i,'');s=s.replace(/\s*-\s*ZD\s*#?\d+.*$/i,'');s=s.replace(/\s*[-\u2013\u2014]\s*V\d+$/i,'');s=s.replace(/\s*V\d+$/i,'');return s.trim();}
 
@@ -152,7 +149,7 @@ var SYN=[
   {k:'unable to publish listings',p:['unable to publish listings','unable to confirm/publish listings','unable to publish and update listings']},
   {k:'lm yext integration failures',p:['mc listings fails due to existing yext entity','lm yext integration failures','lm duplicate yext account error','lm not syncing with active yext account','active yext account disconnected']},
   {k:'visitor tagging / heatmap analytics',p:['visitor tagging and/or heatmap html not tracking website analytics','website analytics','heatmap not activating','heatmap not tracking']},
-  {k:'yelp ep link / linkout issue',p:['yelp ep link provisioning issue','yelp ep linkout issue','yahoo ep linkout issue','ep linkout']},
+  {k:'ep link / linkout issue',p:['yelp ep link provisioning issue','yelp ep linkout issue','yahoo ep linkout issue','ep linkout']},
   {k:'yelp cpc fulfillment issue',p:['yelp cpc fulfillment issue','yelp fulfillment issue']},
   {k:'manual yelp re-order request',p:['manual re-order request for yelp business listing']},
   {k:'ep-ypo installation issues',p:['ep-ypo installation issues','enhanced profiles not auto-enabling','ypo install']},
@@ -170,12 +167,12 @@ var SYN=[
   {k:'ai score issues',p:['ai score','ai lead insights','ai scoring']},
   {k:'cancel ctn request',p:['cancel ctn']},
 ];
-var LBL={'alpha template issue':'Alpha Template Issue (Missing / Update)','missing gp add on':'Missing GP Add-on \u2014 Not Appearing in MC','missing tl add on':'Missing TL Add On in MC','seo report link not available':'SEO Report Link Not Available','mc not installed':'MC Not Installed','mc updates not going to ginger':'MC Updates Not Going to Ginger / Gump','unable to publish listings':'Unable to Publish Listings','lm yext integration failures':'LM Yext Integration Failures','visitor tagging / heatmap analytics':'Website Analytics / Visitor Tagging Not Tracking','yelp ep link / linkout issue':'EP Link Provisioning / Linkout Issue','yelp cpc fulfillment issue':'Yelp CPC Fulfillment Issue','manual yelp re-order request':'Manual Yelp Re-order Request','ep-ypo installation issues':'EP Not Auto-Enabling / GP Not Generating','qr code google reviews broken url':'QR Code Google Reviews \u2014 Broken URL','mcf upgrade failed':'MCF Upgrade Failed','tl report button greyed out':'TL Button Grayed Out / Report Unavailable','tl calls not injecting':'TL Calls Not Injecting to MC','gbp analytics not syncing':'GBP Analytics Not Syncing','lm & reputation failing to load':'LM & Reputation Failing to Load','raq issues':'Yelp RAQ Issues','ep status incorrect in gump':'EP Status Incorrect in GUMP','claim trackable phone number':'Unable to Claim Trackable Phone Number','ai score issues':'AI Score / Lead Insights Issues','o & o ctn reprovision':'O&O CTN Reprovision Request','cancel ctn request':'Cancel CTN Request','unable to update dn':'Unable to Update DN in MC'};
+var LBL={'alpha template issue':'Alpha Template Issue (Missing / Update)','missing gp add on':'Missing GP Add-on \u2014 Not Appearing in MC','missing tl add on':'Missing TL Add On in MC','seo report link not available':'SEO Report Link Not Available','mc not installed':'MC Not Installed','mc updates not going to ginger':'MC Updates Not Going to Ginger / Gump','unable to publish listings':'Unable to Publish Listings','lm yext integration failures':'LM Yext Integration Failures','visitor tagging / heatmap analytics':'Website Analytics / Visitor Tagging Not Tracking','ep link / linkout issue':'EP Link Provisioning / Linkout Issue','yelp cpc fulfillment issue':'Yelp CPC Fulfillment Issue','manual yelp re-order request':'Manual Yelp Re-order Request','ep-ypo installation issues':'EP Not Auto-Enabling / GP Not Generating','qr code google reviews broken url':'QR Code Google Reviews \u2014 Broken URL','mcf upgrade failed':'MCF Upgrade Failed','tl report button greyed out':'TL Button Grayed Out / Report Unavailable','tl calls not injecting':'TL Calls Not Injecting to MC','gbp analytics not syncing':'GBP Analytics Not Syncing','lm & reputation failing to load':'LM & Reputation Failing to Load','raq issues':'Yelp RAQ Issues','ep status incorrect in gump':'EP Status Incorrect in GUMP','claim trackable phone number':'Unable to Claim Trackable Phone Number','ai score issues':'AI Score / Lead Insights Issues','o & o ctn reprovision':'O&O CTN Reprovision Request','cancel ctn request':'Cancel CTN Request','unable to update dn':'Unable to Update DN in MC'};
 
 function gk(s){s=cln(s);s=s.replace(/\s*[-\u2013\u2014]\s*V\d+$/i,'');s=s.replace(/\s*V\d+$/i,'');s=s.replace(/\s*[-\u2013\u2014]\s*#?\d+$/,'');s=s.replace(/\s*\(.*?\)\s*$/,'');s=s.replace(/\s+/g,' ').trim().toLowerCase();for(var i=0;i<SYN.length;i++){var y=SYN[i];for(var j=0;j<y.p.length;j++){if(s.indexOf(y.p[j])===0||s===y.p[j])return y.k;}}return s;}
 
 var ALL=[],activeTab='ALL',searches={};
-var MT=2; /* min tickets threshold */
+var MT=2;
 
 function buildG(issues){
   var m={};for(var i=0;i<issues.length;i++){var x=issues[i],k=gk(x.summary);if(!m[k])m[k]={issues:[],gk:k};m[k].issues.push(x);}
@@ -215,73 +212,52 @@ function load(){
 function render(){
   var open=ALL.filter(function(i){return i.statusCategory!=='Done';});
   var res=ALL.filter(function(i){return i.statusCategory==='Done';});
-
-  /* Global summary */
   var ipT=open.filter(function(i){return i.statusCategory==='In Progress';}).length;
   var blT=open.filter(function(i){return i.statusCategory==='To Do'||i.statusCategory==='No Category';}).length;
-  var allG=buildG(open);
-  var allR=buildG(res);
-  var topG=allG[0];
+  var allG=buildG(open),allR=buildG(res),topG=allG[0];
 
-  /* Alert */
   var al=document.getElementById('alert');
   if(topG&&(topG.priority==='P1'||topG.priority==='P2')){al.className='alert show';document.getElementById('atitle').textContent='\u26A0 Active alert: '+topG.label;document.getElementById('atext').textContent=(topG.aa?topG.aa+' affected accounts':topG.count+' tickets')+' \u00B7 '+topG.priority+' '+PLA[topG.priority]+' \u00B7 Status: '+topG.sL;}
   else if(topG){al.className='alert show';document.getElementById('atitle').textContent='Top issue: '+topG.label;document.getElementById('atext').textContent=(topG.aa?topG.aa+' affected accounts':topG.count+' tickets')+' \u00B7 '+topG.priority+' \u00B7 Status: '+topG.sL;}
   else al.className='alert';
 
-  /* Summary cards */
   document.getElementById('sumrow').innerHTML='<div class="sc" data-t="ip"><div class="sc-h">In progress</div><div class="sc-x">'+ipT+' ticket'+(ipT!==1?'s':'')+' actively being worked across '+allG.filter(function(g){return g.sC==='In Progress';}).length+' known issues.'+(allG[0]?' Top: '+allG[0].label+'.':'')+'</div></div><div class="sc" data-t="bl"><div class="sc-h">Backlog</div><div class="sc-x">'+blT+' ticket'+(blT!==1?'s':'')+' in dev backlog across '+allG.filter(function(g){return g.sC==='To Do';}).length+' known issues.</div></div><div class="sc" data-t="rv"><div class="sc-h">Recently resolved</div><div class="sc-x">'+allR.length+' issue group'+(allR.length!==1?'s':'')+' resolved in the last 30 days ('+res.length+' tickets).</div></div>';
 
-  /* Build tabs */
-  var boardData={};
-  BOARDS.forEach(function(bd){boardData[bd.id]={open:[],res:[]};});
+  var boardData={};BOARDS.forEach(function(bd){boardData[bd.id]={open:[],res:[]};});
   open.forEach(function(i){if(boardData[i.board])boardData[i.board].open.push(i);else boardData['OTHER'].open.push(i);});
   res.forEach(function(i){if(boardData[i.board])boardData[i.board].res.push(i);else boardData['OTHER'].res.push(i);});
 
-  /* ALL tab + board tabs */
   var tabsHTML='<button class="tab'+(activeTab==='ALL'?' on':'')+'" onclick="setTab(\'ALL\')">All Boards<span class="cnt">'+allG.length+'</span></button>';
   BOARDS.forEach(function(bd){
     var g=buildG(boardData[bd.id].open);
-    if(boardData[bd.id].open.length===0&&boardData[bd.id].res.length===0)return;
-    tabsHTML+='<button class="tab'+(activeTab===bd.id?' on':'')+'" onclick="setTab(\''+bd.id+'\')" style="'+(activeTab===bd.id?'border-bottom-color:'+bd.color+';color:'+bd.color:'')+'">'+bd.label+'<span class="cnt"'+(activeTab===bd.id?' style="background:'+bd.color+'"':'')+'>'+g.length+'</span></button>';
+    var total=boardData[bd.id].open.length+boardData[bd.id].res.length;
+    if(total===0)return;
+    var isOn=activeTab===bd.id;
+    tabsHTML+='<button class="tab'+(isOn?' on':'')+'" onclick="setTab(\''+bd.id+'\')" style="'+(isOn?'border-bottom-color:'+bd.color+';color:'+bd.color:'')+'">'+bd.label+'<span class="cnt"'+(isOn?' style="background:'+bd.color+'"':'')+'>'+g.length+'</span></button>';
   });
   document.getElementById('tabs').innerHTML=tabsHTML;
 
-  /* Build panels */
-  var panelsHTML='';
-
-  /* ALL panel */
-  panelsHTML+='<div class="panel'+(activeTab==='ALL'?' on':'')+'" id="panel-ALL">';
-  panelsHTML+=renderBoard({id:'ALL',label:'All Boards',assignee:'All Teams',color:'#29355D'},allG,allR,open);
-  panelsHTML+='</div>';
-
-  /* Per-board panels */
+  var panelsHTML='<div class="panel'+(activeTab==='ALL'?' on':'')+'" id="panel-ALL">'+renderBoard({id:'ALL',label:'All Boards',assignee:'All Teams',color:'#29355D'},allG,allR,open)+'</div>';
   BOARDS.forEach(function(bd){
-    if(boardData[bd.id].open.length===0&&boardData[bd.id].res.length===0)return;
-    var g=buildG(boardData[bd.id].open);
-    var rg=buildG(boardData[bd.id].res);
-    panelsHTML+='<div class="panel'+(activeTab===bd.id?' on':'')+'" id="panel-'+bd.id+'">';
-    panelsHTML+=renderBoard(bd,g,rg,boardData[bd.id].open);
-    panelsHTML+='</div>';
+    var total=boardData[bd.id].open.length+boardData[bd.id].res.length;
+    if(total===0)return;
+    var g=buildG(boardData[bd.id].open),rg=buildG(boardData[bd.id].res);
+    panelsHTML+='<div class="panel'+(activeTab===bd.id?' on':'')+'" id="panel-'+bd.id+'">'+renderBoard(bd,g,rg,boardData[bd.id].open)+'</div>';
   });
   document.getElementById('panels').innerHTML=panelsHTML;
 }
 
 function renderBoard(bd,groups,resGroups,openTickets){
-  var h='';
-  var q=(searches[bd.id]||'').toLowerCase();
+  var h='',q=(searches[bd.id]||'').toLowerCase();
   var g=groups;
   if(q)g=g.filter(function(x){return x.label.toLowerCase().indexOf(q)>=0||x.brief.toLowerCase().indexOf(q)>=0||x.tickets.some(function(t){return t.key.toLowerCase().indexOf(q)>=0||t.summary.toLowerCase().indexOf(q)>=0;});});
 
-  /* Board header */
   var health=openTickets.length===0?['All clear','#4CAF50']:openTickets.some(function(i){return i.priority==='P1';})?['Critical','#FF5000']:openTickets.some(function(i){return i.priority==='P2';})?['Needs attention','#FF9800']:['Monitoring','#5378FC'];
-  h+='<div class="bh"><div class="bh-left"><span class="bh-title">'+bd.label+'</span><span class="bh-badge" style="background:'+health[1]+'15;color:'+health[1]+';border-color:'+health[1]+'40">'+health[0]+'</span>'+(bd.assignee!=='All Teams'?'<span class="bh-assignee">Assignee: '+bd.assignee+'</span>':'')+'</div><div class="bh-right"><input class="si" placeholder="Search issues..." value="'+(searches[bd.id]||'')+'" oninput="setSearch(\''+bd.id+'\',this.value)"></div></div>';
+  h+='<div class="bh"><div class="bh-left"><span class="bh-title">'+bd.label+'</span><span class="bh-badge" style="background:'+health[1]+'15;color:'+health[1]+';border-color:'+health[1]+'40">'+health[0]+'</span>'+(bd.assignee&&bd.assignee!=='All Teams'?'<span class="bh-assignee">Assignee: '+bd.assignee+'</span>':'')+'</div><div><input class="si" placeholder="Search issues..." value="'+(searches[bd.id]||'')+'" oninput="setSearch(\''+bd.id+'\',this.value)"></div></div>';
 
-  /* Stats bar */
   var totalAccts=g.reduce(function(s,x){return s+x.aa;},0);
   h+='<div style="display:flex;gap:24px;margin-bottom:14px;font-size:12px;color:#808080"><span><strong style="color:#29355D;font-size:16px">'+g.length+'</strong> known issues</span><span><strong style="color:#BA7517;font-size:16px">'+openTickets.length+'</strong> open tickets</span>'+(totalAccts?'<span><strong style="color:#FF5000;font-size:16px">'+totalAccts+'</strong> affected accounts</span>':'')+'</div>';
 
-  /* Table */
   if(g.length===0){
     h+='<div class="em">'+(q?'No issues match your search.':'No known issues with 2+ tickets on this board.')+'</div>';
   }else{
@@ -295,24 +271,17 @@ function renderBoard(bd,groups,resGroups,openTickets){
     h+='</tbody></table></div>';
   }
 
-  /* Incident communication for top issue */
   var top=g[0];
   if(top&&(top.priority==='P1'||top.priority==='P2'||top.aa>=5||top.count>=3)){
     var sev=top.priority==='P1'?'Critical \u2014 Severe disruption':top.priority==='P2'?'High \u2014 Major function down for subset':'Medium \u2014 Moderate impact';
-    var imp=top.brief||top.label;
-    if(top.aa)imp+=' '+top.aa+' client accounts reported as affected.';
-    imp+=' '+(top.comps.length?'Components: '+top.comps.join(', ')+'.':'')+' Reported '+top.count+' time'+(top.count>1?'s':'')+' since '+fd(top.first)+'. Status: "'+top.sL+'".';
-    h+='<div class="inc"><div class="inc-h"><span class="inc-i">\u26A0</span><span class="inc-t">Incident Communication \u2014 '+top.label+'</span></div><div class="inc-g"><span class="inc-lb">Priority:</span><span class="inc-v">'+pl(top.priority,PCL[top.priority])+' '+PLA[top.priority]+'</span><span class="inc-lb">Severity:</span><span class="inc-v">'+sev+'</span><span class="inc-lb">Status:</span><span class="inc-v">'+top.sL+'</span><span class="inc-lb">Tickets:</span><span class="inc-v">'+top.count+(top.vC>=2?' (V'+top.vM+')':'')+'</span>'+(top.aa?'<span class="inc-lb">Affected:</span><span class="inc-v" style="color:#FF5000;font-weight:700">'+top.aa+' accounts</span>':'')+'<span class="inc-lb">Reported:</span><span class="inc-v">'+fd(top.first)+' ('+da(top.first)+' days ago)</span></div><div class="inc-s"><div class="inc-st">Impact summary</div><div class="inc-sx">'+imp+'</div></div><div class="inc-s"><div class="inc-st">Client-facing message</div><div class="inc-sx">"We\'re aware of a technical issue. Your subscription is active and no data has been lost. Our engineering team has prioritized this and a fix is in progress. We\'ll follow up once resolved."</div></div><div class="inc-s"><div class="inc-st">Internal notes</div><div class="inc-sx">Latest ticket: <a href="https://thryv.atlassian.net/browse/'+top.id+'" target="_blank">'+top.id+'</a>. '+top.count+' total reports. '+(top.vC>=2?'Across '+top.vC+' versions (V'+top.vM+'). ':'')+'Submit new occurrences as additional tickets.</div></div></div>';
+    var imp=top.brief||top.label;if(top.aa)imp+=' '+top.aa+' client accounts reported as affected.';imp+=' '+(top.comps.length?'Components: '+top.comps.join(', ')+'.':'')+' Reported '+top.count+' time'+(top.count>1?'s':'')+' since '+fd(top.first)+'. Status: "'+top.sL+'".';
+    h+='<div class="inc"><div class="inc-h"><span class="inc-i">\u26A0</span><span class="inc-t">Incident Communication \u2014 '+top.label+'</span></div><div class="inc-g"><span class="inc-lb">Priority:</span><span class="inc-v">'+pl(top.priority,PCL[top.priority])+' '+PLA[top.priority]+'</span><span class="inc-lb">Severity:</span><span class="inc-v">'+sev+'</span><span class="inc-lb">Status:</span><span class="inc-v">'+top.sL+'</span><span class="inc-lb">Tickets:</span><span class="inc-v">'+top.count+(top.vC>=2?' (V'+top.vM+')':'')+'</span>'+(top.aa?'<span class="inc-lb">Affected:</span><span class="inc-v" style="color:#FF5000;font-weight:700">'+top.aa+' accounts</span>':'')+'<span class="inc-lb">Reported:</span><span class="inc-v">'+fd(top.first)+' ('+da(top.first)+' days ago)</span></div><div class="inc-s"><div class="inc-st">Impact summary</div><div class="inc-sx">'+imp+'</div></div><div class="inc-s"><div class="inc-st">Client-facing message</div><div class="inc-sx">"We\'re aware of a technical issue. Your subscription is active and no data has been lost. Our engineering team has prioritized this. We\'ll follow up once resolved."</div></div><div class="inc-s"><div class="inc-st">Internal notes</div><div class="inc-sx">Latest ticket: <a href="https://thryv.atlassian.net/browse/'+top.id+'" target="_blank">'+top.id+'</a>. '+top.count+' total reports. '+(top.vC>=2?'Across '+top.vC+' versions (V'+top.vM+'). ':'')+'Submit new occurrences as additional tickets.</div></div></div>';
   }
 
-  /* Recently resolved */
   if(resGroups.length>0){
     var rs=resGroups.slice(0,5);
     h+='<div class="sh" style="margin-top:4px"><span class="stt">Recently Resolved</span><span class="sn">'+resGroups.length+'</span></div>';
-    rs.forEach(function(g){
-      var d=Math.max(1,Math.round((new Date(g.last)-new Date(g.first))/864e5));
-      h+='<div class="rr"><span class="rk">'+g.id+'</span><span class="rs">'+g.label+(g.aa?' ('+g.aa+' accounts)':'')+'</span><span class="rd">Resolved in '+d+'d</span></div>';
-    });
+    rs.forEach(function(g){var d=Math.max(1,Math.round((new Date(g.last)-new Date(g.first))/864e5));h+='<div class="rr"><span class="rk">'+g.id+'</span><span class="rs">'+g.label+(g.aa?' ('+g.aa+' accounts)':'')+'</span><span class="rd">Resolved in '+d+'d</span></div>';});
   }
   return h;
 }
