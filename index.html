@@ -95,6 +95,7 @@ a { color: inherit; }
   position: sticky;
   top: 0;
   z-index: 100;
+  --nav-height: 57px;
 }
 .nav-inner {
   max-width: 1440px;
@@ -161,25 +162,6 @@ a { color: inherit; }
 }
 .btn-refresh:hover { background: #1f2a4a; }
 .btn-refresh.spinning svg { animation: spin 0.8s linear infinite; }
-
-.btn-force-sync {
-  background: var(--white);
-  color: var(--midnight);
-  border: 1px solid var(--border-strong);
-  padding: 7px 12px;
-  border-radius: var(--r-md);
-  font-size: 12px;
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  text-decoration: none;
-  transition: background 0.15s, border-color 0.15s;
-}
-.btn-force-sync:hover {
-  background: var(--mist);
-  border-color: var(--midnight);
-}
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* =========================================================
@@ -634,6 +616,16 @@ a { color: inherit; }
   padding: 10px 16px;
   border-bottom: 1px solid var(--border);
   white-space: nowrap;
+  position: sticky;
+  top: 57px;
+  z-index: 20;
+}
+.issues-table thead th::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 1px;
+  background: var(--border);
 }
 .issues-table tbody tr {
   border-bottom: 1px solid var(--border);
@@ -797,6 +789,12 @@ a { color: inherit; }
   display: flex;
   gap: 8px;
 }
+.resolved-item .ri-timestamp {
+  font-size: 10.5px;
+  color: var(--steel);
+  font-family: 'DM Mono', monospace;
+  margin-top: 4px;
+}
 
 /* =========================================================
    FOOTER
@@ -809,6 +807,119 @@ a { color: inherit; }
 }
 .footer a { color: var(--midnight); text-decoration: none; }
 .footer a:hover { text-decoration: underline; }
+
+/* =========================================================
+   PRIORITY PILLS & ROW STRIPES
+   ========================================================= */
+.prio-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+  font-family: 'DM Mono', monospace;
+  min-width: 30px;
+}
+.prio-pill.p1 { background: rgba(217, 48, 37, 0.12); color: var(--health-critical); }
+.prio-pill.p2 { background: rgba(227, 116, 0, 0.12); color: var(--health-attention); }
+.prio-pill.p3 { background: rgba(26, 115, 232, 0.12); color: var(--health-monitor); }
+.prio-pill.p4 { background: var(--cloud); color: var(--night); }
+
+/* Left-edge stripe on issue rows */
+.issues-table tbody tr {
+  position: relative;
+}
+.issues-table tbody tr td:first-child {
+  border-left: 3px solid transparent;
+  transition: border-color 0.15s;
+}
+.issues-table tbody tr.prio-p1 td:first-child { border-left-color: var(--health-critical); }
+.issues-table tbody tr.prio-p2 td:first-child { border-left-color: var(--health-attention); }
+.issues-table tbody tr.prio-p3 td:first-child { border-left-color: var(--health-monitor); }
+.issues-table tbody tr.prio-p4 td:first-child { border-left-color: var(--cloud); }
+
+/* Hover hint */
+.row-hover-hint {
+  font-size: 10.5px;
+  color: var(--sapphire);
+  font-weight: 600;
+  margin-top: 6px;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.issues-table tbody tr:hover .row-hover-hint {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* =========================================================
+   CRITICAL TAB BADGE
+   ========================================================= */
+.tab .count.critical {
+  background: var(--health-critical);
+  color: var(--white);
+  box-shadow: 0 0 0 3px rgba(217, 48, 37, 0.18);
+}
+.tab.active .count.critical {
+  background: var(--white);
+  color: var(--health-critical);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.18);
+}
+
+/* =========================================================
+   STAGGERED FADE-IN ON LOAD
+   ========================================================= */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up {
+  animation: fadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+.fade-up-1 { animation-delay: 0ms; }
+.fade-up-2 { animation-delay: 60ms; }
+.fade-up-3 { animation-delay: 120ms; }
+.fade-up-4 { animation-delay: 180ms; }
+.fade-up-5 { animation-delay: 240ms; }
+.fade-up-6 { animation-delay: 300ms; }
+
+/* =========================================================
+   BACK-TO-TOP BUTTON
+   ========================================================= */
+.scroll-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--midnight);
+  color: var(--white);
+  border: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  transform: translateY(12px) scale(0.9);
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s, background 0.15s;
+  box-shadow: var(--shadow-lg);
+  z-index: 80;
+}
+.scroll-top.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+.scroll-top:hover {
+  background: var(--orange);
+}
 
 /* =========================================================
    LOADING
@@ -880,8 +991,8 @@ a { color: inherit; }
   .incident-meta { grid-template-columns: 1fr; }
   .brand { font-size: 13px; }
   .last-sync { display: none; }
-  .btn-force-sync { display: none; }
   .page-title { font-size: 18px; }
+  .scroll-top { right: 16px; bottom: 16px; width: 40px; height: 40px; }
   .pc-big { font-size: 26px; }
 }
 </style>
@@ -904,10 +1015,6 @@ a { color: inherit; }
         <span class="dot"></span>
         <span>Loading…</span>
       </div>
-      <a href="https://github.com/thryv-known-issues/jira-known-issues-live/actions/workflows/sync.yml" target="_blank" rel="noopener" class="btn-force-sync" title="Open GitHub Actions to trigger a fresh Jira sync">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg>
-        Force sync
-      </a>
       <button class="btn-refresh" id="refreshBtn" title="Reload data.json">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
         Refresh
@@ -956,10 +1063,14 @@ a { color: inherit; }
   </div>
 
   <footer class="footer">
-    Maintained by Advanced Technical Support · Data source: <a href="https://thryv.atlassian.net" target="_blank" rel="noopener">thryv.atlassian.net</a> · Repo: <a href="https://github.com/thryv-known-issues/jira-known-issues-live" target="_blank" rel="noopener">jira-known-issues-live</a>
+    Maintained by Advanced Technical Support · Data source: <a href="https://thryv.atlassian.net" target="_blank" rel="noopener">thryv.atlassian.net</a>
   </footer>
 
 </main>
+
+<button class="scroll-top" id="scrollTop" title="Back to top" aria-label="Scroll to top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
 
 <script>
 /* =========================================================
@@ -1156,6 +1267,34 @@ async function loadData(forceFresh = false) {
   }
 }
 
+// ---------------------------------------------------------
+// TIMESTAMP HELPERS — all timestamps shown in CST (America/Chicago)
+// ---------------------------------------------------------
+function formatCST(input, opts = {}) {
+  if (!input) return '—';
+  const d = input instanceof Date ? input : new Date(input);
+  if (isNaN(d.getTime())) return '—';
+  const defaults = {
+    timeZone: 'America/Chicago',
+    year: 'numeric', month: 'short', day: 'numeric',
+    hour: 'numeric', minute: '2-digit',
+    hour12: true
+  };
+  return d.toLocaleString('en-US', { ...defaults, ...opts }) + ' CST';
+}
+
+function formatCSTShort(input) {
+  if (!input) return '—';
+  const d = input instanceof Date ? input : new Date(input);
+  if (isNaN(d.getTime())) return '—';
+  return d.toLocaleString('en-US', {
+    timeZone: 'America/Chicago',
+    month: 'short', day: 'numeric',
+    hour: 'numeric', minute: '2-digit',
+    hour12: true
+  }) + ' CST';
+}
+
 function updateLastSync() {
   const el = document.getElementById('lastSync');
   const ts = rawData && (rawData.fetchedAt || rawData.lastSync);
@@ -1166,12 +1305,13 @@ function updateLastSync() {
   const d = new Date(ts);
   const diff = Date.now() - d.getTime();
   const mins = Math.floor(diff / 60000);
-  let label;
-  if (mins < 1) label = 'just now';
-  else if (mins < 60) label = `${mins}m ago`;
-  else if (mins < 1440) label = `${Math.floor(mins/60)}h ago`;
-  else label = `${Math.floor(mins/1440)}d ago`;
-  el.querySelector('span:last-child').textContent = `Synced ${label}`;
+  let rel;
+  if (mins < 1) rel = 'just now';
+  else if (mins < 60) rel = `${mins}m ago`;
+  else if (mins < 1440) rel = `${Math.floor(mins/60)}h ago`;
+  else rel = `${Math.floor(mins/1440)}d ago`;
+  el.querySelector('span:last-child').textContent = `Synced ${rel} · ${formatCSTShort(d)}`;
+  el.title = `Last sync: ${formatCST(d)}`;
 }
 
 // ---------------------------------------------------------
@@ -1256,7 +1396,7 @@ function render() {
 
 function renderProductCards() {
   const products = ['mc', 'ol', 'tp'];
-  const html = products.map(p => {
+  const html = products.map((p, idx) => {
     const groups = groupedIssues.filter(g => g.product === p && g.tickets.length >= 2 && g.tickets.some(isOpen));
     const knownIssues = groups.length;
     const openTickets = groups.reduce((s,g) => s + g.tickets.filter(isOpen).length, 0);
@@ -1271,7 +1411,7 @@ function renderProductCards() {
     const spark = sparkline(generateSparkData(p));
 
     return `
-      <div class="product-card ${p}">
+      <div class="product-card ${p} fade-up fade-up-${idx + 1}">
         <div class="strip"></div>
         <div class="pc-head">
           <div class="pc-title">${PRODUCT_LABELS[p]}</div>
@@ -1338,7 +1478,7 @@ function renderSummaryCards() {
     }
   }
   const html = `
-    <div class="summary-card">
+    <div class="summary-card fade-up fade-up-4">
       <div class="summary-icon prog">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
       </div>
@@ -1348,7 +1488,7 @@ function renderSummaryCards() {
         <div class="sc-sub">Tickets actively being worked</div>
       </div>
     </div>
-    <div class="summary-card">
+    <div class="summary-card fade-up fade-up-5">
       <div class="summary-icon todo">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
       </div>
@@ -1358,7 +1498,7 @@ function renderSummaryCards() {
         <div class="sc-sub">Awaiting triage or development</div>
       </div>
     </div>
-    <div class="summary-card">
+    <div class="summary-card fade-up fade-up-6">
       <div class="summary-icon done">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
       </div>
@@ -1384,11 +1524,16 @@ function ticketsForBoard(boardId) {
 
 function renderTabs() {
   const html = BOARDS.map(b => {
-    const count = ticketsForBoard(b.id).length;
+    const groups = ticketsForBoard(b.id);
+    const count = groups.length;
+    // Critical if any open ticket on this board has P1 (or equivalent)
+    const hasCritical = groups.some(g =>
+      g.tickets.some(t => isOpen(t) && /^(P1|Highest|Critical)$/i.test(t.priority || ''))
+    );
     return `
       <button class="tab ${b.id === activeTab ? 'active' : ''}" data-tab="${b.id}">
         ${escapeHtml(b.label)}
-        <span class="count">${count}</span>
+        <span class="count ${hasCritical && b.id !== 'all' ? 'critical' : ''}">${count}</span>
       </button>
     `;
   }).join('');
@@ -1479,8 +1624,9 @@ function renderBoard() {
               <div class="ri-meta">
                 <a href="${tagForKey(t.key)}" target="_blank" rel="noopener" class="mono">${escapeHtml(t.key)}</a>
                 <span>·</span>
-                <span>${t.daysSince === 0 ? 'today' : t.daysSince === 1 ? '1 day ago' : `${t.daysSince} days ago`}</span>
+                <span title="${formatCST(t.resolutiondate || t.updated)}">${t.daysSince === 0 ? 'today' : t.daysSince === 1 ? '1 day ago' : `${t.daysSince} days ago`}</span>
               </div>
+              <div class="ri-timestamp">${formatCSTShort(t.resolutiondate || t.updated)}</div>
             </div>
           `).join('')}
         </div>
@@ -1591,18 +1737,32 @@ function renderIssuesTable(groups) {
     const age = avgAge(g);
     const ageDisplay = age === null ? '—' : age === 0 ? 'today' : age === 1 ? '1d' : `${age}d`;
 
+    // Determine top priority of any open ticket
+    const prioOrder = { 'P1': 1, 'Highest': 1, 'Critical': 1, 'P2': 2, 'High': 2, 'P3': 3, 'Medium': 3, 'P4': 4, 'Low': 4, 'Lowest': 5 };
+    const sortedByPrio = [...openTickets].sort((a, b) => (prioOrder[a.priority] || 99) - (prioOrder[b.priority] || 99));
+    const topPrioRaw = sortedByPrio[0]?.priority || 'P3';
+    const prioMap = { 'Highest': 'P1', 'Critical': 'P1', 'High': 'P2', 'Medium': 'P3', 'Low': 'P4', 'Lowest': 'P4' };
+    const prio = prioMap[topPrioRaw] || topPrioRaw;
+    const prioClass = (prio || 'P3').toLowerCase();
+
+    // Oldest ticket created date for "first reported" tooltip
+    const oldestTicket = openTickets.slice().sort((a, b) => new Date(a.created || 0) - new Date(b.created || 0))[0];
+    const firstReported = oldestTicket ? formatCST(oldestTicket.created) : null;
+
     const keys = openTickets.slice(0, 4).map(t =>
       `<a href="${tagForKey(t.key)}" target="_blank" rel="noopener" class="issue-key-pill mono">${escapeHtml(t.key)}</a>`
     ).join('');
     const moreKeys = openTickets.length > 4 ? `<span class="issue-key-pill">+${openTickets.length - 4}</span>` : '';
 
     return `
-      <tr>
+      <tr class="prio-${prioClass}">
         <td class="issue-main-cell">
           <div class="issue-name">${escapeHtml(g.canonical)}</div>
           ${g.brief ? `<div class="issue-brief">${escapeHtml(g.brief)}</div>` : ''}
           <div class="issue-keys">${keys}${moreKeys}</div>
+          <span class="row-hover-hint">View in Jira <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
         </td>
+        <td data-label="Priority"><span class="prio-pill ${prioClass}">${escapeHtml(prio)}</span></td>
         <td data-label="Product"><span class="prod-pill ${g.product}">${PRODUCT_LABELS[g.product]}</span></td>
         <td data-label="Status"><span class="status-pill ${pillClass}">${escapeHtml(status.name)}</span></td>
         <td data-label="Affected">
@@ -1610,7 +1770,7 @@ function renderIssuesTable(groups) {
           <div class="affected-label">${g.affectedAccounts === 1 ? 'account' : 'accounts'}</div>
         </td>
         <td data-label="Tickets"><span class="ticket-count">${openTickets.length}</span></td>
-        <td data-label="Avg age" class="age-cell">${ageDisplay}</td>
+        <td data-label="Avg age" class="age-cell"${firstReported ? ` title="First reported: ${firstReported}"` : ''}>${ageDisplay}</td>
       </tr>
     `;
   }).join('');
@@ -1624,7 +1784,8 @@ function renderIssuesTable(groups) {
       <table class="issues-table">
         <thead>
           <tr>
-            <th style="width:42%">Issue</th>
+            <th style="width:38%">Issue</th>
+            <th>Priority</th>
             <th>Product</th>
             <th>Status</th>
             <th>Affected</th>
@@ -1726,6 +1887,22 @@ document.getElementById('refreshBtn').addEventListener('click', async () => {
   await loadData(true);
   setTimeout(() => btn.classList.remove('spinning'), 600);
 });
+
+// ---------------------------------------------------------
+// BACK-TO-TOP BUTTON
+// ---------------------------------------------------------
+(function setupScrollTop() {
+  const btn = document.getElementById('scrollTop');
+  if (!btn) return;
+  const onScroll = () => {
+    if (window.scrollY > 400) btn.classList.add('show');
+    else btn.classList.remove('show');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
 
 // ---------------------------------------------------------
 // INIT
