@@ -19,7 +19,7 @@ jobs:
           JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
         run: |
           set -e
-          echo "Fetching MCB board issues..."
+          echo "Fetching issues from all ATS-tracked boards + techsupport label..."
 
           TEST=$(curl -s -w "\nHTTP_CODE:%{http_code}" \
             -u "${JIRA_EMAIL}:${JIRA_TOKEN}" \
@@ -31,9 +31,11 @@ jobs:
 
           ALL_ISSUES="[]"
 
+          # Query 1: All open issues from tracked boards + techsupport label
+          # Query 2: Recently resolved (last 30 days) from same scope
           QUERIES=(
-            "project = MCB AND status != Done AND created >= 2026-01-01 ORDER BY priority ASC, created DESC"
-            "project = MCB AND status = Done AND updated >= -30d AND created >= 2026-01-01 ORDER BY updated DESC"
+            "(project in (MCB, TP, LEADS, SEO, CCPT) OR labels = techsupport) AND status != Done AND created >= 2026-01-01 ORDER BY priority ASC, created DESC"
+            "(project in (MCB, TP, LEADS, SEO, CCPT) OR labels = techsupport) AND status = Done AND updated >= -30d AND created >= 2026-01-01 ORDER BY updated DESC"
           )
 
           QNUM=0
@@ -50,7 +52,7 @@ jobs:
                   -H "Accept: application/json" \
                   -G "https://thryv.atlassian.net/rest/api/3/search/jql" \
                   --data-urlencode "jql=${JQL}" \
-                  --data-urlencode "fields=summary,status,priority,components,labels,created,updated,issuetype,reporter,description" \
+                  --data-urlencode "fields=summary,status,priority,components,labels,created,updated,issuetype,reporter,description,project" \
                   --data-urlencode "maxResults=100")
               else
                 RESPONSE=$(curl -s \
@@ -58,7 +60,7 @@ jobs:
                   -H "Accept: application/json" \
                   -G "https://thryv.atlassian.net/rest/api/3/search/jql" \
                   --data-urlencode "jql=${JQL}" \
-                  --data-urlencode "fields=summary,status,priority,components,labels,created,updated,issuetype,reporter,description" \
+                  --data-urlencode "fields=summary,status,priority,components,labels,created,updated,issuetype,reporter,description,project" \
                   --data-urlencode "maxResults=100" \
                   --data-urlencode "nextPageToken=${NEXT_TOKEN}")
               fi
@@ -76,7 +78,8 @@ jobs:
 
               BATCH=$(echo "$RESPONSE" | jq '[.issues[] | {
                 key: .key,
-                project: (.key | split("-")[0]),
+                project: .fields.project.key,
+                projectName: .fields.project.name,
                 summary: (.fields.summary // ""),
                 status: (.fields.status.name // ""),
                 statusCategory: (.fields.status.statusCategory.name // "To Do"),
@@ -96,7 +99,7 @@ jobs:
               if [ -z "$NEXT_TOKEN" ]; then break; fi
 
               CURRENT=$(echo "$ALL_ISSUES" | jq 'length')
-              if [ "$CURRENT" -ge 2000 ]; then echo "  Hit cap."; break 2; fi
+              if [ "$CURRENT" -ge 3000 ]; then echo "  Hit cap at ${CURRENT}."; break 2; fi
             done
           done
 
@@ -104,30 +107,30 @@ jobs:
           TOTAL_COUNT=$(echo "$ALL_ISSUES" | jq 'length')
           OPEN=$(echo "$ALL_ISSUES" | jq '[.[] | select(.statusCategory != "Done")] | length')
           DONE=$(echo "$ALL_ISSUES" | jq '[.[] | select(.statusCategory == "Done")] | length')
+
+          # Count by project
           echo ""
           echo "==============================="
           echo "Total: ${TOTAL_COUNT} (Open: ${OPEN}, Resolved: ${DONE})"
+          echo "$ALL_ISSUES" | jq -r 'group_by(.project) | .[] | "  \(.[0].project): \(length)"'
           echo "==============================="
 
-          # Build initial data.json with rawDescription included
           echo "$ALL_ISSUES" | jq "{
             total: length,
             fetchedAt: \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",
-            projects: [\"MCB\"],
+            projects: [.[] | .project] | unique,
             issues: .
           }" > data_raw.json
           echo "data_raw.json written ($(wc -c < data_raw.json) bytes)"
 
-          # Run Python parser to extract brief + affectedAccounts, strip rawDescription
           echo "Parsing descriptions..."
           python3 parse_descriptions.py < data_raw.json > data.json
           rm -f data_raw.json
           echo "data.json written ($(wc -c < data.json) bytes)"
 
-          # Show a few examples
           echo ""
           echo "Sample briefs:"
-          jq -r '.issues[:5][] | "\(.key): brief=\(.brief[:80]// "none") | accounts=\(.affectedAccounts)"' data.json
+          jq -r '.issues[:5][] | "\(.key): brief=\(.brief[:80] // "none") | accounts=\(.affectedAccounts)"' data.json
 
       - name: Commit and push
         run: |
