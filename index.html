@@ -1,334 +1,1740 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Compass — Known System Issues | Thryv</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>thryv ▸ Known Issues Jira Status Page</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'DM Sans',-apple-system,sans-serif;background:#F4F6FB;color:#121212;font-size:13px;line-height:1.5}
-a{color:#5378FC;text-decoration:none;font-weight:500}a:hover{text-decoration:underline}
-.w{max-width:1180px;margin:0 auto;padding:24px 24px 12px}
-.nav{display:flex;align-items:center;gap:8px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid #ECEEF1}
-.nav-dot{width:10px;height:10px;border-radius:2px;background:#FF5000;flex-shrink:0}
-.nav-b{font-size:15px;font-weight:600;color:#29355D}.nav-a{color:#808080;font-size:12px}.nav-p{font-size:15px;font-weight:600;color:#121212}
-.nav-sp{flex:1}
-.nav-right{display:flex;align-items:center;gap:12px}
-.nav-sy{text-align:right}.nav-sl{font-size:9px;color:#808080;text-transform:uppercase;letter-spacing:.6px}.nav-st{font-size:11px;color:#4D4D4D;font-weight:500}
-.rbtn{padding:5px 14px;border-radius:100px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid #ECEEF1;background:#fff;color:#808080;font-family:inherit;transition:all .15s}
-.rbtn:hover{border-color:#5378FC;color:#5378FC;background:#E8F0FE}
-.sb{padding:10px 16px;border-radius:8px;margin-bottom:14px;font-size:12px;display:none;align-items:center;gap:8px}
-.sb.loading{display:flex;background:#E8F0FE;color:#185FA5;border:1px solid #B5D4F4}
-.sb.error{display:flex;background:#FFF3E0;color:#854F0B;border:1px solid #FAC775}
-.sb.success{display:flex;background:#EAF3DE;color:#3B6D11;border:1px solid #C0DD97}
-.spin{width:14px;height:14px;border:2px solid #B5D4F4;border-top-color:#185FA5;border-radius:50%;animation:sp .6s linear infinite;flex-shrink:0}
-@keyframes sp{to{transform:rotate(360deg)}}
-.alert{background:#FFF3E0;border:1px solid #FFB74D;border-left:4px solid #FF5000;border-radius:8px;padding:12px 16px;margin-bottom:16px;display:none}
-.alert.show{display:block}.alert b{color:#854F0B;font-size:13px}.alert p{color:#854F0B;font-size:12px;margin-top:4px;line-height:1.5}
-/* Summary cards */
-.sr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px}
-.sc{background:#fff;border:1px solid #ECEEF1;border-radius:10px;padding:14px 16px;border-top:3px solid #ccc}
-.sc[data-t="ip"]{border-top-color:#4CAF50}.sc[data-t="bl"]{border-top-color:#FF5000}.sc[data-t="rv"]{border-top-color:#5378FC}
-.sc-h{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
-.sc[data-t="ip"] .sc-h{color:#4CAF50}.sc[data-t="bl"] .sc-h{color:#FF5000}.sc[data-t="rv"] .sc-h{color:#5378FC}
-.sc-x{font-size:12px;color:#4D4D4D;line-height:1.6}
-/* Product health cards */
-.pr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:20px}
-.pc{background:#fff;border:1px solid #ECEEF1;border-radius:10px;padding:16px}
-.pc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.pc-nm{font-size:14px;font-weight:600;color:#29355D}
-.pc-bg{font-size:10px;font-weight:600;padding:3px 10px;border-radius:100px;border:1px solid}
-.pc-st{display:flex;gap:20px;margin-bottom:4px}
-.pc-n{font-size:22px;font-weight:700;line-height:1}.pc-l{font-size:10px;color:#808080;margin-top:2px}
-/* Lookup */
-.lk{background:#fff;border:1px solid #ECEEF1;border-radius:8px;padding:10px 14px;margin-bottom:16px}
-.lk-r{display:flex;align-items:center;gap:10px}
-.lk-lb{font-size:11px;font-weight:600;color:#808080;flex-shrink:0}
-.lk-in{padding:6px 12px;border-radius:6px;border:1px solid #ECEEF1;font-size:12px;width:280px;flex-shrink:0;background:#F4F6FB;color:#121212;font-family:inherit}
-.lk-in:focus{outline:none;border-color:#5378FC;background:#fff}
-.lk-o{display:flex;align-items:center;gap:6px;font-size:12px;overflow:hidden;min-width:0}
-.lk-o .k{font-family:'SF Mono',Consolas,monospace;color:#5378FC;font-weight:600;flex-shrink:0}
-.lk-o .s{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
-/* Tabs */
-.tabs{display:flex;gap:0;margin-bottom:0;border-bottom:2px solid #ECEEF1;overflow-x:auto}
-.tab{padding:10px 20px;font-size:12px;font-weight:600;color:#808080;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s;font-family:inherit;background:none;border-top:none;border-left:none;border-right:none}
-.tab:hover{color:#29355D}.tab.on{color:#FF5000;border-bottom-color:#FF5000}
-.tab .cnt{font-size:10px;font-weight:700;background:#ECEEF1;color:#808080;padding:1px 7px;border-radius:100px;margin-left:6px}
-.tab.on .cnt{background:#FF5000;color:#fff}
-.panel{display:none;padding-top:20px}.panel.on{display:block}
-/* Board header */
-.bh{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
-.bh-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.bh-title{font-size:16px;font-weight:600;color:#29355D}
-.bh-badge{font-size:10.5px;font-weight:600;padding:3px 12px;border-radius:100px;border:1px solid}
-.bh-assignee{font-size:11px;color:#808080}
-.bh-jira{font-size:11px;color:#5378FC;font-weight:500;text-decoration:none;border:1px solid #ECEEF1;padding:3px 10px;border-radius:100px}
-.bh-jira:hover{background:#E8F0FE;border-color:#5378FC;text-decoration:none}
-.si{padding:5px 14px;border-radius:100px;font-size:11px;border:1px solid #ECEEF1;width:240px;background:#fff;color:#121212;font-family:inherit}
-.si:focus{outline:none;border-color:#5378FC}
-/* Table */
-.tw{background:#fff;border:1px solid #ECEEF1;border-radius:10px;overflow:hidden;margin-bottom:20px}
-table{width:100%;border-collapse:collapse}
-thead th{padding:10px 12px;font-size:10.5px;font-weight:700;color:#808080;text-transform:uppercase;letter-spacing:.5px;text-align:left;white-space:nowrap;border-bottom:2px solid #ECEEF1;background:#FAFBFD;cursor:pointer;user-select:none}
-thead th:hover{color:#29355D}
-tbody tr{border-bottom:1px solid #F4F6FB}tbody tr:last-child{border-bottom:none}
-tbody td{padding:12px 12px;vertical-align:top}
-.ti{max-width:420px}.ti-nm{font-size:13px;font-weight:600;color:#121212;margin-bottom:2px}
-.ti-br{font-size:11.5px;color:#808080;line-height:1.4;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.ti-ks{font-size:10.5px;color:#AAA;font-family:'SF Mono',Consolas,monospace}
-.ti-ks a{font-weight:400;font-size:10.5px;color:#AAA}.ti-ks a:hover{color:#5378FC}
-.ta{font-size:18px;font-weight:700;color:#FF5000;line-height:1}
-.ta-l{font-size:10px;color:#808080;font-weight:500}.ta-s{font-size:10px;color:#808080;margin-top:2px}
-.em{text-align:center;padding:40px;color:#808080;font-size:13px}
-/* Pills */
-.p{display:inline-block;padding:2px 10px;border-radius:100px;font-size:10.5px;font-weight:600;letter-spacing:.2px;white-space:nowrap;line-height:18px;border:1.5px solid;vertical-align:middle}
-.p-mc{background:#3C3489;border-color:#9B8FFF;color:#fff}.p-ol{background:#29355D;border-color:#5378FC;color:#fff}.p-tp{background:#5378FC;border-color:#A8C0FF;color:#fff}
-.p-p1{background:#FFE0D0;border-color:#F0997B;color:#993C1D}.p-p2{background:#FAEEDA;border-color:#FAC775;color:#854F0B}.p-p3{background:#E6F1FB;border-color:#85B7EB;color:#185FA5}.p-p4{background:#EAF3DE;border-color:#C0DD97;color:#3B6D11}
-.p-todo{background:#E8F0FE;border-color:#B5D4F4;color:#0C447C}.p-prog{background:#FFF3E0;border-color:#FAC775;color:#633806}.p-done{background:#EAF3DE;border-color:#C0DD97;color:#27500A}
-/* Incident */
-.inc{background:#fff;border:1px solid #ECEEF1;border-left:4px solid #FF5000;border-radius:10px;padding:18px 20px;margin-bottom:20px}
-.inc-h{display:flex;align-items:center;gap:8px;margin-bottom:12px}.inc-i{font-size:16px}.inc-t{font-size:14px;font-weight:600;color:#29355D}
-.inc-g{display:grid;grid-template-columns:120px 1fr;gap:6px 16px;font-size:12px;margin-bottom:12px}
-.inc-lb{color:#808080;font-weight:600}.inc-v{color:#121212}
-.inc-s{margin-top:12px}.inc-st{font-size:12px;font-weight:700;color:#29355D;margin-bottom:4px}.inc-sx{font-size:12px;color:#4D4D4D;line-height:1.6}
-/* Resolved */
-.rr{display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:8px;background:#fff;border:1px solid #ECEEF1;font-size:12px;overflow:hidden;margin-bottom:6px}
-.rr .rk{font-family:'SF Mono',Consolas,monospace;font-size:11px;color:#808080;min-width:68px;flex-shrink:0;white-space:nowrap}
-.rr .rs{flex:1 1 0%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;font-weight:500}
-.rr .rd{font-size:10.5px;color:#27500A;background:#EAF3DE;padding:3px 10px;border-radius:100px;border:1px solid #C0DD97;flex-shrink:0;white-space:nowrap;font-weight:600}
-.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.stt{font-size:16px;font-weight:600;color:#29355D}
-.sn{font-size:12px;color:#808080;background:#ECEEF1;padding:2px 10px;border-radius:100px;font-weight:600}
-.legend{display:flex;gap:24px;padding:14px 18px;background:#fff;border:1px solid #ECEEF1;border-radius:10px;font-size:11px;color:#808080;margin-bottom:16px;flex-wrap:wrap}
-.lg{display:flex;align-items:center;gap:8px;white-space:nowrap}.lg b{font-weight:700;color:#4D4D4D}
-.li{display:inline-flex;align-items:center;gap:4px}.li span:last-child{font-size:10.5px;color:#4D4D4D}
-.footer{text-align:center;padding:16px 0 8px;font-size:11px;color:#808080}
+/* =========================================================
+   THRYV KNOWN ISSUES — DESIGN TOKENS
+   ========================================================= */
+:root {
+  /* Thryv brand */
+  --orange: #FF5000;
+  --orange-soft: #FFE9DD;
+  --midnight: #29355D;
+  --midnight-soft: #DDE2EE;
+  --black: #121212;
+  --white: #FFFFFF;
+  --mist: #F4F6FB;
+  --cloud: #ECEEF1;
+  --steel: #808080;
+  --night: #4D4D4D;
+  --sapphire: #5378FC;
+  --sapphire-soft: #E3EAFE;
+
+  /* Product pills */
+  --mc-bg: #3C3489;
+  --mc-fg: #FFFFFF;
+  --mc-soft: #E8E5F5;
+  --ol-bg: #29355D;
+  --ol-fg: #FFFFFF;
+  --ol-soft: #DDE2EE;
+  --tp-bg: #5378FC;
+  --tp-fg: #FFFFFF;
+  --tp-soft: #E3EAFE;
+
+  /* Status semantics */
+  --todo-bg: #E3EAFE;
+  --todo-fg: #2E4BC4;
+  --prog-bg: #FFF3D6;
+  --prog-fg: #8A5A00;
+  --done-bg: #D9F2E2;
+  --done-fg: #0E6B2E;
+
+  /* Health */
+  --health-critical: #D93025;
+  --health-attention: #E37400;
+  --health-monitor: #1A73E8;
+  --health-clear: #1E8E3E;
+
+  /* Surface */
+  --bg: #F4F6FB;
+  --surface: #FFFFFF;
+  --border: #ECEEF1;
+  --border-strong: #D8DCE6;
+  --text: #121212;
+  --text-muted: #4D4D4D;
+  --text-faint: #808080;
+
+  /* Shape */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-xl: 20px;
+  --shadow-sm: 0 1px 2px rgba(18, 18, 18, 0.04);
+  --shadow-md: 0 4px 12px rgba(41, 53, 93, 0.06);
+  --shadow-lg: 0 12px 32px rgba(41, 53, 93, 0.08);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-feature-settings: 'ss01' on, 'ss02' on;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+button { font-family: inherit; cursor: pointer; }
+a { color: inherit; }
+.mono { font-family: 'DM Mono', ui-monospace, monospace; }
+
+/* =========================================================
+   TOP NAV
+   ========================================================= */
+.nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+.brand-mark {
+  width: 28px; height: 28px;
+  background: var(--orange);
+  border-radius: 7px;
+  display: grid;
+  place-items: center;
+  color: var(--white);
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 1;
+}
+.brand-text { color: var(--midnight); }
+.brand-text .sep { color: var(--steel); margin: 0 6px; font-weight: 400; }
+.brand-text .title { color: var(--black); }
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.last-sync {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.last-sync .dot {
+  width: 7px; height: 7px;
+  background: var(--health-clear);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(30, 142, 62, 0.15);
+}
+.btn-refresh {
+  background: var(--midnight);
+  color: var(--white);
+  border: 0;
+  padding: 8px 14px;
+  border-radius: var(--r-md);
+  font-size: 13px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.15s ease;
+}
+.btn-refresh:hover { background: #1f2a4a; }
+.btn-refresh.spinning svg { animation: spin 0.8s linear infinite; }
+
+.btn-force-sync {
+  background: var(--white);
+  color: var(--midnight);
+  border: 1px solid var(--border-strong);
+  padding: 7px 12px;
+  border-radius: var(--r-md);
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btn-force-sync:hover {
+  background: var(--mist);
+  border-color: var(--midnight);
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+.shell {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 24px;
+}
+.page-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--black);
+  margin: 0;
+}
+.page-subtitle {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-top: 4px;
+}
+.search-wrap {
+  flex: 1 1 320px;
+  max-width: 460px;
+  position: relative;
+}
+.search-input {
+  width: 100%;
+  background: var(--white);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-md);
+  padding: 10px 14px 10px 38px;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--text);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.search-input:focus {
+  outline: 0;
+  border-color: var(--midnight);
+  box-shadow: 0 0 0 3px var(--midnight-soft);
+}
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--steel);
+  pointer-events: none;
+}
+.search-results {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0; right: 0;
+  background: var(--white);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-lg);
+  max-height: 360px;
+  overflow-y: auto;
+  z-index: 50;
+  display: none;
+}
+.search-results.show { display: block; }
+.search-result {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  font-size: 13px;
+}
+.search-result:hover { background: var(--mist); }
+.search-result:last-child { border-bottom: 0; }
+.search-result .sr-key { color: var(--sapphire); font-weight: 500; font-size: 11px; }
+.search-result .sr-summary { color: var(--text); margin-top: 2px; }
+.search-result .sr-meta { color: var(--text-faint); font-size: 11px; margin-top: 2px; }
+
+/* =========================================================
+   HEALTH CARDS (Product)
+   ========================================================= */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.product-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+}
+.product-card .strip {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.product-card.mc .strip { background: var(--mc-bg); }
+.product-card.ol .strip { background: var(--ol-bg); }
+.product-card.tp .strip { background: var(--tp-bg); }
+
+.pc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.pc-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.005em;
+}
+.pc-badge {
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.pc-badge.critical { background: rgba(217, 48, 37, 0.1); color: var(--health-critical); }
+.pc-badge.attention { background: rgba(227, 116, 0, 0.1); color: var(--health-attention); }
+.pc-badge.monitor { background: rgba(26, 115, 232, 0.1); color: var(--health-monitor); }
+.pc-badge.clear { background: rgba(30, 142, 62, 0.1); color: var(--health-clear); }
+
+.pc-metric {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.pc-big {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--black);
+  line-height: 1;
+}
+.pc-label {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+.pc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.pc-stat {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+.pc-stat strong {
+  color: var(--text);
+  font-weight: 600;
+  font-size: 13px;
+  display: block;
+  margin-top: 1px;
+}
+.pc-spark {
+  width: 80px;
+  height: 28px;
+}
+
+/* =========================================================
+   SUMMARY CARDS (In Progress / Backlog / Resolved)
+   ========================================================= */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.summary-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.summary-icon {
+  width: 44px; height: 44px;
+  border-radius: var(--r-md);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.summary-icon.prog { background: var(--prog-bg); color: var(--prog-fg); }
+.summary-icon.todo { background: var(--todo-bg); color: var(--todo-fg); }
+.summary-icon.done { background: var(--done-bg); color: var(--done-fg); }
+.summary-content { flex: 1; min-width: 0; }
+.summary-content .sc-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.summary-content .sc-num {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--black);
+}
+.summary-content .sc-sub {
+  font-size: 11.5px;
+  color: var(--text-faint);
+  margin-top: 2px;
+}
+
+/* =========================================================
+   BOARD TABS
+   ========================================================= */
+.tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 6px;
+  margin-bottom: 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  background: transparent;
+  border: 0;
+  padding: 8px 14px;
+  border-radius: var(--r-sm);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+.tab:hover { background: var(--mist); color: var(--text); }
+.tab.active {
+  background: var(--midnight);
+  color: var(--white);
+}
+.tab .count {
+  background: rgba(0, 0, 0, 0.08);
+  color: inherit;
+  font-size: 11px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.tab.active .count {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* =========================================================
+   BOARD HEADER
+   ========================================================= */
+.board-head {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 18px 22px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.bh-left { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.bh-title {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--black);
+  margin: 0;
+}
+.bh-meta {
+  display: flex;
+  gap: 14px;
+  font-size: 12px;
+  color: var(--text-muted);
+  align-items: center;
+}
+.bh-meta .divider { color: var(--cloud); }
+.bh-meta strong { color: var(--text); font-weight: 600; }
+.btn-jira {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--midnight-soft);
+  color: var(--midnight);
+  border: 0;
+  padding: 8px 14px;
+  border-radius: var(--r-md);
+  font-size: 12.5px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.btn-jira:hover { background: #c8d0e3; }
+
+/* =========================================================
+   INCIDENT BLOCK
+   ========================================================= */
+.incident {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 0;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.incident-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #FFF7F2 0%, #FFEDE0 100%);
+  border-bottom: 1px solid #FFD9BF;
+}
+.incident-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--midnight);
+}
+.incident-title svg { color: var(--orange); }
+.btn-copy {
+  background: var(--white);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  padding: 6px 12px;
+  border-radius: var(--r-sm);
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.15s;
+}
+.btn-copy:hover { background: var(--mist); }
+.btn-copy.copied { background: var(--done-bg); color: var(--done-fg); border-color: var(--done-fg); }
+.incident-body {
+  padding: 18px 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.incident-col h4 {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 8px;
+}
+.incident-col p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  white-space: pre-wrap;
+}
+.incident-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.incident-meta .im-item {
+  background: var(--mist);
+  padding: 8px 12px;
+  border-radius: var(--r-sm);
+}
+.incident-meta .im-label {
+  font-size: 10.5px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+.incident-meta .im-val {
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* =========================================================
+   ISSUE TABLE
+   ========================================================= */
+.issues-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.issues-head {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.issues-head h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+.issues-head .threshold-note {
+  font-size: 11.5px;
+  color: var(--text-faint);
+}
+.issues-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.issues-table thead th {
+  background: var(--mist);
+  text-align: left;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.issues-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.1s;
+}
+.issues-table tbody tr:last-child { border-bottom: 0; }
+.issues-table tbody tr:hover { background: var(--mist); }
+.issues-table td {
+  padding: 14px 16px;
+  vertical-align: top;
+  font-size: 13px;
+}
+.issue-name {
+  font-weight: 600;
+  color: var(--black);
+  letter-spacing: -0.005em;
+  line-height: 1.4;
+}
+.issue-brief {
+  color: var(--text-muted);
+  font-size: 12px;
+  margin-top: 4px;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.issue-keys {
+  font-size: 11px;
+  color: var(--text-faint);
+  margin-top: 6px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.issue-key-pill {
+  background: var(--mist);
+  color: var(--text-muted);
+  padding: 2px 7px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 10.5px;
+  border: 1px solid var(--border);
+  transition: all 0.1s;
+}
+.issue-key-pill:hover {
+  background: var(--midnight-soft);
+  color: var(--midnight);
+  border-color: var(--midnight-soft);
+}
+
+/* Product pills */
+.prod-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+.prod-pill.mc { background: var(--mc-soft); color: var(--mc-bg); }
+.prod-pill.ol { background: var(--ol-soft); color: var(--ol-bg); }
+.prod-pill.tp { background: var(--tp-soft); color: var(--tp-bg); }
+.prod-pill.other { background: var(--cloud); color: var(--night); }
+
+/* Status pills */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.status-pill::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.status-pill.p-todo { background: var(--todo-bg); color: var(--todo-fg); }
+.status-pill.p-prog { background: var(--prog-bg); color: var(--prog-fg); }
+.status-pill.p-done { background: var(--done-bg); color: var(--done-fg); }
+
+.affected-num {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--black);
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+.affected-label {
+  font-size: 10.5px;
+  color: var(--text-faint);
+  margin-top: 2px;
+}
+.ticket-count {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--text);
+}
+.age-cell {
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+/* Empty state */
+.empty {
+  padding: 48px 20px;
+  text-align: center;
+  color: var(--text-faint);
+}
+.empty svg { color: var(--cloud); margin-bottom: 12px; }
+.empty .e-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.empty .e-sub { font-size: 12px; }
+
+/* =========================================================
+   RECENTLY RESOLVED
+   ========================================================= */
+.resolved-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.resolved-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+  padding: 16px 20px;
+}
+.resolved-item {
+  background: var(--mist);
+  border-radius: var(--r-md);
+  padding: 12px;
+  border-left: 3px solid var(--health-clear);
+}
+.resolved-item .ri-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+.resolved-item .ri-meta {
+  font-size: 11px;
+  color: var(--text-faint);
+  display: flex;
+  gap: 8px;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer {
+  text-align: center;
+  padding: 32px 24px 48px;
+  color: var(--text-faint);
+  font-size: 11.5px;
+}
+.footer a { color: var(--midnight); text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+.loader {
+  display: grid;
+  place-items: center;
+  padding: 80px 20px;
+  color: var(--text-faint);
+}
+.loader .spinner {
+  width: 32px; height: 32px;
+  border: 3px solid var(--cloud);
+  border-top-color: var(--midnight);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 12px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 960px) {
+  .product-grid { grid-template-columns: 1fr; }
+  .summary-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .summary-card { padding: 14px; }
+  .summary-icon { width: 36px; height: 36px; }
+  .summary-content .sc-num { font-size: 22px; }
+  .incident-body { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+  .shell { padding: 16px; }
+  .nav-inner { padding: 12px 16px; }
+  .page-head { flex-direction: column; align-items: stretch; }
+  .summary-grid { grid-template-columns: 1fr; }
+  .issues-table thead { display: none; }
+  .issues-table, .issues-table tbody, .issues-table tr, .issues-table td {
+    display: block;
+    width: 100%;
+  }
+  .issues-table tr {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .issues-table td {
+    padding: 4px 0;
+    border: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .issues-table td[data-label]::before {
+    content: attr(data-label);
+    font-size: 10.5px;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+  .issues-table td.issue-main-cell {
+    display: block;
+    margin-bottom: 8px;
+  }
+  .issues-table td.issue-main-cell::before { display: none; }
+  .incident-meta { grid-template-columns: 1fr; }
+  .brand { font-size: 13px; }
+  .last-sync { display: none; }
+  .btn-force-sync { display: none; }
+  .page-title { font-size: 18px; }
+  .pc-big { font-size: 26px; }
+}
 </style>
 </head>
 <body>
-<div class="w">
-<div class="nav">
-  <div class="nav-dot"></div><span class="nav-b">thryv</span><span class="nav-a">&#9658;</span><span class="nav-p">Compass</span>
-  <div class="nav-sp"></div>
-  <div class="nav-right">
-    <button class="rbtn" onclick="load()" title="Reload data">&#8635; Refresh</button>
-    <div class="nav-sy"><div class="nav-sl">Last synced</div><div class="nav-st" id="sync-time">&mdash;</div></div>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <div class="brand-mark">t</div>
+      <div class="brand-text">
+        <span>thryv</span>
+        <span class="sep">▸</span>
+        <span class="title">Known Issues Jira Status Page</span>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <div class="last-sync" id="lastSync">
+        <span class="dot"></span>
+        <span>Loading…</span>
+      </div>
+      <a href="https://github.com/thryv-known-issues/jira-known-issues-live/actions/workflows/sync.yml" target="_blank" rel="noopener" class="btn-force-sync" title="Open GitHub Actions to trigger a fresh Jira sync">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg>
+        Force sync
+      </a>
+      <button class="btn-refresh" id="refreshBtn" title="Reload data.json">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        Refresh
+      </button>
+    </div>
   </div>
-</div>
-<div class="sb" id="sbar"><div class="spin" id="spin"></div><span id="smsg"></span></div>
-<div class="alert" id="alert"><b id="atitle"></b><p id="atext"></p></div>
-<div class="sr" id="sumrow"></div>
-<div class="pr" id="prodrow"></div>
-<div class="lk"><div class="lk-r"><span class="lk-lb">Ticket lookup</span><input class="lk-in" id="lin" placeholder="Search by ticket #, Thryv ID, or keyword..." oninput="doLookup()"><span id="lout"></span></div></div>
-<div class="tabs" id="tabs"></div>
-<div id="panels"></div>
-<div class="legend">
-  <div class="lg"><b>Priority:</b><span class="li"><span class="p p-p1">P1</span><span>Critical</span></span><span class="li"><span class="p p-p2">P2</span><span>High</span></span><span class="li"><span class="p p-p3">P3</span><span>Medium</span></span><span class="li"><span class="p p-p4">P4</span><span>Low</span></span></div>
-  <div class="lg"><b>Status:</b><span class="li"><span class="p p-todo">Backlog</span></span><span class="li"><span class="p p-prog">In Progress</span></span><span class="li"><span class="p p-done">Done</span></span></div>
-</div>
-<div class="footer">Thryv Advanced Technical Support &middot; Known Issues Dashboard &middot; Live from Jira<br>Updated every 2 hours &middot; <span id="fdate"></span></div>
-</div>
+</nav>
+
+<!-- ============ SHELL ============ -->
+<main class="shell">
+
+  <!-- Page head + search -->
+  <div class="page-head">
+    <div>
+      <h1 class="page-title">Live Jira Known Issues</h1>
+      <div class="page-subtitle">Internal dashboard for Advanced Technical Support · Auto-syncs every 2 hours from <span class="mono">thryv.atlassian.net</span></div>
+    </div>
+    <div class="search-wrap">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" id="search" class="search-input" placeholder="Search by ticket #, Thryv ID, keyword, or symptom (e.g. 'listings not publishing')" autocomplete="off" />
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+
+  <!-- Loading state -->
+  <div id="loader" class="loader">
+    <div class="spinner"></div>
+    <div>Loading Jira data…</div>
+  </div>
+
+  <!-- Main content -->
+  <div id="content" style="display:none;">
+
+    <!-- Product health cards -->
+    <div class="product-grid" id="productGrid"></div>
+
+    <!-- Summary cards -->
+    <div class="summary-grid" id="summaryGrid"></div>
+
+    <!-- Board tabs -->
+    <div class="tabs" id="tabs"></div>
+
+    <!-- Board view -->
+    <div id="boardView"></div>
+
+  </div>
+
+  <footer class="footer">
+    Maintained by Advanced Technical Support · Data source: <a href="https://thryv.atlassian.net" target="_blank" rel="noopener">thryv.atlassian.net</a> · Repo: <a href="https://github.com/thryv-known-issues/jira-known-issues-live" target="_blank" rel="noopener">jira-known-issues-live</a>
+  </footer>
+
+</main>
+
 <script>
-var D='data.json';
-var PCL={P1:'p-p1',P2:'p-p2',P3:'p-p3',P4:'p-p4'},PLA={P1:'Critical',P2:'High',P3:'Medium',P4:'Low'},POR={P1:0,P2:1,P3:2,P4:3};
-var PMC={c:'p-mc',bg:'#3C3489',a:'#3C3489'},POL={c:'p-ol',bg:'#29355D',a:'#29355D'},PTP={c:'p-tp',bg:'#5378FC',a:'#5378FC'};
-var PRODS={'Marketing Center':PMC,'Online Listings':POL,'ThryvPay':PTP};
-function stP(sc){return sc==='Done'?'p-done':sc==='In Progress'?'p-prog':'p-todo';}
-function pl(t,c){return'<span class="p '+c+'">'+t+'</span>';}
-function da(d){return Math.max(0,Math.floor((Date.now()-new Date(d).getTime())/864e5));}
-function fd(d){return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric'});}
-function ff(d){return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
-function spk(data,color){var w=90,h=28;if(!data||data.length<2)return'';var mx=Math.max.apply(null,data.concat([1])),mn=Math.min.apply(null,data.concat([0])),r=mx-mn||1;var pts=data.map(function(v,i){return((i/(data.length-1))*w)+','+(h-((v-mn)/r)*(h-4)-2);}).join(' ');return'<svg width="'+w+'" height="'+h+'" style="display:block"><polyline points="'+pts+'" fill="none" stroke="'+color+'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/></svg>';}
-function trend14(arr){var now=Date.now();var out=[];for(var i=0;i<14;i++){var d=new Date(now-(13-i)*864e5);d.setHours(0,0,0,0);var e=new Date(d);e.setHours(23,59,59,999);var c=0;for(var j=0;j<arr.length;j++){var t=new Date(arr[j].created);if(t>=d&&t<=e)c++;}out.push(c);}return out;}
+/* =========================================================
+   THRYV KNOWN ISSUES — APP LOGIC
+   ========================================================= */
 
-var BOARDS=[
-  {id:'MCB',label:'MC Bugs',assignee:'ATS Team',color:'#FF5000',url:'https://thryv.atlassian.net/jira/software/c/projects/MCB/boards/3783'},
-  {id:'TP-base',label:'MC Base',assignee:'Tyler Foreman',color:'#3C3489',url:'https://thryv.atlassian.net/jira/software/c/projects/TP/boards/4986'},
-  {id:'TP-listings',label:'Listings',assignee:'Tyler Foreman',color:'#29355D',url:'https://thryv.atlassian.net/jira/software/c/projects/TP/boards/4988'},
-  {id:'LEADS',label:'TL + LL',assignee:'Divya Kumari',color:'#4CAF50',url:'https://thryv.atlassian.net/jira/software/c/projects/LEADS/boards/4962'},
-  {id:'SEO',label:'SEO',assignee:'Tyler Foreman',color:'#FF9800',url:'https://thryv.atlassian.net/jira/software/c/projects/SEO/boards/4966'},
-  {id:'CCPT',label:'O&O',assignee:'Matthew Schnell',color:'#5378FC',url:'https://thryv.atlassian.net/jira/software/c/projects/CCPT/list'},
-  {id:'OTHER',label:'Other',assignee:'Various',color:'#808080',url:'https://thryv.atlassian.net'},
-];
-function isTPL(i){var c=(i.components||[]).join(' ').toLowerCase(),s=(i.summary||'').toLowerCase();return c.indexOf('listings')>=0||c.indexOf('lm')>=0||c.indexOf('yext')>=0||c.indexOf('yelp')>=0||c.indexOf('gump')>=0||c.indexOf('ginger')>=0||c.indexOf('ep ')>=0||c.indexOf('growth package')>=0||c.indexOf('ypo')>=0||s.indexOf('listing')>=0||s.indexOf('yext')>=0||s.indexOf('yelp')>=0||s.indexOf('gump')>=0||s.indexOf('ginger')>=0||s.indexOf('lm ')>=0||s.indexOf('ep ')>=0||s.indexOf('linkout')>=0||s.indexOf('publish')>=0;}
-function getBoard(i){var p=i.project;if(p==='MCB')return'MCB';if(p==='TP')return isTPL(i)?'TP-listings':'TP-base';if(p==='LEADS')return'LEADS';if(p==='SEO')return'SEO';if(p==='CCPT')return'CCPT';return'OTHER';}
-function clsProd(i){var p=i.project,c=(i.components||[]).join(' ').toLowerCase(),s=(i.summary||'').toLowerCase();if(s.indexOf('thryvpay')>=0||s.indexOf('stripe')>=0||s.indexOf('ach ')>=0||s.indexOf('payment')>=0||s.indexOf('payout')>=0||s.indexOf('merchant')>=0||s.indexOf('checkout')>=0||s.indexOf('wisetack')>=0||s.indexOf('processing fee')>=0)return'ThryvPay';if(p==='SEO'||p==='LEADS')return'Marketing Center';if(p==='CCPT')return'Online Listings';if(c.indexOf('listings')>=0||c.indexOf('growth package')>=0||s.indexOf('listing')>=0||s.indexOf('yext')>=0||s.indexOf('yelp')>=0||s.indexOf('gump')>=0||s.indexOf('ginger')>=0||s.indexOf('publish')>=0||s.indexOf('lm ')>=0||s.indexOf('ctn')>=0||s.indexOf('ep ')>=0||s.indexOf('ypo')>=0||s.indexOf('linkout')>=0||s.indexOf('gp ')>=0)return'Online Listings';return'Marketing Center';}
-function cln(s){s=(s||'').trim();s=s.replace(/^\*[^*]+\*\s*/,'');s=s.replace(/\s*\|.*$/,'');s=s.replace(/\s*-\s*https?:\/\/\S+$/i,'');s=s.replace(/\s*-\s*www\.\S+$/i,'');s=s.replace(/\s*-\s*\S+\.\S{2,6}(\/\S*)?$/,'');s=s.replace(/\s*-\s*LOC[A-Z0-9]+$/i,'');s=s.replace(/\s*-\s*acct_\S+.*$/i,'');s=s.replace(/\s*-\s*[a-z0-9]{16,}(\s*\/\s*[a-z0-9]{16,})?$/i,'');s=s.replace(/\s*-\s*ZD\s*#?\d+.*$/i,'');s=s.replace(/\s*[-\u2013\u2014]\s*V\d+$/i,'');s=s.replace(/\s*V\d+$/i,'');return s.trim();}
-
-var SYN=[
-  {k:'alpha template issue',p:['missing alpha template','template missing in alpha','update alpha template']},
-  {k:'missing gp add on',p:['missing gp add on','missing gp add-on','gp fulfillment issue','gp stats','gp not generating']},
-  {k:'missing tl add on',p:['missing tl add on','missing tl add-on','remove tl add on','tl not installed']},
-  {k:'seo report link not available',p:['seo report link not available','seo reporting issue']},
-  {k:'mc not installed',p:['mc not installed','mc reinstall request','mc not connected']},
-  {k:'mc updates not going to ginger',p:['mc updates not going to ginger','mc geo updates not going to ginger','mc updates partially going to ginger','(aus) mc updates not going to ginger','rpp ctn missing in gump','aus - gump distribution error','gump distribution']},
-  {k:'unable to publish listings',p:['unable to publish listings','unable to confirm/publish listings','unable to publish and update listings']},
-  {k:'lm yext integration failures',p:['mc listings fails due to existing yext entity','lm yext integration failures','lm duplicate yext account error','lm not syncing with active yext account','active yext account disconnected']},
-  {k:'visitor tagging / heatmap analytics',p:['visitor tagging and/or heatmap html not tracking website analytics','website analytics','heatmap not activating','heatmap not tracking']},
-  {k:'ep link / linkout issue',p:['yelp ep link provisioning issue','yelp ep linkout issue','yahoo ep linkout issue','ep linkout']},
-  {k:'yelp cpc fulfillment issue',p:['yelp cpc fulfillment issue','yelp fulfillment issue']},
-  {k:'manual yelp re-order request',p:['manual re-order request for yelp business listing']},
-  {k:'ep-ypo installation issues',p:['ep-ypo installation issues','enhanced profiles not auto-enabling','ypo install']},
-  {k:'qr code google reviews broken url',p:['qr code for google reviews redirects to broken url','qr code for google reviews']},
-  {k:'mcf upgrade failed',p:['mcf to mcplus upgrade failed','mcf to mcpro upgrade failed']},
-  {k:'o & o ctn reprovision',p:['o & o ctn reprovision request','o & o ctn refresh']},
-  {k:'unable to update dn',p:['unable to update dn in mc','unable to update dn']},
-  {k:'tl report button greyed out',p:['tl report button greyed out','tl button greyed out','thryv leads button grayed out']},
-  {k:'tl calls not injecting',p:['tl calls not injecting','tl calls not appearing','eligible tl calls not injecting']},
-  {k:'gbp analytics not syncing',p:['gbp analytics not syncing','gbp analytics stopped syncing','ep analytics not flowing','gbp analytics not showing']},
-  {k:'lm & reputation failing to load',p:['lm and reputation failing to load','lm & reputation not loading','lm not loading']},
-  {k:'raq issues',p:['yelp raq','raq issue','raq eligible','raq not']},
-  {k:'ep status incorrect in gump',p:['ep status incorrect in gump','gump status not aligned','ep not getting disabled']},
-  {k:'claim trackable phone number',p:['unable to claim trackable phone number','can\'t claim trackable phone number','claim trackable']},
-  {k:'ai score issues',p:['ai score','ai lead insights','ai scoring']},
-  {k:'cancel ctn request',p:['cancel ctn']},
-];
-var LBL={'alpha template issue':'Alpha Template Issue (Missing / Update)','missing gp add on':'Missing GP Add-on \u2014 Not Appearing in MC','missing tl add on':'Missing TL Add On in MC','seo report link not available':'SEO Report Link Not Available','mc not installed':'MC Not Installed','mc updates not going to ginger':'MC Updates Not Going to Ginger / Gump','unable to publish listings':'Unable to Publish Listings','lm yext integration failures':'LM Yext Integration Failures','visitor tagging / heatmap analytics':'Website Analytics / Visitor Tagging Not Tracking','ep link / linkout issue':'EP Link Provisioning / Linkout Issue','yelp cpc fulfillment issue':'Yelp CPC Fulfillment Issue','manual yelp re-order request':'Manual Yelp Re-order Request','ep-ypo installation issues':'EP Not Auto-Enabling / GP Not Generating','qr code google reviews broken url':'QR Code Google Reviews \u2014 Broken URL','mcf upgrade failed':'MCF Upgrade Failed','tl report button greyed out':'TL Button Grayed Out / Report Unavailable','tl calls not injecting':'TL Calls Not Injecting to MC','gbp analytics not syncing':'GBP Analytics Not Syncing','lm & reputation failing to load':'LM & Reputation Failing to Load','raq issues':'Yelp RAQ Issues','ep status incorrect in gump':'EP Status Incorrect in GUMP','claim trackable phone number':'Unable to Claim Trackable Phone Number','ai score issues':'AI Score / Lead Insights Issues','o & o ctn reprovision':'O&O CTN Reprovision Request','cancel ctn request':'Cancel CTN Request','unable to update dn':'Unable to Update DN in MC'};
-
-function gk(s){s=cln(s);s=s.replace(/\s*[-\u2013\u2014]\s*V\d+$/i,'');s=s.replace(/\s*V\d+$/i,'');s=s.replace(/\s*[-\u2013\u2014]\s*#?\d+$/,'');s=s.replace(/\s*\(.*?\)\s*$/,'');s=s.replace(/\s+/g,' ').trim().toLowerCase();for(var i=0;i<SYN.length;i++){var y=SYN[i];for(var j=0;j<y.p.length;j++){if(s.indexOf(y.p[j])===0||s===y.p[j])return y.k;}}return s;}
-
-var ALL=[],activeTab='ALL',searches={},MT=2;
-
-function buildG(issues){
-  var m={};for(var i=0;i<issues.length;i++){var x=issues[i],k=gk(x.summary);if(!m[k])m[k]={issues:[],gk:k};m[k].issues.push(x);}
-  var r=[];var ks=Object.keys(m);
-  for(var ki=0;ki<ks.length;ki++){
-    var g=m[ks[ki]];g.issues.sort(function(a,b){return new Date(b.created)-new Date(a.created);});
-    var lt=g.issues[0],vs=[],pri=lt.priority;
-    for(var vi=0;vi<g.issues.length;vi++){var vm=g.issues[vi].summary.match(/V(\d+)/i);if(vm)vs.push(parseInt(vm[1]));if((POR[g.issues[vi].priority]||9)<(POR[pri]||9))pri=g.issues[vi].priority;}
-    var mV=vs.length?Math.max.apply(null,vs):0;
-    var hIP=false,hTD=false;for(var si=0;si<g.issues.length;si++){var sc=g.issues[si].statusCategory;if(sc==='In Progress')hIP=true;if(sc==='To Do'||sc==='No Category')hTD=true;}
-    var sC=hIP?'In Progress':hTD?'To Do':'Done';
-    var co={},la={};for(var ci=0;ci<g.issues.length;ci++){var gi=g.issues[ci];for(var cc=0;cc<(gi.components||[]).length;cc++)co[gi.components[cc]]=1;for(var ll=0;ll<(gi.labels||[]).length;ll++)la[gi.labels[ll]]=1;}
-    var lb=LBL[g.gk]||cln(lt.summary);
-    var tA=0;for(var ai=0;ai<g.issues.length;ai++)tA+=(g.issues[ai].affectedAccounts||0);
-    var br='';for(var bi=0;bi<g.issues.length;bi++){var b=g.issues[bi].brief||'';if(b.length>br.length)br=b;}
-    r.push({id:lt.key,label:lb,brief:br,priority:pri,sC:sC,sL:lt.status,tickets:g.issues,count:g.issues.length,aa:tA,first:g.issues[g.issues.length-1].created,last:lt.updated,comps:Object.keys(co),labels:Object.keys(la),vM:mV,vC:vs.length});
+// ---------------------------------------------------------
+// BOARD CONFIGURATION
+// ---------------------------------------------------------
+const BOARDS = [
+  {
+    id: 'all',
+    label: 'All Boards',
+    short: 'All',
+    jiraUrl: 'https://thryv.atlassian.net/jira/your-work',
+    assignee: 'ATS Team',
+    match: () => true
+  },
+  {
+    id: 'mcb',
+    label: 'MC Bugs',
+    short: 'MCB',
+    jiraUrl: 'https://thryv.atlassian.net/jira/software/c/projects/MCB/boards/3783',
+    assignee: 'ATS Team',
+    match: t => (t.project === 'MCB' || t.project === 'MC') && !isSEO(t)
+  },
+  {
+    id: 'mcbase',
+    label: 'MC Base',
+    short: 'MC Base',
+    jiraUrl: 'https://thryv.atlassian.net/jira/software/c/projects/TP/boards/4986',
+    assignee: 'Tyler Foreman',
+    match: t => t.project === 'TP' && !isListings(t)
+  },
+  {
+    id: 'listings',
+    label: 'Listings',
+    short: 'Listings',
+    jiraUrl: 'https://thryv.atlassian.net/jira/software/c/projects/TP/boards/4988',
+    assignee: 'Tyler Foreman',
+    match: t => t.project === 'TP' && isListings(t)
+  },
+  {
+    id: 'leads',
+    label: 'TL + LL',
+    short: 'TL+LL',
+    jiraUrl: 'https://thryv.atlassian.net/jira/software/c/projects/LEADS/boards/4962',
+    assignee: 'Divya Kumari',
+    match: t => t.project === 'LEADS'
+  },
+  {
+    id: 'seo',
+    label: 'SEO',
+    short: 'SEO',
+    jiraUrl: 'https://thryv.atlassian.net/jira/software/c/projects/SEO/boards/4966',
+    assignee: 'Tyler Foreman',
+    match: t => t.project === 'SEO' || isSEO(t)
+  },
+  {
+    id: 'oo',
+    label: 'O&O',
+    short: 'O&O',
+    jiraUrl: 'https://thryv.atlassian.net/jira/software/c/projects/CCPT',
+    assignee: 'Matthew Schnell',
+    match: t => t.project === 'CCPT' || /o\s*&\s*o|o\s+and\s+o/i.test(t.summary || '')
+  },
+  {
+    id: 'other',
+    label: 'Other',
+    short: 'Other',
+    jiraUrl: 'https://thryv.atlassian.net/jira/your-work',
+    assignee: '—',
+    match: t => !['MCB','MC','TP','LEADS','SEO','CCPT'].includes(t.project) && !/o\s*&\s*o/i.test(t.summary || '')
   }
-  r=r.filter(function(g){return g.count>=MT;});
-  r.sort(function(a,b){var p=(POR[a.priority]||9)-(POR[b.priority]||9);return p!==0?p:(b.aa||b.count)-(a.aa||a.count);});
-  return r;
+];
+
+function isSEO(t) {
+  const s = (t.summary || '').toLowerCase();
+  const c = (t.components || []).join(' ').toLowerCase();
+  // Don't classify "SEO" mentioned in passing — must be a clearly SEO-focused ticket
+  return c.includes('seo') || /alpha template|seo report|missing alpha/i.test(s);
 }
 
-function showS(t,m){var b=document.getElementById('sbar'),s=document.getElementById('spin'),g=document.getElementById('smsg');b.className='sb '+t;s.style.display=t==='loading'?'block':'none';g.textContent=m;if(t==='success')setTimeout(function(){b.className='sb';},4000);}
+const LISTINGS_KEYWORDS = [
+  'raq','update failed','ep linkout','gump','ypo','yext','listings',
+  'enhanced profile','publisher','reputation','lm '
+];
+function isListings(t) {
+  const s = (t.summary || '').toLowerCase();
+  const c = (t.components || []).join(' ').toLowerCase();
+  return LISTINGS_KEYWORDS.some(k => s.includes(k) || c.includes(k));
+}
 
-function load(){
-  showS('loading','Loading known issues from Jira...');
-  fetch(D+'?t='+Date.now()).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).then(function(d){
-    ALL=(d.issues||[]).map(function(i){i.board=getBoard(i);i.product=clsProd(i);return i;});
-    var t=d.fetchedAt?new Date(d.fetchedAt):new Date();
-    document.getElementById('sync-time').textContent=t.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
-    document.getElementById('fdate').textContent='Data through '+ff(new Date());
-    showS('success','Loaded '+ALL.length+' tickets from '+(d.projects||[]).join(', '));
+// ---------------------------------------------------------
+// SYNONYM MAP — groups related summaries into single issues
+// ---------------------------------------------------------
+const SYNONYM_GROUPS = [
+  { canonical: 'Alpha template issue', patterns: ['alpha template','missing alpha','template missing in alpha','update alpha template'] },
+  { canonical: 'Missing GP Add On', patterns: ['missing gp add','gp fulfillment','gp stats','gp not generating'] },
+  { canonical: 'Missing TL Add On', patterns: ['missing tl add','remove tl add','tl not installed'] },
+  { canonical: 'SEO report link not available', patterns: ['seo report','seo reporting'] },
+  { canonical: 'MC not installed', patterns: ['mc not installed','mc reinstall','mc not connected'] },
+  { canonical: 'MC updates not going to Ginger', patterns: ['mc updates not going','mc geo updates','mc updates partially','rpp ctn missing in gump','aus gump distribution'] },
+  { canonical: 'Unable to publish listings', patterns: ['unable to publish','unable to confirm/publish','unable to publish and update'] },
+  { canonical: 'LM/Yext integration failures', patterns: ['lm yext','listings fails existing yext','lm duplicate yext','lm not syncing','active yext disconnected'] },
+  { canonical: 'Visitor tagging / Heatmap analytics', patterns: ['visitor tagging','heatmap','website analytics'] },
+  { canonical: 'EP link / linkout issue', patterns: ['ep link','ep linkout','yelp ep','yahoo ep'] },
+  { canonical: 'Yelp CPC fulfillment issue', patterns: ['yelp cpc','yelp fulfillment'] },
+  { canonical: 'Manual Yelp re-order request', patterns: ['yelp re-order','yelp reorder'] },
+  { canonical: 'EP-YPO installation issues', patterns: ['ep-ypo','enhanced profiles not auto','ypo install'] },
+  { canonical: 'QR code Google reviews broken URL', patterns: ['qr code','google reviews broken'] },
+  { canonical: 'MCF upgrade failed', patterns: ['mcf upgrade','mcf to mcplus','mcf to mcpro'] },
+  { canonical: 'O&O CTN reprovision', patterns: ['o & o ctn','o&o ctn','o and o ctn'] },
+  { canonical: 'Unable to update DN', patterns: ['unable to update dn','update dn'] },
+  { canonical: 'TL report button greyed out', patterns: ['tl report button','thryv leads button','tl button gray','tl button grey'] },
+  { canonical: 'TL calls not injecting', patterns: ['tl calls not','eligible tl calls'] },
+  { canonical: 'GBP analytics not syncing', patterns: ['gbp analytics','ep analytics not flowing'] },
+  { canonical: 'LM & Reputation failing to load', patterns: ['lm & reputation','lm not loading','reputation failing'] },
+  { canonical: 'RAQ issues', patterns: ['raq issue','yelp raq','raq '] },
+  { canonical: 'EP status incorrect in Gump', patterns: ['ep status incorrect','gump status not aligned','ep not getting disabled'] },
+  { canonical: 'Claim trackable phone number', patterns: ['claim trackable','claim phone'] },
+  { canonical: 'AI Score issues', patterns: ['ai score','ai lead insights','ai scoring'] },
+  { canonical: 'Cancel CTN request', patterns: ['cancel ctn'] }
+];
+
+function canonicalize(summary) {
+  const s = (summary || '').toLowerCase();
+  for (const g of SYNONYM_GROUPS) {
+    if (g.patterns.some(p => s.includes(p))) return g.canonical;
+  }
+  // fallback: strip common prefixes / version suffixes
+  return (summary || '')
+    .replace(/\s+v\d+(\.\d+)?$/i, '')
+    .replace(/^\[.*?\]\s*/, '')
+    .trim();
+}
+
+// ---------------------------------------------------------
+// PRODUCT CLASSIFICATION
+// ---------------------------------------------------------
+function classifyProduct(t) {
+  const s = (t.summary || '').toLowerCase();
+  const c = (t.components || []).join(' ').toLowerCase();
+  const all = s + ' ' + c;
+
+  if (/thryvpay|stripe|payment|payout|invoice payment/.test(all)) return 'tp';
+  if (t.project === 'LEADS' || /listings|yext|gump|ypo|raq|publisher|enhanced profile|gbp|yelp|reputation|lm /.test(all)) return 'ol';
+  if (t.project === 'TP' && /listings|yext|gump|ypo|raq/.test(all)) return 'ol';
+  return 'mc';
+}
+
+const PRODUCT_LABELS = {
+  mc: 'Marketing Center',
+  ol: 'Online Listings',
+  tp: 'ThryvPay',
+  other: 'Other'
+};
+
+// ---------------------------------------------------------
+// STATUS CATEGORY MAPPING
+// ---------------------------------------------------------
+function statusPillClass(category) {
+  const c = (category || '').toLowerCase();
+  if (c.includes('done')) return 'p-done';
+  if (c.includes('progress')) return 'p-prog';
+  return 'p-todo'; // To Do, No Category, Blocked, etc.
+}
+
+// ---------------------------------------------------------
+// STATE
+// ---------------------------------------------------------
+let rawData = null;
+let groupedIssues = []; // { canonical, tickets: [...], product, affectedAccounts, ... }
+let activeTab = 'all';
+
+// ---------------------------------------------------------
+// LOAD
+// ---------------------------------------------------------
+async function loadData(forceFresh = false) {
+  const url = forceFresh ? `data.json?t=${Date.now()}` : 'data.json';
+  try {
+    const res = await fetch(url, { cache: forceFresh ? 'no-store' : 'default' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    rawData = await res.json();
+    process();
     render();
-  }).catch(function(e){showS('error','Failed \u2014 '+e.message);});
+    updateLastSync();
+  } catch (err) {
+    console.error('Failed to load data.json', err);
+    document.getElementById('loader').innerHTML = `
+      <div style="color:var(--health-critical);font-weight:600;margin-bottom:6px;">Could not load data.json</div>
+      <div style="font-size:12px;">${err.message}</div>
+    `;
+  }
 }
 
-function render(){
-  var open=ALL.filter(function(i){return i.statusCategory!=='Done';});
-  var res=ALL.filter(function(i){return i.statusCategory==='Done';});
-  var byP={};Object.keys(PRODS).forEach(function(p){byP[p]=ALL.filter(function(i){return i.product===p;});});
-  var ipT=open.filter(function(i){return i.statusCategory==='In Progress';}).length;
-  var blT=open.filter(function(i){return i.statusCategory==='To Do'||i.statusCategory==='No Category';}).length;
-  var allG=buildG(open),allR=buildG(res),topG=allG[0];
+function updateLastSync() {
+  const el = document.getElementById('lastSync');
+  const ts = rawData && (rawData.fetchedAt || rawData.lastSync);
+  if (!ts) {
+    el.querySelector('span:last-child').textContent = 'No sync data';
+    return;
+  }
+  const d = new Date(ts);
+  const diff = Date.now() - d.getTime();
+  const mins = Math.floor(diff / 60000);
+  let label;
+  if (mins < 1) label = 'just now';
+  else if (mins < 60) label = `${mins}m ago`;
+  else if (mins < 1440) label = `${Math.floor(mins/60)}h ago`;
+  else label = `${Math.floor(mins/1440)}d ago`;
+  el.querySelector('span:last-child').textContent = `Synced ${label}`;
+}
 
-  /* Alert */
-  var al=document.getElementById('alert');
-  if(topG&&(topG.priority==='P1'||topG.priority==='P2')){al.className='alert show';document.getElementById('atitle').textContent='\u26A0 Active alert: '+topG.label;document.getElementById('atext').textContent=(topG.aa?topG.aa+' affected accounts':topG.count+' tickets')+' \u00B7 '+topG.priority+' '+PLA[topG.priority]+' \u00B7 Status: '+topG.sL;}
-  else if(topG){al.className='alert show';document.getElementById('atitle').textContent='Top issue: '+topG.label;document.getElementById('atext').textContent=(topG.aa?topG.aa+' affected accounts':topG.count+' tickets')+' \u00B7 '+topG.priority+' \u00B7 Status: '+topG.sL;}
-  else al.className='alert';
+// ---------------------------------------------------------
+// PROCESS — group tickets, compute aggregates
+// ---------------------------------------------------------
+function process() {
+  const items = rawData && (rawData.issues || rawData.tickets);
+  if (!items || !items.length) {
+    groupedIssues = [];
+    return;
+  }
+  const groups = new Map();
+  for (const t of items) {
+    const canonical = canonicalize(t.summary);
+    if (!groups.has(canonical)) {
+      groups.set(canonical, {
+        canonical,
+        tickets: [],
+        brief: t.brief || '',
+        product: classifyProduct(t),
+        affectedAccounts: 0
+      });
+    }
+    const g = groups.get(canonical);
+    g.tickets.push(t);
+    g.affectedAccounts += (t.affectedAccounts || 0);
+    if (!g.brief && t.brief) g.brief = t.brief;
+  }
+  groupedIssues = Array.from(groups.values());
+  // sort: affected accounts desc, then ticket count desc
+  groupedIssues.sort((a, b) => {
+    if (b.affectedAccounts !== a.affectedAccounts) return b.affectedAccounts - a.affectedAccounts;
+    return b.tickets.length - a.tickets.length;
+  });
+}
 
-  /* Summary cards */
-  document.getElementById('sumrow').innerHTML='<div class="sc" data-t="ip"><div class="sc-h">In progress</div><div class="sc-x">'+ipT+' ticket'+(ipT!==1?'s':'')+' actively being worked across '+allG.filter(function(g){return g.sC==='In Progress';}).length+' known issues.'+(allG[0]?' Top: '+allG[0].label+'.':'')+'</div></div><div class="sc" data-t="bl"><div class="sc-h">Backlog</div><div class="sc-x">'+blT+' ticket'+(blT!==1?'s':'')+' in dev backlog across '+allG.filter(function(g){return g.sC==='To Do';}).length+' known issues.</div></div><div class="sc" data-t="rv"><div class="sc-h">Recently resolved</div><div class="sc-x">'+allR.length+' issue group'+(allR.length!==1?'s':'')+' resolved in the last 30 days ('+res.length+' tickets).</div></div>';
+// ---------------------------------------------------------
+// HELPERS
+// ---------------------------------------------------------
+function isOpen(t) {
+  const cat = (t.statusCategory || '').toLowerCase();
+  return !cat.includes('done');
+}
+function ageDays(t) {
+  if (!t.created) return null;
+  const created = new Date(t.created);
+  return Math.floor((Date.now() - created.getTime()) / 86400000);
+}
+function topStatusForGroup(g) {
+  const open = g.tickets.filter(isOpen);
+  if (open.length === 0) return { name: 'Resolved', category: 'Done' };
+  // pick highest-priority status in progress
+  const inProg = open.find(t => (t.statusCategory || '').toLowerCase().includes('progress'));
+  if (inProg) return { name: inProg.status, category: inProg.statusCategory };
+  return { name: open[0].status || 'Open', category: open[0].statusCategory || 'To Do' };
+}
+function avgAge(g) {
+  const ages = g.tickets.map(ageDays).filter(a => a !== null);
+  if (!ages.length) return null;
+  return Math.round(ages.reduce((s,a)=>s+a,0) / ages.length);
+}
+function escapeHtml(s) {
+  return (s || '').replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+function tagForKey(key) {
+  return `https://thryv.atlassian.net/browse/${key}`;
+}
 
-  /* Product health cards */
-  document.getElementById('prodrow').innerHTML=Object.keys(PRODS).map(function(n){
-    var s=PRODS[n],a=byP[n]||[],o=a.filter(function(i){return i.statusCategory!=='Done';}),rv=a.filter(function(i){return i.statusCategory==='Done';});
-    var og=buildG(o),tA=og.reduce(function(s,g){return s+g.aa;},0);
-    var h=o.length===0?['All clear','#4CAF50']:o.some(function(i){return i.priority==='P1';})?['Critical','#FF5000']:o.some(function(i){return i.priority==='P2';})?['Needs attention','#FF9800']:['Monitoring','#5378FC'];
-    var td=trend14(a),rc=td.slice(7).reduce(function(a,b){return a+b;},0),pr=td.slice(0,7).reduce(function(a,b){return a+b;},0);
-    var tdir=rc>pr?'<span style="color:#FF5000;font-weight:600;font-size:10px">&uarr; trending up</span>':rc<pr?'<span style="color:#4CAF50;font-weight:600;font-size:10px">&darr; improving</span>':'<span style="color:#808080;font-size:10px">&rarr; steady</span>';
-    return'<div class="pc"><div class="pc-top"><span class="pc-nm">'+n+'</span><span class="pc-bg" style="background:'+h[1]+'15;color:'+h[1]+';border-color:'+h[1]+'40">'+h[0]+'</span></div><div class="pc-st"><div><div class="pc-n" style="color:'+s.a+'">'+og.length+'</div><div class="pc-l">known issues</div></div><div><div class="pc-n" style="color:#BA7517">'+o.length+'</div><div class="pc-l">open tickets</div></div><div><div class="pc-n" style="color:#FF5000">'+(tA||'\u2014')+'</div><div class="pc-l">affected accts</div></div></div><div style="border-top:1px solid #F4F6FB;padding-top:8px;margin-top:4px">'+spk(td,s.a)+'</div><div style="margin-top:4px">'+tdir+'</div></div>';
+// ---------------------------------------------------------
+// RENDER
+// ---------------------------------------------------------
+function render() {
+  document.getElementById('loader').style.display = 'none';
+  document.getElementById('content').style.display = 'block';
+  renderProductCards();
+  renderSummaryCards();
+  renderTabs();
+  renderBoard();
+}
+
+function renderProductCards() {
+  const products = ['mc', 'ol', 'tp'];
+  const html = products.map(p => {
+    const groups = groupedIssues.filter(g => g.product === p && g.tickets.length >= 2 && g.tickets.some(isOpen));
+    const knownIssues = groups.length;
+    const openTickets = groups.reduce((s,g) => s + g.tickets.filter(isOpen).length, 0);
+    const affected = groups.reduce((s,g) => s + g.affectedAccounts, 0);
+
+    let badge, badgeClass;
+    if (affected > 100 || knownIssues > 10) { badge = 'Critical'; badgeClass = 'critical'; }
+    else if (affected > 30 || knownIssues > 5) { badge = 'Needs attention'; badgeClass = 'attention'; }
+    else if (knownIssues > 0) { badge = 'Monitoring'; badgeClass = 'monitor'; }
+    else { badge = 'All clear'; badgeClass = 'clear'; }
+
+    const spark = sparkline(generateSparkData(p));
+
+    return `
+      <div class="product-card ${p}">
+        <div class="strip"></div>
+        <div class="pc-head">
+          <div class="pc-title">${PRODUCT_LABELS[p]}</div>
+          <span class="pc-badge ${badgeClass}">${badge}</span>
+        </div>
+        <div class="pc-metric">
+          <div class="pc-big">${knownIssues}</div>
+          <div class="pc-label">known issue${knownIssues === 1 ? '' : 's'}</div>
+        </div>
+        <div class="pc-row">
+          <div class="pc-stat">Open tickets<strong>${openTickets}</strong></div>
+          <div class="pc-stat">Affected accounts<strong>${affected.toLocaleString()}</strong></div>
+          <svg class="pc-spark" viewBox="0 0 80 28" preserveAspectRatio="none">${spark}</svg>
+        </div>
+      </div>
+    `;
+  }).join('');
+  document.getElementById('productGrid').innerHTML = html;
+}
+
+// crude deterministic sparkline based on current ticket distribution
+function generateSparkData(productKey) {
+  // 8 buckets — use day-of-week deltas of ticket creation if available
+  const buckets = [0,0,0,0,0,0,0,0];
+  groupedIssues
+    .filter(g => g.product === productKey)
+    .forEach(g => g.tickets.forEach(t => {
+      if (!t.created) return;
+      const age = ageDays(t);
+      if (age === null || age > 56) return;
+      const bucket = Math.min(7, Math.floor(age / 7));
+      buckets[7 - bucket]++;
+    }));
+  return buckets;
+}
+
+function sparkline(data) {
+  if (!data || !data.length) return '';
+  const max = Math.max(1, ...data);
+  const w = 80, h = 28, pad = 2;
+  const dx = (w - pad*2) / (data.length - 1);
+  const points = data.map((v, i) => {
+    const x = pad + i * dx;
+    const y = h - pad - ((v / max) * (h - pad*2));
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  });
+  const path = `M ${points.join(' L ')}`;
+  return `
+    <path d="${path}" fill="none" stroke="#5378FC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="${path} L ${w-pad},${h-pad} L ${pad},${h-pad} Z" fill="#5378FC" opacity="0.08"/>
+  `;
+}
+
+function renderSummaryCards() {
+  let inProg = 0, backlog = 0, resolved = 0;
+  // ticket-level counts (not grouped) — but only from groups with >= 2 tickets
+  const eligible = groupedIssues.filter(g => g.tickets.length >= 2);
+  for (const g of eligible) {
+    for (const t of g.tickets) {
+      const cat = (t.statusCategory || '').toLowerCase();
+      if (cat.includes('done')) resolved++;
+      else if (cat.includes('progress')) inProg++;
+      else backlog++;
+    }
+  }
+  const html = `
+    <div class="summary-card">
+      <div class="summary-icon prog">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <div class="summary-content">
+        <div class="sc-label">In Progress</div>
+        <div class="sc-num">${inProg}</div>
+        <div class="sc-sub">Tickets actively being worked</div>
+      </div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-icon todo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      </div>
+      <div class="summary-content">
+        <div class="sc-label">Backlog</div>
+        <div class="sc-num">${backlog}</div>
+        <div class="sc-sub">Awaiting triage or development</div>
+      </div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-icon done">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      </div>
+      <div class="summary-content">
+        <div class="sc-label">Recently Resolved</div>
+        <div class="sc-num">${resolved}</div>
+        <div class="sc-sub">Closed across known issues</div>
+      </div>
+    </div>
+  `;
+  document.getElementById('summaryGrid').innerHTML = html;
+}
+
+function ticketsForBoard(boardId) {
+  const board = BOARDS.find(b => b.id === boardId);
+  if (!board) return [];
+  return groupedIssues.filter(g =>
+    g.tickets.length >= 2 &&
+    g.tickets.some(t => board.match(t)) &&
+    g.tickets.some(isOpen)
+  );
+}
+
+function renderTabs() {
+  const html = BOARDS.map(b => {
+    const count = ticketsForBoard(b.id).length;
+    return `
+      <button class="tab ${b.id === activeTab ? 'active' : ''}" data-tab="${b.id}">
+        ${escapeHtml(b.label)}
+        <span class="count">${count}</span>
+      </button>
+    `;
+  }).join('');
+  const tabsEl = document.getElementById('tabs');
+  tabsEl.innerHTML = html;
+  tabsEl.querySelectorAll('.tab').forEach(t => {
+    t.addEventListener('click', () => {
+      activeTab = t.dataset.tab;
+      renderTabs();
+      renderBoard();
+    });
+  });
+}
+
+function renderBoard() {
+  const board = BOARDS.find(b => b.id === activeTab);
+  const groups = ticketsForBoard(activeTab);
+  const openTickets = groups.reduce((s,g) => s + g.tickets.filter(isOpen).length, 0);
+  const affected = groups.reduce((s,g) => s + g.affectedAccounts, 0);
+
+  // board health
+  let healthClass, healthLabel;
+  if (affected > 100 || groups.length > 10) { healthClass = 'critical'; healthLabel = 'Critical'; }
+  else if (affected > 30 || groups.length > 5) { healthClass = 'attention'; healthLabel = 'Needs attention'; }
+  else if (groups.length > 0) { healthClass = 'monitor'; healthLabel = 'Monitoring'; }
+  else { healthClass = 'clear'; healthLabel = 'All clear'; }
+
+  // resolved within last 14 days
+  const recentResolved = [];
+  groupedIssues.forEach(g => {
+    if (!board.match) return;
+    g.tickets.forEach(t => {
+      if (!board.match(t)) return;
+      const cat = (t.statusCategory || '').toLowerCase();
+      if (!cat.includes('done')) return;
+      const resolved = t.resolutiondate || t.updated;
+      if (!resolved) return;
+      const days = Math.floor((Date.now() - new Date(resolved).getTime()) / 86400000);
+      if (days <= 14) recentResolved.push({ ...t, daysSince: days });
+    });
+  });
+  recentResolved.sort((a,b) => a.daysSince - b.daysSince);
+
+  const topIssue = groups[0];
+
+  let html = `
+    <div class="board-head">
+      <div class="bh-left">
+        <h2 class="bh-title">${escapeHtml(board.label)}</h2>
+        <span class="pc-badge ${healthClass}">${healthLabel}</span>
+        <div class="bh-meta">
+          <span><strong>${groups.length}</strong> known issues</span>
+          <span class="divider">·</span>
+          <span><strong>${openTickets}</strong> open tickets</span>
+          <span class="divider">·</span>
+          <span><strong>${affected.toLocaleString()}</strong> affected accounts</span>
+          <span class="divider">·</span>
+          <span>Assignee: <strong>${escapeHtml(board.assignee)}</strong></span>
+        </div>
+      </div>
+      <a href="${board.jiraUrl}" target="_blank" rel="noopener" class="btn-jira">
+        Open in Jira
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+      </a>
+    </div>
+  `;
+
+  // Incident communication block
+  if (topIssue) {
+    html += renderIncident(topIssue, board);
+  }
+
+  // Issues table
+  html += renderIssuesTable(groups);
+
+  // Recently resolved
+  if (recentResolved.length > 0) {
+    html += `
+      <div class="resolved-card">
+        <div class="issues-head">
+          <h3>Recently Resolved (last 14 days)</h3>
+          <span class="threshold-note">${recentResolved.length} ticket${recentResolved.length === 1 ? '' : 's'}</span>
+        </div>
+        <div class="resolved-grid">
+          ${recentResolved.slice(0, 12).map(t => `
+            <div class="resolved-item">
+              <div class="ri-name">${escapeHtml(t.summary || 'Untitled')}</div>
+              <div class="ri-meta">
+                <a href="${tagForKey(t.key)}" target="_blank" rel="noopener" class="mono">${escapeHtml(t.key)}</a>
+                <span>·</span>
+                <span>${t.daysSince === 0 ? 'today' : t.daysSince === 1 ? '1 day ago' : `${t.daysSince} days ago`}</span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  document.getElementById('boardView').innerHTML = html;
+
+  // Wire up copy buttons
+  document.querySelectorAll('.btn-copy').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const text = btn.dataset.copy;
+      navigator.clipboard.writeText(text).then(() => {
+        const original = btn.innerHTML;
+        btn.classList.add('copied');
+        btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied`;
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = original;
+        }, 1800);
+      });
+    });
+  });
+}
+
+function renderIncident(g, board) {
+  const status = topStatusForGroup(g);
+  const pillClass = statusPillClass(status.category);
+  const open = g.tickets.filter(isOpen);
+  // Use actual Jira priority from the highest-priority open ticket
+  const prioOrder = { 'P1': 1, 'Highest': 1, 'Critical': 1, 'P2': 2, 'High': 2, 'P3': 3, 'Medium': 3, 'P4': 4, 'Low': 4, 'Lowest': 5 };
+  const sortedByPrio = [...open].sort((a, b) => (prioOrder[a.priority] || 99) - (prioOrder[b.priority] || 99));
+  const topPrio = sortedByPrio[0]?.priority || 'P3';
+  const prioText = topPrio.startsWith('P') ? topPrio : (prioOrder[topPrio] ? `P${prioOrder[topPrio]}` : 'P3');
+  const sevText = g.affectedAccounts > 50 ? 'High' : g.affectedAccounts > 10 ? 'Medium' : 'Low';
+
+  const clientMsg = `We are aware of an issue affecting ${PRODUCT_LABELS[g.product] || 'your service'}: ${g.canonical}. Our engineering team is actively investigating and we will follow up with an update as soon as one is available. We appreciate your patience.`;
+
+  const internalNotes = `Known issue across ${open.length} open ticket${open.length === 1 ? '' : 's'} on ${board.label}.
+Approx. ${g.affectedAccounts.toLocaleString()} account${g.affectedAccounts === 1 ? '' : 's'} affected.
+Current status: ${status.name}.
+Ticket(s): ${open.slice(0, 5).map(t => t.key).join(', ')}${open.length > 5 ? `, +${open.length - 5} more` : ''}.`;
+
+  const fullCopy = `*Incident: ${g.canonical}*
+Priority: ${prioText}  |  Severity: ${sevText}  |  Status: ${status.name}
+Affected accounts: ~${g.affectedAccounts.toLocaleString()}  |  Open tickets: ${open.length}
+
+*Client-facing message*
+${clientMsg}
+
+*Internal notes*
+${internalNotes}`;
+
+  return `
+    <div class="incident">
+      <div class="incident-head">
+        <div class="incident-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Top incident · ${escapeHtml(g.canonical)}
+        </div>
+        <button class="btn-copy" data-copy="${escapeHtml(fullCopy)}">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy for Slack
+        </button>
+      </div>
+      <div class="incident-body">
+        <div class="incident-col">
+          <div class="incident-meta">
+            <div class="im-item"><div class="im-label">Priority</div><div class="im-val">${prioText}</div></div>
+            <div class="im-item"><div class="im-label">Severity</div><div class="im-val">${sevText}</div></div>
+            <div class="im-item"><div class="im-label">Status</div><div class="im-val"><span class="status-pill ${pillClass}">${escapeHtml(status.name)}</span></div></div>
+            <div class="im-item"><div class="im-label">Affected accts</div><div class="im-val">~${g.affectedAccounts.toLocaleString()}</div></div>
+          </div>
+          <h4>Client-facing message</h4>
+          <p>${escapeHtml(clientMsg)}</p>
+        </div>
+        <div class="incident-col">
+          <h4>Internal notes</h4>
+          <p>${escapeHtml(internalNotes)}</p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderIssuesTable(groups) {
+  if (groups.length === 0) {
+    return `
+      <div class="issues-card">
+        <div class="issues-head">
+          <h3>Known issues on this board</h3>
+          <span class="threshold-note">Groups with 2+ tickets only</span>
+        </div>
+        <div class="empty">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <div class="e-title">No active known issues</div>
+          <div class="e-sub">All clear on this board.</div>
+        </div>
+      </div>
+    `;
+  }
+
+  const rows = groups.map(g => {
+    const status = topStatusForGroup(g);
+    const pillClass = statusPillClass(status.category);
+    const openTickets = g.tickets.filter(isOpen);
+    const age = avgAge(g);
+    const ageDisplay = age === null ? '—' : age === 0 ? 'today' : age === 1 ? '1d' : `${age}d`;
+
+    const keys = openTickets.slice(0, 4).map(t =>
+      `<a href="${tagForKey(t.key)}" target="_blank" rel="noopener" class="issue-key-pill mono">${escapeHtml(t.key)}</a>`
+    ).join('');
+    const moreKeys = openTickets.length > 4 ? `<span class="issue-key-pill">+${openTickets.length - 4}</span>` : '';
+
+    return `
+      <tr>
+        <td class="issue-main-cell">
+          <div class="issue-name">${escapeHtml(g.canonical)}</div>
+          ${g.brief ? `<div class="issue-brief">${escapeHtml(g.brief)}</div>` : ''}
+          <div class="issue-keys">${keys}${moreKeys}</div>
+        </td>
+        <td data-label="Product"><span class="prod-pill ${g.product}">${PRODUCT_LABELS[g.product]}</span></td>
+        <td data-label="Status"><span class="status-pill ${pillClass}">${escapeHtml(status.name)}</span></td>
+        <td data-label="Affected">
+          <div class="affected-num">${g.affectedAccounts.toLocaleString()}</div>
+          <div class="affected-label">${g.affectedAccounts === 1 ? 'account' : 'accounts'}</div>
+        </td>
+        <td data-label="Tickets"><span class="ticket-count">${openTickets.length}</span></td>
+        <td data-label="Avg age" class="age-cell">${ageDisplay}</td>
+      </tr>
+    `;
   }).join('');
 
-  /* Board tabs */
-  var boardData={};BOARDS.forEach(function(bd){boardData[bd.id]={open:[],res:[]};});
-  open.forEach(function(i){if(boardData[i.board])boardData[i.board].open.push(i);else boardData['OTHER'].open.push(i);});
-  res.forEach(function(i){if(boardData[i.board])boardData[i.board].res.push(i);else boardData['OTHER'].res.push(i);});
+  return `
+    <div class="issues-card">
+      <div class="issues-head">
+        <h3>Known issues on this board</h3>
+        <span class="threshold-note">Showing groups with 2+ open tickets · Sorted by affected accounts</span>
+      </div>
+      <table class="issues-table">
+        <thead>
+          <tr>
+            <th style="width:42%">Issue</th>
+            <th>Product</th>
+            <th>Status</th>
+            <th>Affected</th>
+            <th>Tickets</th>
+            <th>Avg age</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  `;
+}
 
-  var tabsHTML='<button class="tab'+(activeTab==='ALL'?' on':'')+'" onclick="setTab(\'ALL\')">All Boards<span class="cnt">'+allG.length+'</span></button>';
-  BOARDS.forEach(function(bd){
-    var g=buildG(boardData[bd.id].open);
-    var total=boardData[bd.id].open.length+boardData[bd.id].res.length;
-    if(total===0)return;
-    var isOn=activeTab===bd.id;
-    tabsHTML+='<button class="tab'+(isOn?' on':'')+'" onclick="setTab(\''+bd.id+'\')" style="'+(isOn?'border-bottom-color:'+bd.color+';color:'+bd.color:'')+'">'+bd.label+'<span class="cnt"'+(isOn?' style="background:'+bd.color+'"':'')+'>'+g.length+'</span></button>';
+// ---------------------------------------------------------
+// SEARCH
+// ---------------------------------------------------------
+function setupSearch() {
+  const input = document.getElementById('search');
+  const results = document.getElementById('searchResults');
+
+  function runSearch(q) {
+    if (!q || q.length < 2) {
+      results.classList.remove('show');
+      results.innerHTML = '';
+      return;
+    }
+    const ql = q.toLowerCase();
+    const matches = [];
+
+    // groups first (by canonical name)
+    for (const g of groupedIssues) {
+      if (matches.length >= 12) break;
+      if (g.canonical.toLowerCase().includes(ql) || (g.brief || '').toLowerCase().includes(ql)) {
+        const first = g.tickets[0];
+        matches.push({
+          type: 'group',
+          title: g.canonical,
+          meta: `${g.tickets.length} tickets · ${PRODUCT_LABELS[g.product]} · ${g.affectedAccounts} affected`,
+          key: first?.key || '',
+          link: first ? tagForKey(first.key) : '#'
+        });
+      }
+    }
+    // individual tickets (by key, summary, brief)
+    const items = rawData && (rawData.issues || rawData.tickets);
+    if (items) {
+      for (const t of items) {
+        if (matches.length >= 20) break;
+        const hay = `${t.key} ${t.summary || ''} ${t.brief || ''}`.toLowerCase();
+        if (hay.includes(ql)) {
+          // skip if already covered by a group match for same canonical
+          if (matches.some(m => m.key === t.key)) continue;
+          matches.push({
+            type: 'ticket',
+            title: t.summary || '(no summary)',
+            meta: `${t.status || 'Open'} · ${t.project || '—'}`,
+            key: t.key,
+            link: tagForKey(t.key)
+          });
+        }
+      }
+    }
+
+    if (!matches.length) {
+      results.innerHTML = `<div class="search-result" style="cursor:default;color:var(--text-faint);">No matches for "${escapeHtml(q)}"</div>`;
+      results.classList.add('show');
+      return;
+    }
+
+    results.innerHTML = matches.map(m => `
+      <a class="search-result" href="${m.link}" target="_blank" rel="noopener" style="display:block;text-decoration:none;">
+        <div class="sr-key">${escapeHtml(m.key)}</div>
+        <div class="sr-summary">${escapeHtml(m.title)}</div>
+        <div class="sr-meta">${escapeHtml(m.meta)}</div>
+      </a>
+    `).join('');
+    results.classList.add('show');
+  }
+
+  let timer;
+  input.addEventListener('input', e => {
+    clearTimeout(timer);
+    timer = setTimeout(() => runSearch(e.target.value.trim()), 120);
   });
-  document.getElementById('tabs').innerHTML=tabsHTML;
-
-  /* Panels */
-  var panelsHTML='<div class="panel'+(activeTab==='ALL'?' on':'')+'" id="panel-ALL">'+renderBoard({id:'ALL',label:'All Boards',assignee:'',color:'#29355D',url:''},allG,allR,open)+'</div>';
-  BOARDS.forEach(function(bd){
-    var total=boardData[bd.id].open.length+boardData[bd.id].res.length;
-    if(total===0)return;
-    var g=buildG(boardData[bd.id].open),rg=buildG(boardData[bd.id].res);
-    panelsHTML+='<div class="panel'+(activeTab===bd.id?' on':'')+'" id="panel-'+bd.id+'">'+renderBoard(bd,g,rg,boardData[bd.id].open)+'</div>';
+  input.addEventListener('focus', e => {
+    if (e.target.value.trim().length >= 2) runSearch(e.target.value.trim());
   });
-  document.getElementById('panels').innerHTML=panelsHTML;
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.search-wrap')) results.classList.remove('show');
+  });
 }
 
-function renderBoard(bd,groups,resGroups,openTickets){
-  var h='',q=(searches[bd.id]||'').toLowerCase();
-  var g=groups;
-  if(q)g=g.filter(function(x){return x.label.toLowerCase().indexOf(q)>=0||(x.brief||'').toLowerCase().indexOf(q)>=0||x.tickets.some(function(t){return t.key.toLowerCase().indexOf(q)>=0||t.summary.toLowerCase().indexOf(q)>=0;});});
+// ---------------------------------------------------------
+// REFRESH
+// ---------------------------------------------------------
+document.getElementById('refreshBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('refreshBtn');
+  btn.classList.add('spinning');
+  await loadData(true);
+  setTimeout(() => btn.classList.remove('spinning'), 600);
+});
 
-  var health=openTickets.length===0?['All clear','#4CAF50']:openTickets.some(function(i){return i.priority==='P1';})?['Critical','#FF5000']:openTickets.some(function(i){return i.priority==='P2';})?['Needs attention','#FF9800']:['Monitoring','#5378FC'];
-  h+='<div class="bh"><div class="bh-left"><span class="bh-title">'+bd.label+'</span><span class="bh-badge" style="background:'+health[1]+'15;color:'+health[1]+';border-color:'+health[1]+'40">'+health[0]+'</span>'+(bd.assignee?'<span class="bh-assignee">Assignee: '+bd.assignee+'</span>':'')+(bd.url?'<a class="bh-jira" href="'+bd.url+'" target="_blank">Open in Jira &#8599;</a>':'')+'</div><div><input class="si" placeholder="Search issues..." value="'+(searches[bd.id]||'')+'" oninput="setSearch(\''+bd.id+'\',this.value)"></div></div>';
+// ---------------------------------------------------------
+// INIT
+// ---------------------------------------------------------
+setupSearch();
+loadData();
 
-  var totalAccts=g.reduce(function(s,x){return s+x.aa;},0);
-  h+='<div style="display:flex;gap:24px;margin-bottom:14px;font-size:12px;color:#808080"><span><strong style="color:#29355D;font-size:16px">'+g.length+'</strong> known issues</span><span><strong style="color:#BA7517;font-size:16px">'+openTickets.length+'</strong> open tickets</span>'+(totalAccts?'<span><strong style="color:#FF5000;font-size:16px">'+totalAccts+'</strong> affected accounts</span>':'')+'</div>';
-
-  if(g.length===0){h+='<div class="em">'+(q?'No issues match your search.':'No known issues with 2+ tickets on this board.')+'</div>';}
-  else{
-    h+='<div class="tw"><table><thead><tr><th style="width:44%">Issue</th><th style="width:7%">Priority</th><th style="width:11%">Affected</th><th style="width:12%">Status</th><th style="width:8%">Reported</th><th style="width:5%">Age</th></tr></thead><tbody>';
-    g.forEach(function(x){
-      var ks=x.tickets.map(function(t){return'<a href="https://thryv.atlassian.net/browse/'+t.key+'" target="_blank">'+t.key+'</a>';}).join(' ');
-      var bh=x.brief?'<div class="ti-br">'+x.brief+'</div>':'';
-      var ac=x.aa>0?'<div class="ta">'+x.aa+'</div><div class="ta-l">affected accounts</div><div class="ta-s">'+x.count+' tickets</div>':'<div class="ta" style="color:#4D4D4D">'+x.count+'</div><div class="ta-l">open tickets</div>';
-      h+='<tr><td class="ti"><div class="ti-nm">'+x.label+'</div>'+bh+'<div class="ti-ks">'+ks+'</div></td><td>'+pl(x.priority,PCL[x.priority]||'p-p3')+'</td><td>'+ac+'</td><td>'+pl(x.sL,stP(x.sC))+'</td><td style="font-size:11px;color:#808080;white-space:nowrap">'+fd(x.first)+'</td><td style="font-size:11px;color:#808080;white-space:nowrap">'+da(x.first)+'d</td></tr>';
-    });
-    h+='</tbody></table></div>';
-  }
-
-  /* Incident */
-  var top=g[0];
-  if(top&&(top.priority==='P1'||top.priority==='P2'||top.aa>=5||top.count>=3)){
-    var sev=top.priority==='P1'?'Critical \u2014 Severe disruption':top.priority==='P2'?'High \u2014 Major function down for subset':'Medium \u2014 Moderate impact';
-    var imp=top.brief||top.label;if(top.aa)imp+=' '+top.aa+' client accounts reported as affected.';imp+=' '+(top.comps.length?'Components: '+top.comps.join(', ')+'.':'')+' Reported '+top.count+' time'+(top.count>1?'s':'')+' since '+fd(top.first)+'. Status: "'+top.sL+'".';
-    h+='<div class="inc"><div class="inc-h"><span class="inc-i">\u26A0</span><span class="inc-t">Incident Communication \u2014 '+top.label+'</span></div><div class="inc-g"><span class="inc-lb">Priority:</span><span class="inc-v">'+pl(top.priority,PCL[top.priority])+' '+PLA[top.priority]+'</span><span class="inc-lb">Severity:</span><span class="inc-v">'+sev+'</span><span class="inc-lb">Status:</span><span class="inc-v">'+top.sL+'</span><span class="inc-lb">Tickets:</span><span class="inc-v">'+top.count+(top.vC>=2?' (V'+top.vM+')':'')+'</span>'+(top.aa?'<span class="inc-lb">Affected:</span><span class="inc-v" style="color:#FF5000;font-weight:700">'+top.aa+' accounts</span>':'')+'<span class="inc-lb">Reported:</span><span class="inc-v">'+fd(top.first)+' ('+da(top.first)+' days ago)</span></div><div class="inc-s"><div class="inc-st">Impact summary</div><div class="inc-sx">'+imp+'</div></div><div class="inc-s"><div class="inc-st">Client-facing message</div><div class="inc-sx">"We\'re aware of a technical issue. Your subscription is active and no data has been lost. Our engineering team has prioritized this. We\'ll follow up once resolved."</div></div><div class="inc-s"><div class="inc-st">Internal notes</div><div class="inc-sx">Latest ticket: <a href="https://thryv.atlassian.net/browse/'+top.id+'" target="_blank">'+top.id+'</a>. '+top.count+' reports. '+(top.vC>=2?'Across '+top.vC+' versions (V'+top.vM+'). ':'')+'Submit new occurrences as additional tickets.</div></div></div>';
-  }
-
-  /* Resolved */
-  if(resGroups.length>0){
-    var rs=resGroups.slice(0,5);
-    h+='<div class="sh" style="margin-top:4px"><span class="stt">Recently Resolved</span><span class="sn">'+resGroups.length+'</span></div>';
-    rs.forEach(function(g){var d=Math.max(1,Math.round((new Date(g.last)-new Date(g.first))/864e5));h+='<div class="rr"><span class="rk">'+g.id+'</span><span class="rs">'+g.label+(g.aa?' ('+g.aa+' accounts)':'')+'</span><span class="rd">Resolved in '+d+'d</span></div>';});
-  }
-  return h;
-}
-
-function setTab(id){activeTab=id;render();}
-function setSearch(bid,v){searches[bid]=v;render();}
-function doLookup(){
-  var v=document.getElementById('lin').value.trim(),el=document.getElementById('lout');
-  if(v.length<2){el.innerHTML='';return;}
-  var q=v.toLowerCase(),h=null;
-  for(var i=0;i<ALL.length;i++){if(ALL[i].key.toLowerCase().indexOf(q)>=0||ALL[i].summary.toLowerCase().indexOf(q)>=0){h=ALL[i];break;}}
-  if(h){var bd=BOARDS.find(function(b){return b.id===h.board;})||{label:'Other'};el.innerHTML='<div class="lk-o"><span class="k">'+h.key+'</span>'+pl(h.priority,PCL[h.priority]||'p-p3')+'<span style="font-size:10px;color:#808080;border:1px solid #ECEEF1;padding:1px 8px;border-radius:100px">'+bd.label+'</span><span class="s">'+cln(h.summary)+'</span><a href="https://thryv.atlassian.net/browse/'+h.key+'" target="_blank">Jira \u2197</a></div>';}
-  else el.innerHTML='<span style="font-size:11px;color:#808080">No match</span>';
-}
-load();
+// auto-update "last synced" label every minute
+setInterval(updateLastSync, 60000);
 </script>
 </body>
 </html>
