@@ -19,7 +19,7 @@ jobs:
           JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
         run: |
           set -e
-          echo "Fetching issues from all ATS-tracked boards + techsupport label..."
+          echo "Fetching techsupport-tagged issues (human-reported only)..."
 
           TEST=$(curl -s -w "\nHTTP_CODE:%{http_code}" \
             -u "${JIRA_EMAIL}:${JIRA_TOKEN}" \
@@ -31,11 +31,11 @@ jobs:
 
           ALL_ISSUES="[]"
 
-          # Query 1: All open issues from tracked boards + techsupport label
-          # Query 2: Recently resolved (last 30 days) from same scope
+          # Only techsupport-tagged tickets — these are human-reported by ATS team
+          # Excludes test tickets, system-generated, and dev-created issues
           QUERIES=(
-            "(project in (MCB, TP, LEADS, SEO, CCPT) OR labels = techsupport) AND status != Done AND created >= 2026-01-01 ORDER BY priority ASC, created DESC"
-            "(project in (MCB, TP, LEADS, SEO, CCPT) OR labels = techsupport) AND status = Done AND updated >= -30d AND created >= 2026-01-01 ORDER BY updated DESC"
+            "labels = techsupport AND status != Done AND created >= 2026-01-01 AND summary !~ \"test\" ORDER BY priority ASC, created DESC"
+            "labels = techsupport AND status = Done AND updated >= -30d AND created >= 2026-01-01 AND summary !~ \"test\" ORDER BY updated DESC"
           )
 
           QNUM=0
@@ -108,7 +108,6 @@ jobs:
           OPEN=$(echo "$ALL_ISSUES" | jq '[.[] | select(.statusCategory != "Done")] | length')
           DONE=$(echo "$ALL_ISSUES" | jq '[.[] | select(.statusCategory == "Done")] | length')
 
-          # Count by project
           echo ""
           echo "==============================="
           echo "Total: ${TOTAL_COUNT} (Open: ${OPEN}, Resolved: ${DONE})"
