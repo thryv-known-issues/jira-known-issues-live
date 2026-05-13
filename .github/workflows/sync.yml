@@ -131,7 +131,7 @@ jobs:
           echo "Sample briefs:"
           jq -r '.issues[:5][] | "\(.key): brief=\(.brief[:80] // "none") | accounts=\(.affectedAccounts)"' data.json
 
-      - - name: Commit and push
+      - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
