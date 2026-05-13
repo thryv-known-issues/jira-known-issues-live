@@ -202,18 +202,18 @@ h1, h2, h3 { margin: 0; color: var(--midnight); font-weight: 600; }
 
 .tabs-bar { background: var(--white); border: 1px solid var(--cloud); border-radius: 10px; box-shadow: var(--shadow-sm); overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .tabs-bar::-webkit-scrollbar { display: none; }
-.tabs { display: flex; gap: 2px; padding: 6px; min-width: max-content; }
+.tabs { display: flex; gap: 2px; padding: 5px; min-width: max-content; }
 .tab {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 8px 14px; border-radius: 7px;
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 7px 11px; border-radius: 6px;
   background: transparent; border: none;
-  font: 600 13px/1 'DM Sans', sans-serif;
+  font: 600 12.5px/1 'DM Sans', sans-serif;
   color: var(--night); white-space: nowrap;
   transition: background .15s ease, color .15s ease;
 }
 .tab:hover { background: var(--mist); color: var(--midnight); }
 .tab.active { background: var(--midnight); color: var(--white); }
-.tab .count { background: rgba(0,0,0,0.08); color: inherit; font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 999px; min-width: 18px; text-align: center; }
+.tab .count { background: rgba(0,0,0,0.08); color: inherit; font-size: 10.5px; font-weight: 600; padding: 2px 6px; border-radius: 999px; min-width: 16px; text-align: center; }
 .tab.active .count { background: rgba(255,255,255,0.18); }
 .tab .count.critical { background: var(--p1); color: var(--white); }
 
@@ -458,17 +458,17 @@ footer .top { color: var(--night); font-weight: 500; }
 const JIRA_BASE = 'https://thryv.atlassian.net';
 
 const BOARDS = [
-  { id: 'all',          label: 'All Boards',           url: null },
-  { id: 'myacct-leads', label: 'MyAccount Leads',      url: `${JIRA_BASE}/jira/software/c/projects/SHAR/boards/1754` },
-  { id: 'myacct-inbox', label: 'MyAccount Inbox',      url: `${JIRA_BASE}/jira/software/c/projects/TP/boards/4997` },
-  { id: 'app-market',   label: 'App Market',           url: `${JIRA_BASE}/jira/software/c/projects/MCI/boards/1536` },
-  { id: 'auth-logins',  label: 'Auth / Logins',        url: `${JIRA_BASE}/jira/software/c/projects/SHAR/boards/5166` },
-  { id: 'bc-sw',        label: 'BC / Service Portal / Social / Websites / WFC', url: `${JIRA_BASE}/browse/SW` },
-  { id: 'mc-base',      label: 'Marketing Center Base',     url: `${JIRA_BASE}/jira/software/c/projects/TP/boards/4986` },
-  { id: 'mc-listings',  label: 'Marketing Center Listings', url: `${JIRA_BASE}/jira/software/c/projects/TP/boards/4988` },
-  { id: 'reporting',    label: 'Reporting Center',     url: `${JIRA_BASE}/jira/software/c/projects/TP/boards/5004` },
-  { id: 'thryvpay',     label: 'ThryvPay',             url: `${JIRA_BASE}/servicedesk/customer/portal/1209` },
-  { id: 'other',        label: 'Other',                url: null },
+  { id: 'all',          short: 'All',         label: 'All Boards',           url: null },
+  { id: 'myacct-leads', short: 'MyAcct Leads', label: 'MyAccount — Leads',   url: `${JIRA_BASE}/jira/software/c/projects/SHAR/boards/1754` },
+  { id: 'myacct-inbox', short: 'MyAcct Inbox', label: 'MyAccount — Inbox',   url: `${JIRA_BASE}/jira/software/c/projects/TP/boards/4997` },
+  { id: 'app-market',   short: 'App Market',  label: 'App Market',           url: `${JIRA_BASE}/jira/software/c/projects/MCI/boards/1536` },
+  { id: 'auth-logins',  short: 'Auth',        label: 'Auth / Logins',        url: `${JIRA_BASE}/jira/software/c/projects/SHAR/boards/5166` },
+  { id: 'bc-sw',        short: 'BC / SP',     label: 'BC / Service Portal / Social / Websites / WFC', url: `${JIRA_BASE}/browse/SW` },
+  { id: 'mc-base',      short: 'MC Base',     label: 'Marketing Center — Base',     url: `${JIRA_BASE}/jira/software/c/projects/TP/boards/4986` },
+  { id: 'mc-listings',  short: 'MC Listings', label: 'Marketing Center — Listings', url: `${JIRA_BASE}/jira/software/c/projects/TP/boards/4988` },
+  { id: 'reporting',    short: 'Reporting',   label: 'Reporting Center',     url: `${JIRA_BASE}/jira/software/c/projects/TP/boards/5004` },
+  { id: 'thryvpay',     short: 'ThryvPay',    label: 'ThryvPay',             url: `${JIRA_BASE}/servicedesk/customer/portal/1209` },
+  { id: 'other',        short: 'Other',       label: 'Other',                url: null },
 ];
 
 const STATUS_MAP = {
@@ -752,7 +752,7 @@ function renderTabs(open) {
   const html = BOARDS.map(b => {
     const active = b.id===ACTIVE_TAB ? 'active' : '';
     const critCls = critical[b.id] && b.id!=='all' ? 'critical' : '';
-    return `<button class="tab ${active}" data-tab="${b.id}">${escapeHTML(b.label)} <span class="count ${critCls}">${counts[b.id]||0}</span></button>`;
+    return `<button class="tab ${active}" data-tab="${b.id}" title="${escapeAttr(b.label)}">${escapeHTML(b.short || b.label)} <span class="count ${critCls}">${counts[b.id]||0}</span></button>`;
   }).join('');
   const el = document.getElementById('tabs');
   el.innerHTML = html;
