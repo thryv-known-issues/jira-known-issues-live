@@ -6,1941 +6,1155 @@
 <title>thryv ▸ Known Issues Jira Status Page</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* =========================================================
-   THRYV KNOWN ISSUES — DESIGN TOKENS
-   ========================================================= */
 :root {
-  /* Thryv brand */
-  --orange: #FF5000;
-  --orange-soft: #FFE9DD;
-  --midnight: #29355D;
-  --midnight-soft: #DDE2EE;
-  --black: #121212;
-  --white: #FFFFFF;
-  --mist: #F4F6FB;
-  --cloud: #ECEEF1;
-  --steel: #808080;
-  --night: #4D4D4D;
+  --orange: #FF5000; --orange-soft: #FFE9DD;
+  --midnight: #29355D; --midnight-soft: #DDE2EE;
+  --black: #121212; --white: #FFFFFF;
+  --mist: #F4F6FB; --cloud: #ECEEF1;
+  --steel: #808080; --night: #4D4D4D;
   --sapphire: #5378FC;
-  --sapphire-soft: #E3EAFE;
 
-  /* Product pills */
-  --mc-bg: #3C3489;
-  --mc-fg: #FFFFFF;
-  --mc-soft: #E8E5F5;
-  --ol-bg: #29355D;
-  --ol-fg: #FFFFFF;
-  --ol-soft: #DDE2EE;
-  --tp-bg: #5378FC;
-  --tp-fg: #FFFFFF;
-  --tp-soft: #E3EAFE;
+  --mc-bg: #3C3489; --mc-fg: #9B8FFF;
+  --ol-bg: #29355D; --ol-fg: #5378FC;
+  --tp-bg: #5378FC; --tp-fg: #A8C0FF;
 
-  /* Status semantics */
-  --todo-bg: #E3EAFE;
-  --todo-fg: #2E4BC4;
-  --prog-bg: #FFF3D6;
-  --prog-fg: #8A5A00;
-  --done-bg: #D9F2E2;
-  --done-fg: #0E6B2E;
+  --p1: #D7263D; --p1-bg: #FCE4E8;
+  --p2: #7A5A00; --p2-bg: #FFF1CC;
+  --p3: #2A47B8; --p3-bg: #E5ECFF;
+  --p4: #1F6B33; --p4-bg: #DDF0E2;
 
-  /* Health */
-  --health-critical: #D93025;
-  --health-attention: #E37400;
-  --health-monitor: #1A73E8;
-  --health-clear: #1E8E3E;
+  --st-todo-bg: #E5ECFF; --st-todo-fg: #2A47B8;
+  --st-prog-bg: #FFF1CC; --st-prog-fg: #7A5A00;
+  --st-done-bg: #DDF0E2; --st-done-fg: #1F6B33;
 
-  /* Surface */
-  --bg: #F4F6FB;
-  --surface: #FFFFFF;
-  --border: #ECEEF1;
-  --border-strong: #D8DCE6;
-  --text: #121212;
-  --text-muted: #4D4D4D;
-  --text-faint: #808080;
-
-  /* Shape */
-  --r-sm: 6px;
-  --r-md: 10px;
-  --r-lg: 14px;
-  --r-xl: 20px;
-  --shadow-sm: 0 1px 2px rgba(18, 18, 18, 0.04);
-  --shadow-md: 0 4px 12px rgba(41, 53, 93, 0.06);
-  --shadow-lg: 0 12px 32px rgba(41, 53, 93, 0.08);
+  --shadow-sm: 0 1px 2px rgba(18,18,18,0.04), 0 1px 3px rgba(18,18,18,0.06);
+  --shadow-md: 0 4px 12px rgba(18,18,18,0.06), 0 1px 3px rgba(18,18,18,0.04);
 }
-
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 body {
-  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-feature-settings: 'ss01' on, 'ss02' on;
-  background: var(--bg);
-  color: var(--text);
-  font-size: 14px;
-  line-height: 1.5;
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  background: var(--mist); color: var(--black);
+  font-size: 14px; line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 button { font-family: inherit; cursor: pointer; }
-a { color: inherit; }
-.mono { font-family: 'DM Mono', ui-monospace, monospace; }
+a { color: var(--sapphire); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.wrap { max-width: 1320px; margin: 0 auto; padding: 22px 28px 80px; }
+h1, h2, h3 { margin: 0; color: var(--midnight); font-weight: 600; }
+.section-title {
+  font-size: 12px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.07em; color: var(--steel); margin: 26px 0 12px;
+}
 
-/* =========================================================
-   TOP NAV
-   ========================================================= */
-.nav {
-  background: var(--white);
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  --nav-height: 57px;
+.topnav { background: var(--white); border-bottom: 1px solid var(--cloud); position: sticky; top: 0; z-index: 50; }
+.topnav-inner {
+  max-width: 1320px; margin: 0 auto; padding: 14px 28px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
 }
-.nav-inner {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 14px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+.brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 16px; }
+.brand .thryv { color: var(--orange); }
+.brand .sep { color: var(--cloud); font-weight: 400; }
+.brand .title { color: var(--midnight); }
+.nav-right { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.last-synced { font-size: 13px; color: var(--night); display: flex; align-items: center; gap: 7px; }
+.last-synced .dot { width: 7px; height: 7px; border-radius: 50%; background: #1F6B33; }
+.last-synced strong { color: var(--midnight); font-weight: 600; }
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--midnight); color: var(--white);
+  border: none; border-radius: 6px; padding: 8px 14px;
+  font: 600 13px/1 'DM Sans', sans-serif; transition: background .15s ease;
 }
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: 700;
-  font-size: 15px;
-  letter-spacing: -0.01em;
-}
-.brand-mark {
-  width: 28px; height: 28px;
-  background: var(--orange);
-  border-radius: 7px;
-  display: grid;
-  place-items: center;
-  color: var(--white);
-  font-weight: 800;
-  font-size: 14px;
-  line-height: 1;
-}
-.brand-text { color: var(--midnight); }
-.brand-text .sep { color: var(--steel); margin: 0 6px; font-weight: 400; }
-.brand-text .title { color: var(--black); }
-
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.last-sync {
-  font-size: 12px;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.last-sync .dot {
-  width: 7px; height: 7px;
-  background: var(--health-clear);
-  border-radius: 50%;
-  box-shadow: 0 0 0 3px rgba(30, 142, 62, 0.15);
-}
-.btn-refresh {
-  background: var(--midnight);
-  color: var(--white);
-  border: 0;
-  padding: 8px 14px;
-  border-radius: var(--r-md);
-  font-size: 13px;
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: background 0.15s ease;
-}
-.btn-refresh:hover { background: #1f2a4a; }
-.btn-refresh.spinning svg { animation: spin 0.8s linear infinite; }
+.btn:hover { background: #1f2a4a; }
+.btn:disabled { opacity: .6; cursor: not-allowed; }
+.btn.spinning .icon-refresh { animation: spin .8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* =========================================================
-   LAYOUT
-   ========================================================= */
-.shell {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 24px;
-}
-.page-head {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-.page-title {
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--black);
-  margin: 0;
-}
-.page-subtitle {
-  color: var(--text-muted);
-  font-size: 13px;
-  margin-top: 4px;
-}
-.search-wrap {
-  flex: 1 1 320px;
-  max-width: 460px;
-  position: relative;
-}
+.page-head { margin: 18px 0 4px; }
+.page-title { font-size: 22px; font-weight: 700; color: var(--midnight); margin-bottom: 4px; }
+.page-subtitle { font-size: 13px; color: var(--night); }
+
+.search-wrap { position: relative; margin: 0; }
 .search-input {
-  width: 100%;
-  background: var(--white);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--r-md);
-  padding: 10px 14px 10px 38px;
-  font-size: 13px;
-  font-family: inherit;
-  color: var(--text);
-  transition: border-color 0.15s, box-shadow 0.15s;
+  width: 100%; padding: 12px 14px 12px 40px;
+  background: var(--white); border: 1px solid var(--cloud);
+  border-radius: 10px; font: 500 14px/1.3 'DM Sans', sans-serif;
+  color: var(--black); outline: none; box-shadow: var(--shadow-sm);
+  transition: border-color .15s ease, box-shadow .15s ease;
 }
-.search-input:focus {
-  outline: 0;
-  border-color: var(--midnight);
-  box-shadow: 0 0 0 3px var(--midnight-soft);
-}
-.search-icon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--steel);
-  pointer-events: none;
-}
+.search-input::placeholder { color: var(--steel); }
+.search-input:focus { border-color: var(--sapphire); box-shadow: 0 0 0 3px rgba(83,120,252,0.12); }
+.search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--steel); pointer-events: none; }
 .search-results {
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 0; right: 0;
-  background: var(--white);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--r-md);
-  box-shadow: var(--shadow-lg);
-  max-height: 360px;
-  overflow-y: auto;
-  z-index: 50;
-  display: none;
+  position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+  background: var(--white); border: 1px solid var(--cloud);
+  border-radius: 10px; box-shadow: var(--shadow-md);
+  max-height: 360px; overflow-y: auto; z-index: 30; display: none;
 }
 .search-results.show { display: block; }
-.search-result {
-  padding: 10px 14px;
-  border-bottom: 1px solid var(--border);
-  cursor: pointer;
-  font-size: 13px;
-}
+.search-result { display: block; padding: 10px 14px; border-bottom: 1px solid var(--cloud); text-decoration: none; }
 .search-result:hover { background: var(--mist); }
-.search-result:last-child { border-bottom: 0; }
-.search-result .sr-key { color: var(--sapphire); font-weight: 500; font-size: 11px; }
-.search-result .sr-summary { color: var(--text); margin-top: 2px; }
-.search-result .sr-meta { color: var(--text-faint); font-size: 11px; margin-top: 2px; }
+.search-result:last-child { border-bottom: none; }
+.sr-key { color: var(--sapphire); font-weight: 600; font-size: 11px; font-family: 'DM Mono', monospace; }
+.sr-summary { color: var(--black); margin-top: 2px; font-size: 13.5px; font-weight: 500; }
+.sr-meta { color: var(--steel); font-size: 11px; margin-top: 2px; }
 
-/* =========================================================
-   HEALTH CARDS (Product)
-   ========================================================= */
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 20px;
+/* Checker panel */
+.checker { background: var(--white); border: 1px solid var(--cloud); border-radius: 10px; box-shadow: var(--shadow-sm); padding: 18px 20px; }
+.checker-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 4px; }
+.checker-title { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; color: var(--midnight); }
+.checker-title .tag {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em;
+  color: var(--orange); padding: 2px 7px; background: var(--orange-soft); border-radius: 4px;
 }
-.product-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  padding: 18px 20px;
-  position: relative;
-  overflow: hidden;
+.checker-sub { font-size: 12.5px; color: var(--night); margin-bottom: 10px; }
+.checker-textarea {
+  width: 100%; min-height: 90px; padding: 10px 12px;
+  font: 400 13px/1.5 'DM Sans', sans-serif; color: var(--black);
+  background: var(--mist); border: 1px solid var(--cloud);
+  border-radius: 8px; outline: none; resize: vertical;
+  transition: border-color .15s ease, box-shadow .15s ease;
 }
-.product-card .strip {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
+.checker-textarea:focus { border-color: var(--sapphire); background: var(--white); box-shadow: 0 0 0 3px rgba(83,120,252,0.12); }
+.checker-actions { display: flex; gap: 8px; align-items: center; margin-top: 10px; flex-wrap: wrap; }
+.btn-secondary { background: var(--white); color: var(--midnight); border: 1px solid var(--cloud); }
+.btn-secondary:hover { background: var(--mist); }
+.checker-result { margin-top: 14px; display: none; }
+.checker-result.show { display: block; }
+.verdict {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px; border-radius: 8px;
+  font-size: 14px; font-weight: 600; margin-bottom: 12px;
 }
-.product-card.mc .strip { background: var(--mc-bg); }
-.product-card.ol .strip { background: var(--ol-bg); }
-.product-card.tp .strip { background: var(--tp-bg); }
-
-.pc-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 14px;
+.verdict.known { background: var(--p4-bg); color: var(--p4); border: 1px solid #B5DDC0; }
+.verdict.maybe { background: var(--p2-bg); color: var(--p2); border: 1px solid #F0DCA0; }
+.verdict.new { background: var(--orange-soft); color: var(--orange); border: 1px solid #FFCFB8; }
+.verdict .icon { font-size: 20px; line-height: 1; }
+.verdict .sub { display: block; font-size: 12px; font-weight: 500; margin-top: 2px; color: var(--night); }
+.match-list { display: flex; flex-direction: column; gap: 8px; }
+.match-row { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; background: var(--mist); border: 1px solid var(--cloud); border-radius: 8px; }
+.match-rank {
+  flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+  background: var(--midnight); color: var(--white);
+  font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
 }
-.pc-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text);
-  letter-spacing: -0.005em;
-}
-.pc-badge {
-  font-size: 10.5px;
-  font-weight: 600;
-  padding: 3px 8px;
-  border-radius: 999px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-.pc-badge.critical { background: rgba(217, 48, 37, 0.1); color: var(--health-critical); }
-.pc-badge.attention { background: rgba(227, 116, 0, 0.1); color: var(--health-attention); }
-.pc-badge.monitor { background: rgba(26, 115, 232, 0.1); color: var(--health-monitor); }
-.pc-badge.clear { background: rgba(30, 142, 62, 0.1); color: var(--health-clear); }
-
-.pc-metric {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  margin-bottom: 4px;
-}
-.pc-big {
-  font-size: 30px;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  color: var(--black);
-  line-height: 1;
-}
-.pc-label {
-  font-size: 11.5px;
-  color: var(--text-muted);
-}
-.pc-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid var(--border);
-}
-.pc-stat {
-  font-size: 11.5px;
-  color: var(--text-muted);
-}
-.pc-stat strong {
-  color: var(--text);
-  font-weight: 600;
-  font-size: 13px;
-  display: block;
-  margin-top: 1px;
-}
-.pc-spark {
-  width: 80px;
-  height: 28px;
+.match-body { flex: 1; min-width: 0; }
+.match-body .name { font-size: 13.5px; font-weight: 600; color: var(--midnight); margin-bottom: 2px; }
+.match-body .brief { font-size: 12.5px; color: var(--night); margin-bottom: 6px; line-height: 1.4; }
+.match-body .meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: 11px; color: var(--steel); }
+.match-body .meta a { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 600; padding: 2px 6px; border-radius: 4px; background: var(--white); border: 1px solid var(--cloud); color: var(--midnight); }
+.match-body .meta a:hover { background: var(--cloud); text-decoration: none; }
+.confidence { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 2px 6px; border-radius: 3px; }
+.confidence.high { background: var(--p4-bg); color: var(--p4); }
+.confidence.med { background: var(--p2-bg); color: var(--p2); }
+.confidence.low { background: var(--mist); color: var(--steel); border: 1px solid var(--cloud); }
+.new-jira-stub { margin-top: 10px; padding: 12px 14px; background: var(--white); border: 1px dashed var(--orange); border-radius: 8px; }
+.new-jira-stub .label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--orange); margin-bottom: 6px; }
+.stub-text {
+  font-size: 12.5px; color: var(--black); line-height: 1.5;
+  white-space: pre-wrap; word-break: break-word;
+  font-family: 'DM Mono', monospace;
+  background: var(--mist); padding: 10px 12px; border-radius: 6px; margin-top: 6px;
 }
 
-/* =========================================================
-   SUMMARY CARDS (In Progress / Backlog / Resolved)
-   ========================================================= */
-.summary-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 24px;
-}
-.summary-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  padding: 18px 20px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-.summary-icon {
-  width: 44px; height: 44px;
-  border-radius: var(--r-md);
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-}
-.summary-icon.prog { background: var(--prog-bg); color: var(--prog-fg); }
-.summary-icon.todo { background: var(--todo-bg); color: var(--todo-fg); }
-.summary-icon.done { background: var(--done-bg); color: var(--done-fg); }
-.summary-content { flex: 1; min-width: 0; }
-.summary-content .sc-label {
-  font-size: 12px;
-  color: var(--text-muted);
-  font-weight: 500;
-}
-.summary-content .sc-num {
-  font-size: 26px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  color: var(--black);
-}
-.summary-content .sc-sub {
-  font-size: 11.5px;
-  color: var(--text-faint);
-  margin-top: 2px;
-}
+.summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.sum-card { background: var(--white); border: 1px solid var(--cloud); border-radius: 10px; padding: 18px 20px; box-shadow: var(--shadow-sm); }
+.sum-card .label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--steel); }
+.sum-card .big { font-size: 34px; font-weight: 700; color: var(--midnight); margin: 6px 0 2px; line-height: 1; }
+.sum-card .sub { font-size: 13px; color: var(--night); }
+.sum-card.in-progress .big { color: var(--orange); }
 
-/* =========================================================
-   BOARD TABS
-   ========================================================= */
-.tabs {
-  display: flex;
-  gap: 4px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  padding: 6px;
-  margin-bottom: 16px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
+.prod-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.prod-card {
+  background: var(--white); border: 1px solid var(--cloud);
+  border-radius: 10px; padding: 18px 20px; box-shadow: var(--shadow-sm);
+  display: flex; flex-direction: column; gap: 12px;
+  position: relative; overflow: hidden;
 }
-.tabs::-webkit-scrollbar { display: none; }
+.prod-card .strip { position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.prod-card.mc .strip { background: var(--mc-bg); }
+.prod-card.ol .strip { background: var(--ol-bg); }
+.prod-card.tp .strip { background: var(--tp-bg); }
+.pc-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-top: 4px; }
+.prod-pill { display: inline-flex; align-items: center; font-size: 12px; font-weight: 600; padding: 4px 11px; border-radius: 999px; }
+.prod-pill.mc { background: var(--mc-bg); color: var(--white); }
+.prod-pill.ol { background: var(--ol-bg); color: var(--white); }
+.prod-pill.tp { background: var(--tp-bg); color: var(--white); }
+.health-badge { font-size: 11px; font-weight: 600; padding: 4px 9px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.05em; }
+.health-critical { background: var(--p1-bg); color: var(--p1); }
+.health-attention { background: var(--p2-bg); color: var(--p2); }
+.health-monitor { background: var(--p3-bg); color: var(--p3); }
+.health-clear { background: var(--p4-bg); color: var(--p4); }
+.pc-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.pc-stat .v { font-size: 20px; font-weight: 700; color: var(--midnight); line-height: 1.1; }
+.pc-stat.affected .v { color: var(--orange); }
+.pc-stat .l { font-size: 11px; color: var(--steel); margin-top: 2px; }
+.pc-spark { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.pc-spark svg { display: block; }
+.trend { font-size: 12px; font-weight: 600; color: var(--night); }
+.trend.up { color: var(--p1); }
+.trend.down { color: var(--p4); }
+
+.tabs-bar { background: var(--white); border: 1px solid var(--cloud); border-radius: 10px; box-shadow: var(--shadow-sm); overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.tabs-bar::-webkit-scrollbar { display: none; }
+.tabs { display: flex; gap: 2px; padding: 6px; min-width: max-content; }
 .tab {
-  background: transparent;
-  border: 0;
-  padding: 8px 14px;
-  border-radius: var(--r-sm);
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-muted);
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: background 0.15s, color 0.15s;
-  flex-shrink: 0;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 14px; border-radius: 7px;
+  background: transparent; border: none;
+  font: 600 13px/1 'DM Sans', sans-serif;
+  color: var(--night); white-space: nowrap;
+  transition: background .15s ease, color .15s ease;
 }
-.tab:hover { background: var(--mist); color: var(--text); }
-.tab.active {
-  background: var(--midnight);
-  color: var(--white);
-}
-.tab .count {
-  background: rgba(0, 0, 0, 0.08);
-  color: inherit;
-  font-size: 11px;
-  padding: 1px 7px;
-  border-radius: 999px;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-}
-.tab.active .count {
-  background: rgba(255, 255, 255, 0.18);
-}
+.tab:hover { background: var(--mist); color: var(--midnight); }
+.tab.active { background: var(--midnight); color: var(--white); }
+.tab .count { background: rgba(0,0,0,0.08); color: inherit; font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 999px; min-width: 18px; text-align: center; }
+.tab.active .count { background: rgba(255,255,255,0.18); }
+.tab .count.critical { background: var(--p1); color: var(--white); }
 
-/* =========================================================
-   BOARD HEADER
-   ========================================================= */
-.board-head {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  padding: 18px 22px;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-.bh-left { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-.bh-title {
-  font-size: 17px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  color: var(--black);
-  margin: 0;
-}
-.bh-meta {
-  display: flex;
-  gap: 14px;
-  font-size: 12px;
-  color: var(--text-muted);
-  align-items: center;
-}
-.bh-meta .divider { color: var(--cloud); }
-.bh-meta strong { color: var(--text); font-weight: 600; }
-.btn-jira {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--midnight-soft);
-  color: var(--midnight);
-  border: 0;
-  padding: 8px 14px;
-  border-radius: var(--r-md);
-  font-size: 12.5px;
-  font-weight: 500;
-  text-decoration: none;
-  transition: background 0.15s;
-}
-.btn-jira:hover { background: #c8d0e3; }
+.board-panel { background: var(--white); border: 1px solid var(--cloud); border-radius: 10px; padding: 22px 24px; box-shadow: var(--shadow-sm); margin-top: 14px; }
+.bp-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+.bp-title { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.bp-title h2 { font-size: 20px; }
+.bp-link { font-size: 13px; font-weight: 600; color: var(--midnight); background: var(--midnight-soft); padding: 7px 12px; border-radius: 7px; }
+.bp-link:hover { background: #c8d0e3; text-decoration: none; }
+.bp-search { margin-top: 10px; display: flex; align-items: center; gap: 8px; background: var(--mist); border: 1px solid var(--cloud); border-radius: 8px; padding: 8px 12px; }
+.bp-search input { flex: 1; border: none; outline: none; background: transparent; font: 500 14px/1.3 'DM Sans', sans-serif; color: var(--black); }
+.bp-search input::placeholder { color: var(--steel); }
+.bp-stats { display: flex; gap: 24px; flex-wrap: wrap; margin: 14px 0 18px; padding: 12px 0; border-top: 1px solid var(--cloud); border-bottom: 1px solid var(--cloud); }
+.bp-stat { display: flex; flex-direction: column; gap: 2px; }
+.bp-stat .v { font-size: 22px; font-weight: 700; color: var(--midnight); }
+.bp-stat.affected .v { color: var(--orange); }
+.bp-stat .l { font-size: 11px; color: var(--steel); text-transform: uppercase; letter-spacing: 0.05em; }
 
-/* =========================================================
-   INCIDENT BLOCK
-   ========================================================= */
 .incident {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  padding: 0;
-  margin-bottom: 16px;
-  overflow: hidden;
+  background: linear-gradient(180deg, #FFF7F2 0%, #FFFCFA 100%);
+  border: 1px solid #FFD8C4; border-left: 3px solid var(--orange);
+  border-radius: 8px; padding: 16px 18px; margin-bottom: 18px;
 }
-.incident-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 20px;
-  background: linear-gradient(135deg, #FFF7F2 0%, #FFEDE0 100%);
-  border-bottom: 1px solid #FFD9BF;
+.incident-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+.incident-title { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--midnight); flex-wrap: wrap; }
+.incident-title .label-tag {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em;
+  color: var(--orange); padding: 2px 7px; background: var(--orange-soft); border-radius: 4px;
 }
-.incident-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--midnight);
-}
-.incident-title svg { color: var(--orange); }
 .btn-copy {
-  background: var(--white);
-  border: 1px solid var(--border-strong);
-  color: var(--text);
-  padding: 6px 12px;
-  border-radius: var(--r-sm);
-  font-size: 12px;
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: background 0.15s;
+  display: inline-flex; align-items: center; gap: 6px;
+  font: 600 12px/1 'DM Sans', sans-serif; padding: 6px 10px;
+  background: var(--white); color: var(--midnight);
+  border: 1px solid var(--cloud); border-radius: 6px;
+  transition: background .15s ease;
 }
 .btn-copy:hover { background: var(--mist); }
-.btn-copy.copied { background: var(--done-bg); color: var(--done-fg); border-color: var(--done-fg); }
-.incident-body {
-  padding: 18px 20px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-}
-.incident-col h4 {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text-faint);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin: 0 0 8px;
-}
-.incident-col p {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.55;
-  color: var(--text);
-  white-space: pre-wrap;
-}
-.incident-meta {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-.incident-meta .im-item {
-  background: var(--mist);
-  padding: 8px 12px;
-  border-radius: var(--r-sm);
-}
-.incident-meta .im-label {
-  font-size: 10.5px;
-  color: var(--text-faint);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-weight: 600;
-}
-.incident-meta .im-val {
-  font-size: 13px;
-  color: var(--text);
-  font-weight: 600;
-  margin-top: 2px;
-}
+.btn-copy.copied { background: var(--st-done-bg); color: var(--st-done-fg); border-color: #B5DDC0; }
+.incident-meta { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 12px; }
+.im-item { font-size: 12px; color: var(--night); }
+.im-label { color: var(--steel); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; }
+.im-val { color: var(--midnight); font-weight: 600; }
+.incident-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.incident-col h4 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--steel); margin: 0 0 6px; }
+.incident-col p { margin: 0; font-size: 13px; color: var(--black); line-height: 1.5; }
 
-/* =========================================================
-   ISSUE TABLE
-   ========================================================= */
-.issues-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  margin-bottom: 24px;
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table.issues { width: 100%; border-collapse: collapse; min-width: 760px; }
+table.issues thead th {
+  text-align: left; font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.05em; color: var(--steel);
+  padding: 10px 12px; border-bottom: 1px solid var(--cloud); background: var(--white);
 }
-.issues-head {
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
+table.issues thead th:first-child { position: sticky; left: 0; background: var(--white); z-index: 2; }
+table.issues tbody td { padding: 14px 12px; border-bottom: 1px solid var(--cloud); vertical-align: top; font-size: 13px; }
+table.issues tbody tr:last-child td { border-bottom: none; }
+table.issues tbody td:first-child { position: sticky; left: 0; background: var(--white); z-index: 1; min-width: 240px; max-width: 360px; }
+table.issues tbody tr.row-p1 td { background: rgba(215,38,61,0.03); }
+table.issues tbody tr.row-p1 td:first-child { background: linear-gradient(90deg, rgba(215,38,61,0.06), rgba(215,38,61,0.02)); }
+.issue-name { font-weight: 600; color: var(--midnight); font-size: 14px; margin-bottom: 4px; line-height: 1.35; }
+.issue-brief { color: var(--night); font-size: 12.5px; margin-bottom: 6px; line-height: 1.45; }
+.issue-keys { display: flex; flex-wrap: wrap; gap: 6px; }
+.issue-keys a {
+  font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 4px;
+  background: var(--mist); border: 1px solid var(--cloud);
+  color: var(--midnight); font-family: 'DM Mono', monospace;
 }
-.issues-head h3 {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: -0.005em;
-}
-.issues-head .threshold-note {
-  font-size: 11.5px;
-  color: var(--text-faint);
-}
-.issues-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-}
-.issues-table thead th {
-  background: var(--mist);
-  text-align: left;
-  font-size: 10.5px;
-  font-weight: 600;
-  color: var(--text-faint);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 10px 16px;
-  border-bottom: 1px solid var(--border);
-  white-space: nowrap;
-  position: sticky;
-  top: 57px;
-  z-index: 20;
-}
-/* First/last th — round to match parent card edge */
-.issues-table thead th:first-child { border-top-left-radius: 0; }
-.issues-table thead th:last-child { border-top-right-radius: 0; }
-.issues-table thead th::after {
-  content: '';
-  position: absolute;
-  left: 0; right: 0; bottom: -1px;
-  height: 1px;
-  background: var(--border);
-}
-.issues-table tbody tr {
-  transition: background 0.1s;
-}
-.issues-table tbody tr:hover { background: var(--mist); }
-.issues-table td {
-  padding: 14px 16px;
-  vertical-align: top;
-  font-size: 13px;
-  border-bottom: 1px solid var(--border);
-}
-.issues-table tbody tr:last-child td { border-bottom: 0; }
-.issue-name {
-  font-weight: 600;
-  color: var(--black);
-  letter-spacing: -0.005em;
-  line-height: 1.4;
-}
-.issue-brief {
-  color: var(--text-muted);
-  font-size: 12px;
-  margin-top: 4px;
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.issue-keys {
-  font-size: 11px;
-  color: var(--text-faint);
-  margin-top: 6px;
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-.issue-key-pill {
-  background: var(--sapphire-soft);
-  color: var(--sapphire);
-  padding: 3px 8px;
-  border-radius: 4px;
-  text-decoration: none;
-  font-family: 'DM Mono', monospace;
-  font-size: 10.5px;
-  font-weight: 600;
-  border: 1px solid transparent;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  transition: all 0.12s ease;
-  cursor: pointer;
-}
-.issue-key-pill::after {
-  content: '↗';
-  font-size: 9px;
-  opacity: 0.6;
-}
-.issue-key-pill:hover {
-  background: var(--sapphire);
-  color: var(--white);
-  border-color: var(--sapphire);
-  transform: translateY(-1px);
-}
-.issue-key-pill:hover::after {
-  opacity: 1;
-}
-.issue-key-more {
-  background: var(--cloud);
-  color: var(--text-muted);
-  padding: 3px 8px;
-  border-radius: 4px;
-  font-size: 10.5px;
-  font-weight: 600;
-}
+.issue-keys a:hover { background: var(--cloud); text-decoration: none; }
+.issue-key-more { font-size: 11px; color: var(--steel); padding: 2px 6px; font-weight: 600; font-family: 'DM Mono', monospace; }
+.pill { display: inline-flex; align-items: center; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+.pri-p1 { background: var(--p1-bg); color: var(--p1); }
+.pri-p2 { background: var(--p2-bg); color: var(--p2); }
+.pri-p3 { background: var(--p3-bg); color: var(--p3); }
+.pri-p4 { background: var(--p4-bg); color: var(--p4); }
+.pri-none { background: var(--mist); color: var(--steel); }
+.p-todo { background: var(--st-todo-bg); color: var(--st-todo-fg); }
+.p-prog { background: var(--st-prog-bg); color: var(--st-prog-fg); }
+.p-done { background: var(--st-done-bg); color: var(--st-done-fg); }
+.affected-big { font-size: 18px; font-weight: 700; color: var(--orange); line-height: 1; }
+.affected-big .sub { display: block; font-size: 10px; font-weight: 500; color: var(--steel); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+.affected-fallback { font-size: 13px; color: var(--steel); }
+.affected-fallback strong { color: var(--night); font-weight: 600; }
+.reported { font-size: 12px; color: var(--night); white-space: nowrap; }
+.age { font-size: 11px; color: var(--steel); margin-top: 2px; }
 
-/* Product pills */
-.prod-pill {
-  display: inline-flex;
-  align-items: center;
-  font-size: 10.5px;
-  font-weight: 600;
-  padding: 3px 8px;
-  border-radius: 999px;
-  letter-spacing: 0.01em;
-  white-space: nowrap;
-}
-.prod-pill.mc { background: var(--mc-soft); color: var(--mc-bg); }
-.prod-pill.ol { background: var(--ol-soft); color: var(--ol-bg); }
-.prod-pill.tp { background: var(--tp-soft); color: var(--tp-bg); }
-.prod-pill.other { background: var(--cloud); color: var(--night); }
+.resolved-list { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.resolved-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px; background: var(--mist); border: 1px solid var(--cloud); border-radius: 6px; font-size: 13px; }
+.resolved-row .name { font-weight: 600; color: var(--midnight); }
+.resolved-row .meta { font-size: 11px; color: var(--steel); margin-top: 2px; }
 
-/* Status pills */
-.status-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 3px 9px;
-  border-radius: 999px;
-  white-space: nowrap;
-}
-.status-pill::before {
-  content: '';
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: currentColor;
-}
-.status-pill.p-todo { background: var(--todo-bg); color: var(--todo-fg); }
-.status-pill.p-prog { background: var(--prog-bg); color: var(--prog-fg); }
-.status-pill.p-done { background: var(--done-bg); color: var(--done-fg); }
+.empty { padding: 40px 20px; text-align: center; color: var(--steel); font-size: 14px; }
+.empty strong { color: var(--midnight); font-size: 16px; display: block; margin-bottom: 6px; }
+.loading { display: flex; align-items: center; justify-content: center; padding: 80px 20px; color: var(--steel); font-size: 14px; }
+.spinner { width: 18px; height: 18px; border: 2px solid var(--cloud); border-top-color: var(--orange); border-radius: 50%; animation: spin .8s linear infinite; margin-right: 10px; }
+footer { margin-top: 40px; text-align: center; font-size: 12px; color: var(--steel); line-height: 1.7; }
+footer .top { color: var(--night); font-weight: 500; }
 
-.affected-num {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--black);
-  letter-spacing: -0.01em;
-  font-variant-numeric: tabular-nums;
-}
-.affected-label {
-  font-size: 10.5px;
-  color: var(--text-faint);
-  margin-top: 2px;
-}
-.ticket-count {
-  font-variant-numeric: tabular-nums;
-  font-weight: 600;
-  color: var(--text);
-}
-.age-cell {
-  font-variant-numeric: tabular-nums;
-  color: var(--text-muted);
-  font-size: 12px;
-}
-
-/* Empty state */
-.empty {
-  padding: 48px 20px;
-  text-align: center;
-  color: var(--text-faint);
-}
-.empty svg { color: var(--cloud); margin-bottom: 12px; }
-.empty .e-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-muted);
-  margin-bottom: 4px;
-}
-.empty .e-sub { font-size: 12px; }
-
-/* =========================================================
-   RECENTLY RESOLVED
-   ========================================================= */
-.resolved-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  overflow: hidden;
-  margin-bottom: 24px;
-}
-.resolved-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 12px;
-  padding: 16px 20px;
-}
-.resolved-item {
-  background: var(--mist);
-  border-radius: var(--r-md);
-  padding: 12px;
-  border-left: 3px solid var(--health-clear);
-}
-.resolved-item .ri-name {
-  font-size: 12.5px;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 4px;
-  line-height: 1.4;
-}
-.resolved-item .ri-meta {
-  font-size: 11px;
-  color: var(--text-faint);
-  display: flex;
-  gap: 8px;
-}
-.resolved-item .ri-timestamp {
-  font-size: 10.5px;
-  color: var(--steel);
-  font-family: 'DM Mono', monospace;
-  margin-top: 4px;
-}
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-.footer {
-  text-align: center;
-  padding: 32px 24px 48px;
-  color: var(--text-faint);
-  font-size: 11.5px;
-}
-.footer a { color: var(--midnight); text-decoration: none; }
-.footer a:hover { text-decoration: underline; }
-
-/* =========================================================
-   PRIORITY PILLS & ROW STRIPES
-   ========================================================= */
-.prio-pill {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10.5px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 4px;
-  letter-spacing: 0.02em;
-  font-family: 'DM Mono', monospace;
-  min-width: 30px;
-}
-.prio-pill.p1 { background: rgba(217, 48, 37, 0.12); color: var(--health-critical); }
-.prio-pill.p2 { background: rgba(227, 116, 0, 0.12); color: var(--health-attention); }
-.prio-pill.p3 { background: rgba(26, 115, 232, 0.12); color: var(--health-monitor); }
-.prio-pill.p4 { background: var(--cloud); color: var(--night); }
-
-/* Left-edge stripe on issue rows */
-.issues-table tbody tr {
-  position: relative;
-}
-.issues-table tbody tr td:first-child {
-  border-left: 3px solid transparent;
-  transition: border-color 0.15s;
-}
-.issues-table tbody tr.prio-p1 td:first-child { border-left-color: var(--health-critical); }
-.issues-table tbody tr.prio-p2 td:first-child { border-left-color: var(--health-attention); }
-.issues-table tbody tr.prio-p3 td:first-child { border-left-color: var(--health-monitor); }
-.issues-table tbody tr.prio-p4 td:first-child { border-left-color: var(--cloud); }
-
-/* Hover hint */
-.row-hover-hint {
-  font-size: 10.5px;
-  color: var(--sapphire);
-  font-weight: 600;
-  margin-top: 6px;
-  opacity: 0;
-  transform: translateX(-4px);
-  transition: opacity 0.15s ease, transform 0.15s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-.issues-table tbody tr:hover .row-hover-hint {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-/* =========================================================
-   CRITICAL TAB BADGE
-   ========================================================= */
-.tab .count.critical {
-  background: var(--health-critical);
-  color: var(--white);
-  box-shadow: 0 0 0 3px rgba(217, 48, 37, 0.18);
-}
-.tab.active .count.critical {
-  background: var(--white);
-  color: var(--health-critical);
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.18);
-}
-
-/* =========================================================
-   STAGGERED FADE-IN ON LOAD
-   ========================================================= */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.fade-up {
-  animation: fadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-}
-.fade-up-1 { animation-delay: 0ms; }
-.fade-up-2 { animation-delay: 60ms; }
-.fade-up-3 { animation-delay: 120ms; }
-.fade-up-4 { animation-delay: 180ms; }
-.fade-up-5 { animation-delay: 240ms; }
-.fade-up-6 { animation-delay: 300ms; }
-
-/* =========================================================
-   BACK-TO-TOP BUTTON
-   ========================================================= */
 .scroll-top {
-  position: fixed;
-  right: 24px;
-  bottom: 24px;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--midnight);
-  color: var(--white);
-  border: 0;
-  display: grid;
-  place-items: center;
-  opacity: 0;
-  transform: translateY(12px) scale(0.9);
-  pointer-events: none;
-  transition: opacity 0.2s, transform 0.2s, background 0.15s;
-  box-shadow: var(--shadow-lg);
-  z-index: 80;
+  position: fixed; bottom: 24px; right: 24px;
+  width: 42px; height: 42px;
+  background: var(--midnight); color: var(--white);
+  border: none; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease, background .15s ease;
+  box-shadow: var(--shadow-md); z-index: 40; font-size: 18px;
 }
-.scroll-top.show {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  pointer-events: auto;
-}
-.scroll-top:hover {
-  background: var(--orange);
-}
+.scroll-top.show { opacity: 1; pointer-events: auto; }
+.scroll-top:hover { transform: translateY(-2px); background: #1f2a4a; }
 
-/* =========================================================
-   LOADING
-   ========================================================= */
-.loader {
-  display: grid;
-  place-items: center;
-  padding: 80px 20px;
-  color: var(--text-faint);
-}
-.loader .spinner {
-  width: 32px; height: 32px;
-  border: 3px solid var(--cloud);
-  border-top-color: var(--midnight);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin-bottom: 12px;
-}
+.fade-up { opacity: 0; transform: translateY(8px); animation: fadeUp .5s ease forwards; }
+.fade-up-1 { animation-delay: .05s; }
+.fade-up-2 { animation-delay: .12s; }
+.fade-up-3 { animation-delay: .19s; }
+.fade-up-4 { animation-delay: .26s; }
+.fade-up-5 { animation-delay: .33s; }
+.fade-up-6 { animation-delay: .40s; }
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
-@media (max-width: 960px) {
-  .product-grid { grid-template-columns: 1fr; }
-  .summary-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .summary-card { padding: 14px; }
-  .summary-icon { width: 36px; height: 36px; }
-  .summary-content .sc-num { font-size: 22px; }
-  .incident-body { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 720px) {
-  .shell { padding: 16px; }
-  .nav-inner { padding: 12px 16px; }
-  .page-head { flex-direction: column; align-items: stretch; }
-  .summary-grid { grid-template-columns: 1fr; }
-  .issues-table thead { display: none; }
-  .issues-table, .issues-table tbody, .issues-table tr, .issues-table td {
-    display: block;
-    width: 100%;
-  }
-  .issues-table tr {
-    padding: 14px 16px;
-    border-bottom: 1px solid var(--border);
-  }
-  .issues-table td {
-    padding: 4px 0;
-    border: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 12px;
-  }
-  .issues-table td[data-label]::before {
-    content: attr(data-label);
-    font-size: 10.5px;
-    color: var(--text-faint);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-weight: 600;
-    flex-shrink: 0;
-    padding-top: 2px;
-  }
-  .issues-table td.issue-main-cell {
-    display: block;
-    margin-bottom: 8px;
-  }
-  .issues-table td.issue-main-cell::before { display: none; }
-  .incident-meta { grid-template-columns: 1fr; }
-  .brand { font-size: 13px; }
-  .last-sync { display: none; }
+@media (max-width: 900px) { .incident-cols { grid-template-columns: 1fr; } }
+@media (max-width: 768px) {
+  .wrap { padding: 16px 14px 64px; }
+  .topnav-inner { padding: 12px 14px; }
+  .brand { font-size: 15px; }
+  .last-synced { font-size: 12px; }
+  .summary-grid, .prod-grid { grid-template-columns: 1fr; }
+  .sum-card .big { font-size: 28px; }
+  .board-panel, .checker { padding: 16px 14px; }
+  .bp-stats { gap: 16px; }
+  .bp-stat .v { font-size: 18px; }
+  table.issues { min-width: 640px; }
+  .section-title { margin: 22px 0 10px; }
+  h2 { font-size: 17px !important; }
+  .pc-stats { gap: 6px; }
+  .pc-stat .v { font-size: 17px; }
   .page-title { font-size: 18px; }
-  .scroll-top { right: 16px; bottom: 16px; width: 40px; height: 40px; }
-  .pc-big { font-size: 26px; }
+}
+@media (max-width: 480px) {
+  .nav-right { width: 100%; justify-content: space-between; }
+  .scroll-top { bottom: 16px; right: 16px; width: 38px; height: 38px; }
 }
 </style>
 </head>
 <body>
 
-<!-- ============ NAV ============ -->
-<nav class="nav">
-  <div class="nav-inner">
+<nav class="topnav">
+  <div class="topnav-inner">
     <div class="brand">
-      <div class="brand-mark">t</div>
-      <div class="brand-text">
-        <span>thryv</span>
-        <span class="sep">▸</span>
-        <span class="title">Known Issues Jira Status Page</span>
-      </div>
+      <span class="thryv">thryv</span>
+      <span class="sep">▸</span>
+      <span class="title">Known Issues Jira Status Page</span>
     </div>
-    <div class="nav-actions">
-      <div class="last-sync" id="lastSync">
+    <div class="nav-right">
+      <div class="last-synced">
         <span class="dot"></span>
-        <span>Loading…</span>
+        Last synced <strong id="last-synced">—</strong>
       </div>
-      <button class="btn-refresh" id="refreshBtn" title="Reload data.json">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-        Refresh
+      <button class="btn" id="refresh-btn" onclick="loadData(true)">
+        <span class="icon-refresh">↻</span> Refresh
       </button>
     </div>
   </div>
 </nav>
 
-<!-- ============ SHELL ============ -->
-<main class="shell">
+<main class="wrap">
+  <div id="loading" class="loading"><div class="spinner"></div> Loading Jira data…</div>
 
-  <!-- Page head + search -->
-  <div class="page-head">
-    <div>
-      <h1 class="page-title">Live Jira Known Issues</h1>
-      <div class="page-subtitle">Internal dashboard for Advanced Technical Support · Auto-syncs every 2 hours from <span class="mono">thryv.atlassian.net</span></div>
-    </div>
-    <div class="search-wrap">
-      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-      <input type="text" id="search" class="search-input" placeholder="Search by ticket #, Thryv ID, keyword, or symptom (e.g. 'listings not publishing')" autocomplete="off" />
-      <div class="search-results" id="searchResults"></div>
-    </div>
-  </div>
-
-  <!-- Loading state -->
-  <div id="loader" class="loader">
-    <div class="spinner"></div>
-    <div>Loading Jira data…</div>
-  </div>
-
-  <!-- Main content -->
   <div id="content" style="display:none;">
 
-    <!-- Product health cards -->
-    <div class="product-grid" id="productGrid"></div>
+    <div class="page-head fade-up fade-up-1">
+      <div class="page-title">Known Issues Dashboard</div>
+      <div class="page-subtitle">Real-time status of known issues tracked across 9 Jira boards · Internal ATS view</div>
+    </div>
 
-    <!-- Summary cards -->
-    <div class="summary-grid" id="summaryGrid"></div>
+    <div class="section-title fade-up fade-up-1">Check a Zendesk Ticket</div>
+    <div class="checker fade-up fade-up-2">
+      <div class="checker-head">
+        <div class="checker-title">
+          <span>Is this a known issue?</span>
+          <span class="tag">Paste & Check</span>
+        </div>
+      </div>
+      <div class="checker-sub">
+        Paste the Zendesk ticket subject, description, or any client message text below. The page will scan it against current Jira issues and tell you if it matches a known issue or looks like a fresh one.
+      </div>
+      <textarea id="checker-input" class="checker-textarea"
+        placeholder="Paste ticket subject + body here. Example: 'Client says their Yext listings are not syncing after Marketing Center install. Account #485219...'"></textarea>
+      <div class="checker-actions">
+        <button class="btn" id="checker-run">Check Against Known Issues</button>
+        <button class="btn btn-secondary" id="checker-clear">Clear</button>
+        <span style="font-size:11px;color:var(--steel);">Tip: Cmd/Ctrl+Enter to run</span>
+      </div>
+      <div class="checker-result" id="checker-result"></div>
+    </div>
 
-    <!-- Board tabs -->
-    <div class="tabs" id="tabs"></div>
+    <div class="section-title fade-up fade-up-2">Overview</div>
+    <div class="summary-grid fade-up fade-up-3">
+      <div class="sum-card in-progress">
+        <div class="label">In Progress</div>
+        <div class="big" id="sum-prog-tickets">0</div>
+        <div class="sub"><span id="sum-prog-groups">0</span> known issue groups</div>
+      </div>
+      <div class="sum-card">
+        <div class="label">Backlog</div>
+        <div class="big" id="sum-back-tickets">0</div>
+        <div class="sub"><span id="sum-back-groups">0</span> known issue groups</div>
+      </div>
+      <div class="sum-card">
+        <div class="label">Recently Resolved (30d)</div>
+        <div class="big" id="sum-res-groups">0</div>
+        <div class="sub"><span id="sum-res-tickets">0</span> tickets resolved</div>
+      </div>
+    </div>
 
-    <!-- Board view -->
-    <div id="boardView"></div>
+    <div class="section-title fade-up fade-up-3">Product Health</div>
+    <div class="prod-grid fade-up fade-up-4" id="prod-grid"></div>
+
+    <div class="section-title fade-up fade-up-4">Ticket Lookup</div>
+    <div class="search-wrap fade-up fade-up-5">
+      <span class="search-icon">🔍</span>
+      <input id="global-search" class="search-input" type="text"
+        placeholder="Search by ticket #, Thryv ID, keyword, or symptom…" autocomplete="off" />
+      <div class="search-results" id="search-results"></div>
+    </div>
+
+    <div class="section-title fade-up fade-up-5">Boards</div>
+    <div class="tabs-bar fade-up fade-up-6"><div class="tabs" id="tabs"></div></div>
+
+    <div id="board-panel" class="fade-up fade-up-6"></div>
 
   </div>
 
-  <footer class="footer">
-    Maintained by Advanced Technical Support · Data source: <a href="https://thryv.atlassian.net" target="_blank" rel="noopener">thryv.atlassian.net</a>
+  <footer>
+    <div class="top">Thryv Advanced Technical Support · Known Issues Jira Status Page</div>
+    <div>Updated every 2 hours · Filtered by techsupport label</div>
   </footer>
-
 </main>
 
-<button class="scroll-top" id="scrollTop" title="Back to top" aria-label="Scroll to top">
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
-</button>
+<button class="scroll-top" id="scroll-top" aria-label="Back to top" title="Back to top">↑</button>
 
 <script>
-/* =========================================================
-   THRYV KNOWN ISSUES — APP LOGIC
-   ========================================================= */
+const JIRA_BASE = 'https://thryv.atlassian.net';
 
-// ---------------------------------------------------------
-// BOARD CONFIGURATION
-// ---------------------------------------------------------
 const BOARDS = [
-  {
-    id: 'all',
-    label: 'All Boards',
-    short: 'All',
-    jiraUrl: 'https://thryv.atlassian.net/jira/your-work',
-    assignee: 'ATS Team',
-    match: () => true
-  },
-  {
-    id: 'mcb',
-    label: 'MC Bugs',
-    short: 'MCB',
-    jiraUrl: 'https://thryv.atlassian.net/jira/software/c/projects/MCB/boards/3783',
-    assignee: 'ATS Team',
-    match: t => (t.project === 'MCB' || t.project === 'MC') && !isSEO(t)
-  },
-  {
-    id: 'mcbase',
-    label: 'MC Base',
-    short: 'MC Base',
-    jiraUrl: 'https://thryv.atlassian.net/jira/software/c/projects/TP/boards/4986',
-    assignee: 'Tyler Foreman',
-    match: t => t.project === 'TP' && !isListings(t)
-  },
-  {
-    id: 'listings',
-    label: 'Listings',
-    short: 'Listings',
-    jiraUrl: 'https://thryv.atlassian.net/jira/software/c/projects/TP/boards/4988',
-    assignee: 'Tyler Foreman',
-    match: t => t.project === 'TP' && isListings(t)
-  },
-  {
-    id: 'leads',
-    label: 'TL + LL',
-    short: 'TL+LL',
-    jiraUrl: 'https://thryv.atlassian.net/jira/software/c/projects/LEADS/boards/4962',
-    assignee: 'Divya Kumari',
-    match: t => t.project === 'LEADS'
-  },
-  {
-    id: 'seo',
-    label: 'SEO',
-    short: 'SEO',
-    jiraUrl: 'https://thryv.atlassian.net/jira/software/c/projects/SEO/boards/4966',
-    assignee: 'Tyler Foreman',
-    match: t => t.project === 'SEO' || isSEO(t)
-  },
-  {
-    id: 'oo',
-    label: 'O&O',
-    short: 'O&O',
-    jiraUrl: 'https://thryv.atlassian.net/jira/software/c/projects/CCPT',
-    assignee: 'Matthew Schnell',
-    match: t => t.project === 'CCPT' || /o\s*&\s*o|o\s+and\s+o/i.test(t.summary || '')
-  },
-  {
-    id: 'other',
-    label: 'Other',
-    short: 'Other',
-    jiraUrl: 'https://thryv.atlassian.net/jira/your-work',
-    assignee: '—',
-    match: t => !['MCB','MC','TP','LEADS','SEO','CCPT'].includes(t.project) && !/o\s*&\s*o/i.test(t.summary || '')
-  }
+  { id: 'all',          label: 'All Boards',           url: null },
+  { id: 'myacct-leads', label: 'MyAccount Leads',      url: `${JIRA_BASE}/jira/software/c/projects/SHAR/boards/1754` },
+  { id: 'myacct-inbox', label: 'MyAccount Inbox',      url: `${JIRA_BASE}/jira/software/c/projects/TP/boards/4997` },
+  { id: 'app-market',   label: 'App Market',           url: `${JIRA_BASE}/jira/software/c/projects/MCI/boards/1536` },
+  { id: 'auth-logins',  label: 'Auth / Logins',        url: `${JIRA_BASE}/jira/software/c/projects/SHAR/boards/5166` },
+  { id: 'bc-sw',        label: 'BC / Service Portal / Social / Websites / WFC', url: `${JIRA_BASE}/browse/SW` },
+  { id: 'mc-base',      label: 'Marketing Center Base',     url: `${JIRA_BASE}/jira/software/c/projects/TP/boards/4986` },
+  { id: 'mc-listings',  label: 'Marketing Center Listings', url: `${JIRA_BASE}/jira/software/c/projects/TP/boards/4988` },
+  { id: 'reporting',    label: 'Reporting Center',     url: `${JIRA_BASE}/jira/software/c/projects/TP/boards/5004` },
+  { id: 'thryvpay',     label: 'ThryvPay',             url: `${JIRA_BASE}/servicedesk/customer/portal/1209` },
+  { id: 'other',        label: 'Other',                url: null },
 ];
 
-function isSEO(t) {
-  const s = (t.summary || '').toLowerCase();
-  const c = (t.components || []).join(' ').toLowerCase();
-  // Don't classify "SEO" mentioned in passing — must be a clearly SEO-focused ticket
-  return c.includes('seo') || /alpha template|seo report|missing alpha/i.test(s);
-}
-
-const LISTINGS_KEYWORDS = [
-  'raq','update failed','ep linkout','gump','ypo','yext','listings',
-  'enhanced profile','publisher','reputation','lm '
-];
-function isListings(t) {
-  const s = (t.summary || '').toLowerCase();
-  const c = (t.components || []).join(' ').toLowerCase();
-  return LISTINGS_KEYWORDS.some(k => s.includes(k) || c.includes(k));
-}
-
-// ---------------------------------------------------------
-// SYNONYM MAP — groups related summaries into single issues
-// ---------------------------------------------------------
-const SYNONYM_GROUPS = [
-  { canonical: 'Alpha template issue', patterns: ['alpha template','missing alpha','template missing in alpha','update alpha template'] },
-  { canonical: 'Missing GP Add On', patterns: ['missing gp add','gp fulfillment','gp stats','gp not generating'] },
-  { canonical: 'Missing TL Add On', patterns: ['missing tl add','remove tl add','tl not installed'] },
-  { canonical: 'SEO report link not available', patterns: ['seo report','seo reporting'] },
-  { canonical: 'MC not installed', patterns: ['mc not installed','mc reinstall','mc not connected'] },
-  { canonical: 'MC updates not going to Ginger', patterns: ['mc updates not going','mc geo updates','mc updates partially','rpp ctn missing in gump','aus gump distribution'] },
-  { canonical: 'Unable to publish listings', patterns: ['unable to publish','unable to confirm/publish','unable to publish and update'] },
-  { canonical: 'LM/Yext integration failures', patterns: ['lm yext','listings fails existing yext','lm duplicate yext','lm not syncing','active yext disconnected'] },
-  { canonical: 'Visitor tagging / Heatmap analytics', patterns: ['visitor tagging','heatmap','website analytics'] },
-  { canonical: 'EP link / linkout issue', patterns: ['ep link','ep linkout','yelp ep','yahoo ep'] },
-  { canonical: 'Yelp CPC fulfillment issue', patterns: ['yelp cpc','yelp fulfillment'] },
-  { canonical: 'Manual Yelp re-order request', patterns: ['yelp re-order','yelp reorder'] },
-  { canonical: 'EP-YPO installation issues', patterns: ['ep-ypo','enhanced profiles not auto','ypo install'] },
-  { canonical: 'QR code Google reviews broken URL', patterns: ['qr code','google reviews broken'] },
-  { canonical: 'MCF upgrade failed', patterns: ['mcf upgrade','mcf to mcplus','mcf to mcpro'] },
-  { canonical: 'O&O CTN reprovision', patterns: ['o & o ctn','o&o ctn','o and o ctn'] },
-  { canonical: 'Unable to update DN', patterns: ['unable to update dn','update dn'] },
-  { canonical: 'TL report button greyed out', patterns: ['tl report button','thryv leads button','tl button gray','tl button grey'] },
-  { canonical: 'TL calls not injecting', patterns: ['tl calls not','eligible tl calls'] },
-  { canonical: 'GBP analytics not syncing', patterns: ['gbp analytics','ep analytics not flowing'] },
-  { canonical: 'LM & Reputation failing to load', patterns: ['lm & reputation','lm not loading','reputation failing'] },
-  { canonical: 'RAQ issues', patterns: ['raq issue','yelp raq','raq '] },
-  { canonical: 'EP status incorrect in Gump', patterns: ['ep status incorrect','gump status not aligned','ep not getting disabled'] },
-  { canonical: 'Claim trackable phone number', patterns: ['claim trackable','claim phone'] },
-  { canonical: 'AI Score issues', patterns: ['ai score','ai lead insights','ai scoring'] },
-  { canonical: 'Cancel CTN request', patterns: ['cancel ctn'] }
-];
-
-function canonicalize(summary) {
-  const s = (summary || '').toLowerCase();
-  for (const g of SYNONYM_GROUPS) {
-    if (g.patterns.some(p => s.includes(p))) return g.canonical;
-  }
-  // fallback: strip common prefixes / version suffixes
-  return (summary || '')
-    .replace(/\s+v\d+(\.\d+)?$/i, '')
-    .replace(/^\[.*?\]\s*/, '')
-    .trim();
-}
-
-// ---------------------------------------------------------
-// PRODUCT CLASSIFICATION
-// ---------------------------------------------------------
-function classifyProduct(t) {
-  const s = (t.summary || '').toLowerCase();
-  const c = (t.components || []).join(' ').toLowerCase();
-  const all = s + ' ' + c;
-
-  if (/thryvpay|stripe|payment|payout|invoice payment/.test(all)) return 'tp';
-  if (t.project === 'LEADS' || /listings|yext|gump|ypo|raq|publisher|enhanced profile|gbp|yelp|reputation|lm /.test(all)) return 'ol';
-  if (t.project === 'TP' && /listings|yext|gump|ypo|raq/.test(all)) return 'ol';
-  return 'mc';
-}
-
-const PRODUCT_LABELS = {
-  mc: 'Marketing Center',
-  ol: 'Online Listings',
-  tp: 'ThryvPay',
-  other: 'Other'
+const STATUS_MAP = {
+  'Dev Backlog':'todo','Open':'todo','New':'todo','Blocked':'todo','To Do':'todo','Backlog':'todo',
+  'Dev In Progress':'prog','In Review':'prog','Dev Complete':'prog','QA Backlog':'prog','W/ Product':'prog','W/ Devs':'prog','In Progress':'prog',
+  'Released':'done','Deployed':'done','Canceled':'done','Complete':'done','Resolved':'done','Done':'done','Closed':'done',
 };
 
-// ---------------------------------------------------------
-// STATUS CATEGORY MAPPING
-// ---------------------------------------------------------
-function statusPillClass(category) {
-  const c = (category || '').toLowerCase();
-  if (c.includes('done')) return 'p-done';
-  if (c.includes('progress')) return 'p-prog';
-  return 'p-todo'; // To Do, No Category, Blocked, etc.
-}
+const SYNONYM_GROUPS = [
+  { key:'alpha template issue', label:'Alpha Template Issue (Missing / Update)', patterns:['alpha template','missing alpha template','template missing in alpha','update alpha template'] },
+  { key:'missing gp add on', label:'Missing GP Add-on', patterns:['missing gp add','gp fulfillment','gp stats','gp not generating','growth package'] },
+  { key:'missing tl add on', label:'Missing TL Add On in MC', patterns:['missing tl add','remove tl add on','tl not installed','thryv leads add'] },
+  { key:'seo report link not available', label:'SEO Report Link Not Available', patterns:['seo report link','seo reporting issue','seo report'] },
+  { key:'mc not installed', label:'MC Not Installed', patterns:['mc not installed','mc reinstall','mc not connected','marketing center not install'] },
+  { key:'mc updates not going to ginger', label:'MC Updates Not Going to Ginger / Gump', patterns:['mc updates','mc geo updates','rpp ctn missing in gump','gump distribution','updates not going to ginger','mc updates partially'] },
+  { key:'unable to publish listings', label:'Unable to Publish Listings', patterns:['unable to publish','unable to confirm','publish and update','cannot publish listing'] },
+  { key:'lm yext integration failures', label:'LM Yext Integration Failures', patterns:['yext integration','fails existing yext','lm duplicate yext','lm not syncing','active yext disconnected','yext not syncing'] },
+  { key:'visitor tagging / heatmap analytics', label:'Website Analytics / Visitor Tagging Not Tracking', patterns:['visitor tagging','heatmap not','website analytics','heatmap analytics','heatmap not tracking'] },
+  { key:'ep link / linkout issue', label:'EP Link Provisioning / Linkout Issue', patterns:['ep link','yelp ep link','yahoo ep link','ep linkout','linkout issue','enhanced profile link'] },
+  { key:'yelp cpc fulfillment issue', label:'Yelp CPC Fulfillment Issue', patterns:['yelp cpc','yelp fulfillment'] },
+  { key:'ep-ypo installation issues', label:'EP Not Auto-Enabling / GP Not Generating', patterns:['ep-ypo','enhanced profiles not auto','ypo install','ep not auto-enabling','ep not enabling'] },
+  { key:'mcf upgrade failed', label:'MCF Upgrade Failed', patterns:['mcf upgrade','mcf to mcplus','mcf to mcpro'] },
+  { key:'tl report button greyed out', label:'TL Button Grayed Out / Report Unavailable', patterns:['tl report button','thryv leads button gr','tl button gr','thryv leads grayed','tl grayed'] },
+  { key:'tl calls not injecting', label:'TL Calls Not Injecting to MC', patterns:['tl calls not','eligible tl calls','thryv leads calls'] },
+  { key:'gbp analytics not syncing', label:'GBP Analytics Not Syncing', patterns:['gbp analytics','ep analytics not flowing','google business profile analytics','gbp not syncing'] },
+  { key:'lm & reputation failing to load', label:'LM & Reputation Failing to Load', patterns:['lm & reputation','lm and reputation','lm not loading','reputation failing','listings management not loading'] },
+  { key:'ep status incorrect in gump', label:'EP Status Incorrect in GUMP', patterns:['ep status','gump status not aligned','ep not getting disabled'] },
+  { key:'claim trackable phone number', label:'Unable to Claim Trackable Phone Number', patterns:['claim trackable phone','ctn provisioning','trackable phone number','cannot claim ctn'] },
+];
 
-// ---------------------------------------------------------
-// STATE
-// ---------------------------------------------------------
-let rawData = null;
-let groupedIssues = []; // { canonical, tickets: [...], product, affectedAccounts, ... }
-let activeTab = 'all';
+const LISTINGS_KEYS=['listings','yext','yelp','gump','ginger',' ep ',' lm ','ctn',' gp ','raq','publish','linkout','gbp','enhanced profile','yahoo'];
+const REPORTING_KEYS=['reporting','analytics','heatmap','visitor tagging','seo report'];
+const INBOX_KEYS=['inbox','lead notification','web form','webform'];
+const AUTH_KEYS=['auth','login',' sso ','password','2fa','mfa','sign in','sign-in'];
+const TPAY_KEYS=['thryvpay','stripe','payment','payout','merchant','checkout','wisetack'];
 
-// ---------------------------------------------------------
-// LOAD
-// ---------------------------------------------------------
-async function loadData(forceFresh = false) {
-  const url = forceFresh ? `data.json?t=${Date.now()}` : 'data.json';
+const STOPWORDS = new Set([
+  'a','an','the','and','or','but','if','then','of','to','in','on','at','for','with','by','as','is','are','was','were','be','been','being','have','has','had','do','does','did','will','would','should','could','can','may','might','must','this','that','these','those','it','its','they','them','their','i','me','my','we','us','our','you','your','he','she','his','her','from','about','into','out','up','down','over','under','again','further','more','most','some','any','no','not','also','said','says','please','thanks','thank','hi','hello','hey','team','client','customer','user','account','said','need','want','says','told','asked','also','still','when','what','how','why','where','which','who','because','since','while','very','just','only','really','now','today','yesterday'
+]);
+
+let DATA = null;
+let ACTIVE_TAB = 'all';
+let GLOBAL_QUERY = '';
+let BOARD_QUERY = '';
+
+async function loadData(bustCache = false) {
+  const btn = document.getElementById('refresh-btn');
+  if (btn) { btn.disabled = true; btn.classList.add('spinning'); }
   try {
-    const res = await fetch(url, { cache: forceFresh ? 'no-store' : 'default' });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    rawData = await res.json();
-    process();
+    const url = 'data.json' + (bustCache ? '?t=' + Date.now() : '');
+    const res = await fetch(url, { cache: bustCache ? 'no-store' : 'default' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    DATA = await res.json();
     render();
-    updateLastSync();
-  } catch (err) {
-    console.error('Failed to load data.json', err);
-    document.getElementById('loader').innerHTML = `
-      <div style="color:var(--health-critical);font-weight:600;margin-bottom:6px;">Could not load data.json</div>
-      <div style="font-size:12px;">${err.message}</div>
-    `;
+  } catch (e) {
+    document.getElementById('loading').innerHTML =
+      '<div style="text-align:center;"><strong style="color:var(--midnight);display:block;margin-bottom:8px;">Could not load data.json</strong>' +
+      '<div style="color:var(--steel);font-size:13px;">' + (e.message || e) + '</div></div>';
+  } finally {
+    if (btn) { btn.disabled = false; setTimeout(() => btn.classList.remove('spinning'), 600); }
   }
 }
 
-// ---------------------------------------------------------
-// TIMESTAMP HELPERS — all timestamps shown in CST (America/Chicago)
-// ---------------------------------------------------------
-function formatCST(input, opts = {}) {
-  if (!input) return '—';
-  const d = input instanceof Date ? input : new Date(input);
-  if (isNaN(d.getTime())) return '—';
-  const defaults = {
-    timeZone: 'America/Chicago',
-    year: 'numeric', month: 'short', day: 'numeric',
-    hour: 'numeric', minute: '2-digit',
-    hour12: true
-  };
-  return d.toLocaleString('en-US', { ...defaults, ...opts }) + ' CST';
-}
+function getProject(i) { return (i.project || i.projectKey || (i.key || '').split('-')[0] || '').toUpperCase(); }
+function containsAny(text, keys) { const t=' '+(text||'').toLowerCase()+' '; return keys.some(k => t.includes(k)); }
 
-function formatCSTShort(input) {
-  if (!input) return '—';
-  const d = input instanceof Date ? input : new Date(input);
-  if (isNaN(d.getTime())) return '—';
-  return d.toLocaleString('en-US', {
-    timeZone: 'America/Chicago',
-    month: 'short', day: 'numeric',
-    hour: 'numeric', minute: '2-digit',
-    hour12: true
-  }) + ' CST';
-}
-
-function updateLastSync() {
-  const el = document.getElementById('lastSync');
-  const ts = rawData && (rawData.fetchedAt || rawData.lastSync);
-  if (!ts) {
-    el.querySelector('span:last-child').textContent = 'No sync data';
-    return;
+function classifyBoard(issue) {
+  const proj = getProject(issue);
+  const blob = ((issue.summary||'') + ' ' + (issue.components||[]).join(' ')).toLowerCase();
+  if (containsAny(blob, TPAY_KEYS)) return 'thryvpay';
+  if (proj === 'SW') return 'bc-sw';
+  if (proj === 'MCI') return 'app-market';
+  if (proj === 'AUTH') return 'auth-logins';
+  if (proj === 'SHAR') return containsAny(blob, AUTH_KEYS) ? 'auth-logins' : 'myacct-leads';
+  if (proj === 'TP') {
+    if (containsAny(blob, INBOX_KEYS)) return 'myacct-inbox';
+    if (containsAny(blob, REPORTING_KEYS)) return 'reporting';
+    if (containsAny(blob, LISTINGS_KEYS)) return 'mc-listings';
+    return 'mc-base';
   }
-  const d = new Date(ts);
-  const diff = Date.now() - d.getTime();
-  const mins = Math.floor(diff / 60000);
-  let rel;
-  if (mins < 1) rel = 'just now';
-  else if (mins < 60) rel = `${mins}m ago`;
-  else if (mins < 1440) rel = `${Math.floor(mins/60)}h ago`;
-  else rel = `${Math.floor(mins/1440)}d ago`;
-  el.querySelector('span:last-child').textContent = `Synced ${rel} · ${formatCSTShort(d)}`;
-  el.title = `Last sync: ${formatCST(d)}`;
+  if (proj === 'MCB' || proj === 'MC') return containsAny(blob, LISTINGS_KEYS) ? 'mc-listings' : 'mc-base';
+  return 'other';
 }
 
-// ---------------------------------------------------------
-// PROCESS — group tickets, compute aggregates
-// ---------------------------------------------------------
-function process() {
-  const items = rawData && (rawData.issues || rawData.tickets);
-  if (!items || !items.length) {
-    groupedIssues = [];
-    return;
-  }
+function classifyProduct(b) { if (b==='thryvpay') return 'tp'; if (b==='mc-listings') return 'ol'; return 'mc'; }
+function statusCat(s) { return STATUS_MAP[s] || 'todo'; }
+function statusLabel(s) { return s || 'Open'; }
+function priorityLabel(p) {
+  if (!p) return null;
+  const s = String(p).toLowerCase();
+  if (s.includes('highest') || s.includes('p1') || s === '1' || s === 'critical') return 'P1';
+  if (s.includes('high') || s.includes('p2') || s === '2') return 'P2';
+  if (s.includes('medium') || s.includes('p3') || s === '3') return 'P3';
+  if (s.includes('low') || s.includes('p4') || s === '4') return 'P4';
+  return null;
+}
+function priorityRank(p) { const m={P1:1,P2:2,P3:3,P4:4}; return m[priorityLabel(p)] || 5; }
+function isOpen(i) { return statusCat(i.status) !== 'done'; }
+
+function findSynonym(summary) {
+  const s = (summary||'').toLowerCase();
+  for (const g of SYNONYM_GROUPS) for (const p of g.patterns) if (s.includes(p)) return g;
+  return null;
+}
+function cleanSummary(s) {
+  if (!s) return 'Untitled';
+  let out = s.replace(/^\[[^\]]+\]\s*/g,'').trim().replace(/\s+/g,' ');
+  if (out.length > 80) out = out.slice(0,78).trim() + '…';
+  return out;
+}
+function groupIssues(issues) {
   const groups = new Map();
-  for (const t of items) {
-    const canonical = canonicalize(t.summary);
-    if (!groups.has(canonical)) {
-      groups.set(canonical, {
-        canonical,
-        tickets: [],
-        brief: t.brief || '',
-        product: classifyProduct(t),
-        affectedAccounts: 0
-      });
-    }
-    const g = groups.get(canonical);
-    g.tickets.push(t);
-    g.affectedAccounts += (t.affectedAccounts || 0);
-    if (!g.brief && t.brief) g.brief = t.brief;
+  for (const issue of issues) {
+    const syn = findSynonym(issue.summary);
+    const key = syn ? syn.key : ('raw::' + (issue.summary||'').toLowerCase().replace(/\s+/g,' ').trim());
+    const label = syn ? syn.label : cleanSummary(issue.summary);
+    if (!groups.has(key)) groups.set(key, { key, label, issues:[], affected:0, topPriority:5, hasBrief:'', synonym:syn });
+    const g = groups.get(key);
+    g.issues.push(issue);
+    g.affected += (issue.affectedAccounts || 0);
+    g.topPriority = Math.min(g.topPriority, priorityRank(issue.priority));
+    if (!g.hasBrief && issue.brief) g.hasBrief = issue.brief;
   }
-  groupedIssues = Array.from(groups.values());
-  // sort: affected accounts desc, then ticket count desc
-  groupedIssues.sort((a, b) => {
-    if (b.affectedAccounts !== a.affectedAccounts) return b.affectedAccounts - a.affectedAccounts;
-    return b.tickets.length - a.tickets.length;
-  });
+  return Array.from(groups.values());
+}
+function topPriorityPill(g) { return ({1:'P1',2:'P2',3:'P3',4:'P4'})[g.topPriority] || null; }
+
+function healthForGroups(groups) {
+  let hasP1=false, hasP2=false;
+  for (const g of groups) { if (g.topPriority===1) hasP1=true; if (g.topPriority===2) hasP2=true; }
+  if (groups.length===0) return { label:'All clear', cls:'health-clear' };
+  if (hasP1) return { label:'Critical', cls:'health-critical' };
+  if (hasP2) return { label:'Needs attention', cls:'health-attention' };
+  return { label:'Monitoring', cls:'health-monitor' };
 }
 
-// ---------------------------------------------------------
-// HELPERS
-// ---------------------------------------------------------
-function isOpen(t) {
-  const cat = (t.statusCategory || '').toLowerCase();
-  return !cat.includes('done');
+function normalizeIssue(i) {
+  return {
+    key: i.key, summary: i.summary || '',
+    status: i.status || i.statusName || '',
+    statusCategory: i.statusCategory || '',
+    priority: i.priority || '', components: i.components || [],
+    project: i.project || i.projectKey || (i.key || '').split('-')[0],
+    created: i.created || i.createdAt || null,
+    updated: i.updated || i.updatedAt || i.resolutiondate || null,
+    brief: i.brief || '', affectedAccounts: i.affectedAccounts || 0,
+    labels: i.labels || [],
+  };
 }
-function ageDays(t) {
-  if (!t.created) return null;
-  const created = new Date(t.created);
-  return Math.floor((Date.now() - created.getTime()) / 86400000);
+function getOpen() {
+  if (!DATA) return [];
+  const arr = (DATA.issues || DATA.tickets || []).map(normalizeIssue);
+  for (const i of arr) i._board = classifyBoard(i);
+  return arr;
 }
-function topStatusForGroup(g) {
-  const open = g.tickets.filter(isOpen);
-  if (open.length === 0) return { name: 'Resolved', category: 'Done' };
-  // pick highest-priority status in progress
-  const inProg = open.find(t => (t.statusCategory || '').toLowerCase().includes('progress'));
-  if (inProg) return { name: inProg.status, category: inProg.statusCategory };
-  return { name: open[0].status || 'Open', category: open[0].statusCategory || 'To Do' };
-}
-function avgAge(g) {
-  const ages = g.tickets.map(ageDays).filter(a => a !== null);
-  if (!ages.length) return null;
-  return Math.round(ages.reduce((s,a)=>s+a,0) / ages.length);
-}
-function escapeHtml(s) {
-  return (s || '').replace(/[&<>"']/g, c => ({
-    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-  }[c]));
-}
-function tagForKey(key) {
-  return `https://thryv.atlassian.net/browse/${key}`;
+function getResolved() {
+  if (!DATA) return [];
+  const arr = (DATA.resolved || []).map(normalizeIssue);
+  for (const i of arr) i._board = classifyBoard(i);
+  return arr;
 }
 
-// ---------------------------------------------------------
-// RENDER
-// ---------------------------------------------------------
 function render() {
-  document.getElementById('loader').style.display = 'none';
+  document.getElementById('loading').style.display = 'none';
   document.getElementById('content').style.display = 'block';
-  renderProductCards();
-  renderSummaryCards();
-  renderTabs();
-  renderBoard();
+  updateLastSynced();
+  const open = getOpen(), resolved = getResolved();
+  renderSummary(open, resolved);
+  renderProductHealth(open);
+  renderTabs(open);
+  renderBoardPanel(open, resolved);
 }
 
-function renderProductCards() {
-  const products = ['mc', 'ol', 'tp'];
-  const html = products.map((p, idx) => {
-    const groups = groupedIssues.filter(g => g.product === p && g.tickets.length >= 2 && g.tickets.some(isOpen));
-    const knownIssues = groups.length;
-    const openTickets = groups.reduce((s,g) => s + g.tickets.filter(isOpen).length, 0);
-    const affected = groups.reduce((s,g) => s + g.affectedAccounts, 0);
+function updateLastSynced() {
+  const el = document.getElementById('last-synced');
+  if (!DATA) { el.textContent='unknown'; return; }
+  const ts = DATA.lastSync || DATA.syncedAt || DATA.updatedAt;
+  if (!ts) { el.textContent='unknown'; return; }
+  const d = new Date(ts);
+  if (isNaN(d.getTime())) { el.textContent='unknown'; return; }
+  const mins = Math.floor((Date.now() - d.getTime()) / 60000);
+  if (mins < 1) el.textContent = 'just now';
+  else if (mins < 60) el.textContent = mins + ' min ago';
+  else if (mins < 1440) el.textContent = Math.floor(mins/60) + 'h ago';
+  else el.textContent = d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+}
+setInterval(updateLastSynced, 60000);
 
-    let badge, badgeClass;
-    if (affected > 100 || knownIssues > 10) { badge = 'Critical'; badgeClass = 'critical'; }
-    else if (affected > 30 || knownIssues > 5) { badge = 'Needs attention'; badgeClass = 'attention'; }
-    else if (knownIssues > 0) { badge = 'Monitoring'; badgeClass = 'monitor'; }
-    else { badge = 'All clear'; badgeClass = 'clear'; }
+function formatDate(s) {
+  if (!s) return '—';
+  const d = new Date(s);
+  if (isNaN(d.getTime())) return '—';
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+}
 
-    const spark = sparkline(generateSparkData(p));
+function renderSummary(open, resolved) {
+  let prog=0, back=0;
+  for (const i of open) (statusCat(i.status)==='prog' ? prog++ : back++);
+  const openGroups = groupIssues(open);
+  let progGroups=0, backGroups=0;
+  for (const g of openGroups) (g.issues.some(x => statusCat(x.status)==='prog') ? progGroups++ : backGroups++);
+  document.getElementById('sum-prog-tickets').textContent = prog;
+  document.getElementById('sum-prog-groups').textContent = progGroups;
+  document.getElementById('sum-back-tickets').textContent = back;
+  document.getElementById('sum-back-groups').textContent = backGroups;
+  document.getElementById('sum-res-groups').textContent = groupIssues(resolved).length;
+  document.getElementById('sum-res-tickets').textContent = resolved.length;
+}
 
+function renderProductHealth(open) {
+  const buckets = { mc:[], ol:[], tp:[] };
+  for (const i of open) buckets[classifyProduct(i._board)].push(i);
+  const products = [
+    { id:'mc', label:'Marketing Center' },
+    { id:'ol', label:'Online Listings' },
+    { id:'tp', label:'ThryvPay' },
+  ];
+  const html = products.map(p => {
+    const issues = buckets[p.id];
+    const groups = groupIssues(issues).filter(g => g.issues.length >= 2);
+    const affected = issues.reduce((s,i) => s+(i.affectedAccounts||0), 0);
+    const health = healthForGroups(groups);
+    const trend = computeTrend(issues);
+    const spark = sparkline(trend.points);
+    const arrow = trend.delta > 0 ? '▲' : trend.delta < 0 ? '▼' : '–';
+    const arrowCls = trend.delta > 0 ? 'up' : trend.delta < 0 ? 'down' : '';
     return `
-      <div class="product-card ${p} fade-up fade-up-${idx + 1}">
+      <div class="prod-card ${p.id}">
         <div class="strip"></div>
         <div class="pc-head">
-          <div class="pc-title">${PRODUCT_LABELS[p]}</div>
-          <span class="pc-badge ${badgeClass}">${badge}</span>
+          <span class="prod-pill ${p.id}">${escapeHTML(p.label)}</span>
+          <span class="health-badge ${health.cls}">${health.label}</span>
         </div>
-        <div class="pc-metric">
-          <div class="pc-big">${knownIssues}</div>
-          <div class="pc-label">known issue${knownIssues === 1 ? '' : 's'}</div>
+        <div class="pc-stats">
+          <div class="pc-stat"><div class="v">${groups.length}</div><div class="l">Known Issues</div></div>
+          <div class="pc-stat"><div class="v">${issues.length}</div><div class="l">Open Tickets</div></div>
+          <div class="pc-stat affected"><div class="v">${affected}</div><div class="l">Affected</div></div>
         </div>
-        <div class="pc-row">
-          <div class="pc-stat">Open tickets<strong>${openTickets}</strong></div>
-          <div class="pc-stat">Affected accounts<strong>${affected.toLocaleString()}</strong></div>
-          <svg class="pc-spark" viewBox="0 0 80 28" preserveAspectRatio="none">${spark}</svg>
-        </div>
-      </div>
-    `;
+        <div class="pc-spark">${spark}<span class="trend ${arrowCls}">${arrow} ${Math.abs(trend.delta)} (14d)</span></div>
+      </div>`;
   }).join('');
-  document.getElementById('productGrid').innerHTML = html;
+  document.getElementById('prod-grid').innerHTML = html;
 }
 
-// crude deterministic sparkline based on current ticket distribution
-function generateSparkData(productKey) {
-  // 8 buckets — use day-of-week deltas of ticket creation if available
-  const buckets = [0,0,0,0,0,0,0,0];
-  groupedIssues
-    .filter(g => g.product === productKey)
-    .forEach(g => g.tickets.forEach(t => {
-      if (!t.created) return;
-      const age = ageDays(t);
-      if (age === null || age > 56) return;
-      const bucket = Math.min(7, Math.floor(age / 7));
-      buckets[7 - bucket]++;
-    }));
-  return buckets;
+function computeTrend(issues) {
+  const days=14, buckets=new Array(days).fill(0), now=Date.now();
+  for (const i of issues) {
+    if (!i.created) continue;
+    const d = new Date(i.created); if (isNaN(d.getTime())) continue;
+    const age = Math.floor((now - d.getTime())/86400000);
+    if (age<0 || age>=days) continue;
+    buckets[days-1-age]++;
+  }
+  const first = buckets.slice(0,7).reduce((a,b)=>a+b,0);
+  const second = buckets.slice(7).reduce((a,b)=>a+b,0);
+  return { points: buckets, delta: second - first };
 }
 
-function sparkline(data) {
-  if (!data || !data.length) return '';
-  const max = Math.max(1, ...data);
-  const w = 80, h = 28, pad = 2;
-  const dx = (w - pad*2) / (data.length - 1);
-  const points = data.map((v, i) => {
-    const x = pad + i * dx;
-    const y = h - pad - ((v / max) * (h - pad*2));
-    return `${x.toFixed(1)},${y.toFixed(1)}`;
-  });
-  const path = `M ${points.join(' L ')}`;
-  return `
+function sparkline(points) {
+  const w=80, h=28, pad=2;
+  if (!points.length) return `<svg width="${w}" height="${h}"></svg>`;
+  const max = Math.max(1, ...points);
+  const dx = (w - pad*2) / (points.length - 1 || 1);
+  const pts = points.map((v,i) => (pad + i*dx).toFixed(1) + ',' + (h - pad - (v/max)*(h-pad*2)).toFixed(1));
+  const path = 'M ' + pts.join(' L ');
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" aria-hidden="true">
     <path d="${path}" fill="none" stroke="#5378FC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="${path} L ${w-pad},${h-pad} L ${pad},${h-pad} Z" fill="#5378FC" opacity="0.08"/>
-  `;
+  </svg>`;
 }
 
-function renderSummaryCards() {
-  let inProg = 0, backlog = 0, resolved = 0;
-  // ticket-level counts (not grouped) — but only from groups with >= 2 tickets
-  const eligible = groupedIssues.filter(g => g.tickets.length >= 2);
-  for (const g of eligible) {
-    for (const t of g.tickets) {
-      const cat = (t.statusCategory || '').toLowerCase();
-      if (cat.includes('done')) resolved++;
-      else if (cat.includes('progress')) inProg++;
-      else backlog++;
+function renderTabs(open) {
+  const counts={}, critical={};
+  for (const b of BOARDS) { counts[b.id]=0; critical[b.id]=false; }
+  counts.all = open.length;
+  critical.all = open.some(i => priorityRank(i.priority)===1);
+  for (const i of open) {
+    counts[i._board] = (counts[i._board]||0)+1;
+    if (priorityRank(i.priority)===1) critical[i._board] = true;
+  }
+  const html = BOARDS.map(b => {
+    const active = b.id===ACTIVE_TAB ? 'active' : '';
+    const critCls = critical[b.id] && b.id!=='all' ? 'critical' : '';
+    return `<button class="tab ${active}" data-tab="${b.id}">${escapeHTML(b.label)} <span class="count ${critCls}">${counts[b.id]||0}</span></button>`;
+  }).join('');
+  const el = document.getElementById('tabs');
+  el.innerHTML = html;
+  el.querySelectorAll('.tab').forEach(t => {
+    t.addEventListener('click', () => {
+      ACTIVE_TAB = t.dataset.tab; BOARD_QUERY = '';
+      renderTabs(open);
+      renderBoardPanel(getOpen(), getResolved());
+    });
+  });
+}
+
+function renderBoardPanel(open, resolved) {
+  const board = BOARDS.find(b => b.id === ACTIVE_TAB);
+  const filteredOpen = ACTIVE_TAB==='all' ? open : open.filter(i => i._board === ACTIVE_TAB);
+  const filteredResolved = ACTIVE_TAB==='all' ? resolved : resolved.filter(i => i._board === ACTIVE_TAB);
+
+  const gq = GLOBAL_QUERY.trim().toLowerCase();
+  const bq = BOARD_QUERY.trim().toLowerCase();
+  const searched = filteredOpen.filter(i => {
+    const blob = (i.key+' '+i.summary+' '+i.brief+' '+(i.labels||[]).join(' ')).toLowerCase();
+    return (!gq || blob.includes(gq)) && (!bq || blob.includes(bq));
+  });
+
+  let groups = groupIssues(searched).filter(g => g.issues.length >= 2);
+  groups.sort((a,b) => {
+    if (a.topPriority !== b.topPriority) return a.topPriority - b.topPriority;
+    if (b.affected !== a.affected) return b.affected - a.affected;
+    return b.issues.length - a.issues.length;
+  });
+
+  const groupedKeys = new Set();
+  for (const g of groups) for (const i of g.issues) groupedKeys.add(i.key);
+  const singletons = [];
+  for (const i of searched) {
+    if (!groupedKeys.has(i.key)) {
+      singletons.push({
+        key:'single::'+i.key, label:cleanSummary(i.summary), issues:[i],
+        affected:i.affectedAccounts||0, topPriority:priorityRank(i.priority),
+        hasBrief:i.brief||'',
+      });
     }
   }
-  const html = `
-    <div class="summary-card fade-up fade-up-4">
-      <div class="summary-icon prog">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      </div>
-      <div class="summary-content">
-        <div class="sc-label">In Progress</div>
-        <div class="sc-num">${inProg}</div>
-        <div class="sc-sub">Tickets actively being worked</div>
-      </div>
-    </div>
-    <div class="summary-card fade-up fade-up-5">
-      <div class="summary-icon todo">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-      </div>
-      <div class="summary-content">
-        <div class="sc-label">Backlog</div>
-        <div class="sc-num">${backlog}</div>
-        <div class="sc-sub">Awaiting triage or development</div>
-      </div>
-    </div>
-    <div class="summary-card fade-up fade-up-6">
-      <div class="summary-icon done">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-      </div>
-      <div class="summary-content">
-        <div class="sc-label">Recently Resolved</div>
-        <div class="sc-num">${resolved}</div>
-        <div class="sc-sub">Closed across known issues</div>
-      </div>
-    </div>
-  `;
-  document.getElementById('summaryGrid').innerHTML = html;
-}
+  singletons.sort((a,b) => a.topPriority!==b.topPriority ? a.topPriority-b.topPriority : b.affected-a.affected);
+  const allRows = [...groups, ...singletons];
 
-function ticketsForBoard(boardId) {
-  const board = BOARDS.find(b => b.id === boardId);
-  if (!board) return [];
-  return groupedIssues.filter(g =>
-    g.tickets.length >= 2 &&
-    g.tickets.some(t => board.match(t)) &&
-    g.tickets.some(isOpen)
+  const totalAffected = filteredOpen.reduce((s,i) => s+(i.affectedAccounts||0), 0);
+  const health = healthForGroups(groups);
+
+  const topIssue = allRows.find(g =>
+    topPriorityPill(g)==='P1' || topPriorityPill(g)==='P2' ||
+    g.affected >= 5 || g.issues.length >= 3
   );
-}
 
-function renderTabs() {
-  const html = BOARDS.map(b => {
-    const groups = ticketsForBoard(b.id);
-    const count = groups.length;
-    // Critical if any open ticket on this board has P1 (or equivalent)
-    const hasCritical = groups.some(g =>
-      g.tickets.some(t => isOpen(t) && /^(P1|Highest|Critical)$/i.test(t.priority || ''))
-    );
-    return `
-      <button class="tab ${b.id === activeTab ? 'active' : ''}" data-tab="${b.id}">
-        ${escapeHtml(b.label)}
-        <span class="count ${hasCritical && b.id !== 'all' ? 'critical' : ''}">${count}</span>
-      </button>
-    `;
-  }).join('');
-  const tabsEl = document.getElementById('tabs');
-  tabsEl.innerHTML = html;
-  tabsEl.querySelectorAll('.tab').forEach(t => {
-    t.addEventListener('click', () => {
-      activeTab = t.dataset.tab;
-      renderTabs();
-      renderBoard();
-    });
-  });
-}
+  const recentResolved = filteredResolved.slice()
+    .sort((a,b) => new Date(b.updated||0) - new Date(a.updated||0))
+    .slice(0,5);
 
-function renderBoard() {
-  const board = BOARDS.find(b => b.id === activeTab);
-  const groups = ticketsForBoard(activeTab);
-  const openTickets = groups.reduce((s,g) => s + g.tickets.filter(isOpen).length, 0);
-  const affected = groups.reduce((s,g) => s + g.affectedAccounts, 0);
-
-  // board health
-  let healthClass, healthLabel;
-  if (affected > 100 || groups.length > 10) { healthClass = 'critical'; healthLabel = 'Critical'; }
-  else if (affected > 30 || groups.length > 5) { healthClass = 'attention'; healthLabel = 'Needs attention'; }
-  else if (groups.length > 0) { healthClass = 'monitor'; healthLabel = 'Monitoring'; }
-  else { healthClass = 'clear'; healthLabel = 'All clear'; }
-
-  // resolved within last 14 days
-  const recentResolved = [];
-  groupedIssues.forEach(g => {
-    if (!board.match) return;
-    g.tickets.forEach(t => {
-      if (!board.match(t)) return;
-      const cat = (t.statusCategory || '').toLowerCase();
-      if (!cat.includes('done')) return;
-      const resolved = t.resolutiondate || t.updated;
-      if (!resolved) return;
-      const days = Math.floor((Date.now() - new Date(resolved).getTime()) / 86400000);
-      if (days <= 14) recentResolved.push({ ...t, daysSince: days });
-    });
-  });
-  recentResolved.sort((a,b) => a.daysSince - b.daysSince);
-
-  const topIssue = groups[0];
-
-  let html = `
-    <div class="board-head">
-      <div class="bh-left">
-        <h2 class="bh-title">${escapeHtml(board.label)}</h2>
-        <span class="pc-badge ${healthClass}">${healthLabel}</span>
-        <div class="bh-meta">
-          <span><strong>${groups.length}</strong> known issues</span>
-          <span class="divider">·</span>
-          <span><strong>${openTickets}</strong> open tickets</span>
-          <span class="divider">·</span>
-          <span><strong>${affected.toLocaleString()}</strong> affected accounts</span>
-          <span class="divider">·</span>
-          <span>Assignee: <strong>${escapeHtml(board.assignee)}</strong></span>
+  const html = `
+    <div class="board-panel">
+      <div class="bp-head">
+        <div class="bp-title">
+          <h2>${escapeHTML(board.label)}</h2>
+          <span class="health-badge ${health.cls}">${health.label}</span>
         </div>
+        ${board.url ? `<a class="bp-link" href="${board.url}" target="_blank" rel="noopener">Open in Jira ↗</a>` : ''}
       </div>
-      <a href="${board.jiraUrl}" target="_blank" rel="noopener" class="btn-jira">
-        Open in Jira
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
-      </a>
-    </div>
-  `;
-
-  // Incident communication block
-  if (topIssue) {
-    html += renderIncident(topIssue, board);
-  }
-
-  // Issues table
-  html += renderIssuesTable(groups);
-
-  // Recently resolved
-  if (recentResolved.length > 0) {
-    html += `
-      <div class="resolved-card">
-        <div class="issues-head">
-          <h3>Recently Resolved (last 14 days)</h3>
-          <span class="threshold-note">${recentResolved.length} ticket${recentResolved.length === 1 ? '' : 's'}</span>
-        </div>
-        <div class="resolved-grid">
-          ${recentResolved.slice(0, 12).map(t => `
-            <div class="resolved-item">
-              <div class="ri-name">${escapeHtml(t.summary || 'Untitled')}</div>
-              <div class="ri-meta">
-                <a href="${tagForKey(t.key)}" target="_blank" rel="noopener" class="mono">${escapeHtml(t.key)}</a>
-                <span>·</span>
-                <span title="${formatCST(t.resolutiondate || t.updated)}">${t.daysSince === 0 ? 'today' : t.daysSince === 1 ? '1 day ago' : `${t.daysSince} days ago`}</span>
+      <div class="bp-search">
+        <span style="color:var(--steel);">🔍</span>
+        <input id="board-search" type="text" value="${escapeAttr(BOARD_QUERY)}" placeholder="Search within ${escapeAttr(board.label)}…" />
+      </div>
+      <div class="bp-stats">
+        <div class="bp-stat"><div class="v">${groups.length}</div><div class="l">Known Issues</div></div>
+        <div class="bp-stat"><div class="v">${filteredOpen.length}</div><div class="l">Open Tickets</div></div>
+        <div class="bp-stat affected"><div class="v">${totalAffected}</div><div class="l">Affected Accounts</div></div>
+      </div>
+      ${topIssue ? renderIncident(topIssue, board) : ''}
+      ${allRows.length===0 ? `
+        <div class="empty">
+          <strong>No matching issues</strong>
+          ${searched.length===0 ? 'No open tickets on this board.' : 'Try adjusting your search.'}
+        </div>` : `
+      <div class="table-wrap">
+        <table class="issues">
+          <thead><tr><th>Issue</th><th>Priority</th><th>Affected</th><th>Status</th><th>Reported</th><th>Age</th></tr></thead>
+          <tbody>${allRows.map(renderRow).join('')}</tbody>
+        </table>
+      </div>`}
+      ${recentResolved.length ? `
+        <div class="section-title" style="margin: 22px 0 10px;">Recently Resolved (last 30 days)</div>
+        <div class="resolved-list">
+          ${recentResolved.map(i => `
+            <div class="resolved-row">
+              <div>
+                <div class="name">${escapeHTML(cleanSummary(i.summary))}</div>
+                <div class="meta">
+                  <a href="${JIRA_BASE}/browse/${escapeAttr(i.key)}" target="_blank" rel="noopener">${escapeHTML(i.key)}</a>
+                  · Resolved ${formatDate(i.updated)}
+                </div>
               </div>
-              <div class="ri-timestamp">${formatCSTShort(t.resolutiondate || t.updated)}</div>
+              <span class="pill p-done">${escapeHTML(statusLabel(i.status))}</span>
             </div>
           `).join('')}
-        </div>
-      </div>
-    `;
+        </div>` : ''}
+    </div>`;
+  document.getElementById('board-panel').innerHTML = html;
+
+  const bs = document.getElementById('board-search');
+  if (bs) {
+    bs.addEventListener('input', e => {
+      BOARD_QUERY = e.target.value;
+      renderBoardPanel(open, resolved);
+      const el = document.getElementById('board-search');
+      if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); }
+    });
   }
+  wireCopyButtons();
+}
 
-  document.getElementById('boardView').innerHTML = html;
-
-  // Wire up copy buttons
+function wireCopyButtons() {
   document.querySelectorAll('.btn-copy').forEach(btn => {
+    if (btn.dataset.wired) return;
+    btn.dataset.wired = '1';
     btn.addEventListener('click', () => {
-      const text = btn.dataset.copy;
+      const text = btn.dataset.copy || '';
       navigator.clipboard.writeText(text).then(() => {
         const original = btn.innerHTML;
         btn.classList.add('copied');
-        btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied`;
-        setTimeout(() => {
-          btn.classList.remove('copied');
-          btn.innerHTML = original;
-        }, 1800);
-      });
+        btn.innerHTML = '✓ Copied';
+        setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = original; }, 1800);
+      }).catch(() => {});
     });
   });
 }
 
 function renderIncident(g, board) {
-  const status = topStatusForGroup(g);
-  const pillClass = statusPillClass(status.category);
-  const open = g.tickets.filter(isOpen);
-  // Use actual Jira priority from the highest-priority open ticket
-  const prioOrder = { 'P1': 1, 'Highest': 1, 'Critical': 1, 'P2': 2, 'High': 2, 'P3': 3, 'Medium': 3, 'P4': 4, 'Low': 4, 'Lowest': 5 };
-  const sortedByPrio = [...open].sort((a, b) => (prioOrder[a.priority] || 99) - (prioOrder[b.priority] || 99));
-  const topPrio = sortedByPrio[0]?.priority || 'P3';
-  const prioText = topPrio.startsWith('P') ? topPrio : (prioOrder[topPrio] ? `P${prioOrder[topPrio]}` : 'P3');
-  const sevText = g.affectedAccounts > 50 ? 'High' : g.affectedAccounts > 10 ? 'Medium' : 'Low';
+  const open = g.issues.filter(isOpen);
+  const sample = open[0] || g.issues[0];
+  const pri = topPriorityPill(g) || 'P3';
+  const sev = g.affected > 50 ? 'High' : g.affected > 10 ? 'Medium' : 'Low';
+  const status = sample.status || 'Open';
+  const productLabel = ({tp:'ThryvPay', ol:'Online Listings', mc:'Marketing Center'})[classifyProduct(sample._board)] || 'your service';
 
-  const clientMsg = `We are aware of an issue affecting ${PRODUCT_LABELS[g.product] || 'your service'}: ${g.canonical}. Our engineering team is actively investigating and we will follow up with an update as soon as one is available. We appreciate your patience.`;
-
-  const internalNotes = `Known issue across ${open.length} open ticket${open.length === 1 ? '' : 's'} on ${board.label}.
-Approx. ${g.affectedAccounts.toLocaleString()} account${g.affectedAccounts === 1 ? '' : 's'} affected.
-Current status: ${status.name}.
-Ticket(s): ${open.slice(0, 5).map(t => t.key).join(', ')}${open.length > 5 ? `, +${open.length - 5} more` : ''}.`;
-
-  const fullCopy = `*Incident: ${g.canonical}*
-Priority: ${prioText}  |  Severity: ${sevText}  |  Status: ${status.name}
-Affected accounts: ~${g.affectedAccounts.toLocaleString()}  |  Open tickets: ${open.length}
-
-*Client-facing message*
-${clientMsg}
-
-*Internal notes*
-${internalNotes}`;
+  const clientMsg = `We are aware of an issue affecting ${productLabel}: ${g.label}. Our engineering team is actively investigating and we will follow up with an update as soon as one is available. We appreciate your patience.`;
+  const internalNotes = `Known issue across ${open.length} open ticket${open.length===1?'':'s'} on ${board.label}.\nApprox. ${g.affected} account${g.affected===1?'':'s'} affected.\nCurrent status: ${status}.\nTicket(s): ${open.slice(0,5).map(t=>t.key).join(', ')}${open.length>5 ? ', +'+(open.length-5)+' more' : ''}.`;
+  const fullCopy = `*Incident: ${g.label}*\nPriority: ${pri}  |  Severity: ${sev}  |  Status: ${status}\nAffected accounts: ~${g.affected}  |  Open tickets: ${open.length}\n\n*Client-facing message*\n${clientMsg}\n\n*Internal notes*\n${internalNotes}`;
 
   return `
     <div class="incident">
       <div class="incident-head">
         <div class="incident-title">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          Top incident · ${escapeHtml(g.canonical)}
+          <span class="label-tag">Top Incident</span>
+          <span>${escapeHTML(g.label)}</span>
         </div>
-        <button class="btn-copy" data-copy="${escapeHtml(fullCopy)}">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          Copy for Slack
-        </button>
+        <button class="btn-copy" data-copy="${escapeAttr(fullCopy)}">📋 Copy for Slack</button>
       </div>
-      <div class="incident-body">
+      <div class="incident-meta">
+        <span class="im-item"><span class="im-label">Priority</span><span class="im-val">${pri}</span></span>
+        <span class="im-item"><span class="im-label">Severity</span><span class="im-val">${sev}</span></span>
+        <span class="im-item"><span class="im-label">Status</span><span class="im-val">${escapeHTML(status)}</span></span>
+        <span class="im-item"><span class="im-label">Affected</span><span class="im-val">~${g.affected}</span></span>
+        <span class="im-item"><span class="im-label">Open Tickets</span><span class="im-val">${open.length}</span></span>
+      </div>
+      <div class="incident-cols">
         <div class="incident-col">
-          <div class="incident-meta">
-            <div class="im-item"><div class="im-label">Priority</div><div class="im-val">${prioText}</div></div>
-            <div class="im-item"><div class="im-label">Severity</div><div class="im-val">${sevText}</div></div>
-            <div class="im-item"><div class="im-label">Status</div><div class="im-val"><span class="status-pill ${pillClass}">${escapeHtml(status.name)}</span></div></div>
-            <div class="im-item"><div class="im-label">Affected accts</div><div class="im-val">~${g.affectedAccounts.toLocaleString()}</div></div>
-          </div>
           <h4>Client-facing message</h4>
-          <p>${escapeHtml(clientMsg)}</p>
+          <p>${escapeHTML(clientMsg)}</p>
         </div>
         <div class="incident-col">
           <h4>Internal notes</h4>
-          <p>${escapeHtml(internalNotes)}</p>
+          <p style="white-space:pre-line;">${escapeHTML(internalNotes)}</p>
         </div>
       </div>
-    </div>
-  `;
+    </div>`;
 }
 
-function renderIssuesTable(groups) {
-  if (groups.length === 0) {
-    return `
-      <div class="issues-card">
-        <div class="issues-head">
-          <h3>Known issues on this board</h3>
-          <span class="threshold-note">Groups with 2+ tickets only</span>
-        </div>
-        <div class="empty">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          <div class="e-title">No active known issues</div>
-          <div class="e-sub">All clear on this board.</div>
-        </div>
-      </div>
-    `;
+function renderRow(g) {
+  const sample = g.issues[0];
+  const pri = topPriorityPill(g);
+  const priPill = pri ? `<span class="pill pri-${pri.toLowerCase()}">${pri}</span>` : `<span class="pill pri-none">—</span>`;
+
+  let bestStatus = sample.status, bestCat = statusCat(bestStatus);
+  for (const i of g.issues) {
+    const c = statusCat(i.status);
+    if (c==='prog' && bestCat!=='prog') { bestStatus = i.status; bestCat = c; }
   }
+  const statusPill = `<span class="pill p-${bestCat}">${escapeHTML(statusLabel(bestStatus))}</span>`;
 
-  const rows = groups.map(g => {
-    const status = topStatusForGroup(g);
-    const pillClass = statusPillClass(status.category);
-    const openTickets = g.tickets.filter(isOpen);
-    const age = avgAge(g);
-    const ageDisplay = age === null ? '—' : age === 0 ? 'today' : age === 1 ? '1d' : `${age}d`;
+  const affectedCell = g.affected > 0
+    ? `<div class="affected-big">${g.affected}<span class="sub">accounts</span></div>`
+    : `<div class="affected-fallback"><strong>${g.issues.length}</strong> ticket${g.issues.length===1?'':'s'}</div>`;
 
-    // Determine top priority of any open ticket
-    const prioOrder = { 'P1': 1, 'Highest': 1, 'Critical': 1, 'P2': 2, 'High': 2, 'P3': 3, 'Medium': 3, 'P4': 4, 'Low': 4, 'Lowest': 5 };
-    const sortedByPrio = [...openTickets].sort((a, b) => (prioOrder[a.priority] || 99) - (prioOrder[b.priority] || 99));
-    const topPrioRaw = sortedByPrio[0]?.priority || 'P3';
-    const prioMap = { 'Highest': 'P1', 'Critical': 'P1', 'High': 'P2', 'Medium': 'P3', 'Low': 'P4', 'Lowest': 'P4' };
-    const prio = prioMap[topPrioRaw] || topPrioRaw;
-    const prioClass = (prio || 'P3').toLowerCase();
+  let earliest = null;
+  for (const i of g.issues) {
+    const d = i.created ? new Date(i.created) : null;
+    if (d && !isNaN(d.getTime())) { if (!earliest || d < earliest) earliest = d; }
+  }
+  const reportedStr = earliest ? formatDate(earliest.toISOString()) : '—';
+  const ageD = earliest ? Math.floor((Date.now() - earliest.getTime())/86400000) : null;
 
-    // Oldest ticket created date for "first reported" tooltip
-    const oldestTicket = openTickets.slice().sort((a, b) => new Date(a.created || 0) - new Date(b.created || 0))[0];
-    const firstReported = oldestTicket ? formatCST(oldestTicket.created) : null;
+  const visibleKeys = g.issues.slice(0,4);
+  const moreKeys = g.issues.length > 4 ? g.issues.length - 4 : 0;
+  const keys = visibleKeys.map(i => `<a href="${JIRA_BASE}/browse/${escapeAttr(i.key)}" target="_blank" rel="noopener">${escapeHTML(i.key)}</a>`).join('') +
+    (moreKeys ? `<span class="issue-key-more">+${moreKeys}</span>` : '');
 
-    const keys = openTickets.slice(0, 4).map(t =>
-      `<a href="${tagForKey(t.key)}" target="_blank" rel="noopener" class="issue-key-pill mono">${escapeHtml(t.key)}</a>`
-    ).join('');
-    const moreKeys = openTickets.length > 4 ? `<span class="issue-key-more mono">+${openTickets.length - 4}</span>` : '';
-
-    return `
-      <tr class="prio-${prioClass}">
-        <td class="issue-main-cell">
-          <div class="issue-name">${escapeHtml(g.canonical)}</div>
-          ${g.brief ? `<div class="issue-brief">${escapeHtml(g.brief)}</div>` : ''}
-          <div class="issue-keys">${keys}${moreKeys}</div>
-          <span class="row-hover-hint">View in Jira <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
-        </td>
-        <td data-label="Priority"><span class="prio-pill ${prioClass}">${escapeHtml(prio)}</span></td>
-        <td data-label="Product"><span class="prod-pill ${g.product}">${PRODUCT_LABELS[g.product]}</span></td>
-        <td data-label="Status"><span class="status-pill ${pillClass}">${escapeHtml(status.name)}</span></td>
-        <td data-label="Affected">
-          <div class="affected-num">${g.affectedAccounts.toLocaleString()}</div>
-          <div class="affected-label">${g.affectedAccounts === 1 ? 'account' : 'accounts'}</div>
-        </td>
-        <td data-label="Tickets"><span class="ticket-count">${openTickets.length}</span></td>
-        <td data-label="Avg age" class="age-cell"${firstReported ? ` title="First reported: ${firstReported}"` : ''}>${ageDisplay}</td>
-      </tr>
-    `;
-  }).join('');
+  const rowCls = pri==='P1' ? 'row-p1' : (pri==='P2' ? 'row-p2' : '');
 
   return `
-    <div class="issues-card">
-      <div class="issues-head">
-        <h3>Known issues on this board</h3>
-        <span class="threshold-note">Showing groups with 2+ open tickets · Sorted by affected accounts</span>
-      </div>
-      <table class="issues-table">
-        <thead>
-          <tr>
-            <th style="width:38%">Issue</th>
-            <th>Priority</th>
-            <th>Product</th>
-            <th>Status</th>
-            <th>Affected</th>
-            <th>Tickets</th>
-            <th>Avg age</th>
-          </tr>
-        </thead>
-        <tbody>${rows}</tbody>
-      </table>
-    </div>
-  `;
+    <tr class="${rowCls}">
+      <td>
+        <div class="issue-name">${escapeHTML(g.label)}</div>
+        ${g.hasBrief ? `<div class="issue-brief">${escapeHTML(g.hasBrief)}</div>` : ''}
+        <div class="issue-keys">${keys}</div>
+      </td>
+      <td>${priPill}</td>
+      <td>${affectedCell}</td>
+      <td>${statusPill}</td>
+      <td><div class="reported">${reportedStr}</div></td>
+      <td><div class="age">${ageD!==null ? ageD+'d' : '—'}</div></td>
+    </tr>`;
 }
 
-// ---------------------------------------------------------
-// SEARCH
-// ---------------------------------------------------------
-function setupSearch() {
-  const input = document.getElementById('search');
-  const results = document.getElementById('searchResults');
-
-  function runSearch(q) {
-    if (!q || q.length < 2) {
-      results.classList.remove('show');
-      results.innerHTML = '';
-      return;
+function runGlobalSearch(q) {
+  const results = document.getElementById('search-results');
+  if (!q || q.length < 2) { results.classList.remove('show'); results.innerHTML = ''; return; }
+  const open = getOpen();
+  const ql = q.toLowerCase();
+  const matches = [];
+  const groups = groupIssues(open).filter(g => g.issues.length >= 2);
+  for (const g of groups) {
+    if (matches.length >= 8) break;
+    const hay = (g.label+' '+g.hasBrief).toLowerCase();
+    if (hay.includes(ql)) {
+      const first = g.issues[0];
+      matches.push({ title:g.label, meta:`${g.issues.length} tickets · ${g.affected} affected`, key:first.key, link:`${JIRA_BASE}/browse/${first.key}` });
     }
-    const ql = q.toLowerCase();
-    const matches = [];
-
-    // groups first (by canonical name)
-    for (const g of groupedIssues) {
-      if (matches.length >= 12) break;
-      if (g.canonical.toLowerCase().includes(ql) || (g.brief || '').toLowerCase().includes(ql)) {
-        const first = g.tickets[0];
-        matches.push({
-          type: 'group',
-          title: g.canonical,
-          meta: `${g.tickets.length} tickets · ${PRODUCT_LABELS[g.product]} · ${g.affectedAccounts} affected`,
-          key: first?.key || '',
-          link: first ? tagForKey(first.key) : '#'
-        });
-      }
+  }
+  for (const t of open) {
+    if (matches.length >= 18) break;
+    const hay = (t.key+' '+t.summary+' '+t.brief).toLowerCase();
+    if (hay.includes(ql) && !matches.some(m => m.key===t.key)) {
+      matches.push({ title:t.summary||'(no summary)', meta:`${t.status||'Open'} · ${t.project||'—'}`, key:t.key, link:`${JIRA_BASE}/browse/${t.key}` });
     }
-    // individual tickets (by key, summary, brief)
-    const items = rawData && (rawData.issues || rawData.tickets);
-    if (items) {
-      for (const t of items) {
-        if (matches.length >= 20) break;
-        const hay = `${t.key} ${t.summary || ''} ${t.brief || ''}`.toLowerCase();
-        if (hay.includes(ql)) {
-          // skip if already covered by a group match for same canonical
-          if (matches.some(m => m.key === t.key)) continue;
-          matches.push({
-            type: 'ticket',
-            title: t.summary || '(no summary)',
-            meta: `${t.status || 'Open'} · ${t.project || '—'}`,
-            key: t.key,
-            link: tagForKey(t.key)
-          });
-        }
-      }
-    }
+  }
+  if (!matches.length) {
+    results.innerHTML = `<div class="search-result" style="cursor:default;color:var(--steel);">No matches for "${escapeHTML(q)}"</div>`;
+    results.classList.add('show'); return;
+  }
+  results.innerHTML = matches.map(m => `
+    <a class="search-result" href="${escapeAttr(m.link)}" target="_blank" rel="noopener">
+      <div class="sr-key">${escapeHTML(m.key)}</div>
+      <div class="sr-summary">${escapeHTML(m.title)}</div>
+      <div class="sr-meta">${escapeHTML(m.meta)}</div>
+    </a>`).join('');
+  results.classList.add('show');
+}
 
-    if (!matches.length) {
-      results.innerHTML = `<div class="search-result" style="cursor:default;color:var(--text-faint);">No matches for "${escapeHtml(q)}"</div>`;
-      results.classList.add('show');
-      return;
+// =========== ZENDESK TICKET CHECKER ===========
+function tokenize(text) {
+  return (text||'').toLowerCase().replace(/[^a-z0-9\s\-]/g,' ').split(/\s+/).filter(w => w.length >= 3 && !STOPWORDS.has(w));
+}
+function scoreAgainstIssue(pastedText, pastedTokens, group) {
+  let score = 0;
+  if (group.synonym) {
+    for (const pattern of group.synonym.patterns) {
+      if (pastedText.includes(pattern)) { score += 12; break; }
     }
+  }
+  const issueText = (group.label+' '+group.issues.map(i=>i.summary).join(' ')+' '+(group.hasBrief||'')).toLowerCase();
+  const issueTokens = new Set(tokenize(issueText));
+  let wordHits = 0;
+  for (const t of pastedTokens) if (issueTokens.has(t)) wordHits++;
+  score += wordHits * 3;
+  if (group.hasBrief) {
+    const briefTokens = new Set(tokenize(group.hasBrief));
+    let briefHits = 0;
+    for (const t of pastedTokens) if (briefTokens.has(t)) briefHits++;
+    score += Math.min(briefHits, 5) * 2;
+  }
+  if (group.affected >= 10) score += 3;
+  return { score };
+}
 
-    results.innerHTML = matches.map(m => `
-      <a class="search-result" href="${m.link}" target="_blank" rel="noopener" style="display:block;text-decoration:none;">
-        <div class="sr-key">${escapeHtml(m.key)}</div>
-        <div class="sr-summary">${escapeHtml(m.title)}</div>
-        <div class="sr-meta">${escapeHtml(m.meta)}</div>
-      </a>
-    `).join('');
-    results.classList.add('show');
+function checkZendeskTicket() {
+  const input = document.getElementById('checker-input').value.trim();
+  const result = document.getElementById('checker-result');
+
+  if (!input) {
+    result.innerHTML = `<div class="verdict new"><span class="icon">⚠</span><div>Paste some ticket text first.</div></div>`;
+    result.classList.add('show'); return;
+  }
+  if (input.length < 15) {
+    result.innerHTML = `<div class="verdict new"><span class="icon">⚠</span><div>Need a bit more text<span class="sub">Paste at least the subject + first sentence of the ticket.</span></div></div>`;
+    result.classList.add('show'); return;
   }
 
-  let timer;
-  input.addEventListener('input', e => {
-    clearTimeout(timer);
-    timer = setTimeout(() => runSearch(e.target.value.trim()), 120);
-  });
-  input.addEventListener('focus', e => {
-    if (e.target.value.trim().length >= 2) runSearch(e.target.value.trim());
-  });
-  document.addEventListener('click', e => {
-    if (!e.target.closest('.search-wrap')) results.classList.remove('show');
-  });
+  const open = getOpen();
+  const groups = groupIssues(open);
+  const pastedText = input.toLowerCase();
+  const pastedTokens = tokenize(input);
+
+  const scored = groups
+    .map(g => ({ group:g, ...scoreAgainstIssue(pastedText, pastedTokens, g) }))
+    .filter(s => s.score > 0)
+    .sort((a,b) => b.score - a.score)
+    .slice(0, 3);
+
+  const topScore = scored[0]?.score || 0;
+  let verdict, verdictCls;
+  if (topScore >= 20) {
+    verdict = { icon:'✓', text:'Likely a known issue', sub:'Strong match found. Add the new info to the existing Jira instead of opening a fresh one.' };
+    verdictCls = 'known';
+  } else if (topScore >= 10) {
+    verdict = { icon:'?', text:'Possibly related', sub:'Review the matches below. If none clearly fit, open a fresh Jira.' };
+    verdictCls = 'maybe';
+  } else {
+    verdict = { icon:'+', text:'Looks new — no clear match', sub:'No strong match against current known issues. Open a fresh Jira on the appropriate board.' };
+    verdictCls = 'new';
+  }
+
+  let html = `
+    <div class="verdict ${verdictCls}">
+      <span class="icon">${verdict.icon}</span>
+      <div>${escapeHTML(verdict.text)}<span class="sub">${escapeHTML(verdict.sub)}</span></div>
+    </div>`;
+
+  if (scored.length) {
+    html += `<div class="match-list">`;
+    scored.forEach((s, idx) => {
+      const conf = s.score >= 20 ? 'high' : s.score >= 10 ? 'med' : 'low';
+      const confLabel = conf==='high' ? 'High match' : conf==='med' ? 'Medium match' : 'Low match';
+      const visibleKeys = s.group.issues.slice(0,3).map(i =>
+        `<a href="${JIRA_BASE}/browse/${escapeAttr(i.key)}" target="_blank" rel="noopener">${escapeHTML(i.key)}</a>`).join('');
+      const moreKeys = s.group.issues.length > 3 ? `<span style="color:var(--steel);font-size:11px;">+${s.group.issues.length-3} more</span>` : '';
+      html += `
+        <div class="match-row">
+          <div class="match-rank">${idx+1}</div>
+          <div class="match-body">
+            <div class="name">${escapeHTML(s.group.label)}</div>
+            ${s.group.hasBrief ? `<div class="brief">${escapeHTML(s.group.hasBrief)}</div>` : ''}
+            <div class="meta">
+              <span class="confidence ${conf}">${confLabel}</span>
+              ${visibleKeys}${moreKeys}
+              ${s.group.affected > 0 ? `<span style="color:var(--orange);font-weight:600;">${s.group.affected} affected</span>` : ''}
+            </div>
+          </div>
+        </div>`;
+    });
+    html += `</div>`;
+  }
+
+  if (verdictCls === 'new') {
+    const firstLine = input.split(/\n/)[0].slice(0, 100);
+    const stub = `Summary: ${firstLine}\n\nDescription of Issue:\n${input.slice(0, 500)}${input.length>500?'...':''}\n\nAffected Account(s):\n[Add Thryv ID, account name, EAID here]\n\nSteps to Reproduce:\n1. \n2. \n3. \n\nActual Result:\n\nDesired Result:\n`;
+    html += `
+      <div class="new-jira-stub">
+        <div class="label">📝 Suggested Jira stub</div>
+        <div style="font-size:12px;color:var(--night);">Starting point for the new Jira ticket:</div>
+        <div class="stub-text">${escapeHTML(stub)}</div>
+        <div style="margin-top:8px;"><button class="btn-copy" data-copy="${escapeAttr(stub)}">📋 Copy stub</button></div>
+      </div>`;
+  }
+
+  result.innerHTML = html;
+  result.classList.add('show');
+  wireCopyButtons();
 }
 
-// ---------------------------------------------------------
-// REFRESH
-// ---------------------------------------------------------
-document.getElementById('refreshBtn').addEventListener('click', async () => {
-  const btn = document.getElementById('refreshBtn');
-  btn.classList.add('spinning');
-  await loadData(true);
-  setTimeout(() => btn.classList.remove('spinning'), 600);
+function escapeHTML(s) { return String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+function escapeAttr(s) { return escapeHTML(s); }
+
+document.getElementById('global-search').addEventListener('input', e => {
+  GLOBAL_QUERY = e.target.value;
+  runGlobalSearch(e.target.value.trim());
+  if (DATA) { renderTabs(getOpen()); renderBoardPanel(getOpen(), getResolved()); }
+});
+document.getElementById('global-search').addEventListener('focus', e => {
+  if (e.target.value.trim().length >= 2) runGlobalSearch(e.target.value.trim());
+});
+document.addEventListener('click', e => {
+  if (!e.target.closest('.search-wrap')) document.getElementById('search-results').classList.remove('show');
 });
 
-// ---------------------------------------------------------
-// BACK-TO-TOP BUTTON
-// ---------------------------------------------------------
-(function setupScrollTop() {
-  const btn = document.getElementById('scrollTop');
-  if (!btn) return;
-  const onScroll = () => {
-    if (window.scrollY > 200) btn.classList.add('show');
-    else btn.classList.remove('show');
-  };
+document.getElementById('checker-run').addEventListener('click', checkZendeskTicket);
+document.getElementById('checker-clear').addEventListener('click', () => {
+  document.getElementById('checker-input').value = '';
+  document.getElementById('checker-result').classList.remove('show');
+  document.getElementById('checker-result').innerHTML = '';
+});
+document.getElementById('checker-input').addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.preventDefault(); checkZendeskTicket(); }
+});
+
+(function() {
+  const btn = document.getElementById('scroll-top');
+  const onScroll = () => { if (window.scrollY > 240) btn.classList.add('show'); else btn.classList.remove('show'); };
   window.addEventListener('scroll', onScroll, { passive: true });
-  btn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-  // Re-check after data loads + on resize, in case page becomes scrollable later
-  window.addEventListener('resize', onScroll);
-  setTimeout(onScroll, 800);
-  setTimeout(onScroll, 2000);
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 })();
 
-// ---------------------------------------------------------
-// INIT
-// ---------------------------------------------------------
-setupSearch();
 loadData();
-
-// auto-update "last synced" label every minute
-setInterval(updateLastSync, 60000);
 </script>
+
 </body>
 </html>
