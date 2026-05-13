@@ -645,7 +645,7 @@ function render() {
 function updateLastSynced() {
   const el = document.getElementById('last-synced');
   if (!DATA) { el.textContent='unknown'; return; }
-  const ts = DATA.lastSync || DATA.syncedAt || DATA.updatedAt;
+  const ts = DATA.lastSync || DATA.syncedAt || DATA.updatedAt || DATA.fetchedAt;
   if (!ts) { el.textContent='unknown'; return; }
   const d = new Date(ts);
   if (isNaN(d.getTime())) { el.textContent='unknown'; return; }
