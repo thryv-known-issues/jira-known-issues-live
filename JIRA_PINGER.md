@@ -1,13 +1,14 @@
 # jira-pinger
 
-An hourly GitHub Actions job that sends you a Slack DM for Jira issues you reported or watch that were created or updated in the last 65 minutes.
+An hourly GitHub Actions job that sends you a Slack DM when a Jira issue you reported or watch moves into a finished status: Done, Cancelled or Canceled, Released, Deployed, Complete or Completed, Closed, or Resolved.
 
 ## How it works
 
 - `jira_pinger.py` queries Jira Cloud with JQL:
   `(reporter = currentUser() OR watcher = currentUser()) AND updated >= "-65m" ORDER BY updated DESC`
-- It compares each issue's `updated` value with `state.json` and sends a DM only for issues that are new or changed.
-- `state.json` is rewritten from the current results and committed back to the repo by the workflow, only when it changes.
+- It compares each issue's status with the status saved in `state.json`. A DM is sent only when an issue has just moved into one of the finished statuses. Edits, comments and other status changes don't trigger a DM.
+- The first run after this change only records the current statuses and sends nothing.
+- `state.json` keeps the last known status of every issue seen, and is committed back to the repo by the workflow only when it changes.
 - Slack messages go to `chat.postMessage` with the `SLACK_USER_ID` as the channel.
 
 ## Required secrets
