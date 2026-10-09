@@ -10,7 +10,8 @@ from pathlib import Path
 import requests
 
 REQUIRED_ENV = ["JIRA_SITE", "JIRA_EMAIL", "JIRA_API_TOKEN", "SLACK_BOT_TOKEN", "SLACK_USER_ID"]
-JQL = '(reporter = currentUser() OR watcher = currentUser()) AND updated >= "-65m" ORDER BY updated DESC'
+# The 125 minute lookback covers a skipped hourly run. Saved statuses in state.json prevent repeat DMs.
+JQL = '(reporter = currentUser() OR watcher = currentUser()) AND updated >= "-125m" ORDER BY updated DESC'
 # Compared case-insensitively against the Jira status name.
 TARGET_STATUSES = {
     "done",
@@ -121,7 +122,7 @@ def main():
 
     previous = state["statuses"]
     if not issues:
-        no_data = "No data: no Jira issues you reported or watch changed in the last 65 minutes."
+        no_data = "No data: no Jira issues you reported or watch changed in the last 2 hours."
         print(no_data)
         if not args.dry_run:
             send_slack_dm(config, no_data)
