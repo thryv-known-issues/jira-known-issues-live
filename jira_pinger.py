@@ -120,6 +120,8 @@ def main():
         return
 
     previous = state["statuses"]
+    if not issues:
+        print("No data: no Jira issues you reported or watch changed in the last 65 minutes.")
     hits = find_transitions(issues, previous)
     print(f"Found {len(issues)} recent issue(s); {len(hits)} moved into a finished status.")
 
