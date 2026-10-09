@@ -2,8 +2,9 @@ name: jira-pinger
 
 on:
   schedule:
-    # Off the top of the hour, when GitHub schedules are busiest and most likely to be skipped.
-    - cron: '17 * * * *'
+    # Every 15 minutes, off the top of the hour. GitHub often skips scheduled runs, so more
+    # slots means at least one run per hour. state.json prevents repeat DMs.
+    - cron: '7,22,37,52 * * * *'
   workflow_dispatch:
 
 permissions:

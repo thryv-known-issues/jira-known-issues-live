@@ -1,6 +1,6 @@
 # jira-pinger
 
-An hourly GitHub Actions job that sends you a Slack DM when a Jira issue you reported or watch moves into a finished status: Done, Cancelled or Canceled, Released, Deployed, Complete or Completed, Closed, or Resolved.
+A GitHub Actions job that runs every 15 minutes and sends you a Slack DM when a Jira issue you reported or watch moves into a finished status: Done, Cancelled or Canceled, Released, Deployed, Complete or Completed, Closed, or Resolved.
 
 ## How it works
 
@@ -9,6 +9,8 @@ An hourly GitHub Actions job that sends you a Slack DM when a Jira issue you rep
   The wider window covers a skipped hourly run, since GitHub sometimes skips scheduled jobs.
 - It compares each issue's status with the status saved in `state.json`. A DM is sent only when an issue has just moved into one of the finished statuses. Edits, comments and other status changes don't trigger a DM.
 - The first run after this change only records the current statuses and sends nothing.
+- When nothing has finished, you get a "No data" DM, at most once an hour, so you know the job is alive.
+- The job runs every 15 minutes because GitHub often skips scheduled runs. Saved statuses prevent repeat DMs.
 - `state.json` keeps the last known status of every issue seen, and is committed back to the repo by the workflow only when it changes.
 - Slack messages go to `chat.postMessage` with the `SLACK_USER_ID` as the channel.
 

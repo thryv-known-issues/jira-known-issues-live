@@ -5,6 +5,7 @@ import argparse
 import json
 import os
 import sys
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import requests
@@ -24,6 +25,9 @@ TARGET_STATUSES = {
     "closed",
     "resolved",
 }
+# The job runs every 15 minutes so skipped GitHub runs don't matter, but "No data" goes out at most hourly.
+NO_DATA_INTERVAL = timedelta(minutes=55)
+NO_DATA_MESSAGE = "No data: none of your Jira issues moved into a finished status in the last 2 hours."
 SLACK_POST_URL = "https://slack.com/api/chat.postMessage"
 STATE_FILE = Path(__file__).resolve().parent / "state.json"
 HTTP_TIMEOUT = 30
@@ -61,9 +65,22 @@ def load_state():
     return {}
 
 
-def save_state(statuses):
+def save_state(statuses, last_no_data=None):
     # Keep every issue ever seen, so a later edit to an already-finished issue is not mistaken for a new transition.
-    STATE_FILE.write_text(json.dumps({"statuses": statuses}, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    state = {"statuses": statuses}
+    if last_no_data:
+        state["last_no_data_dm"] = last_no_data
+    STATE_FILE.write_text(json.dumps(state, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def no_data_due(last_iso):
+    if not last_iso:
+        return True
+    try:
+        last = datetime.fromisoformat(last_iso)
+    except ValueError:
+        return True
+    return datetime.now(timezone.utc) - last >= NO_DATA_INTERVAL
 
 
 def is_finished(status):
@@ -121,11 +138,7 @@ def main():
         return
 
     previous = state["statuses"]
-    if not issues:
-        no_data = "No data: no Jira issues you reported or watch changed in the last 2 hours."
-        print(no_data)
-        if not args.dry_run:
-            send_slack_dm(config, no_data)
+    last_no_data = state.get("last_no_data_dm")
     hits = find_transitions(issues, previous)
     print(f"Found {len(issues)} recent issue(s); {len(hits)} moved into a finished status.")
 
@@ -136,11 +149,17 @@ def main():
         else:
             send_slack_dm(config, message)
 
+    if not hits:
+        print(NO_DATA_MESSAGE)
+        if not args.dry_run and no_data_due(last_no_data):
+            send_slack_dm(config, NO_DATA_MESSAGE)
+            last_no_data = datetime.now(timezone.utc).isoformat()
+
     if args.dry_run:
         print("Dry run: Slack was not contacted and state.json was not changed.")
         return
 
-    save_state({**previous, **current})
+    save_state({**previous, **current}, last_no_data)
 
 
 if __name__ == "__main__":
