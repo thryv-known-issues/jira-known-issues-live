@@ -1,18 +1,24 @@
 #!/usr/bin/env python3
-"""DM a Slack user when Jira issues they reported or watch move into a finished status."""
+"""DM a Slack user when Jira issues they reported or watch move into a finished status.
+
+When nothing has finished, it periodically sends a digest of every open issue they created or watch.
+"""
 
 import argparse
 import json
 import os
 import sys
+from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import requests
 
 REQUIRED_ENV = ["JIRA_SITE", "JIRA_EMAIL", "JIRA_API_TOKEN", "SLACK_BOT_TOKEN", "SLACK_USER_ID"]
-# The 125 minute lookback covers a skipped hourly run. Saved statuses in state.json prevent repeat DMs.
+# The 125 minute lookback covers a skipped run. Saved statuses in state.json prevent repeat DMs.
 JQL = '(reporter = currentUser() OR watcher = currentUser()) AND updated >= "-125m" ORDER BY updated DESC'
+OPEN_JQL = "(reporter = currentUser() OR watcher = currentUser()) AND statusCategory != Done ORDER BY updated DESC"
+CREATED_OPEN_JQL = "reporter = currentUser() AND statusCategory != Done"
 # Compared case-insensitively against the Jira status name.
 TARGET_STATUSES = {
     "done",
@@ -24,10 +30,14 @@ TARGET_STATUSES = {
     "completed",
     "closed",
     "resolved",
+    "integration",
+    "production",
 }
-# The job runs every 15 minutes so skipped GitHub runs don't matter, but "No data" goes out at most hourly.
-NO_DATA_INTERVAL = timedelta(minutes=55)
-NO_DATA_MESSAGE = "No data: none of your Jira issues moved into a finished status in the last 2 hours."
+# The job runs every 15 minutes, but the open-issues digest goes out at most this often. Change it here.
+DIGEST_INTERVAL = timedelta(hours=4)
+MAX_DIGEST_ISSUES = 100
+SUMMARY_MAX_CHARS = 90
+NO_OPEN_MESSAGE = "No data: you have no open Jira issues that you created or are watching."
 SLACK_POST_URL = "https://slack.com/api/chat.postMessage"
 STATE_FILE = Path(__file__).resolve().parent / "state.json"
 HTTP_TIMEOUT = 30
@@ -42,10 +52,10 @@ def load_config():
     return config
 
 
-def fetch_jira_issues(config):
+def fetch_jira_issues(config, jql=JQL):
     url = f"{config['JIRA_SITE']}/rest/api/3/search/jql"
     auth = (config["JIRA_EMAIL"], config["JIRA_API_TOKEN"])
-    params = {"jql": JQL, "fields": "summary,status", "maxResults": 100}
+    params = {"jql": jql, "fields": "summary,status", "maxResults": 100}
     issues = []
     while True:
         resp = requests.get(url, params=params, auth=auth, headers={"Accept": "application/json"}, timeout=HTTP_TIMEOUT)
@@ -65,22 +75,22 @@ def load_state():
     return {}
 
 
-def save_state(statuses, last_no_data=None):
+def save_state(statuses, last_digest=None):
     # Keep every issue ever seen, so a later edit to an already-finished issue is not mistaken for a new transition.
     state = {"statuses": statuses}
-    if last_no_data:
-        state["last_no_data_dm"] = last_no_data
+    if last_digest:
+        state["last_digest_dm"] = last_digest
     STATE_FILE.write_text(json.dumps(state, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
-def no_data_due(last_iso):
+def digest_due(last_iso):
     if not last_iso:
         return True
     try:
         last = datetime.fromisoformat(last_iso)
     except ValueError:
         return True
-    return datetime.now(timezone.utc) - last >= NO_DATA_INTERVAL
+    return datetime.now(timezone.utc) - last >= DIGEST_INTERVAL
 
 
 def is_finished(status):
@@ -99,15 +109,56 @@ def find_transitions(issues, previous_statuses):
     return hits
 
 
+def escape_slack(text):
+    return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
 def build_message(config, key, summary, status):
     return f"*Jira:* {key} {summary}\nStatus: {status}\n{config['JIRA_SITE']}/browse/{key}"
+
+
+def build_digest(config, issues, created_keys):
+    """Summarize open issues in two sections (created by the user, watched by the user), grouped by status."""
+    open_issues = [i for i in issues if not is_finished(i["fields"]["status"]["name"])]
+    if not open_issues:
+        return NO_OPEN_MESSAGE
+
+    shown = open_issues[:MAX_DIGEST_ISSUES]
+    sections = {"Created by you": defaultdict(list), "Watching": defaultdict(list)}
+    for issue in shown:
+        key = issue["key"]
+        status = issue["fields"]["status"]["name"]
+        summary = issue["fields"].get("summary") or ""
+        if len(summary) > SUMMARY_MAX_CHARS:
+            summary = summary[:SUMMARY_MAX_CHARS].rstrip() + "..."
+        summary = escape_slack(summary)
+        section = "Created by you" if key in created_keys else "Watching"
+        sections[section][status].append(f"- <{config['JIRA_SITE']}/browse/{key}|{key}> {summary}")
+
+    lines = [f"*Open Jira issues pending an outcome ({len(open_issues)})*"]
+    for title, by_status in sections.items():
+        if not by_status:
+            continue
+        count = sum(len(items) for items in by_status.values())
+        lines.append(f"\n*{title} ({count})*")
+        for status, items in sorted(by_status.items(), key=lambda pair: -len(pair[1])):
+            lines.append(f"_{escape_slack(status)}_ ({len(items)})")
+            lines.extend(items)
+    if len(open_issues) > len(shown):
+        lines.append(f"\n...and {len(open_issues) - len(shown)} more")
+    return "\n".join(lines)
 
 
 def send_slack_dm(config, text):
     resp = requests.post(
         SLACK_POST_URL,
         headers={"Authorization": f"Bearer {config['SLACK_BOT_TOKEN']}"},
-        json={"channel": config["SLACK_USER_ID"], "text": text},
+        json={
+            "channel": config["SLACK_USER_ID"],
+            "text": text,
+            "unfurl_links": False,
+            "unfurl_media": False,
+        },
         timeout=HTTP_TIMEOUT,
     )
     resp.raise_for_status()
@@ -138,7 +189,7 @@ def main():
         return
 
     previous = state["statuses"]
-    last_no_data = state.get("last_no_data_dm")
+    last_digest = state.get("last_digest_dm")
     hits = find_transitions(issues, previous)
     print(f"Found {len(issues)} recent issue(s); {len(hits)} moved into a finished status.")
 
@@ -150,16 +201,22 @@ def main():
             send_slack_dm(config, message)
 
     if not hits:
-        print(NO_DATA_MESSAGE)
-        if not args.dry_run and no_data_due(last_no_data):
-            send_slack_dm(config, NO_DATA_MESSAGE)
-            last_no_data = datetime.now(timezone.utc).isoformat()
+        if digest_due(last_digest):
+            open_issues = fetch_jira_issues(config, OPEN_JQL)
+            created_keys = {issue["key"] for issue in fetch_jira_issues(config, CREATED_OPEN_JQL)}
+            digest = build_digest(config, open_issues, created_keys)
+            print(digest)
+            if not args.dry_run:
+                send_slack_dm(config, digest)
+                last_digest = datetime.now(timezone.utc).isoformat()
+        else:
+            print("Nothing finished, and the open-issues digest is not due yet.")
 
     if args.dry_run:
         print("Dry run: Slack was not contacted and state.json was not changed.")
         return
 
-    save_state({**previous, **current}, last_no_data)
+    save_state({**previous, **current}, last_digest)
 
 
 if __name__ == "__main__":
