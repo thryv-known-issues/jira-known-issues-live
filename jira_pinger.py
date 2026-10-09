@@ -121,7 +121,10 @@ def main():
 
     previous = state["statuses"]
     if not issues:
-        print("No data: no Jira issues you reported or watch changed in the last 65 minutes.")
+        no_data = "No data: no Jira issues you reported or watch changed in the last 65 minutes."
+        print(no_data)
+        if not args.dry_run:
+            send_slack_dm(config, no_data)
     hits = find_transitions(issues, previous)
     print(f"Found {len(issues)} recent issue(s); {len(hits)} moved into a finished status.")
 
