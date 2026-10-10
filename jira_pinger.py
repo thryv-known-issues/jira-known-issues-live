@@ -55,7 +55,7 @@ def load_config():
 def fetch_jira_issues(config, jql=JQL):
     url = f"{config['JIRA_SITE']}/rest/api/3/search/jql"
     auth = (config["JIRA_EMAIL"], config["JIRA_API_TOKEN"])
-    params = {"jql": jql, "fields": "summary,status", "maxResults": 100}
+    params = {"jql": jql, "fields": "summary,status,project", "maxResults": 100}
     issues = []
     while True:
         resp = requests.get(url, params=params, auth=auth, headers={"Accept": "application/json"}, timeout=HTTP_TIMEOUT)
@@ -118,31 +118,38 @@ def build_message(config, key, summary, status):
 
 
 def build_digest(config, issues, created_keys):
-    """Summarize open issues in two sections (created by the user, watched by the user), grouped by status."""
+    """Summarize open issues grouped by Jira board (project), then by status. Watched-only issues are tagged."""
     open_issues = [i for i in issues if not is_finished(i["fields"]["status"]["name"])]
     if not open_issues:
         return NO_OPEN_MESSAGE
 
     shown = open_issues[:MAX_DIGEST_ISSUES]
-    sections = {"Created by you": defaultdict(list), "Watching": defaultdict(list)}
+    boards = {}
     for issue in shown:
         key = issue["key"]
-        status = issue["fields"]["status"]["name"]
-        summary = issue["fields"].get("summary") or ""
+        fields = issue["fields"]
+        status = fields["status"]["name"]
+        project = fields.get("project") or {}
+        board_key = project.get("key") or key.split("-")[0]
+        board_name = project.get("name") or board_key
+        summary = fields.get("summary") or ""
         if len(summary) > SUMMARY_MAX_CHARS:
             summary = summary[:SUMMARY_MAX_CHARS].rstrip() + "..."
-        summary = escape_slack(summary)
-        section = "Created by you" if key in created_keys else "Watching"
-        sections[section][status].append(f"- <{config['JIRA_SITE']}/browse/{key}|{key}> {summary}")
+        tag = "" if key in created_keys else " (watching)"
+        line = f"- <{config['JIRA_SITE']}/browse/{key}|{key}> {escape_slack(summary)}{tag}"
+        board = boards.setdefault(board_key, {"name": board_name, "by_status": defaultdict(list)})
+        board["by_status"][status].append(line)
+
+    def board_size(board):
+        return sum(len(items) for items in board["by_status"].values())
 
     lines = [f"*Open Jira issues pending an outcome ({len(open_issues)})*"]
-    for title, by_status in sections.items():
-        if not by_status:
-            continue
-        count = sum(len(items) for items in by_status.values())
-        lines.append(f"\n*{title} ({count})*")
-        for status, items in sorted(by_status.items(), key=lambda pair: -len(pair[1])):
-            lines.append(f"_{escape_slack(status)}_ ({len(items)})")
+    # Biggest boards first, then alphabetical; within a board, statuses with the most issues first.
+    for board_key, board in sorted(boards.items(), key=lambda pair: (-board_size(pair[1]), pair[1]["name"].lower())):
+        title = board_key if board["name"] == board_key else f"{escape_slack(board['name'])} ({board_key})"
+        lines.append(f"\n*{title}* - {board_size(board)}")
+        for status, items in sorted(board["by_status"].items(), key=lambda pair: (-len(pair[1]), pair[0].lower())):
+            lines.append(f"_{escape_slack(status)}_")
             lines.extend(items)
     if len(open_issues) > len(shown):
         lines.append(f"\n...and {len(open_issues) - len(shown)} more")
