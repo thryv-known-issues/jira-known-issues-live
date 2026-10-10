@@ -71,7 +71,8 @@ def fetch_jira_issues(config, jql=JQL):
 
 def load_state():
     if STATE_FILE.exists():
-        return json.loads(STATE_FILE.read_text(encoding="utf-8"))
+        # utf-8-sig also accepts a file saved with a byte-order mark, which some Windows editors add.
+        return json.loads(STATE_FILE.read_text(encoding="utf-8-sig"))
     return {}
 
 
