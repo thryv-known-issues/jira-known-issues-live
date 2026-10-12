@@ -1,5 +1,5 @@
 {
-  "last_digest_dm": "2026-10-12T17:00:20.115381+00:00",
+  "last_digest_dm": "2026-10-12T21:00:21.716432+00:00",
   "statuses": {
     "AR-74840": "Work In Progress",
     "AR-75451": "Manager approval",
@@ -27,6 +27,7 @@
     "TP-34746": "Production",
     "TP-35120": "In Progress",
     "TP-36275": "Ready for Dev",
+    "TP-38526": "Ready for Dev",
     "TPS-236": "Closed",
     "TPS-242": "Closed",
     "TPS-246": "Closed",
