@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """DM a Slack user when Jira issues they reported or watch move into a finished status.
 
-When nothing has finished, it periodically sends a digest of every open issue they created or watch.
+When nothing has finished, it sends a digest of every open issue they created or watch, at most once a day.
 """
 
 import argparse
@@ -11,6 +11,7 @@ import sys
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import requests
 
@@ -33,8 +34,14 @@ TARGET_STATUSES = {
     "integration",
     "production",
 }
-# The job runs every 15 minutes, but the open-issues digest goes out at most this often. Change it here.
-DIGEST_INTERVAL = timedelta(hours=4)
+# The job runs every 15 minutes, but the open-issues digest goes out once a day: on the first run at or after this
+# hour (Central time). Set DIGEST_WEEKDAYS_ONLY to False to get it on weekends too.
+try:
+    LOCAL_TZ = ZoneInfo("America/Chicago")
+except Exception:  # no time zone database installed: fall back to a fixed Central Standard offset (an hour off in summer)
+    LOCAL_TZ = timezone(timedelta(hours=-6), "CST")
+DIGEST_HOUR = 8
+DIGEST_WEEKDAYS_ONLY = True
 MAX_DIGEST_ISSUES = 100
 SUMMARY_MAX_CHARS = 90
 NO_OPEN_MESSAGE = "No data: you have no open Jira issues that you created or are watching."
@@ -84,14 +91,20 @@ def save_state(statuses, last_digest=None):
     STATE_FILE.write_text(json.dumps(state, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
-def digest_due(last_iso):
+def digest_due(last_iso, now=None):
+    """True once per Central-time day: from DIGEST_HOUR on, and only if no digest has gone out yet today."""
+    now = (now or datetime.now(timezone.utc)).astimezone(LOCAL_TZ)
+    if DIGEST_WEEKDAYS_ONLY and now.weekday() >= 5:
+        return False
+    if now.hour < DIGEST_HOUR:
+        return False
     if not last_iso:
         return True
     try:
-        last = datetime.fromisoformat(last_iso)
+        last = datetime.fromisoformat(last_iso).astimezone(LOCAL_TZ)
     except ValueError:
         return True
-    return datetime.now(timezone.utc) - last >= DIGEST_INTERVAL
+    return last.date() < now.date()
 
 
 def is_finished(status):
@@ -218,7 +231,7 @@ def main():
                 send_slack_dm(config, digest)
                 last_digest = datetime.now(timezone.utc).isoformat()
         else:
-            print("Nothing finished, and the open-issues digest is not due yet.")
+            print("Nothing finished, and today's open-issues digest is not due (or was already sent).")
 
     if args.dry_run:
         print("Dry run: Slack was not contacted and state.json was not changed.")
