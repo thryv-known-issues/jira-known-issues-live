@@ -3,6 +3,7 @@
   "statuses": {
     "AR-74840": "Waiting",
     "AR-75451": "Manager approval",
+    "CCPT-1784": "Ready for Dev",
     "LEADS-1243": "Done",
     "LEADS-1412": "Done",
     "LEADS-1432": "Done",
@@ -37,7 +38,7 @@
     "TP-38687": "Open",
     "TP-39326": "Ready for Dev",
     "TP-39332": "Ready for Dev",
-    "TP-39849": "Ready for Dev",
+    "TP-39849": "Cancelled",
     "TPS-236": "Closed",
     "TPS-242": "Closed",
     "TPS-246": "Closed",
