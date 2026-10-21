@@ -86,10 +86,10 @@ def load_config():
     return config
 
 
-def fetch_jira_issues(config, jql=JQL):
+def fetch_jira_issues(config, jql=JQL, fields="summary,status,project"):
     url = f"{config['JIRA_SITE']}/rest/api/3/search/jql"
     auth = (config["JIRA_EMAIL"], config["JIRA_API_TOKEN"])
-    params = {"jql": jql, "fields": "summary,status,project", "maxResults": 100}
+    params = {"jql": jql, "fields": fields, "maxResults": 100}
     issues = []
     while True:
         resp = requests.get(url, params=params, auth=auth, headers={"Accept": "application/json"}, timeout=HTTP_TIMEOUT)
@@ -110,13 +110,15 @@ def load_state():
     return {}
 
 
-def save_state(statuses, last_digest=None, channel_announced=None):
+def save_state(statuses, last_digest=None, channel_announced=None, snapshot_done=None):
     # Keep every issue ever seen, so a later edit to an already-finished issue is not mistaken for a new transition.
     state = {"statuses": statuses}
     if last_digest:
         state["last_digest_dm"] = last_digest
     if channel_announced is not None:
         state["channel_announced"] = channel_announced
+    if snapshot_done:
+        state["people_snapshot_done"] = snapshot_done
     STATE_FILE.write_text(json.dumps(state, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
@@ -136,20 +138,99 @@ def digest_due(last_iso, now=None):
     return last.date() < now.date()
 
 
-def load_strict_only():
-    """Issues listed under "strict_only" in overrides.json are only treated as resolved once they reach a truly
-    finished status (the team list), not Integration or Production. Use it for partly fixed issues."""
+def read_overrides():
     if not OVERRIDES_FILE.exists():
         return {}
     try:
         data = json.loads(OVERRIDES_FILE.read_text(encoding="utf-8-sig"))
-        return {str(key).strip().upper(): note for key, note in data.get("strict_only", {}).items()}
-    except (ValueError, AttributeError) as exc:
+        return data if isinstance(data, dict) else {}
+    except ValueError as exc:
         print(f"WARNING: could not read {OVERRIDES_FILE.name} ({exc}); ignoring it.")
         return {}
 
 
+def load_strict_only():
+    """Issues listed under "strict_only" in overrides.json are only treated as resolved once they reach a truly
+    finished status (the team list), not Integration or Production. Use it for partly fixed issues."""
+    strict = read_overrides().get("strict_only", {})
+    return {str(key).strip().upper(): note for key, note in strict.items()} if isinstance(strict, dict) else {}
+
+
 STRICT_ONLY = load_strict_only()
+
+
+# ---- ONE-TIME TEST: "who is associated with what" snapshot (sent only to your own DM, never pings anyone) ----
+SNAPSHOT_JQL = 'labels = "techsupport" AND statusCategory != Done ORDER BY updated DESC'
+SNAPSHOT_MAX_CHARS = 3000
+SNAPSHOT_MAX_KEYS_PER_LINE = 40
+
+
+def snapshot_id():
+    """overrides.json can hold "people_snapshot": "<any label>". The snapshot is sent once per distinct label."""
+    value = read_overrides().get("people_snapshot")
+    return str(value) if value else None
+
+
+def fetch_watcher_names(config, key):
+    """Display names of the watchers of one issue, or None when Jira will not say (for example no permission)."""
+    url = f"{config['JIRA_SITE']}/rest/api/3/issue/{key}/watchers"
+    resp = requests.get(url, auth=(config["JIRA_EMAIL"], config["JIRA_API_TOKEN"]), headers={"Accept": "application/json"}, timeout=HTTP_TIMEOUT)
+    if resp.status_code in (401, 403, 404):
+        return None
+    resp.raise_for_status()
+    return [w.get("displayName") for w in resp.json().get("watchers", []) if w.get("displayName")]
+
+
+def collect_people(config, issues, watcher_lookup=fetch_watcher_names):
+    """{name: {"reporter": [keys], "watching": [keys]}}, plus how many issues had no people listed and how many lookups failed."""
+    people, nobody, failed = {}, 0, 0
+    for issue in issues:
+        key = issue["key"]
+        reporter = ((issue["fields"].get("reporter")) or {}).get("displayName")
+        watchers = watcher_lookup(config, key)
+        if watchers is None:
+            failed += 1
+            watchers = []
+        names = {}
+        if reporter:
+            names[reporter] = "reporter"
+        for name in watchers:
+            names.setdefault(name, "watching")        # reporter wins if the same person also watches
+        if not names:
+            nobody += 1
+        for name, role in names.items():
+            people.setdefault(name, {"reporter": [], "watching": []})[role].append(key)
+    return people, nobody, failed
+
+
+def build_people_snapshot(people, issue_count, nobody, failed):
+    """Plain-text messages (no @-mentions, so nobody is pinged), each under SNAPSHOT_MAX_CHARS."""
+    head = ("ONE-TIME TEST RUN. This is a one-off test of the associations list. It will not repeat and nobody was pinged.\n"
+            f"Snapshot: who is associated with the {issue_count} open techsupport Jira issues right now ({len(people)} people). "
+            "Reporter = created it; watching = watching it.")
+    notes = []
+    if nobody:
+        notes.append(f"{nobody} issue(s) list no reporter or watchers.")
+    if failed:
+        notes.append(f"Jira would not show the watchers of {failed} issue(s), so only their reporters are counted.")
+    blocks = []
+    for name, roles in sorted(people.items(), key=lambda item: (-(len(item[1]["reporter"]) + len(item[1]["watching"])), item[0].lower())):
+        lines = [f"{name}: {len(roles['reporter']) + len(roles['watching'])} issue(s)"]
+        for role in ("reporter", "watching"):
+            keys = roles[role]
+            if keys:
+                shown = ", ".join(keys[:SNAPSHOT_MAX_KEYS_PER_LINE]) + (f" (+{len(keys) - SNAPSHOT_MAX_KEYS_PER_LINE} more)" if len(keys) > SNAPSHOT_MAX_KEYS_PER_LINE else "")
+                lines.append(f"  {role}: {shown}")
+        blocks.append("\n".join(lines))
+    reminder = "(One-time test run, continued. Not a recurring message.)"
+    messages, current = [], "\n".join([head, *notes])
+    for block in blocks:
+        if len(current) + len(block) + 2 > SNAPSHOT_MAX_CHARS and current:
+            messages.append(current)
+            current = reminder
+        current = f"{current}\n\n{block}" if current else block
+    messages.append(current)
+    return messages
 
 
 def is_finished(status, key=None):
@@ -322,7 +403,8 @@ def main():
             open_issues = fetch_jira_issues(config, OPEN_JQL)
             created_keys = {issue["key"] for issue in fetch_jira_issues(config, CREATED_OPEN_JQL)}
             digest = build_digest(config, open_issues, created_keys)
-            print(digest)
+            # This repo is public, so its Actions logs are public too: never print ticket details outside a dry run.
+            print(digest if args.dry_run else f"Daily list built: {len(open_issues)} open issue(s).")
             if not args.dry_run:
                 send_slack_dm(config, digest)
                 last_digest = datetime.now(timezone.utc).isoformat()
@@ -357,13 +439,34 @@ def main():
             channel_error = f"Channel post failed: {exc}. Personal DMs and saved state were not affected."
             print(channel_error)
 
+    # ONE-TIME TEST: a snapshot of who is associated with which open techsupport issue. DM to the owner only, once per label.
+    snapshot_done = state.get("people_snapshot_done")
+    wanted = snapshot_id()
+    snapshot_error = None
+    if wanted and wanted != snapshot_done:
+        try:
+            open_issues = fetch_jira_issues(config, SNAPSHOT_JQL, fields="summary,status,reporter")
+            people, nobody, failed = collect_people(config, open_issues)
+            messages = build_people_snapshot(people, len(open_issues), nobody, failed)
+            print(f"Snapshot: {len(open_issues)} open techsupport issue(s), {len(people)} people, {len(messages)} message(s).")
+            for text in messages:
+                if args.dry_run:
+                    print(f"--- snapshot DM ---\n{text}")
+                else:
+                    send_slack_dm(config, text)
+            if not args.dry_run:
+                snapshot_done = wanted
+        except (requests.RequestException, RuntimeError) as exc:
+            snapshot_error = f"Snapshot failed: {exc}."
+            print(snapshot_error)
+
     if args.dry_run:
         print("Dry run: Slack was not contacted and state.json was not changed.")
         return
 
-    save_state({**previous, **current}, last_digest, announced)
-    if channel_error:
-        sys.exit(channel_error)
+    save_state({**previous, **current}, last_digest, announced, snapshot_done)
+    if channel_error or snapshot_error:
+        sys.exit(" ".join(m for m in (channel_error, snapshot_error) if m))
 
 
 if __name__ == "__main__":

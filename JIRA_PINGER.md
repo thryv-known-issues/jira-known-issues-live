@@ -16,6 +16,8 @@ A GitHub Actions job that runs every 15 minutes and sends you a Slack DM when a 
   - If a channel post fails (for example the app was never added to the channel), your personal DMs and saved state are not affected; the run is marked failed so GitHub emails you.
   - The Slack app must be a member of the channel (in the channel, type `/invite @Jira Pinger`).
 - Exceptions for partly fixed issues: list an issue under `strict_only` in `overrides.json` and Integration or Production no longer count as resolved for it. It stays in your daily open-issues list, and you get your DM only when it reaches a truly finished status (Done, Resolved, Closed, Released, Deployed, Complete or Completed, Cancelled, Published, Won't Do). To add one, edit `overrides.json` in the repo, for example `"SHAR-8117": "why it is an exception"`.
+- One-time test snapshot: if `overrides.json` has a `people_snapshot` label that is new to `state.json`, the next run sends a DM to you (only you, never a channel, and with no @-mentions) listing who is reporter or watcher on each open techsupport issue. The message says it is a one-time test run. The label is then recorded in `state.json` so it never repeats; change the label to run it again on purpose.
+- The Actions logs of this public repo only ever show counts, never ticket numbers, summaries or people's names.
 - The job runs every 15 minutes because GitHub often skips scheduled runs. Saved statuses prevent repeat DMs.
 - `state.json` keeps the last known status of every issue seen, and is committed back to the repo by the workflow only when it changes.
 - Slack messages go to `chat.postMessage` with the `SLACK_USER_ID` as the channel.
