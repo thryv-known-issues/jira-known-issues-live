@@ -15,6 +15,7 @@ A GitHub Actions job that runs every 15 minutes and sends you a Slack DM when a 
   - Email addresses in issue summaries are replaced with `[email]` in channel posts.
   - If a channel post fails (for example the app was never added to the channel), your personal DMs and saved state are not affected; the run is marked failed so GitHub emails you.
   - The Slack app must be a member of the channel (in the channel, type `/invite @Jira Pinger`).
+- Exceptions for partly fixed issues: list an issue under `strict_only` in `overrides.json` and Integration or Production no longer count as resolved for it. It stays in your daily open-issues list, and you get your DM only when it reaches a truly finished status (Done, Resolved, Closed, Released, Deployed, Complete or Completed, Cancelled, Published, Won't Do). To add one, edit `overrides.json` in the repo, for example `"SHAR-8117": "why it is an exception"`.
 - The job runs every 15 minutes because GitHub often skips scheduled runs. Saved statuses prevent repeat DMs.
 - `state.json` keeps the last known status of every issue seen, and is committed back to the repo by the workflow only when it changes.
 - Slack messages go to `chat.postMessage` with the `SLACK_USER_ID` as the channel.

@@ -1,0 +1,5 @@
+{
+  "strict_only": {
+    "SHAR-8117": "Type 1 is resolved but type 2 is not, so Integration does not count as resolved. Only Done, Closed, Resolved and similar do."
+  }
+}

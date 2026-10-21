@@ -72,6 +72,7 @@ SUMMARY_MAX_CHARS = 90
 NO_OPEN_MESSAGE = "No data: you have no open Jira issues that you created or are watching."
 SLACK_POST_URL = "https://slack.com/api/chat.postMessage"
 STATE_FILE = Path(__file__).resolve().parent / "state.json"
+OVERRIDES_FILE = Path(__file__).resolve().parent / "overrides.json"
 HTTP_TIMEOUT = 30
 
 
@@ -135,8 +136,27 @@ def digest_due(last_iso, now=None):
     return last.date() < now.date()
 
 
-def is_finished(status):
-    return status.strip().lower() in TARGET_STATUSES
+def load_strict_only():
+    """Issues listed under "strict_only" in overrides.json are only treated as resolved once they reach a truly
+    finished status (the team list), not Integration or Production. Use it for partly fixed issues."""
+    if not OVERRIDES_FILE.exists():
+        return {}
+    try:
+        data = json.loads(OVERRIDES_FILE.read_text(encoding="utf-8-sig"))
+        return {str(key).strip().upper(): note for key, note in data.get("strict_only", {}).items()}
+    except (ValueError, AttributeError) as exc:
+        print(f"WARNING: could not read {OVERRIDES_FILE.name} ({exc}); ignoring it.")
+        return {}
+
+
+STRICT_ONLY = load_strict_only()
+
+
+def is_finished(status, key=None):
+    status = status.strip().lower()
+    if key and key.upper() in STRICT_ONLY:
+        return status in CHANNEL_STATUSES
+    return status in TARGET_STATUSES
 
 
 def find_transitions(issues, previous_statuses):
@@ -146,7 +166,7 @@ def find_transitions(issues, previous_statuses):
         key = issue["key"]
         status = issue["fields"]["status"]["name"]
         before = previous_statuses.get(key)
-        if is_finished(status) and (before is None or not is_finished(before)):
+        if is_finished(status, key) and (before is None or not is_finished(before, key)):
             hits.append((key, issue["fields"].get("summary", ""), status))
     return hits
 
@@ -161,7 +181,7 @@ def build_message(config, key, summary, status):
 
 def build_digest(config, issues, created_keys):
     """Summarize open issues grouped by Jira board (project), then by status. Watched-only issues are tagged."""
-    open_issues = [i for i in issues if not is_finished(i["fields"]["status"]["name"])]
+    open_issues = [i for i in issues if not is_finished(i["fields"]["status"]["name"], i["key"])]
     if not open_issues:
         return NO_OPEN_MESSAGE
 
