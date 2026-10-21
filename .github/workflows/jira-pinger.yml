@@ -36,6 +36,8 @@ jobs:
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_USER_ID: ${{ secrets.SLACK_USER_ID }}
+          # Optional. When this secret exists, resolved techsupport issues are also posted to that Slack channel.
+          SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
         run: python jira_pinger.py
 
       - name: Commit state.json if it changed

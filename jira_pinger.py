@@ -2,11 +2,15 @@
 """DM a Slack user when Jira issues they reported or watch move into a finished status.
 
 When nothing has finished, it sends a digest of every open issue they created or watch, at most once a day.
+
+If SLACK_CHANNEL_ID is set, any Jira issue labelled "techsupport" that is resolved (by the team's rules) is also posted to
+that Slack channel. The channel only ever gets resolved issues, never the open-issues digest.
 """
 
 import argparse
 import json
 import os
+import re
 import sys
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
@@ -34,6 +38,27 @@ TARGET_STATUSES = {
     "integration",
     "production",
 }
+# Team channel: every "techsupport" issue (any project, any reporter) whose status just changed to a resolved status.
+# These are the team's resolved statuses (the Known System Issues rules), so Integration and Production are NOT here,
+# even though they ping you personally. Cancelled is included; the post shows the status word so readers can tell.
+CHANNEL_JQL = 'labels = "techsupport" AND status CHANGED AFTER "-125m" ORDER BY updated DESC'
+CHANNEL_STATUSES = {
+    "done",
+    "resolved",
+    "closed",
+    "cancelled",
+    "canceled",
+    "released",
+    "deployed",
+    "complete",
+    "completed",
+    "published",
+    "won't do",
+}
+CHANNEL_MAX_PER_MESSAGE = 25
+CHANNEL_SUMMARY_CHARS = 110
+CHANNEL_KEEP_DAYS = 14
+EMAIL_RE = re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
 # The job runs every 15 minutes, but the open-issues digest goes out once a day: on the first run at or after this
 # hour (Central time). Set DIGEST_WEEKDAYS_ONLY to False to get it on weekends too.
 try:
@@ -56,6 +81,7 @@ def load_config():
         sys.exit(f"Missing required environment variable(s): {', '.join(missing)}")
     config = {name: os.environ[name] for name in REQUIRED_ENV}
     config["JIRA_SITE"] = config["JIRA_SITE"].rstrip("/")
+    config["SLACK_CHANNEL_ID"] = os.environ.get("SLACK_CHANNEL_ID", "").strip()   # optional: turns on team-channel posts
     return config
 
 
@@ -83,11 +109,13 @@ def load_state():
     return {}
 
 
-def save_state(statuses, last_digest=None):
+def save_state(statuses, last_digest=None, channel_announced=None):
     # Keep every issue ever seen, so a later edit to an already-finished issue is not mistaken for a new transition.
     state = {"statuses": statuses}
     if last_digest:
         state["last_digest_dm"] = last_digest
+    if channel_announced is not None:
+        state["channel_announced"] = channel_announced
     STATE_FILE.write_text(json.dumps(state, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
@@ -170,12 +198,52 @@ def build_digest(config, issues, created_keys):
     return "\n".join(lines)
 
 
-def send_slack_dm(config, text):
+def channel_resolved(issues):
+    """(key, summary, status) for techsupport issues now in one of the team's resolved statuses."""
+    return [
+        (i["key"], i["fields"].get("summary") or "", i["fields"]["status"]["name"])
+        for i in issues
+        if i["fields"]["status"]["name"].strip().lower() in CHANNEL_STATUSES
+    ]
+
+
+def mask_emails(text):
+    """Ticket summaries sometimes contain customer email addresses; keep them out of a shared channel."""
+    return EMAIL_RE.sub("[email]", text)
+
+
+def build_channel_batches(config, items):
+    """Yield (message text, keys it covers), at most CHANNEL_MAX_PER_MESSAGE issues per message."""
+    for start in range(0, len(items), CHANNEL_MAX_PER_MESSAGE):
+        chunk = items[start:start + CHANNEL_MAX_PER_MESSAGE]
+        lines = [f":white_check_mark: Jira resolved (techsupport): {len(chunk)}"]
+        for key, summary, status in chunk:
+            summary = mask_emails(summary)
+            if len(summary) > CHANNEL_SUMMARY_CHARS:
+                summary = summary[:CHANNEL_SUMMARY_CHARS].rstrip() + "..."
+            lines.append(f"- <{config['JIRA_SITE']}/browse/{key}|{key}> {escape_slack(summary)} ({escape_slack(status)})")
+        yield "\n".join(lines), [key for key, _, _ in chunk]
+
+
+def prune_announced(announced, now=None):
+    """Forget announcements older than CHANNEL_KEEP_DAYS so state.json stays small."""
+    now = now or datetime.now(timezone.utc)
+    keep = {}
+    for key, stamp in announced.items():
+        try:
+            if now - datetime.fromisoformat(stamp) <= timedelta(days=CHANNEL_KEEP_DAYS):
+                keep[key] = stamp
+        except ValueError:
+            keep[key] = stamp
+    return keep
+
+
+def _post(config, channel, text):
     resp = requests.post(
         SLACK_POST_URL,
         headers={"Authorization": f"Bearer {config['SLACK_BOT_TOKEN']}"},
         json={
-            "channel": config["SLACK_USER_ID"],
+            "channel": channel,
             "text": text,
             "unfurl_links": False,
             "unfurl_media": False,
@@ -186,6 +254,14 @@ def send_slack_dm(config, text):
     body = resp.json()
     if not body.get("ok"):
         raise RuntimeError(f"Slack chat.postMessage failed: {body.get('error', 'unknown error')}")
+
+
+def send_slack_dm(config, text):
+    _post(config, config["SLACK_USER_ID"], text)
+
+
+def send_slack_channel(config, text):
+    _post(config, config["SLACK_CHANNEL_ID"], text)
 
 
 def main():
@@ -233,11 +309,41 @@ def main():
         else:
             print("Nothing finished, and today's open-issues digest is not due (or was already sent).")
 
+    # Team channel: resolved techsupport issues only. A failure here must never undo or repeat the personal DMs,
+    # so it is caught, state is saved, and the run is then reported as failed at the very end.
+    channel_error = None
+    announced = state.get("channel_announced")
+    if config["SLACK_CHANNEL_ID"]:
+        try:
+            candidates = channel_resolved(fetch_jira_issues(config, CHANNEL_JQL))
+            now_iso = datetime.now(timezone.utc).isoformat()
+            if announced is None:
+                # First run with a channel set: record what is already resolved so the channel is not flooded.
+                print(f"Channel: first run, recorded {len(candidates)} recently resolved issue(s) without posting.")
+                if not args.dry_run:
+                    announced = {key: now_iso for key, _, _ in candidates}
+            else:
+                fresh = [item for item in candidates if item[0] not in announced]
+                print(f"Channel: {len(candidates)} techsupport issue(s) resolved recently; {len(fresh)} new to the channel.")
+                for text, keys in build_channel_batches(config, fresh):
+                    if args.dry_run:
+                        print(f"--- channel post ---\n{text}")
+                    else:
+                        send_slack_channel(config, text)
+                        announced = {**announced, **{key: now_iso for key in keys}}
+            if announced is not None:
+                announced = prune_announced(announced)
+        except (requests.RequestException, RuntimeError) as exc:
+            channel_error = f"Channel post failed: {exc}. Personal DMs and saved state were not affected."
+            print(channel_error)
+
     if args.dry_run:
         print("Dry run: Slack was not contacted and state.json was not changed.")
         return
 
-    save_state({**previous, **current}, last_digest)
+    save_state({**previous, **current}, last_digest, announced)
+    if channel_error:
+        sys.exit(channel_error)
 
 
 if __name__ == "__main__":
