@@ -83,7 +83,45 @@ def load_config():
     config = {name: os.environ[name] for name in REQUIRED_ENV}
     config["JIRA_SITE"] = config["JIRA_SITE"].rstrip("/")
     config["SLACK_CHANNEL_ID"] = os.environ.get("SLACK_CHANNEL_ID", "").strip()   # optional: turns on team-channel posts
+    config["MENTIONS"] = load_mentions(os.environ.get("SLACK_MENTIONS", ""))
     return config
+
+
+def load_mentions(raw):
+    """Optional secret SLACK_MENTIONS: JSON like {"Jira display name": "U012ABCDEF"}. Only these people are ever tagged in the channel."""
+    if not raw.strip():
+        return {}
+    try:
+        data = json.loads(raw)
+    except ValueError:
+        print("SLACK_MENTIONS is not valid JSON, so channel posts will not tag anyone.")
+        return {}
+    if not isinstance(data, dict):
+        return {}
+    mentions = {}
+    for name, uid in data.items():
+        uid = str(uid or "").strip()
+        if uid.startswith("->"):                  # "Former Agent": "->Current Agent" re-routes to that person's ID
+            uid = str(data.get(uid[2:].strip()) or "").strip()
+        if uid and not uid.startswith("->"):
+            mentions[str(name)] = uid
+    return mentions
+
+
+def mention_ids(config, key, reporter, watcher_lookup=None):
+    """Slack IDs to tag for one resolved issue: its reporter and watchers who are in SLACK_MENTIONS, each person once."""
+    mentions = config.get("MENTIONS") or {}
+    if not mentions:
+        return []
+    names = [reporter] if reporter else []
+    watchers = (watcher_lookup or fetch_watcher_names)(config, key)
+    names += watchers or []
+    ids = []
+    for name in names:
+        uid = mentions.get(name)
+        if uid and uid not in ids:
+            ids.append(uid)
+    return ids
 
 
 def fetch_jira_issues(config, jql=JQL, fields="summary,status,project"):
@@ -313,16 +351,19 @@ def mask_emails(text):
     return EMAIL_RE.sub("[email]", text)
 
 
-def build_channel_batches(config, items):
-    """Yield (message text, keys it covers), at most CHANNEL_MAX_PER_MESSAGE issues per message."""
+def build_channel_batches(config, items, tags=None):
+    """Yield (message text, keys it covers), at most CHANNEL_MAX_PER_MESSAGE issues per message.
+    tags maps an issue key to the Slack IDs to tag on its line."""
+    tags = tags or {}
     for start in range(0, len(items), CHANNEL_MAX_PER_MESSAGE):
         chunk = items[start:start + CHANNEL_MAX_PER_MESSAGE]
-        lines = [f":white_check_mark: Jira resolved (techsupport): {len(chunk)}"]
+        lines = [":white_check_mark: Resolved, please check:"]
         for key, summary, status in chunk:
             summary = mask_emails(summary)
             if len(summary) > CHANNEL_SUMMARY_CHARS:
                 summary = summary[:CHANNEL_SUMMARY_CHARS].rstrip() + "..."
-            lines.append(f"- <{config['JIRA_SITE']}/browse/{key}|{key}> {escape_slack(summary)} ({escape_slack(status)})")
+            who = "".join(f" <@{uid}>" for uid in tags.get(key, []))
+            lines.append(f"- <{config['JIRA_SITE']}/browse/{key}|{key}> {escape_slack(summary)} ({escape_slack(status)}){who}")
         yield "\n".join(lines), [key for key, _, _ in chunk]
 
 
@@ -417,7 +458,9 @@ def main():
     announced = state.get("channel_announced")
     if config["SLACK_CHANNEL_ID"]:
         try:
-            candidates = channel_resolved(fetch_jira_issues(config, CHANNEL_JQL))
+            channel_issues = fetch_jira_issues(config, CHANNEL_JQL, fields="summary,status,reporter")
+            reporters = {i["key"]: ((i["fields"].get("reporter")) or {}).get("displayName") for i in channel_issues}
+            candidates = channel_resolved(channel_issues)
             now_iso = datetime.now(timezone.utc).isoformat()
             if announced is None:
                 # First run with a channel set: record what is already resolved so the channel is not flooded.
@@ -427,7 +470,13 @@ def main():
             else:
                 fresh = [item for item in candidates if item[0] not in announced]
                 print(f"Channel: {len(candidates)} techsupport issue(s) resolved recently; {len(fresh)} new to the channel.")
-                for text, keys in build_channel_batches(config, fresh):
+                tags = {}
+                for key, _, _ in fresh:
+                    try:
+                        tags[key] = mention_ids(config, key, reporters.get(key))
+                    except requests.RequestException:
+                        tags[key] = []             # never lose the post because a watcher lookup failed
+                for text, keys in build_channel_batches(config, fresh, tags):
                     if args.dry_run:
                         print(f"--- channel post ---\n{text}")
                     else:

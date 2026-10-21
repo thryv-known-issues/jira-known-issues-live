@@ -38,6 +38,8 @@ jobs:
           SLACK_USER_ID: ${{ secrets.SLACK_USER_ID }}
           # Optional. When this secret exists, resolved techsupport issues are also posted to that Slack channel.
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
+          # Optional JSON of Slack IDs for the agents tagged in channel posts.
+          SLACK_MENTIONS: ${{ secrets.SLACK_MENTIONS }}
         run: python jira_pinger.py
 
       - name: Commit state.json if it changed
