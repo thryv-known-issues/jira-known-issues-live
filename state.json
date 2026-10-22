@@ -68,6 +68,7 @@
     "TP-38391": "Ready for Stage",
     "TP-38526": "Done",
     "TP-38687": "Open",
+    "TP-39036": "Ready for Dev",
     "TP-39326": "Ready for Dev",
     "TP-39332": "Ready for Dev",
     "TP-39849": "Cancelled",
@@ -84,6 +85,6 @@
     "TPS-262": "Closed",
     "TPS-266": "Closed",
     "TSM-480411": "Done",
-    "TSM-485923": "Open"
+    "TSM-485923": "Work In Progress"
   }
 }
