@@ -16,6 +16,7 @@ A GitHub Actions job that runs every 15 minutes and sends you a Slack DM when a 
   - If a channel post fails (for example the app was never added to the channel), your personal DMs and saved state are not affected; the run is marked failed so GitHub emails you.
   - Each line is short: the issue, its summary and status, then an @-tag for each agent on it who is in the optional `SLACK_MENTIONS` secret, followed by the header "Resolved, please check". Only the reporter and watchers listed in that secret are ever tagged.
   - `SLACK_MENTIONS` is JSON of Jira display name to Slack member ID. A value like `"->Scott Savage"` re-routes a former agent's tickets to that person's ID (each person is tagged once). Without the secret nobody is tagged.
+  - Quiet hours: from Friday 10 PM to Monday 6 AM Central, nothing is posted to the channel. Issues that resolve in that window are held (only their keys are saved in `state.json`) and go out together in one post on the first run at or after 6 AM Central Monday, skipping any that are no longer resolved. Your personal DMs and daily list are not affected. To change the hours, edit `QUIET_FRIDAY_HOUR` and `QUIET_MONDAY_HOUR` in `jira_pinger.py`.
   - The Slack app must be a member of the channel (in the channel, type `/invite @Jira Pinger`).
 - Exceptions for partly fixed issues: list an issue under `strict_only` in `overrides.json` and Integration or Production no longer count as resolved for it. It stays in your daily open-issues list, and you get your DM only when it reaches a truly finished status (Done, Resolved, Closed, Released, Deployed, Complete or Completed, Cancelled, Published, Won't Do). To add one, edit `overrides.json` in the repo, for example `"SHAR-8117": "why it is an exception"`.
 - One-time test snapshot: if `overrides.json` has a `people_snapshot` label that is new to `state.json`, the next run sends a DM to you (only you, never a channel, and with no @-mentions) listing who is reporter or watcher on each open techsupport issue. The message says it is a one-time test run. The label is then recorded in `state.json` so it never repeats; change the label to run it again on purpose.
@@ -55,5 +56,6 @@ python jira_pinger.py --dry-run
 Omit `--dry-run` to send real DMs and update `state.json`.
 
 The script needs Python 3.12 or later and the `requests` package: `pip install requests`.
+
 
 

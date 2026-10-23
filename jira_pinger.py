@@ -69,6 +69,10 @@ except Exception:  # no time zone database installed: fall back to a fixed Centr
     LOCAL_TZ = timezone(timedelta(hours=-6), "CST")
 DIGEST_HOUR = 8
 DIGEST_WEEKDAYS_ONLY = True
+# Team channel quiet hours (Central): nothing is posted from Friday QUIET_FRIDAY_HOUR through Monday QUIET_MONDAY_HOUR.
+# Issues that resolve meanwhile are held (by key only) and posted together on the first run after the quiet hours end.
+QUIET_FRIDAY_HOUR = 22
+QUIET_MONDAY_HOUR = 6
 MAX_DIGEST_ISSUES = 100
 SUMMARY_MAX_CHARS = 90
 NO_OPEN_MESSAGE = "No data: you have no open Jira issues that you created or are watching."
@@ -150,7 +154,7 @@ def load_state():
     return {}
 
 
-def save_state(statuses, last_digest=None, channel_announced=None, snapshot_done=None):
+def save_state(statuses, last_digest=None, channel_announced=None, snapshot_done=None, channel_held=None):
     # Keep every issue ever seen, so a later edit to an already-finished issue is not mistaken for a new transition.
     state = {"statuses": statuses}
     if last_digest:
@@ -159,7 +163,16 @@ def save_state(statuses, last_digest=None, channel_announced=None, snapshot_done
         state["channel_announced"] = channel_announced
     if snapshot_done:
         state["people_snapshot_done"] = snapshot_done
+    if channel_held:
+        state["channel_held"] = sorted(channel_held)
     STATE_FILE.write_text(json.dumps(state, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def channel_quiet(now=None):
+    """True from Friday 10 PM through Monday 6 AM Central, when nothing is posted to the team channel."""
+    now = (now or datetime.now(timezone.utc)).astimezone(LOCAL_TZ)
+    day, hour = now.weekday(), now.hour
+    return (day == 4 and hour >= QUIET_FRIDAY_HOUR) or day in (5, 6) or (day == 0 and hour < QUIET_MONDAY_HOUR)
 
 
 def digest_due(last_iso, now=None):
@@ -458,6 +471,7 @@ def main():
     # so it is caught, state is saved, and the run is then reported as failed at the very end.
     channel_error = None
     announced = state.get("channel_announced")
+    held = list(state.get("channel_held", []))
     if config["SLACK_CHANNEL_ID"]:
         try:
             channel_issues = fetch_jira_issues(config, CHANNEL_JQL, fields="summary,status,reporter")
@@ -470,7 +484,18 @@ def main():
                 if not args.dry_run:
                     announced = {key: now_iso for key, _, _ in candidates}
             else:
-                fresh = [item for item in candidates if item[0] not in announced]
+                held = [k for k in state.get("channel_held", []) if k not in announced]
+                fresh = [item for item in candidates if item[0] not in announced and item[0] not in held]
+                if channel_quiet():
+                    held = sorted(set(held) | {key for key, _, _ in fresh})
+                    print(f"Channel: quiet hours; {len(held)} issue(s) held for Monday morning.")
+                    fresh = []
+                elif held:
+                    jql = "key in (" + ",".join(held) + ")"
+                    held_issues = fetch_jira_issues(config, jql, fields="summary,status,reporter")
+                    reporters.update({i["key"]: ((i["fields"].get("reporter")) or {}).get("displayName") for i in held_issues})
+                    fresh = channel_resolved(held_issues) + fresh      # held issues still resolved now, ahead of this run's new ones
+                    held = []
                 print(f"Channel: {len(candidates)} techsupport issue(s) resolved recently; {len(fresh)} new to the channel.")
                 tags = {}
                 for key, _, _ in fresh:
@@ -515,7 +540,7 @@ def main():
         print("Dry run: Slack was not contacted and state.json was not changed.")
         return
 
-    save_state({**previous, **current}, last_digest, announced, snapshot_done)
+    save_state({**previous, **current}, last_digest, announced, snapshot_done, held)
     if channel_error or snapshot_error:
         sys.exit(" ".join(m for m in (channel_error, snapshot_error) if m))
 
