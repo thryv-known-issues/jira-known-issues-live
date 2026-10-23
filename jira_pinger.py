@@ -39,10 +39,11 @@ TARGET_STATUSES = {
     "production",
 }
 # Team channel: every "techsupport" issue (any project, any reporter) whose status just changed to a resolved status.
-# These are the team's resolved statuses (the Known System Issues rules), so Integration and Production are NOT here,
-# even though they ping you personally. Cancelled is included; the post shows the status word so readers can tell.
+# STRICT_STATUSES are the team's fully resolved statuses (the Known System Issues rules); Integration is NOT here.
+# The channel also posts Production. Issues listed under strict_only in overrides.json use STRICT_STATUSES only,
+# so a partly fixed issue does not post at Production. Cancelled is included; the post shows the status word.
 CHANNEL_JQL = 'labels = "techsupport" AND status CHANGED AFTER "-125m" ORDER BY updated DESC'
-CHANNEL_STATUSES = {
+STRICT_STATUSES = {
     "done",
     "resolved",
     "closed",
@@ -55,6 +56,7 @@ CHANNEL_STATUSES = {
     "published",
     "won't do",
 }
+CHANNEL_STATUSES = STRICT_STATUSES | {"production"}
 CHANNEL_MAX_PER_MESSAGE = 25
 CHANNEL_SUMMARY_CHARS = 110
 CHANNEL_KEEP_DAYS = 14
@@ -274,7 +276,7 @@ def build_people_snapshot(people, issue_count, nobody, failed):
 def is_finished(status, key=None):
     status = status.strip().lower()
     if key and key.upper() in STRICT_ONLY:
-        return status in CHANNEL_STATUSES
+        return status in STRICT_STATUSES
     return status in TARGET_STATUSES
 
 
@@ -342,7 +344,7 @@ def channel_resolved(issues):
     return [
         (i["key"], i["fields"].get("summary") or "", i["fields"]["status"]["name"])
         for i in issues
-        if i["fields"]["status"]["name"].strip().lower() in CHANNEL_STATUSES
+        if i["fields"]["status"]["name"].strip().lower() in (STRICT_STATUSES if i["key"].upper() in STRICT_ONLY else CHANNEL_STATUSES)
     ]
 
 

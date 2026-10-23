@@ -10,7 +10,7 @@ A GitHub Actions job that runs every 15 minutes and sends you a Slack DM when a 
 - It compares each issue's status with the status saved in `state.json`. A DM is sent only when an issue has just moved into one of the finished statuses. Edits, comments and other status changes don't trigger a DM.
 - The first run after this change only records the current statuses and sends nothing.
 - Once a day, on weekdays, the first run at or after 8 AM Central also sends a list of every open issue you reported or watch, grouped by Jira board and status. Nothing else is sent when nothing has finished. To change the hour or include weekends, edit `DIGEST_HOUR` or `DIGEST_WEEKDAYS_ONLY` in `jira_pinger.py`.
-- Team channel (optional): if the `SLACK_CHANNEL_ID` secret is set, every Jira issue labelled `techsupport`, in any project and by any reporter, whose status just changed to a resolved status is also posted to that channel, batched into one message per run. The channel only ever gets these resolved posts, never the open-issues list. Its resolved statuses follow the team rules: Done, Resolved, Closed, Cancelled or Canceled, Released, Deployed, Complete or Completed, Published, and Won't Do. Integration and Production are not included there, although they still ping you personally.
+- Team channel (optional): if the `SLACK_CHANNEL_ID` secret is set, every Jira issue labelled `techsupport`, in any project and by any reporter, whose status just changed to a resolved status is also posted to that channel, batched into one message per run. The channel only ever gets these resolved posts, never the open-issues list. Its resolved statuses follow the team rules: Done, Resolved, Closed, Cancelled or Canceled, Released, Deployed, Complete or Completed, Published, Won't Do, and Production. Integration is not included there, although it still pings you personally. A ticket that posts at Production does not post again at Done (it is remembered for 14 days). Issues under `strict_only` skip Production too.
   - The first run after the channel is turned on only records what is already resolved, so the channel is not flooded.
   - Email addresses in issue summaries are replaced with `[email]` in channel posts.
   - If a channel post fails (for example the app was never added to the channel), your personal DMs and saved state are not affected; the run is marked failed so GitHub emails you.
@@ -55,4 +55,5 @@ python jira_pinger.py --dry-run
 Omit `--dry-run` to send real DMs and update `state.json`.
 
 The script needs Python 3.12 or later and the `requests` package: `pip install requests`.
+
 
