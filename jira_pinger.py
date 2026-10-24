@@ -229,6 +229,25 @@ SNAPSHOT_MAX_CHARS = 3000
 SNAPSHOT_MAX_KEYS_PER_LINE = 40
 
 
+def bot_preview_id():
+    """overrides.json can hold "bot_preview": "<any label>". A fake-data sample of each channel message style is DMed to the owner once per label."""
+    value = read_overrides().get("bot_preview")
+    return str(value) if value else None
+
+
+def build_bot_previews(config):
+    """The three channel message styles built from made-up tickets, tagging only the owner, each marked as a test."""
+    me = [config["SLACK_USER_ID"]]
+    note = "*TEST PREVIEW, fake data, sent only to you. Nothing was posted to the team channel.*\n"
+    resolved = [("TEST-0001", "Example: customer cannot see their add-on", "Done"), ("TEST-0002", "Example: report is missing data", "Production")]
+    incoming = [("TEST-0003", "Example: fix is built and heading to production", "Integration")]
+    tags = {key: me for key, _, _ in resolved + incoming}
+    texts = [text for text, _ in build_channel_batches(config, resolved, tags)]
+    texts += [text for text, _ in build_channel_batches(config, incoming, tags, INCOMING_HEADER)]
+    texts.append(build_recap(config, resolved, incoming, tags))
+    return [note + text for text in texts]
+
+
 def snapshot_id():
     """overrides.json can hold "people_snapshot": "<any label>". The snapshot is sent once per distinct label."""
     value = read_overrides().get("people_snapshot")
@@ -615,13 +634,31 @@ def main():
             snapshot_error = f"Snapshot failed: {exc}."
             print(snapshot_error)
 
+    # ONE-TIME TEST: sample channel messages, sent as the bot to the owner's DM only, once per label.
+    preview_done = state.get("bot_preview_done")
+    preview_wanted = bot_preview_id()
+    preview_error = None
+    if preview_wanted and preview_wanted != preview_done:
+        try:
+            for text in build_bot_previews(config):
+                if args.dry_run:
+                    print(f"--- bot preview DM ---\n{text}")
+                else:
+                    send_slack_dm(config, text)
+            print("Bot preview: sample messages built.")
+            if not args.dry_run:
+                preview_done = preview_wanted
+        except (requests.RequestException, RuntimeError) as exc:
+            preview_error = f"Bot preview failed: {exc}."
+            print(preview_error)
+
     if args.dry_run:
         print("Dry run: Slack was not contacted and state.json was not changed.")
         return
 
-    save_state({**previous, **current}, last_digest, announced, snapshot_done, weekend_resolved, {"channel_incoming": incoming_announced, "weekend_incoming": weekend_incoming})
-    if channel_error or snapshot_error:
-        sys.exit(" ".join(m for m in (channel_error, snapshot_error) if m))
+    save_state({**previous, **current}, last_digest, announced, snapshot_done, weekend_resolved, {"channel_incoming": incoming_announced, "weekend_incoming": weekend_incoming, "bot_preview_done": preview_done})
+    if channel_error or snapshot_error or preview_error:
+        sys.exit(" ".join(m for m in (channel_error, snapshot_error, preview_error) if m))
 
 
 if __name__ == "__main__":
