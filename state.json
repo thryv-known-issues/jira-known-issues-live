@@ -44,6 +44,10 @@
     "TP-40546": "2026-10-23T15:00:23.286172+00:00",
     "TSM-486155": "2026-10-23T13:00:22.713833+00:00"
   },
+  "channel_held": [
+    "TP-28615",
+    "TP-34537"
+  ],
   "last_digest_dm": "2026-10-23T13:00:22.385348+00:00",
   "people_snapshot_done": "one-time-test-2026-10-21",
   "statuses": {
@@ -75,7 +79,7 @@
     "TP-24670": "Ready for Dev",
     "TP-27989": "In Progress",
     "TP-28060": "Done",
-    "TP-28615": "Production",
+    "TP-28615": "Done",
     "TP-29384": "Done",
     "TP-29515": "Done",
     "TP-29520": "Done",
@@ -85,7 +89,7 @@
     "TP-34807": "Done",
     "TP-35120": "Done",
     "TP-36275": "Ready for Dev",
-    "TP-38391": "Production",
+    "TP-38391": "Done",
     "TP-38526": "Done",
     "TP-38687": "Open",
     "TP-39036": "Ready for Dev",
