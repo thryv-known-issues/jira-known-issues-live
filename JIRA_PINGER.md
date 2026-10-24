@@ -1,42 +1,57 @@
 ﻿# jira-pinger
 
-A GitHub Actions job that runs every 15 minutes and sends you a Slack DM when a Jira issue you reported or watch moves into a finished status: Done, Cancelled or Canceled, Released, Deployed, Complete or Completed, Closed, Resolved, Integration, or Production.
+A GitHub Actions job that watches Jira and keeps Ryan and the support team in Slack up to date. It does two separate things.
 
-## How it works
+1. **Personal DMs to Ryan.** A Slack DM when a Jira issue he reported or watches moves into a finished status, plus one list of his open issues each weekday morning.
+2. **Team channel posts.** A post in the support team channel when any Jira issue labelled `techsupport` is resolved, tagging the agents on it so they know to check it.
 
-- `jira_pinger.py` queries Jira Cloud with JQL:
-  `(reporter = currentUser() OR watcher = currentUser()) AND updated >= "-125m" ORDER BY updated DESC`
-  The wider window covers a skipped hourly run, since GitHub sometimes skips scheduled jobs.
-- It compares each issue's status with the status saved in `state.json`. A DM is sent only when an issue has just moved into one of the finished statuses. Edits, comments and other status changes don't trigger a DM.
-- The first run after this change only records the current statuses and sends nothing.
-- Once a day, on weekdays, the first run at or after 8 AM Central also sends a list of every open issue you reported or watch, grouped by Jira board and status. Nothing else is sent when nothing has finished. To change the hour or include weekends, edit `DIGEST_HOUR` or `DIGEST_WEEKDAYS_ONLY` in `jira_pinger.py`.
-- Team channel (optional): if the `SLACK_CHANNEL_ID` secret is set, every Jira issue labelled `techsupport`, in any project and by any reporter, whose status just changed to a resolved status is also posted to that channel, batched into one message per run. The channel only ever gets these resolved posts, never the open-issues list. Its resolved statuses follow the team rules: Done, Resolved, Closed, Cancelled or Canceled, Released, Deployed, Complete or Completed, Published, Won't Do, and Production. Integration is not included there, although it still pings you personally. A ticket that posts at Production does not post again at Done (it is remembered for 14 days). Issues under `strict_only` skip Production too.
-  - The first run after the channel is turned on only records what is already resolved, so the channel is not flooded.
-  - Email addresses in issue summaries are replaced with `[email]` in channel posts.
-  - If a channel post fails (for example the app was never added to the channel), your personal DMs and saved state are not affected; the run is marked failed so GitHub emails you.
-  - Each line is short: the issue, its summary and status, then an @-tag for each agent on it who is in the optional `SLACK_MENTIONS` secret, followed by the header "Resolved, please check". Only the reporter and watchers listed in that secret are ever tagged.
-  - `SLACK_MENTIONS` is JSON of Jira display name to Slack member ID. A value like `"->Scott Savage"` re-routes a former agent's tickets to that person's ID (each person is tagged once). Without the secret nobody is tagged.
-  - Quiet hours: from Friday 10 PM to Monday 6 AM Central, nothing is posted to the channel. Issues that resolve in that window are held (only their keys are saved in `state.json`) and go out together in one post on the first run at or after 6 AM Central Monday, skipping any that are no longer resolved. Your personal DMs and daily list are not affected. To change the hours, edit `QUIET_FRIDAY_HOUR` and `QUIET_MONDAY_HOUR` in `jira_pinger.py`.
-  - The Slack app must be a member of the channel (in the channel, type `/invite @Jira Pinger`).
-- Exceptions for partly fixed issues: list an issue under `strict_only` in `overrides.json` and Integration or Production no longer count as resolved for it. It stays in your daily open-issues list, and you get your DM only when it reaches a truly finished status (Done, Resolved, Closed, Released, Deployed, Complete or Completed, Cancelled, Published, Won't Do). To add one, edit `overrides.json` in the repo, for example `"SHAR-8117": "why it is an exception"`.
-- One-time test snapshot: if `overrides.json` has a `people_snapshot` label that is new to `state.json`, the next run sends a DM to you (only you, never a channel, and with no @-mentions) listing who is reporter or watcher on each open techsupport issue. The message says it is a one-time test run. The label is then recorded in `state.json` so it never repeats; change the label to run it again on purpose.
-- The Actions logs of this public repo only ever show counts, never ticket numbers, summaries or people's names.
-- The job runs every 15 minutes because GitHub often skips scheduled runs. Saved statuses prevent repeat DMs.
-- `state.json` keeps the last known status of every issue seen, and is committed back to the repo by the workflow only when it changes.
-- Slack messages go to `chat.postMessage` with the `SLACK_USER_ID` as the channel.
+## When it runs
+
+The job runs every hour. An outside timer (cron-job.org) starts the workflow on the hour, because GitHub's own scheduler often skips runs. A GitHub schedule is also set as a backup. Each run looks back about two hours, so a skipped run is covered, and saved statuses in `state.json` prevent repeat messages.
+
+## Personal DMs
+
+- Finished statuses that send a DM: Done, Cancelled or Canceled, Released, Deployed, Complete or Completed, Closed, Resolved, Integration, and Production.
+- It compares each issue's status with the status saved in `state.json` and sends a DM only when an issue has just moved into one of those statuses. Edits and comments do nothing.
+- Once a day, on weekdays, the first run at or after 8 AM Central sends a list of every open issue Ryan reported or watches, grouped by Jira board and status. To change this, edit `DIGEST_HOUR` or `DIGEST_WEEKDAYS_ONLY` in `jira_pinger.py`.
+- Nothing is sent on a run where nothing finished and the daily list is not due.
+
+## Team channel posts
+
+- **What triggers a post:** a `techsupport` issue, in any project and by any reporter, that just moved to Done, Resolved, Closed, Cancelled or Canceled, Released, Deployed, Complete or Completed, Published, Won't Do, or Production. Integration does not post there, although it still pings Ryan personally.
+- **What a post looks like:** a short list under the header "Resolved, please check:". Each line has the issue link, its summary and status, then an @-tag for each agent on it. Several issues resolved in the same run go in one post.
+- **Who is tagged:** the reporter and watchers of the issue who are listed in the `SLACK_MENTIONS` secret. Everyone else, such as developers, is never tagged.
+- **Former agents:** an entry like `"Former Agent": "->Current Agent"` in the secret re-routes that person's tickets to the current agent. Each person is tagged once per issue.
+- **No repeats:** a ticket that posts at Production does not post again at Done. Announced issues are remembered for 14 days.
+- **Quiet hours:** from Friday 10 PM to Monday 6 AM Central nothing is posted. Issues that resolve in that window are held, and only their keys are saved. They go out together in one post on the first run at or after 6 AM Central Monday, skipping any that were reopened. Ryan's personal DMs and daily list are not affected. To change the hours, edit `QUIET_FRIDAY_HOUR` and `QUIET_MONDAY_HOUR` in `jira_pinger.py`.
+- **Customer emails:** email addresses in issue summaries are replaced with `[email]`.
+- **First run:** when the channel is first turned on, the job only records what is already resolved, so the channel is not flooded.
+- **Failures:** if a channel post fails (for example the Slack app was never added to the channel), personal DMs and saved state are not affected, and the run is marked failed so GitHub emails Ryan.
+- The Slack app must be a member of the channel (in the channel, type `/invite @Jira Pinger`).
+
+## Exceptions for partly fixed issues
+
+List an issue under `strict_only` in `overrides.json` and Integration or Production no longer count as resolved for it, in both the DMs and the channel. It stays in the daily open-issues list, and posts only when it reaches a fully finished status (Done, Resolved, Closed, Released, Deployed, Complete or Completed, Cancelled, Published, Won't Do). Example: `"SHAR-8117": "Type 1 is resolved but type 2 is not"`.
+
+## Notes
+
+- The Actions logs of this public repo only ever show counts, never ticket numbers, summaries or people's names. `state.json` stores ticket keys and statuses only.
+- `state.json` keeps the last known status of every issue seen, and the workflow commits it back to the repo only when it changes.
+- Personal DMs go to `chat.postMessage` with `SLACK_USER_ID` as the channel. Team posts use `SLACK_CHANNEL_ID`.
 
 ## Required secrets
 
-Add these at **Settings â†’ Secrets and variables â†’ Actions** in the repo:
+Add these at **Settings → Secrets and variables → Actions** in the repo:
 
-| Secret name       | What it is                                                        |
-| ----------------- | ----------------------------------------------------------------- |
-| `JIRA_SITE`       | Your Jira base URL, for example `https://your-site.atlassian.net` |
-| `JIRA_EMAIL`      | The email address on your Atlassian account                       |
-| `JIRA_API_TOKEN`  | API token from id.atlassian.com under Security â†’ API tokens       |
-| `SLACK_BOT_TOKEN` | Slack bot token (`xoxb-...`) from your Slack app's OAuth page     |
-| `SLACK_USER_ID`   | Your Slack member ID (starts with `U` or `W`)                     |
-| `SLACK_CHANNEL_ID`| Optional. A Slack channel ID (starts with `C`) for resolved techsupport posts. Leave it out to keep the channel feature off. |
+| Secret name        | What it is                                                                                                                  |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| `JIRA_SITE`        | Your Jira base URL, for example `https://your-site.atlassian.net`                                                           |
+| `JIRA_EMAIL`       | The email address on your Atlassian account                                                                                 |
+| `JIRA_API_TOKEN`   | API token from id.atlassian.com under Security → API tokens                                                                 |
+| `SLACK_BOT_TOKEN`  | Slack bot token (`xoxb-...`) from your Slack app's OAuth page                                                               |
+| `SLACK_USER_ID`    | Your Slack member ID (starts with `U` or `W`)                                                                               |
+| `SLACK_CHANNEL_ID` | Optional. A Slack channel ID (starts with `C`) for resolved techsupport posts. Leave it out to keep the channel feature off. |
+| `SLACK_MENTIONS`   | Optional. JSON of Jira display name to Slack member ID, for the agents tagged in channel posts. Without it nobody is tagged. |
 
 ## Run the workflow manually
 
@@ -45,7 +60,7 @@ Add these at **Settings â†’ Secrets and variables â†’ Actions** in the
 
 ## Run locally
 
-Set the five variables in your shell only. Do not write them to a file in this repo.
+Set the variables in your shell only. Do not write them to a file in this repo.
 
 Preview messages without contacting Slack or changing `state.json`:
 
@@ -53,9 +68,6 @@ Preview messages without contacting Slack or changing `state.json`:
 python jira_pinger.py --dry-run
 ```
 
-Omit `--dry-run` to send real DMs and update `state.json`.
+Omit `--dry-run` to send real messages and update `state.json`.
 
-The script needs Python 3.12 or later and the `requests` package: `pip install requests`.
-
-
-
+The script needs Python 3.12 or later and the `requests` and `tzdata` packages: `pip install requests tzdata`.
