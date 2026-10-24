@@ -57,6 +57,12 @@ STRICT_STATUSES = {
     "won't do",
 }
 CHANNEL_STATUSES = STRICT_STATUSES | {"production"}
+# "Fix incoming" heads-up: an issue that just reached Integration (the fix is built and on its way) is posted once with
+# a jiggling-eyes emoji (custom Slack emoji named eyes-jiggle). Issues under strict_only are skipped, because Integration
+# there means only part of the fix is in.
+INCOMING_STATUS = "integration"
+INCOMING_HEADER = ":eyes-jiggle: Fix incoming, keep an eye out:"
+RESOLVED_HEADER = ":white_check_mark: Resolved, please check:"
 CHANNEL_MAX_PER_MESSAGE = 25
 CHANNEL_SUMMARY_CHARS = 110
 CHANNEL_KEEP_DAYS = 14
@@ -154,7 +160,7 @@ def load_state():
     return {}
 
 
-def save_state(statuses, last_digest=None, channel_announced=None, snapshot_done=None, channel_held=None):
+def save_state(statuses, last_digest=None, channel_announced=None, snapshot_done=None, channel_held=None, extra=None):
     # Keep every issue ever seen, so a later edit to an already-finished issue is not mistaken for a new transition.
     state = {"statuses": statuses}
     if last_digest:
@@ -165,6 +171,9 @@ def save_state(statuses, last_digest=None, channel_announced=None, snapshot_done
         state["people_snapshot_done"] = snapshot_done
     if channel_held:
         state["channel_held"] = sorted(channel_held)
+    for name, value in (extra or {}).items():
+        if value:
+            state[name] = value
     STATE_FILE.write_text(json.dumps(state, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
@@ -352,6 +361,15 @@ def build_digest(config, issues, created_keys):
     return "\n".join(lines)
 
 
+def incoming_items(issues):
+    """(key, summary, status) for techsupport issues now at Integration, except strict_only exceptions."""
+    return [
+        (i["key"], i["fields"].get("summary") or "", i["fields"]["status"]["name"])
+        for i in issues
+        if i["fields"]["status"]["name"].strip().lower() == INCOMING_STATUS and i["key"].upper() not in STRICT_ONLY
+    ]
+
+
 def channel_resolved(issues):
     """(key, summary, status) for techsupport issues now in one of the team's resolved statuses."""
     return [
@@ -366,13 +384,13 @@ def mask_emails(text):
     return EMAIL_RE.sub("[email]", text)
 
 
-def build_channel_batches(config, items, tags=None):
+def build_channel_batches(config, items, tags=None, header=None):
     """Yield (message text, keys it covers), at most CHANNEL_MAX_PER_MESSAGE issues per message.
     tags maps an issue key to the Slack IDs to tag on its line."""
     tags = tags or {}
     for start in range(0, len(items), CHANNEL_MAX_PER_MESSAGE):
         chunk = items[start:start + CHANNEL_MAX_PER_MESSAGE]
-        lines = [":white_check_mark: Resolved, please check:"]
+        lines = [header or RESOLVED_HEADER]
         for key, summary, status in chunk:
             summary = mask_emails(summary)
             if len(summary) > CHANNEL_SUMMARY_CHARS:
@@ -472,6 +490,8 @@ def main():
     channel_error = None
     announced = state.get("channel_announced")
     held = list(state.get("channel_held", []))
+    incoming_announced = state.get("channel_incoming")
+    incoming_held = list(state.get("incoming_held", []))
     if config["SLACK_CHANNEL_ID"]:
         try:
             channel_issues = fetch_jira_issues(config, CHANNEL_JQL, fields="summary,status,reporter")
@@ -511,7 +531,43 @@ def main():
                         announced = {**announced, **{key: now_iso for key in keys}}
             if announced is not None:
                 announced = prune_announced(announced)
+                incoming = incoming_items(channel_issues)
+                if incoming_announced is None:
+                    # First run with the heads-up feature: record what is already at Integration, post nothing.
+                    print(f"Channel: fix-incoming first run, recorded {len(incoming)} issue(s) without posting.")
+                    if not args.dry_run:
+                        incoming_announced = {key: now_iso for key, _, _ in incoming}
+                else:
+                    seen = lambda k: k in incoming_announced or k in announced
+                    incoming_held = [k for k in incoming_held if not seen(k)]
+                    fresh_in = [i for i in incoming if not seen(i[0]) and i[0] not in incoming_held]
+                    if channel_quiet():
+                        incoming_held = sorted(set(incoming_held) | {key for key, _, _ in fresh_in})
+                        print(f"Channel: quiet hours; {len(incoming_held)} fix-incoming issue(s) held for Monday morning.")
+                        fresh_in = []
+                    elif incoming_held:
+                        held_in = fetch_jira_issues(config, "key in (" + ",".join(incoming_held) + ")", fields="summary,status,reporter")
+                        reporters.update({i["key"]: ((i["fields"].get("reporter")) or {}).get("displayName") for i in held_in})
+                        fresh_in = incoming_items(held_in) + fresh_in      # still at Integration now; ones already resolved are dropped
+                        incoming_held = []
+                    print(f"Channel: {len(incoming)} issue(s) at Integration recently; {len(fresh_in)} new heads-up(s).")
+                    tags_in = {}
+                    for key, _, _ in fresh_in:
+                        try:
+                            tags_in[key] = mention_ids(config, key, reporters.get(key))
+                        except requests.RequestException:
+                            tags_in[key] = []
+                    for text, keys in build_channel_batches(config, fresh_in, tags_in, INCOMING_HEADER):
+                        if args.dry_run:
+                            print(f"--- fix incoming post ---\n{text}")
+                        else:
+                            send_slack_channel(config, text)
+                            incoming_announced = {**incoming_announced, **{key: now_iso for key in keys}}
+                if incoming_announced is not None:
+                    incoming_announced = prune_announced(incoming_announced)
         except (requests.RequestException, RuntimeError) as exc:
+            held = list(state.get("channel_held", []))                # keep held issues so the next run retries them
+            incoming_held = list(state.get("incoming_held", []))
             channel_error = f"Channel post failed: {exc}. Personal DMs and saved state were not affected."
             print(channel_error)
 
@@ -540,7 +596,7 @@ def main():
         print("Dry run: Slack was not contacted and state.json was not changed.")
         return
 
-    save_state({**previous, **current}, last_digest, announced, snapshot_done, held)
+    save_state({**previous, **current}, last_digest, announced, snapshot_done, held, {"channel_incoming": incoming_announced, "incoming_held": incoming_held})
     if channel_error or snapshot_error:
         sys.exit(" ".join(m for m in (channel_error, snapshot_error) if m))
 

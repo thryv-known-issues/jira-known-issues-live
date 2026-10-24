@@ -1,4 +1,4 @@
-﻿# jira-pinger
+# jira-pinger
 
 A GitHub Actions job that posts to the support team's Slack channel when a Jira issue labelled `techsupport` is resolved, and tags the agents on it so they know to check it.
 
@@ -6,6 +6,7 @@ A GitHub Actions job that posts to the support team's Slack channel when a Jira 
 
 - **What triggers a post:** a `techsupport` issue, in any project and by any reporter, that just moved to Done, Resolved, Closed, Cancelled or Canceled, Released, Deployed, Complete or Completed, Published, Won't Do, or Production. Integration does not post.
 - **What a post looks like:** a short list under the header "Resolved, please check:". Each line has the issue link, its summary and status, then an @-tag for each agent on it. Several issues resolved in the same run go in one post.
+- **Fix incoming heads-up:** when a `techsupport` issue reaches Integration (the fix is built and on its way), a separate post goes out under the header ":eyes-jiggle: Fix incoming, keep an eye out:", tagging the same agents. Each issue gets one heads-up and later its normal resolved post. Issues under `strict_only` and issues that already posted as resolved get no heads-up. It needs a custom Slack emoji named `eyes-jiggle`. The heads-up follows the same quiet hours, and weekend heads-ups go out Monday only if the issue is still at Integration.
 - **Who is tagged:** the reporter and watchers of the issue who are listed in the `SLACK_MENTIONS` secret. Everyone else, such as developers, is never tagged.
 - **Former agents:** an entry like `"Former Agent": "->Current Agent"` in the secret re-routes that person's tickets to the current agent. Each person is tagged once per issue.
 - **No repeats:** a ticket that posts at Production does not post again at Done. Announced issues are remembered for 14 days.
