@@ -75,10 +75,12 @@ except Exception:  # no time zone database installed: fall back to a fixed Centr
     LOCAL_TZ = timezone(timedelta(hours=-6), "CST")
 DIGEST_HOUR = 8
 DIGEST_WEEKDAYS_ONLY = True
-# Team channel quiet hours (Central): nothing is posted from Friday QUIET_FRIDAY_HOUR through Monday QUIET_MONDAY_HOUR.
-# Issues that resolve meanwhile are held (by key only) and posted together on the first run after the quiet hours end.
-QUIET_FRIDAY_HOUR = 22
-QUIET_MONDAY_HOUR = 6
+# Weekend window (Central): from Friday WEEKEND_START_HOUR to Monday WEEKEND_END_HOUR. Channel posts still go out as usual;
+# what is posted in this window is also logged (by key only) and bundled into one recap on the first run after it ends.
+WEEKEND_START_HOUR = 22
+WEEKEND_END_HOUR = 6
+RECAP_HEADER = ":spiral_calendar_pad: Weekend recap, in case anything slipped:"
+RECAP_MAX_PER_SECTION = 40
 MAX_DIGEST_ISSUES = 100
 SUMMARY_MAX_CHARS = 90
 NO_OPEN_MESSAGE = "No data: you have no open Jira issues that you created or are watching."
@@ -160,7 +162,7 @@ def load_state():
     return {}
 
 
-def save_state(statuses, last_digest=None, channel_announced=None, snapshot_done=None, channel_held=None, extra=None):
+def save_state(statuses, last_digest=None, channel_announced=None, snapshot_done=None, weekend_resolved=None, extra=None):
     # Keep every issue ever seen, so a later edit to an already-finished issue is not mistaken for a new transition.
     state = {"statuses": statuses}
     if last_digest:
@@ -169,19 +171,19 @@ def save_state(statuses, last_digest=None, channel_announced=None, snapshot_done
         state["channel_announced"] = channel_announced
     if snapshot_done:
         state["people_snapshot_done"] = snapshot_done
-    if channel_held:
-        state["channel_held"] = sorted(channel_held)
+    if weekend_resolved:
+        state["weekend_resolved"] = sorted(weekend_resolved)
     for name, value in (extra or {}).items():
         if value:
             state[name] = value
     STATE_FILE.write_text(json.dumps(state, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
-def channel_quiet(now=None):
-    """True from Friday 10 PM through Monday 6 AM Central, when nothing is posted to the team channel."""
+def weekend_window(now=None):
+    """True from Friday 10 PM through Monday 6 AM Central, the stretch the Monday recap covers."""
     now = (now or datetime.now(timezone.utc)).astimezone(LOCAL_TZ)
     day, hour = now.weekday(), now.hour
-    return (day == 4 and hour >= QUIET_FRIDAY_HOUR) or day in (5, 6) or (day == 0 and hour < QUIET_MONDAY_HOUR)
+    return (day == 4 and hour >= WEEKEND_START_HOUR) or day in (5, 6) or (day == 0 and hour < WEEKEND_END_HOUR)
 
 
 def digest_due(last_iso, now=None):
@@ -400,6 +402,26 @@ def build_channel_batches(config, items, tags=None, header=None):
         yield "\n".join(lines), [key for key, _, _ in chunk]
 
 
+def build_recap(config, resolved, incoming, tags=None):
+    """One message listing what was posted over the weekend, or "" when nothing is left to list."""
+    tags = tags or {}
+    sections = []
+    for header, items in ((RESOLVED_HEADER, resolved), (INCOMING_HEADER, incoming)):
+        if not items:
+            continue
+        lines = [header]
+        for key, summary, status in items[:RECAP_MAX_PER_SECTION]:
+            summary = mask_emails(summary)
+            if len(summary) > CHANNEL_SUMMARY_CHARS:
+                summary = summary[:CHANNEL_SUMMARY_CHARS].rstrip() + "..."
+            who = "".join(f" <@{uid}>" for uid in tags.get(key, []))
+            lines.append(f"- <{config['JIRA_SITE']}/browse/{key}|{key}> {escape_slack(summary)} ({escape_slack(status)}){who}")
+        if len(items) > RECAP_MAX_PER_SECTION:
+            lines.append(f"...and {len(items) - RECAP_MAX_PER_SECTION} more.")
+        sections.append("\n".join(lines))
+    return RECAP_HEADER + "\n\n" + "\n\n".join(sections) if sections else ""
+
+
 def prune_announced(announced, now=None):
     """Forget announcements older than CHANNEL_KEEP_DAYS so state.json stays small."""
     now = now or datetime.now(timezone.utc)
@@ -485,89 +507,90 @@ def main():
         else:
             print("Nothing finished, and today's open-issues digest is not due (or was already sent).")
 
-    # Team channel: resolved techsupport issues only. A failure here must never undo or repeat the personal DMs,
-    # so it is caught, state is saved, and the run is then reported as failed at the very end.
+    # Team channel: resolved techsupport issues and "fix incoming" heads-ups, posted as they happen, all week. A failure
+    # here must never undo or repeat the personal DMs, so it is caught, state is saved, and the run is reported as failed.
+    # Over the weekend (Friday 10 PM to Monday 6 AM Central) the keys of what was posted are also logged, and the first run
+    # after that window posts one bundled recap of them, so nothing slips past anyone.
     channel_error = None
     announced = state.get("channel_announced")
-    held = list(state.get("channel_held", []))
     incoming_announced = state.get("channel_incoming")
-    incoming_held = list(state.get("incoming_held", []))
+    weekend_resolved = list(state.get("weekend_resolved") or state.get("channel_held") or [])   # channel_held: older name
+    weekend_incoming = list(state.get("weekend_incoming", []))
     if config["SLACK_CHANNEL_ID"]:
         try:
             channel_issues = fetch_jira_issues(config, CHANNEL_JQL, fields="summary,status,reporter")
             reporters = {i["key"]: ((i["fields"].get("reporter")) or {}).get("displayName") for i in channel_issues}
             candidates = channel_resolved(channel_issues)
+            incoming = incoming_items(channel_issues)
             now_iso = datetime.now(timezone.utc).isoformat()
+            in_window = weekend_window()
+
+            def tags_for(items):
+                tags = {}
+                for key, _, _ in items:
+                    try:
+                        tags[key] = mention_ids(config, key, reporters.get(key))
+                    except requests.RequestException:
+                        tags[key] = []             # never lose the post because a watcher lookup failed
+                return tags
+
             if announced is None:
                 # First run with a channel set: record what is already resolved so the channel is not flooded.
                 print(f"Channel: first run, recorded {len(candidates)} recently resolved issue(s) without posting.")
                 if not args.dry_run:
                     announced = {key: now_iso for key, _, _ in candidates}
             else:
-                held = [k for k in state.get("channel_held", []) if k not in announced]
-                fresh = [item for item in candidates if item[0] not in announced and item[0] not in held]
-                if channel_quiet():
-                    held = sorted(set(held) | {key for key, _, _ in fresh})
-                    print(f"Channel: quiet hours; {len(held)} issue(s) held for Monday morning.")
-                    fresh = []
-                elif held:
-                    jql = "key in (" + ",".join(held) + ")"
-                    held_issues = fetch_jira_issues(config, jql, fields="summary,status,reporter")
-                    reporters.update({i["key"]: ((i["fields"].get("reporter")) or {}).get("displayName") for i in held_issues})
-                    fresh = channel_resolved(held_issues) + fresh      # held issues still resolved now, ahead of this run's new ones
-                    held = []
+                fresh = [item for item in candidates if item[0] not in announced]
                 print(f"Channel: {len(candidates)} techsupport issue(s) resolved recently; {len(fresh)} new to the channel.")
-                tags = {}
-                for key, _, _ in fresh:
-                    try:
-                        tags[key] = mention_ids(config, key, reporters.get(key))
-                    except requests.RequestException:
-                        tags[key] = []             # never lose the post because a watcher lookup failed
-                for text, keys in build_channel_batches(config, fresh, tags):
+                for text, keys in build_channel_batches(config, fresh, tags_for(fresh)):
                     if args.dry_run:
                         print(f"--- channel post ---\n{text}")
                     else:
                         send_slack_channel(config, text)
                         announced = {**announced, **{key: now_iso for key in keys}}
-            if announced is not None:
+                        if in_window:
+                            weekend_resolved = sorted(set(weekend_resolved) | set(keys))
                 announced = prune_announced(announced)
-                incoming = incoming_items(channel_issues)
+
                 if incoming_announced is None:
                     # First run with the heads-up feature: record what is already at Integration, post nothing.
                     print(f"Channel: fix-incoming first run, recorded {len(incoming)} issue(s) without posting.")
                     if not args.dry_run:
                         incoming_announced = {key: now_iso for key, _, _ in incoming}
                 else:
-                    seen = lambda k: k in incoming_announced or k in announced
-                    incoming_held = [k for k in incoming_held if not seen(k)]
-                    fresh_in = [i for i in incoming if not seen(i[0]) and i[0] not in incoming_held]
-                    if channel_quiet():
-                        incoming_held = sorted(set(incoming_held) | {key for key, _, _ in fresh_in})
-                        print(f"Channel: quiet hours; {len(incoming_held)} fix-incoming issue(s) held for Monday morning.")
-                        fresh_in = []
-                    elif incoming_held:
-                        held_in = fetch_jira_issues(config, "key in (" + ",".join(incoming_held) + ")", fields="summary,status,reporter")
-                        reporters.update({i["key"]: ((i["fields"].get("reporter")) or {}).get("displayName") for i in held_in})
-                        fresh_in = incoming_items(held_in) + fresh_in      # still at Integration now; ones already resolved are dropped
-                        incoming_held = []
+                    fresh_in = [i for i in incoming if i[0] not in incoming_announced and i[0] not in announced]
                     print(f"Channel: {len(incoming)} issue(s) at Integration recently; {len(fresh_in)} new heads-up(s).")
-                    tags_in = {}
-                    for key, _, _ in fresh_in:
-                        try:
-                            tags_in[key] = mention_ids(config, key, reporters.get(key))
-                        except requests.RequestException:
-                            tags_in[key] = []
-                    for text, keys in build_channel_batches(config, fresh_in, tags_in, INCOMING_HEADER):
+                    for text, keys in build_channel_batches(config, fresh_in, tags_for(fresh_in), INCOMING_HEADER):
                         if args.dry_run:
                             print(f"--- fix incoming post ---\n{text}")
                         else:
                             send_slack_channel(config, text)
                             incoming_announced = {**incoming_announced, **{key: now_iso for key in keys}}
+                            if in_window:
+                                weekend_incoming = sorted(set(weekend_incoming) | set(keys))
                 if incoming_announced is not None:
                     incoming_announced = prune_announced(incoming_announced)
+
+                # Monday recap: the first run after the weekend window posts everything logged, once, in one message.
+                if not in_window and (weekend_resolved or weekend_incoming):
+                    logged = sorted(set(weekend_resolved) | set(weekend_incoming))
+                    logged_issues = fetch_jira_issues(config, "key in (" + ",".join(logged) + ")", fields="summary,status,reporter")
+                    reporters.update({i["key"]: ((i["fields"].get("reporter")) or {}).get("displayName") for i in logged_issues})
+                    recap_resolved = [i for i in channel_resolved(logged_issues) if i[0] in weekend_resolved or i[0] in weekend_incoming]
+                    recap_incoming = [i for i in incoming_items(logged_issues) if i[0] in weekend_incoming]
+                    text = build_recap(config, recap_resolved, recap_incoming, tags_for(recap_resolved + recap_incoming))
+                    if text:
+                        print(f"Channel: weekend recap with {len(recap_resolved)} resolved and {len(recap_incoming)} heads-up issue(s).")
+                        if args.dry_run:
+                            print(f"--- weekend recap ---\n{text}")
+                        else:
+                            send_slack_channel(config, text)
+                    if not args.dry_run:
+                        weekend_resolved, weekend_incoming = [], []
         except (requests.RequestException, RuntimeError) as exc:
-            held = list(state.get("channel_held", []))                # keep held issues so the next run retries them
-            incoming_held = list(state.get("incoming_held", []))
+            # keep the weekend log as it was in the saved state, so the next run retries the recap
+            weekend_resolved = list(state.get("weekend_resolved") or state.get("channel_held") or [])
+            weekend_incoming = list(state.get("weekend_incoming", []))
             channel_error = f"Channel post failed: {exc}. Personal DMs and saved state were not affected."
             print(channel_error)
 
@@ -596,7 +619,7 @@ def main():
         print("Dry run: Slack was not contacted and state.json was not changed.")
         return
 
-    save_state({**previous, **current}, last_digest, announced, snapshot_done, held, {"channel_incoming": incoming_announced, "incoming_held": incoming_held})
+    save_state({**previous, **current}, last_digest, announced, snapshot_done, weekend_resolved, {"channel_incoming": incoming_announced, "weekend_incoming": weekend_incoming})
     if channel_error or snapshot_error:
         sys.exit(" ".join(m for m in (channel_error, snapshot_error) if m))
 
