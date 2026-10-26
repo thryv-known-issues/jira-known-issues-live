@@ -50,6 +50,9 @@
     "TSM-475910": "2026-10-26T16:00:25.867624+00:00",
     "TSM-486155": "2026-10-23T13:00:22.713833+00:00"
   },
+  "channel_incoming": {
+    "TP-40098": "2026-10-26T17:00:21.494583+00:00"
+  },
   "last_digest_dm": "2026-10-26T13:00:34.782259+00:00",
   "people_snapshot_done": "one-time-test-2026-10-21",
   "statuses": {
@@ -102,7 +105,7 @@
     "TP-39849": "Cancelled",
     "TP-39857": "Ready for Dev",
     "TP-40094": "Done",
-    "TP-40098": "Code Review",
+    "TP-40098": "Integration",
     "TP-40182": "Ready for Dev",
     "TP-40547": "Ready for Dev",
     "TP-40589": "Ready for Dev",
