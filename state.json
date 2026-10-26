@@ -112,11 +112,5 @@
     "TPS-266": "Closed",
     "TSM-480411": "Done",
     "TSM-485923": "Done"
-  },
-  "weekend_resolved": [
-    "LEADS-1650",
-    "TP-28615",
-    "TP-34537",
-    "TP-39870"
-  ]
+  }
 }
