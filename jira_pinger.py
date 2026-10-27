@@ -292,6 +292,7 @@ def build_bot_previews(config):
     texts = [text for text, _ in build_channel_batches(config, resolved, tags)]
     texts += [text for text, _ in build_channel_batches(config, incoming, tags, INCOMING_HEADER)]
     texts.append(build_recap(config, resolved, incoming, tags))
+    texts += [text.split("\n", 1)[1] for text in build_table_watch_preview(config)]   # a dropped-row alert, without its own test label
     return [note + text for text in texts]
 
 
