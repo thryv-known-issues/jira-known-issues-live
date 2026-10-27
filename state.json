@@ -64,7 +64,7 @@
     "TP-40098": "2026-10-26T17:00:21.494583+00:00"
   },
   "last_digest_dm": "2026-10-27T13:00:22.781116+00:00",
-  "last_full_run": "2026-10-27T21:15:20.656732+00:00",
+  "last_full_run": "2026-10-27T22:15:22.529181+00:00",
   "people_snapshot_done": "one-time-test-2026-10-21",
   "statuses": {
     "AR-74840": "Complete",
@@ -86,7 +86,7 @@
     "SEO-396": "Done",
     "SEO-397": "Ready for Dev",
     "SHAR-4325": "In Progress",
-    "SHAR-8117": "Integration",
+    "SHAR-8117": "Code Review",
     "SHAR-9702": "Done",
     "SW-1088": "Cancelled",
     "SW-1497": "Ready for Dev",
@@ -145,7 +145,7 @@
       "MC-5686": 19198137,
       "SEO-397": 19191353,
       "SHAR-7622": 19193769,
-      "SHAR-8117": 19199058,
+      "SHAR-8117": 19202310,
       "SHAR-9837": 19190881,
       "SHAR-9839": 19190700,
       "SHAR-9840": 19190704,
