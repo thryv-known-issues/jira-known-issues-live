@@ -26,6 +26,10 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          # Check out the newest commit on the branch, not the commit that existed when the run was queued.
+          # Runs queue behind each other, and a stale checkout would read old state.json and then conflict on push.
+          ref: ${{ github.ref_name }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -65,7 +69,8 @@ jobs:
             else
               git commit -m "Update Jira pinger state [skip ci]"
               # Other workflows also push to main, so rebase onto their commits first.
-              git pull --rebase origin main
+              # -X theirs keeps this run's state.json if a rebase ever conflicts on it.
+              git pull --rebase -X theirs origin main
               git push
             fi
           fi
