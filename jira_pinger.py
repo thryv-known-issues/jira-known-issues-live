@@ -108,7 +108,8 @@ def load_config():
 
 def load_mentions(raw):
     """Optional secret SLACK_MENTIONS: JSON like {"Jira display name": "U012ABCDEF"}. Only these people are ever tagged in the channel."""
-    if not raw.strip():
+    raw = raw.lstrip("\ufeff").strip()            # tolerate a byte-order mark or stray whitespace from how the secret was pasted
+    if not raw:
         return {}
     try:
         data = json.loads(raw)
