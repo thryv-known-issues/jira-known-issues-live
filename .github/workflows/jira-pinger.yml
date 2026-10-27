@@ -3,9 +3,15 @@ name: jira-pinger
 on:
   schedule:
     # Every 15 minutes, off the top of the hour. GitHub often skips scheduled runs, so more
-    # slots means at least one run per hour. state.json prevents repeat DMs.
+    # slots means at least one run per hour. state.json prevents repeat DMs. The script does the
+    # hourly work about once an hour and only table watch on the other passes.
     - cron: '7,22,37,52 * * * *'
   workflow_dispatch:
+    inputs:
+      force_full:
+        description: 'Run the hourly work (status pings, channel posts, daily list) even if it is not due yet'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -45,6 +51,7 @@ jobs:
           TABLE_WATCH_DRY_RUN: ${{ vars.TABLE_WATCH_DRY_RUN }}
           TABLE_WATCH_CHANNEL: ${{ vars.TABLE_WATCH_CHANNEL }}
           TABLE_WATCH_LABEL: ${{ vars.TABLE_WATCH_LABEL }}
+          FORCE_FULL: ${{ inputs.force_full }}
         run: python jira_pinger.py
 
       - name: Commit state.json if it changed

@@ -334,11 +334,92 @@ class Wiring(unittest.TestCase):
         self.assertTrue(posted[0][1].startswith("<@UBARB> id3"))
         self.assertIn("Table watch (live)", out)
 
+    def test_live_mode_dms_the_rep_and_sends_unmatched_to_the_owner(self):
+        r = rows(4, "Agent Barb")
+        r2 = rows(4, "Someone Unknown")
+        j.fetch_changelog = lambda config, key: [save(5, desc(table(r)), desc(table(r[:3]))), save(6, desc(table(r2)), desc(table(r2[:3])))]
+        out, dms, saved, posted = self.run_main({"TABLE_WATCH_ENABLED": True, "TABLE_WATCH_DRY_RUN": False},
+                                                watch_state={"last": {"TP-1": 4}, "sent": {}})
+        self.assertEqual(sorted(channel for channel, _ in posted), ["UBARB", "UME"])
+        to_owner = next(text for channel, text in posted if channel == "UME")
+        self.assertIn("no rep could be matched", to_owner)
+
+    def test_large_removal_is_one_untagged_message_to_the_owner(self):
+        r = rows(30, "Agent Barb")
+        j.fetch_changelog = lambda config, key: [save(5, desc(table(r)), desc(table(r[:18])))]   # 12 rows gone, under half the table
+        out, dms, saved, posted = self.run_main({"TABLE_WATCH_ENABLED": True, "TABLE_WATCH_DRY_RUN": False},
+                                                watch_state={"last": {"TP-1": 4}, "sent": {}})
+        self.assertEqual([channel for channel, _ in posted], ["UME"])
+        self.assertIn("12 of 30 rows", posted[0][1])
+        self.assertNotIn("<@UBARB>", posted[0][1])
+
+    def test_ten_rows_or_fewer_still_tag_the_rep(self):
+        r = rows(30, "Agent Barb")
+        j.fetch_changelog = lambda config, key: [save(5, desc(table(r)), desc(table(r[:20])))]   # exactly 10 gone
+        out, dms, saved, posted = self.run_main({"TABLE_WATCH_ENABLED": True, "TABLE_WATCH_DRY_RUN": False},
+                                                watch_state={"last": {"TP-1": 4}, "sent": {}})
+        self.assertEqual(len(posted), 1)
+        self.assertEqual(posted[0][0], "UBARB")
+
     def test_error_in_table_watch_never_stops_the_pings(self):
         out, dms, saved, posted = self.run_main({"TABLE_WATCH_ENABLED": True}, tw_raises=True)
         self.assertEqual(len(dms), 1)
         self.assertIn("Table watch error (ValueError)", out)
         self.assertNotIn("boom", out)
+
+
+class Gate(unittest.TestCase):
+    """Hourly work about once an hour; table watch on every 15-minute pass."""
+
+    def test_full_run_due_rules(self):
+        from datetime import datetime, timedelta, timezone
+        now = datetime(2026, 10, 27, 17, 0, tzinfo=timezone.utc)
+        stamp = lambda minutes: (now - timedelta(minutes=minutes)).isoformat()
+        self.assertTrue(j.full_run_due({}, now))
+        self.assertFalse(j.full_run_due({"last_full_run": stamp(15)}, now))
+        self.assertFalse(j.full_run_due({"last_full_run": stamp(54)}, now))
+        self.assertTrue(j.full_run_due({"last_full_run": stamp(55)}, now))
+        self.assertTrue(j.full_run_due({"last_full_run": "garbage"}, now))
+
+    def test_force_full_overrides(self):
+        import os
+        from datetime import datetime, timezone
+        os.environ["FORCE_FULL"] = "true"
+        try:
+            self.assertTrue(j.full_run_due({"last_full_run": datetime.now(timezone.utc).isoformat()}))
+        finally:
+            del os.environ["FORCE_FULL"]
+
+    def test_light_pass_runs_only_table_watch_and_keeps_other_state(self):
+        import json
+        import tempfile
+        from datetime import datetime, timezone
+        orig = {n: getattr(j, n) for n in ("load_config", "load_state", "fetch_jira_issues", "table_watch_step", "STATE_FILE", "send_slack_dm", "save_state")}
+        calls = {"issues": 0, "dm": 0}
+        tmp = Path(tempfile.mkdtemp()) / "state.json"
+        try:
+            j.STATE_FILE = tmp
+            j.load_config = lambda: {"JIRA_SITE": JIRA, "SLACK_CHANNEL_ID": "", "SLACK_USER_ID": "UME", "MENTIONS": {}, "TABLE_WATCH_ENABLED": True,
+                                     "TABLE_WATCH_DRY_RUN": False, "TABLE_WATCH_CHANNEL": "", "TABLE_WATCH_LABEL": "techsupport"}
+            j.load_state = lambda: {"statuses": {"A-1": "Open"}, "channel_announced": {"X-1": "t"}, "last_full_run": datetime.now(timezone.utc).isoformat()}
+            def fail_issues(*a, **k):
+                calls["issues"] += 1
+                return []
+            j.fetch_jira_issues = fail_issues
+            j.send_slack_dm = lambda config, text: calls.__setitem__("dm", calls["dm"] + 1)
+            j.table_watch_step = lambda config, tw: {"last": {"TP-1": 9}, "sent": {}}
+            sys.argv = ["jira_pinger.py"]
+            buf = io.StringIO()
+            with contextlib.redirect_stdout(buf):
+                j.main()
+            saved = json.loads(tmp.read_text(encoding="utf-8"))
+        finally:
+            for name, value in orig.items():
+                setattr(j, name, value)
+        self.assertEqual((calls["issues"], calls["dm"]), (0, 0))              # no status search, no DMs
+        self.assertEqual(saved["table_watch"]["last"]["TP-1"], 9)
+        self.assertEqual(saved["channel_announced"], {"X-1": "t"})           # everything else untouched
+        self.assertEqual(saved["statuses"], {"A-1": "Open"})
 
 
 if __name__ == "__main__":

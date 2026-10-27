@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from .parse import parse_tables
 
 SIGNATURE_WINDOW = timedelta(minutes=60)
+BULK_ROWS = 10                    # more rows than this gone in one save is a clean-up or restructure, not an overwrite: one message, no tags
 
 
 @dataclass
@@ -117,7 +118,7 @@ def analyze(issue, histories, labels=None, label="techsupport", muted=frozenset(
                 common = dict(issue=issue, history_id=h["id"], created=created, author=author,
                               table_no=pos, table_count=count, header=prev.header,
                               table_size=len(prev.rows))
-                if alertable and len(alertable) > len(prev.rows) / 2:
+                if alertable and (len(alertable) > len(prev.rows) / 2 or len(alertable) > BULK_ROWS):
                     keys = [prev.key(r) for r in alertable]
                     result.alerts.append(Alert("bulk", rows=alertable, keys=keys, **common))
                     open_alerts.update((tid, k) for k in keys)

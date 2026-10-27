@@ -186,14 +186,20 @@ def table_watch_step(config, tw_state):
         return [{"key": i["key"], "labels": i["fields"].get("labels", [])} for i in fetch_jira_issues(config, jql, fields="labels")]
 
     dry = config["TABLE_WATCH_DRY_RUN"]
-    destination = config["SLACK_USER_ID"] if dry else (config["TABLE_WATCH_CHANNEL"] or config["SLACK_USER_ID"])
+    owner = config["SLACK_USER_ID"]
 
     def send(message):
         text = message["text"]
         if dry:
             who = message["agent"] or "nobody (no agent named)"
-            text = f"*TABLE WATCH DRY RUN. Nothing was sent to the agent. This would have gone to: {who}.*\n{text}"
-        _post(config, destination, text)
+            _post(config, owner, f"*TABLE WATCH DRY RUN. Nothing was sent to the agent. This would have gone to: {who}.*\n{text}")
+        elif config["TABLE_WATCH_CHANNEL"]:
+            _post(config, config["TABLE_WATCH_CHANNEL"], text)           # optional: post in a channel instead of DMs
+        elif message["user_id"]:
+            _post(config, message["user_id"], text)                      # the rep who added the row gets the DM
+        else:
+            who = message["agent"] or "no agent named"
+            _post(config, owner, f"*Table watch: no rep could be matched ({who}), or a large part of the table was removed. Sent only to you.*\n{text}")
 
     new_state, counts = runner.run(config, tw_state, fetch_issues, lambda key: fetch_changelog(config, key), send,
                                    label=config["TABLE_WATCH_LABEL"])
@@ -201,6 +207,36 @@ def table_watch_step(config, tw_state):
     print("Table watch ({}): {} ticket(s) checked, {} new to it, {} alert(s) sent, {} unmapped name(s), {} send failure(s).".format(
         mode, counts["checked"], counts["baselined"], counts["alerts"], counts["unmapped"], counts["failed"]))
     return new_state
+
+
+FULL_RUN_MINUTES = 55          # status pings, channel posts and the daily list run about hourly; table watch runs on every pass
+
+
+def full_run_due(state, now=None):
+    """True when the hourly work is due. The outside timer fires every 15 minutes, so the other passes only run table watch."""
+    if os.environ.get("FORCE_FULL", "").strip().lower() in ("1", "true", "yes"):
+        return True
+    last = state.get("last_full_run")
+    if not last:
+        return True
+    try:
+        elapsed = (now or datetime.now(timezone.utc)) - datetime.fromisoformat(last)
+    except ValueError:
+        return True
+    return elapsed >= timedelta(minutes=FULL_RUN_MINUTES)
+
+
+def light_run(config, state):
+    """Table watch only. Keeps every other saved field exactly as it was."""
+    if not config.get("TABLE_WATCH_ENABLED"):
+        print("Light pass: nothing to do (hourly work is not due yet).")
+        return
+    try:
+        state["table_watch"] = table_watch_step(config, state.get("table_watch"))
+    except Exception as exc:
+        print(f"Table watch error ({type(exc).__name__}); it will retry on the next pass. Pings are not affected.")
+        return
+    STATE_FILE.write_text(json.dumps(state, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
 def load_state():
@@ -568,8 +604,11 @@ def main():
     args = parser.parse_args()
 
     config = load_config()
-    issues = fetch_jira_issues(config)
     state = load_state()
+    if not args.dry_run and "statuses" in state and not full_run_due(state):
+        light_run(config, state)
+        return
+    issues = fetch_jira_issues(config)
     current = {issue["key"]: issue["fields"]["status"]["name"] for issue in issues}
 
     if "statuses" not in state:
@@ -762,7 +801,8 @@ def main():
         print("Dry run: Slack was not contacted and state.json was not changed.")
         return
 
-    save_state({**previous, **current}, last_digest, announced, snapshot_done, weekend_resolved, {"channel_incoming": incoming_announced, "weekend_incoming": weekend_incoming, "bot_preview_done": preview_done, "table_watch": tw_state, "table_watch_preview_done": tw_preview_done})
+    save_state({**previous, **current}, last_digest, announced, snapshot_done, weekend_resolved, {"channel_incoming": incoming_announced, "weekend_incoming": weekend_incoming, "bot_preview_done": preview_done, "table_watch": tw_state, "table_watch_preview_done": tw_preview_done,
+                                                   "last_full_run": datetime.now(timezone.utc).isoformat()})
     if channel_error or snapshot_error or preview_error:
         sys.exit(" ".join(m for m in (channel_error, snapshot_error, preview_error) if m))
 
