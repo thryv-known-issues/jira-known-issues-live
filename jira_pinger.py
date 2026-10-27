@@ -193,10 +193,10 @@ def table_watch_step(config, tw_state):
         if dry:
             who = message["agent"] or "nobody (no agent named)"
             _post(config, owner, f"*TABLE WATCH DRY RUN. Nothing was sent to the agent. This would have gone to: {who}.*\n{text}")
-        elif config["TABLE_WATCH_CHANNEL"]:
-            _post(config, config["TABLE_WATCH_CHANNEL"], text)           # optional: post in a channel instead of DMs
+        elif message["user_id"] and config["TABLE_WATCH_CHANNEL"]:
+            _post(config, config["TABLE_WATCH_CHANNEL"], text)           # tagged alert in the team channel, like the status posts
         elif message["user_id"]:
-            _post(config, message["user_id"], text)                      # the rep who added the row gets the DM
+            _post(config, message["user_id"], text)                      # no channel set: the rep who added the row gets the DM
         else:
             who = message["agent"] or "no agent named"
             _post(config, owner, f"*Table watch: no rep could be matched ({who}), or a large part of the table was removed. Sent only to you.*\n{text}")

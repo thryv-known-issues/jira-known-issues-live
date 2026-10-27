@@ -344,6 +344,16 @@ class Wiring(unittest.TestCase):
         to_owner = next(text for channel, text in posted if channel == "UME")
         self.assertIn("no rep could be matched", to_owner)
 
+    def test_channel_setting_posts_tagged_alerts_in_the_channel_and_keeps_the_rest_private(self):
+        r = rows(4, "Agent Barb")
+        r2 = rows(4, "Someone Unknown")
+        j.fetch_changelog = lambda config, key: [save(5, desc(table(r)), desc(table(r[:3]))), save(6, desc(table(r2)), desc(table(r2[:3])))]
+        out, dms, saved, posted = self.run_main({"TABLE_WATCH_ENABLED": True, "TABLE_WATCH_DRY_RUN": False, "TABLE_WATCH_CHANNEL": "CCHAN"},
+                                                watch_state={"last": {"TP-1": 4}, "sent": {}})
+        self.assertEqual(sorted(channel for channel, _ in posted), ["CCHAN", "UME"])
+        in_channel = next(text for channel, text in posted if channel == "CCHAN")
+        self.assertTrue(in_channel.startswith("<@UBARB> id3"))
+
     def test_large_removal_is_one_untagged_message_to_the_owner(self):
         r = rows(30, "Agent Barb")
         j.fetch_changelog = lambda config, key: [save(5, desc(table(r)), desc(table(r[:18])))]   # 12 rows gone, under half the table
