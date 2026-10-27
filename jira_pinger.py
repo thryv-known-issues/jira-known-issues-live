@@ -98,6 +98,11 @@ def load_config():
     config["JIRA_SITE"] = config["JIRA_SITE"].rstrip("/")
     config["SLACK_CHANNEL_ID"] = os.environ.get("SLACK_CHANNEL_ID", "").strip()   # optional: turns on team-channel posts
     config["MENTIONS"] = load_mentions(os.environ.get("SLACK_MENTIONS", ""))
+    # Table watch is off unless TABLE_WATCH_ENABLED is true. Dry run (the default) sends its alerts to the owner's DM only.
+    config["TABLE_WATCH_ENABLED"] = os.environ.get("TABLE_WATCH_ENABLED", "").strip().lower() in ("1", "true", "yes", "on")
+    config["TABLE_WATCH_DRY_RUN"] = os.environ.get("TABLE_WATCH_DRY_RUN", "").strip().lower() not in ("0", "false", "no", "off")
+    config["TABLE_WATCH_CHANNEL"] = os.environ.get("TABLE_WATCH_CHANNEL", "").strip()
+    config["TABLE_WATCH_LABEL"] = os.environ.get("TABLE_WATCH_LABEL", "").strip() or "techsupport"
     return config
 
 
@@ -153,6 +158,48 @@ def fetch_jira_issues(config, jql=JQL, fields="summary,status,project"):
             break
         params["nextPageToken"] = next_token
     return issues
+
+
+def fetch_changelog(config, key, page_size=100):
+    """Every change-history entry of one issue (read-only), following pagination."""
+    url = f"{config['JIRA_SITE']}/rest/api/3/issue/{key}/changelog"
+    auth = (config["JIRA_EMAIL"], config["JIRA_API_TOKEN"])
+    out, start = [], 0
+    while True:
+        resp = requests.get(url, params={"startAt": start, "maxResults": page_size}, auth=auth,
+                            headers={"Accept": "application/json"}, timeout=HTTP_TIMEOUT)
+        resp.raise_for_status()
+        page = resp.json()
+        values = page.get("values", [])
+        out.extend(values)
+        start += len(values)
+        if not values or page.get("isLast", True) or start >= page.get("total", start):
+            return out
+
+
+def table_watch_step(config, tw_state):
+    """One table-watch pass. Returns the new saved state. Any problem is reported by type only (the log is public)."""
+    from table_watch import runner
+
+    def fetch_issues(jql):
+        return [{"key": i["key"], "labels": i["fields"].get("labels", [])} for i in fetch_jira_issues(config, jql, fields="labels")]
+
+    dry = config["TABLE_WATCH_DRY_RUN"]
+    destination = config["SLACK_USER_ID"] if dry else (config["TABLE_WATCH_CHANNEL"] or config["SLACK_USER_ID"])
+
+    def send(message):
+        text = message["text"]
+        if dry:
+            who = message["agent"] or "nobody (no agent named)"
+            text = f"*TABLE WATCH DRY RUN. Nothing was sent to the agent. This would have gone to: {who}.*\n{text}"
+        _post(config, destination, text)
+
+    new_state, counts = runner.run(config, tw_state, fetch_issues, lambda key: fetch_changelog(config, key), send,
+                                   label=config["TABLE_WATCH_LABEL"])
+    mode = "dry run" if dry else "live"
+    print("Table watch ({}): {} ticket(s) checked, {} new to it, {} alert(s) sent, {} unmapped name(s), {} send failure(s).".format(
+        mode, counts["checked"], counts["baselined"], counts["alerts"], counts["unmapped"], counts["failed"]))
+    return new_state
 
 
 def load_state():
@@ -613,6 +660,17 @@ def main():
             channel_error = f"Channel post failed: {exc}. Personal DMs and saved state were not affected."
             print(channel_error)
 
+    # Table watch: a separate layer. Off by default, and any error in it is swallowed so the pings above are never affected.
+    tw_state = state.get("table_watch")
+    if config.get("TABLE_WATCH_ENABLED"):
+        if args.dry_run:
+            print("Table watch: skipped in a --dry-run preview.")
+        else:
+            try:
+                tw_state = table_watch_step(config, tw_state)
+            except Exception as exc:
+                print(f"Table watch error ({type(exc).__name__}); it will retry on the next run. Pings are not affected.")
+
     # ONE-TIME TEST: a snapshot of who is associated with which open techsupport issue. DM to the owner only, once per label.
     snapshot_done = state.get("people_snapshot_done")
     wanted = snapshot_id()
@@ -656,7 +714,7 @@ def main():
         print("Dry run: Slack was not contacted and state.json was not changed.")
         return
 
-    save_state({**previous, **current}, last_digest, announced, snapshot_done, weekend_resolved, {"channel_incoming": incoming_announced, "weekend_incoming": weekend_incoming, "bot_preview_done": preview_done})
+    save_state({**previous, **current}, last_digest, announced, snapshot_done, weekend_resolved, {"channel_incoming": incoming_announced, "weekend_incoming": weekend_incoming, "bot_preview_done": preview_done, "table_watch": tw_state})
     if channel_error or snapshot_error or preview_error:
         sys.exit(" ".join(m for m in (channel_error, snapshot_error, preview_error) if m))
 

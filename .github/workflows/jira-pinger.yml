@@ -40,6 +40,11 @@ jobs:
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
           # Optional JSON of Slack IDs for the agents tagged in channel posts.
           SLACK_MENTIONS: ${{ secrets.SLACK_MENTIONS }}
+          # Table watch (off unless the repository variable TABLE_WATCH_ENABLED is true; dry run unless TABLE_WATCH_DRY_RUN is false).
+          TABLE_WATCH_ENABLED: ${{ vars.TABLE_WATCH_ENABLED }}
+          TABLE_WATCH_DRY_RUN: ${{ vars.TABLE_WATCH_DRY_RUN }}
+          TABLE_WATCH_CHANNEL: ${{ vars.TABLE_WATCH_CHANNEL }}
+          TABLE_WATCH_LABEL: ${{ vars.TABLE_WATCH_LABEL }}
         run: python jira_pinger.py
 
       - name: Commit state.json if it changed

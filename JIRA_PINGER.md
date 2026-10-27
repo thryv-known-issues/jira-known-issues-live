@@ -15,6 +15,18 @@ A GitHub Actions job that posts to the support team's Slack channel when a Jira 
 - **Weekend recap:** the job keeps running every hour all weekend and posts as usual. Whatever it posts from Friday 10 PM to Monday 6 AM Central is also logged (ticket keys only), and the first run at or after 6 AM Central Monday posts one bundled recap of it under ":spiral_calendar_pad: Weekend recap, in case anything slipped:", with the resolved tickets and the fix-incoming tickets in two sections and the same tags. Tickets reopened or moved on since then are left out, and nothing is posted if there was no weekend activity. To change the window, edit `WEEKEND_START_HOUR` and `WEEKEND_END_HOUR` in `jira_pinger.py`.
 - **Customer emails:** email addresses in issue summaries are replaced with `[email]`.
 
+## Table watch (dropped-row alerts)
+
+Several agents add rows to the affected-accounts table inside the description of the same `techsupport` Jira ticket. Jira saves the whole description, so when two people save at nearly the same time the later save can wipe out the earlier one's row. Table watch reads each ticket's change history, compares every saved version of each table with the one before it, and when a row has disappeared it sends a short Slack message that tags the agent named in that row and shows the exact row, so they can check it and re-add it. It never edits Jira and uses no AI.
+
+- **Off by default.** Turn it on with repository variables (Settings, Secrets and variables, Actions, Variables tab): `TABLE_WATCH_ENABLED` = `true`. It stays in dry-run until `TABLE_WATCH_DRY_RUN` = `false`. Optional: `TABLE_WATCH_CHANNEL` (where live alerts go; if empty they go to the owner's DM) and `TABLE_WATCH_LABEL` (default `techsupport`).
+- **Dry run:** alerts go only to the owner's DM, labeled with who they would have gone to. Nothing reaches an agent. The public Actions log only ever shows counts.
+- **What alerts:** any row that disappears. Two clear cleanups stay quiet: a duplicate row removed while another row for the same Thryv ID stays, and a row whose Resolved column is filled. More than half the table removed in one save posts one untagged message for a human to check.
+- **Tagging:** by the Agent column, using the `SLACK_MENTIONS` secret. Add each spelling that appears in tables as its own entry (for example `"Barb Larrosa": "U..."`). Matching ignores case and accents. An unmapped name posts without a tag.
+- **No repeats:** each alert is remembered by a short hash, so account IDs and ticket numbers are not saved in `state.json`. The first time a ticket is seen it is only recorded, so old history is never alerted.
+- **Safe by design:** an error inside table watch is reported by type only and never stops the pings above it.
+- Code lives in `table_watch/`, tests in `tests/test_table_watch.py` (`python -m unittest tests.test_table_watch`).
+
 ## When it runs
 
 The job runs every hour. An outside timer (cron-job.org) starts the workflow on the hour, because GitHub's own scheduler often skips runs. A GitHub schedule is also set as a backup. Each run looks back about two hours, so a skipped run is covered, and the saved list of announced issues in `state.json` prevents repeat posts.
