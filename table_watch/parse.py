@@ -3,11 +3,13 @@ import re
 from dataclasses import dataclass
 
 LINK = re.compile(r"\[([^\]|]*)\|[^\]]*\]")
+COLOR = re.compile(r"\{color[^}]*\}")
+WRAP_MARKUP = "*+_-~^"
 
 ID_HEADERS = ("thryv id", "location id", "account id")
 TICKET_HEADERS = ("zendesk ticket", "zd ticket", "ticket #", "ticket")
 AGENT_HEADERS = ("tech support agent", "agent", "tech agent")
-RESOLVED_HEADERS = ("resolved", "resolved?", "resolved date")
+RESOLVED_NO = ("n", "no", "false", "-", "0")
 
 
 @dataclass
@@ -40,7 +42,15 @@ class Table:
 
     @property
     def resolved_col(self):
-        return self.col(RESOLVED_HEADERS)
+        for i, h in enumerate(self.header):
+            if h.lower().startswith("resolved"):      # Resolved, Resolved?, Resolved Y/N?, Resolved date
+                return i
+        return None
+
+    def is_resolved(self, row):
+        """True when the Resolved column holds anything other than an empty or a "no" value."""
+        value = self.cell(row, self.resolved_col).strip().lower() if self.resolved_col is not None else ""
+        return bool(value) and value not in RESOLVED_NO
 
     def cell(self, row, col):
         if col is None or col >= len(row):
@@ -57,9 +67,17 @@ class Table:
         return (self.thryv_id(row), self.cell(row, self.ticket_col))
 
 
+def clean_cell(cell):
+    """Remove wiki formatting people add around a value (bold, underline, color, date macro), so formatting alone never changes a row."""
+    cell = COLOR.sub("", cell).replace("{{", "").replace("}}", "").strip()
+    while len(cell) > 2 and cell[0] == cell[-1] and cell[0] in WRAP_MARKUP:   # *bold*, +underline+, _italic_ ... but not a lone "Signature+"
+        cell = cell[1:-1].strip()
+    return cell
+
+
 def _cells(text, sep):
     text = LINK.sub(r"\1", text)
-    return [c.strip() for c in text.split(sep)]
+    return [clean_cell(c) for c in text.split(sep)]
 
 
 def parse_tables(text):

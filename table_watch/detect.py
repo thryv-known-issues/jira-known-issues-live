@@ -57,6 +57,8 @@ def _tables_by_id(text):
 
 
 def _diff(prev_rows, new_rows, table):
+    prev_rows = [r for r in prev_rows if any(r)]       # blank rows are layout, not data
+    new_rows = [r for r in new_rows if any(r)]
     remaining = Counter(table.key(r) for r in new_rows)
     removed = []
     for r in prev_rows:
@@ -104,10 +106,9 @@ def analyze(issue, histories, labels=None, label="techsupport", muted=frozenset(
                 alertable = []
                 for row in removed:
                     key = prev.key(row)
-                    resolved = prev.cell(row, prev.resolved_col) if prev.resolved_col is not None else ""
                     if key in muted:
                         result.logs.append(LogEntry("acknowledged", h["id"], row))
-                    elif resolved:
+                    elif prev.is_resolved(row):
                         result.logs.append(LogEntry("resolved", h["id"], row))
                     elif prev.thryv_id(row) in new_ids:
                         result.logs.append(LogEntry("consolidation", h["id"], row, "same Thryv ID still present"))
@@ -138,4 +139,14 @@ def analyze(issue, histories, labels=None, label="techsupport", muted=frozenset(
                     if (tid, key) in open_alerts:
                         open_alerts.discard((tid, key))
                         result.logs.append(LogEntry("readded", h["id"], row))
+    # An alert only matters while the row is still gone: rows the newest save put back are not reported.
+    still_missing = {key for _, key in open_alerts}
+    kept = []
+    for alert in result.alerts:
+        pairs = [(k, r) for k, r in zip(alert.keys, alert.rows) if k in still_missing]
+        if pairs:
+            alert.keys = [k for k, _ in pairs]
+            alert.rows = [r for _, r in pairs]
+            kept.append(alert)
+    result.alerts = kept
     return result

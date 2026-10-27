@@ -147,8 +147,10 @@ class Detection(unittest.TestCase):
         r = rows(4)
         gone, back = desc(table(r[:3])), desc(table(r))
         res = analyze("TP-1", [save(1, desc(table(r)), gone), save(2, gone, back, "2026-10-26T10:05:00.000-0700")])
-        self.assertEqual(len(res.alerts), 1)
+        self.assertEqual(res.alerts, [])        # the row is back by the newest save, so nothing is reported
         self.assertEqual([e.kind for e in res.logs], ["readded"])
+        res = analyze("TP-1", [save(1, desc(table(r)), gone)])
+        self.assertEqual(len(res.alerts), 1)    # still missing: reported
 
     def test_resolved_and_acknowledged_not_alerted(self):
         head = "||*Thryv ID*||*Zendesk Ticket*||*Tech Support Agent*||*Resolved*||"
@@ -162,6 +164,30 @@ class Detection(unittest.TestCase):
         h = [save(1, desc(table(rows(4))), desc(table(rows(4)[:3])))]
         self.assertEqual(analyze("TP-1", h, labels=["other"]).alerts, [])
         self.assertEqual(len(analyze("TP-1", h, labels=["techsupport"]).alerts), 1)
+
+
+class RealWorldNoise(unittest.TestCase):
+    """Cases found by replaying a real ticket's history: formatting edits, blank rows, Resolved Y/N columns."""
+
+    def test_formatting_around_a_cell_is_not_a_drop(self):
+        r = rows(4)
+        bold = [row[:] for row in r]
+        bold[2][2] = "*" + bold[2][2] + "*"
+        bold[1][0] = "{color:#ff0000}" + bold[1][0] + "{color}"
+        bold[3][2] = "+" + bold[3][2] + "+"
+        self.assertEqual(analyze("TP-1", [save(1, desc(table(r)), desc(table(bold)))]).alerts, [])
+
+    def test_blank_rows_are_ignored(self):
+        r = rows(3)
+        blank = [["", "", "", ""]]
+        self.assertEqual(analyze("TP-1", [save(1, desc(table(r + blank)), desc(table(r)))]).alerts, [])
+
+    def test_resolved_yes_no_column(self):
+        head = "||*Thryv ID*||*Zendesk Ticket*||*Tech Support Agent*||*Resolved Y/N?*||"
+        r = [["a", "1", "Agent Karla", "Y"], ["b", "2", "Agent Karla", "N"], ["c", "3", "Agent Karla", ""], ["d", "4", "Agent Karla", ""]]
+        res = analyze("TP-1", [save(1, desc(table(r, head)), desc(table(r[2:], head)))])
+        self.assertEqual([a.keys for a in res.alerts], [[("b", "2")]])     # Y is a cleanup, N is still a drop
+        self.assertEqual([e.kind for e in res.logs], ["resolved"])
 
 
 class Runner(unittest.TestCase):
