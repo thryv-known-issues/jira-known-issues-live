@@ -1,4 +1,6 @@
-# jira-pinger
+# Jira Watcher
+
+(Formerly Jira Pinger. The GitHub repo, workflow and script keep their old names, `jira-pinger`.)
 
 A GitHub Actions job that posts to the support team's Slack channel when a Jira issue labelled `techsupport` is resolved, and tags the agents on it so they know to check it.
 
@@ -23,7 +25,7 @@ List an issue under `strict_only` in `overrides.json` and Production no longer c
 
 ## Setup notes
 
-- The Slack app must be a member of the channel (in the channel, type `/invite @Jira Pinger`).
+- The Slack app must be a member of the channel (in the channel, type `/invite @Jira Watcher`).
 - The first run after the channel is turned on only records what is already resolved, so the channel is not flooded.
 - If a post fails (for example the app was never added to the channel), the run is marked failed so GitHub emails the owner. Nothing is lost, and the issue is retried on the next run.
 - The Actions logs of this public repo only ever show counts, never ticket numbers, summaries or people's names. `state.json` stores ticket keys and statuses only.
