@@ -225,6 +225,17 @@ class Runner(unittest.TestCase):
         self.assertEqual(([h["id"] for h in out], urls), (["1", "2", "3"], [0, 2]))
 
 
+class Preview(unittest.TestCase):
+    def test_preview_builds_one_fake_alert_tagging_only_the_owner(self):
+        texts = j.build_table_watch_preview({"SLACK_USER_ID": "UME", "JIRA_SITE": JIRA})
+        self.assertEqual(len(texts), 1)
+        self.assertIn("TEST PREVIEW, fake data", texts[0])
+        self.assertIn("<@UME> demo103", texts[0])
+        self.assertEqual(texts[0].count("<@"), 1)
+        self.assertIn("demo103 | AU MC Plus | 1000003 | Demo Agent", texts[0])
+        self.assertNotIn("\u2014", texts[0])
+
+
 class Wiring(unittest.TestCase):
     """The new layer inside main(): off by default, dry run goes to the owner's DM only, errors never stop the pings."""
 
@@ -236,6 +247,7 @@ class Wiring(unittest.TestCase):
         j.digest_due = lambda last, now=None: False
         j.snapshot_id = lambda: None
         j.bot_preview_id = lambda: None
+        j.table_watch_preview_id = lambda: None
         base = {"JIRA_SITE": JIRA, "SLACK_CHANNEL_ID": "", "SLACK_USER_ID": "UME", "MENTIONS": MENTIONS,
                 "TABLE_WATCH_ENABLED": False, "TABLE_WATCH_DRY_RUN": True, "TABLE_WATCH_CHANNEL": "", "TABLE_WATCH_LABEL": "techsupport"}
         base.update(env)
@@ -259,7 +271,7 @@ class Wiring(unittest.TestCase):
 
     def setUp(self):
         self._orig = {n: getattr(j, n) for n in ("send_slack_dm", "send_slack_channel", "save_state", "digest_due", "snapshot_id",
-                                                  "bot_preview_id", "load_config", "load_state", "fetch_jira_issues", "_post",
+                                                  "bot_preview_id", "table_watch_preview_id", "load_config", "load_state", "fetch_jira_issues", "_post",
                                                   "table_watch_step")}
 
     def tearDown(self):

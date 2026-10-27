@@ -295,6 +295,35 @@ def build_bot_previews(config):
     return [note + text for text in texts]
 
 
+def table_watch_preview_id():
+    """overrides.json can hold "table_watch_preview": "<any label>". One fake-data dropped-row alert is DMed to the owner per label."""
+    value = read_overrides().get("table_watch_preview")
+    return str(value) if value else None
+
+
+def build_table_watch_preview(config):
+    """A made-up dropped-row alert built by the real table-watch code, tagging only the owner."""
+    from table_watch.detect import analyze
+    from table_watch.message import build_messages, norm_name
+    head = "||*Thryv ID*||*Country+Package*||*Zendesk Ticket*||*Tech Support Agent*||"
+    rows = [["demo101", "US MC Plus", "1000001", "Demo Agent"], ["demo102", "US MC Pro", "1000002", "Demo Agent"],
+            ["demo103", "AU MC Plus", "1000003", "Demo Agent"]]
+    table = lambda rs: head + "\n" + "\n".join("|" + "|".join(r) + "|" for r in rs)
+    text_before = "Demo ticket\n\n" + table(rows[:2])
+    text_with_third = "Demo ticket\n\n" + table(rows)
+    # save 1 adds the third row; save 2 is made from the older text, so the third row disappears
+    history = [
+        {"id": "1", "created": "2026-10-26T10:00:00.000-0700", "author": {"displayName": "Someone Else"},
+         "items": [{"field": "description", "fromString": text_before, "toString": text_with_third}]},
+        {"id": "2", "created": "2026-10-26T10:00:30.000-0700", "author": {"displayName": "Another Agent"},
+         "items": [{"field": "description", "fromString": text_with_third, "toString": text_before}]},
+    ]
+    result = analyze("DEMO-1", history, labels=["techsupport"])
+    messages, _ = build_messages(result.alerts, {norm_name("Demo Agent"): config["SLACK_USER_ID"]}, config["JIRA_SITE"])
+    note = "*TEST PREVIEW, fake data, sent only to you. This is how a table watch alert will look. The ticket DEMO-1 and its rows are made up.*\n"
+    return [note + message["text"] for message in messages]
+
+
 def snapshot_id():
     """overrides.json can hold "people_snapshot": "<any label>". The snapshot is sent once per distinct label."""
     value = read_overrides().get("people_snapshot")
@@ -710,11 +739,28 @@ def main():
             preview_error = f"Bot preview failed: {exc}."
             print(preview_error)
 
+    # ONE-TIME TEST: a fake table-watch alert, sent as the bot to the owner's DM only, once per label.
+    tw_preview_done = state.get("table_watch_preview_done")
+    tw_preview_wanted = table_watch_preview_id()
+    if tw_preview_wanted and tw_preview_wanted != tw_preview_done:
+        try:
+            for text in build_table_watch_preview(config):
+                if args.dry_run:
+                    print(f"--- table watch preview DM ---\n{text}")
+                else:
+                    send_slack_dm(config, text)
+            print("Table watch preview: sample alert built.")
+            if not args.dry_run:
+                tw_preview_done = tw_preview_wanted
+        except Exception as exc:
+            preview_error = (preview_error or "") + f" Table watch preview failed ({type(exc).__name__})."
+            print(f"Table watch preview failed ({type(exc).__name__}).")
+
     if args.dry_run:
         print("Dry run: Slack was not contacted and state.json was not changed.")
         return
 
-    save_state({**previous, **current}, last_digest, announced, snapshot_done, weekend_resolved, {"channel_incoming": incoming_announced, "weekend_incoming": weekend_incoming, "bot_preview_done": preview_done, "table_watch": tw_state})
+    save_state({**previous, **current}, last_digest, announced, snapshot_done, weekend_resolved, {"channel_incoming": incoming_announced, "weekend_incoming": weekend_incoming, "bot_preview_done": preview_done, "table_watch": tw_state, "table_watch_preview_done": tw_preview_done})
     if channel_error or snapshot_error or preview_error:
         sys.exit(" ".join(m for m in (channel_error, snapshot_error, preview_error) if m))
 

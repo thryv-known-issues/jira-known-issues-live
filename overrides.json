@@ -3,5 +3,6 @@
     "SHAR-8117": "Type 1 is resolved but type 2 is not, so Integration does not count as resolved. Only Done, Closed, Resolved and similar do."
   },
   "people_snapshot": "one-time-test-2026-10-21",
-  "bot_preview": "logo-check-2026-10-24"
+  "bot_preview": "logo-check-2026-10-24",
+  "table_watch_preview": "table-watch-look-2026-10-26"
 }
