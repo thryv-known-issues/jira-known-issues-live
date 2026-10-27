@@ -58,10 +58,10 @@ STRICT_STATUSES = {
 }
 CHANNEL_STATUSES = STRICT_STATUSES | {"production"}
 # "Fix incoming" heads-up: an issue that just reached Integration (the fix is built and on its way) is posted once with
-# a jiggling-eyes emoji (custom Slack emoji named eyes-jiggle). Issues under strict_only are skipped, because Integration
+# the built-in eyes emoji. Issues under strict_only are skipped, because Integration
 # there means only part of the fix is in.
 INCOMING_STATUS = "integration"
-INCOMING_HEADER = ":eyes-jiggle: Fix incoming, keep an eye out:"
+INCOMING_HEADER = ":eyes: Fix incoming, keep an eye out:"
 RESOLVED_HEADER = ":white_check_mark: Resolved, please check:"
 CHANNEL_MAX_PER_MESSAGE = 25
 CHANNEL_SUMMARY_CHARS = 110
