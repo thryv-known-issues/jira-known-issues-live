@@ -75,7 +75,7 @@
     "TP-40098": "2026-10-26T17:00:21.494583+00:00"
   },
   "last_digest_dm": "2026-10-28T13:15:19.978375+00:00",
-  "last_full_run": "2026-10-29T01:15:18.464691+00:00",
+  "last_full_run": "2026-10-29T02:15:18.292331+00:00",
   "people_snapshot_done": "one-time-test-2026-10-21",
   "statuses": {
     "AR-74840": "Complete",
@@ -89,6 +89,8 @@
     "LEADS-1502": "Done",
     "LEADS-1556": "Done",
     "LEADS-1574": "Ready for Dev",
+    "LEADS-1699": "Open",
+    "LEADS-1700": "Ready for Dev",
     "LEADS-861": "Done",
     "MCI-588": "Dev Backlog",
     "SEO-388": "Done",
@@ -162,6 +164,7 @@
       "LEADS-1574": 19214158,
       "LEADS-1698": 19229795,
       "LEADS-1699": 0,
+      "LEADS-1700": 19234529,
       "MC-1558": 19229796,
       "MC-5686": 19198137,
       "SEO-397": 19229543,
