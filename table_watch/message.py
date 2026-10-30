@@ -17,6 +17,18 @@ def name_map_from_mentions(mentions):
     return {norm_name(name): uid for name, uid in (mentions or {}).items() if uid}
 
 
+def lookup_agent(name_map, agent):
+    """Slack ID for the name in the Agent cell. Exact spelling first; a single word (a first name) matches when exactly one person has it."""
+    key = norm_name(agent)
+    if key in name_map:
+        return name_map[key]
+    if key and " " not in key:
+        ids = {uid for name, uid in name_map.items() if name.split(" ")[0] == key}
+        if len(ids) == 1:
+            return ids.pop()
+    return None
+
+
 def _join(items):
     if len(items) <= 1:
         return "".join(items)
@@ -55,7 +67,7 @@ def build_messages(alerts, name_map, jira_base, zendesk_base=ZENDESK_BASE):
             groups.setdefault((a.history_id, a.table_no, norm_name(a.agent)), []).append(a)
     for (history_id, _, agent_key), group in groups.items():
         first = group[0]
-        uid = name_map.get(agent_key)
+        uid = lookup_agent(name_map, first.agent)
         if agent_key and not uid and first.agent not in unmapped:
             unmapped.append(first.agent)
         tag = f"<@{uid}> " if uid else ""

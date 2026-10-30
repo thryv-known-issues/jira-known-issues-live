@@ -132,6 +132,16 @@ class Detection(unittest.TestCase):
         res = analyze("TP-1", [save(1, desc(table(r)), desc(table(r[:3])))])
         self.assertEqual(build_messages(res.alerts, names, JIRA)[0][0]["user_id"], "USCOTT")
 
+    def test_first_name_only_matches_when_unique(self):
+        names = name_map_from_mentions({"Naomi Caraballo Jiminian": "UNAOMI", "Naomi Jiminian": "UNAOMI", "Barbara Larrosa": "UBARB",
+                                        "Karla Cruz": "UKARLA", "Karla Other": "UOTHER"})
+        from table_watch.message import lookup_agent
+        self.assertEqual(lookup_agent(names, "Naomi"), "UNAOMI")        # two spellings, one person
+        self.assertEqual(lookup_agent(names, "barbara"), "UBARB")
+        self.assertIsNone(lookup_agent(names, "Karla"))                 # two different Karlas: do not guess
+        self.assertIsNone(lookup_agent(names, "Someone"))
+        self.assertIsNone(lookup_agent(names, "Naomi Smith"))           # a full name must match exactly
+
     def test_message_matches_handoff_format(self):
         r = rows(4, "Agent Barb")
         r[3] = ["lem1", "US Signature+", "4864337", "Agent Barb"]
@@ -342,7 +352,7 @@ class Wiring(unittest.TestCase):
                                                 watch_state={"last": {"TP-1": 4}, "sent": {}})
         self.assertEqual(sorted(channel for channel, _ in posted), ["UBARB", "UME"])
         to_owner = next(text for channel, text in posted if channel == "UME")
-        self.assertIn("no rep could be matched", to_owner)
+        self.assertIn("could not match the agent name", to_owner)
 
     def test_channel_setting_posts_tagged_alerts_in_the_channel_and_keeps_the_rest_private(self):
         r = rows(4, "Agent Barb")
