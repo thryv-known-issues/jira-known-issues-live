@@ -98,7 +98,7 @@
     "TP-40098": "2026-10-26T17:00:21.494583+00:00"
   },
   "last_digest_dm": "2026-10-29T14:15:17.478563+00:00",
-  "last_full_run": "2026-10-30T03:15:17.195741+00:00",
+  "last_full_run": "2026-10-30T04:15:16.432699+00:00",
   "people_snapshot_done": "one-time-test-2026-10-21",
   "statuses": {
     "AR-74840": "Complete",
@@ -114,7 +114,7 @@
     "LEADS-1574": "Done",
     "LEADS-1699": "Cancelled",
     "LEADS-1700": "Cancelled",
-    "LEADS-1711": "Open",
+    "LEADS-1711": "Ready for Dev",
     "LEADS-1712": "Open",
     "LEADS-861": "Done",
     "MCI-588": "Dev Backlog",
