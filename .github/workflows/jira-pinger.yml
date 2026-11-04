@@ -69,8 +69,22 @@ jobs:
             else
               git commit -m "Update Jira pinger state [skip ci]"
               # Other workflows also push to main, so rebase onto their commits first.
+              # GitHub sometimes answers a push with a temporary server error. If the save is lost, the next run does not
+              # know what was already posted and repeats it, so retry a few times before giving up.
               # -X theirs keeps this run's state.json if a rebase ever conflicts on it.
-              git pull --rebase -X theirs origin main
-              git push
+              saved=0
+              for attempt in 1 2 3 4 5; do
+                if git pull --rebase -X theirs origin main && git push; then
+                  saved=1
+                  break
+                fi
+                echo "Saving state failed (attempt $attempt of 5), retrying"
+                git rebase --abort 2>/dev/null || true
+                sleep $((attempt * 6))
+              done
+              if [ "$saved" -ne 1 ]; then
+                echo "Could not save state.json after 5 attempts"
+                exit 1
+              fi
             fi
           fi
