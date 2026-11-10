@@ -100,7 +100,7 @@
     "TSM-487942": "2026-10-30T14:15:16.157112+00:00"
   },
   "last_digest_dm": "2026-11-10T14:30:20.634590+00:00",
-  "last_full_run": "2026-11-10T16:30:22.645752+00:00",
+  "last_full_run": "2026-11-10T17:30:24.826075+00:00",
   "people_snapshot_done": "one-time-test-2026-10-21",
   "statuses": {
     "AR-74840": "Complete",
@@ -126,7 +126,7 @@
     "SEO-392": "Done",
     "SEO-396": "Done",
     "SEO-397": "In Progress",
-    "SEO-404": "Ready for Dev",
+    "SEO-404": "In Progress",
     "SEO-410": "Open",
     "SEO-411": "Ready for Dev",
     "SHAR-10121": "Done",
@@ -138,6 +138,7 @@
     "SHAR-9965": "Cancelled",
     "SW-1088": "Cancelled",
     "SW-1364": "Ready for Dev",
+    "SW-147": "In Progress",
     "SW-1497": "Done",
     "SW-1680": "Ready for Dev",
     "SYSINT-19378": "Closed",
@@ -201,7 +202,7 @@
     "TSM-480411": "Done",
     "TSM-485923": "Done",
     "TSM-489701": "Open",
-    "TSM-490779": "Open"
+    "TSM-490779": "Work In Progress"
   },
   "table_watch": {
     "last": {
@@ -328,7 +329,7 @@
       "SW-1690": 19295135,
       "SW-1702": 19475360,
       "SW-1703": 19339891,
-      "SW-1732": 19380777,
+      "SW-1732": 19491129,
       "SW-1759": 19429811,
       "SW-1775": 19432295,
       "SW-1776": 0,
