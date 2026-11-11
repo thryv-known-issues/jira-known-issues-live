@@ -11,7 +11,7 @@ BULK_ROWS = 10                    # more rows than this gone in one save is a cl
 
 @dataclass
 class Alert:
-    kind: str  # "drop" (one row) or "bulk" (more than half the table, one alert)
+    kind: str  # "drop" (one row), "bulk" (a large removal, one alert), "resolved" (one row marked resolved) or "resolved_bulk"
     issue: str
     history_id: str
     created: datetime
@@ -126,14 +126,31 @@ def analyze(issue, histories, labels=None, label="techsupport", muted=frozenset(
                     for row in alertable:
                         key = prev.key(row)
                         alert = Alert("drop", rows=[row], keys=[key],
-                                      agent=prev.cell(row, prev.agent_col),
+                                      agent=prev.agent(row),
                                       thryv_id=prev.cell(row, prev.id_col),
-                                      ticket=prev.cell(row, prev.ticket_col), **common)
+                                      ticket=prev.ticket_value(row), **common)
                         ab = added_by.get((tid, key))
                         if ab and ab[0] != author and timedelta(0) <= created - ab[1] <= SIGNATURE_WINDOW:
                             alert.signature_seconds = (created - ab[1]).total_seconds()
                         result.alerts.append(alert)
                         open_alerts.add((tid, key))
+                # Rows whose Resolved column went from empty or "no" to "Yes", "Y" and so on in this save.
+                if prev.resolved_col is not None and new.resolved_col is not None:
+                    before = {}
+                    for r in prev.rows:
+                        if any(r):
+                            before.setdefault(prev.key(r), r)
+                    flipped = []
+                    for r in new.rows:
+                        old = before.get(new.key(r)) if any(r) else None
+                        if old is not None and not prev.is_resolved(old) and new.is_resolved(r):
+                            flipped.append(r)
+                    if flipped and len(flipped) > BULK_ROWS:
+                        result.alerts.append(Alert("resolved_bulk", rows=flipped, keys=[new.key(r) for r in flipped], **common))
+                    else:
+                        for r in flipped:
+                            result.alerts.append(Alert("resolved", rows=[r], keys=[new.key(r)], agent=new.agent(r),
+                                                       thryv_id=new.cell(r, new.id_col), ticket=new.ticket_value(r), **common))
                 for row in added:
                     key = new.key(row)
                     added_by[(tid, key)] = (author, created)
@@ -144,6 +161,9 @@ def analyze(issue, histories, labels=None, label="techsupport", muted=frozenset(
     still_missing = {key for _, key in open_alerts}
     kept = []
     for alert in result.alerts:
+        if alert.kind in ("resolved", "resolved_bulk"):
+            kept.append(alert)                      # a row marked resolved is news whether or not it is still there
+            continue
         pairs = [(k, r) for k, r in zip(alert.keys, alert.rows) if k in still_missing]
         if pairs:
             alert.keys = [k for k, _ in pairs]

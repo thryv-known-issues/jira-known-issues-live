@@ -2,6 +2,8 @@
 import re
 import unicodedata
 
+from .parse import agent_name
+
 ZENDESK_BASE = "https://thryv.zendesk.com"
 
 
@@ -26,7 +28,30 @@ def lookup_agent(name_map, agent):
         ids = {uid for name, uid in name_map.items() if name.split(" ")[0] == key}
         if len(ids) == 1:
             return ids.pop()
+    elif len(key.split(" ")) == 2 and len(key.split(" ")[1]) == 1:       # "Katie C": first name plus last initial
+        first, initial = key.split(" ")
+        ids = {uid for name, uid in name_map.items() if " " in name and name.split(" ")[0] == first and name.split(" ")[1].startswith(initial)}
+        if len(ids) == 1:
+            return ids.pop()
+    elif key:                                   # "Karla Cruz (US)": a known full name inside a longer cell
+        ids = {uid for name, uid in name_map.items() if " " in name and re.search(r"\b" + re.escape(name) + r"\b", key)}
+        if len(ids) == 1:
+            return ids.pop()
     return None
+
+
+def find_agent(name_map, alert):
+    """(slack id or None, name text). Uses the agent cell; only when that cell is empty or the table has no agent column
+    are the other cells searched for a known person."""
+    if alert.agent:
+        return lookup_agent(name_map, alert.agent), alert.agent
+    row = alert.rows[0] if alert.rows else []
+    for cell in row:
+        text = agent_name(cell)
+        uid = lookup_agent(name_map, text) if text else None
+        if uid:
+            return uid, text
+    return None, ""
 
 
 def _join(items):
@@ -62,17 +87,27 @@ def build_messages(alerts, name_map, jira_base, zendesk_base=ZENDESK_BASE):
             text = (f"{len(a.rows)} of {a.table_size} rows were removed from {_where(a, jira_base)} "
                     f"in one save. Please check the history and re-add anything that should stay.\n"
                     + _rows_block(a.rows))
-            messages.append({"history_id": a.history_id, "user_id": None, "agent": "", "text": text, "alerts": [a]})
+            messages.append({"history_id": a.history_id, "user_id": None, "agent": "", "kind": "bulk", "text": text, "alerts": [a]})
+        elif a.kind == "resolved_bulk":
+            text = (f"{len(a.rows)} rows were marked resolved in {_where(a, jira_base)} in one save. Please check them.\n"
+                    + _rows_block(a.rows))
+            messages.append({"history_id": a.history_id, "user_id": None, "agent": "", "kind": "resolved_bulk", "text": text, "alerts": [a]})
         else:
-            groups.setdefault((a.history_id, a.table_no, norm_name(a.agent)), []).append(a)
-    for (history_id, _, agent_key), group in groups.items():
-        first = group[0]
-        uid = lookup_agent(name_map, first.agent)
-        if agent_key and not uid and first.agent not in unmapped:
-            unmapped.append(first.agent)
+            uid, who = find_agent(name_map, a)
+            groups.setdefault((a.kind, a.history_id, a.table_no, uid or norm_name(who)), []).append((a, uid, who))
+    for (kind, history_id, _, _), group in groups.items():
+        alerts = [a for a, _, _ in group]
+        first, uid, who = alerts[0], group[0][1], group[0][2]
+        if who and not uid and who not in unmapped:
+            unmapped.append(who)
         tag = f"<@{uid}> " if uid else ""
-        refs = _join([_ref(a, zendesk_base) for a in group])
-        text = (f"{tag}{refs} may have been dropped from {_where(first, jira_base)}. "
-                f"Please review and re-add if applicable.\n" + _rows_block([a.rows[0] for a in group]))
-        messages.append({"history_id": history_id, "user_id": uid, "agent": first.agent, "text": text, "alerts": group})
+        refs = _join([_ref(a, zendesk_base) for a in alerts])
+        if kind == "resolved":
+            verb = "was" if len(alerts) == 1 else "were"
+            text = (f":white_check_mark: {tag}{refs} {verb} marked resolved in {_where(first, jira_base)}. Please check.\n"
+                    + _rows_block([a.rows[0] for a in alerts]))
+        else:
+            text = (f"{tag}{refs} may have been dropped from {_where(first, jira_base)}. "
+                    f"Please review and re-add if applicable.\n" + _rows_block([a.rows[0] for a in alerts]))
+        messages.append({"history_id": history_id, "user_id": uid, "agent": who, "kind": kind, "text": text, "alerts": alerts})
     return messages, unmapped

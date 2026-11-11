@@ -12,7 +12,8 @@ LOOKBACK = "-125m"                  # same window as the pinger, so one skipped 
 
 def alert_hash(alert):
     """Short fingerprint of (ticket, save, row), so the saved state never holds account IDs or ticket numbers."""
-    raw = "|".join([alert.issue, str(alert.history_id)] + [part for key in alert.keys for part in key])
+    kind_part = ["resolved"] if alert.kind.startswith("resolved") else []      # drop alerts keep their old fingerprint
+    raw = "|".join([alert.issue, str(alert.history_id)] + kind_part + [part for key in alert.keys for part in key])
     return hashlib.sha256(raw.encode("utf-8")).hexdigest()[:16]
 
 

@@ -200,6 +200,168 @@ class RealWorldNoise(unittest.TestCase):
         self.assertEqual([e.kind for e in res.logs], ["resolved"])
 
 
+class CombinedAgentCells(unittest.TestCase):
+    """Tables from real tickets: the agent and the ticket share one cell, and the header is not the usual one."""
+    NAMES = name_map_from_mentions({"Karla Cruz": "UKARLA", "Barbara Larrosa": "UBARB", "Barbara Larrosa Presinal": "UBARB",
+                                    "Naomi Jiminian": "UNAOMI", "Ryan Lann": "URYAN", "Vanessa Garcia": "UVANESSA", "Vanessa Angelina Garcia": "UVANESSA"})
+
+    def drop(self, head, rows_, drop_index):
+        before = head + "\n" + "\n".join("|" + "|".join(r) + "|" for r in rows_)
+        after = head + "\n" + "\n".join("|" + "|".join(r) + "|" for i, r in enumerate(rows_) if i != drop_index)
+        return analyze("TP-1", [save(1, "Intro\n\n" + before, "Intro\n\n" + after)])
+
+    def test_tech_agent_plus_ticket_header(self):
+        head = "||*Thryv IDs*||*EID*||*Tech Agent + Ticket*||*Correct Name*||*User Email(s) Affected*||"
+        rows_ = [["obs846 & wkl879", "BSGG2742", "Karla Cruz - 4883721", "wkl879 - Location 2", "a@x.example"],
+                 ["fln050 / hgh661 / epu540 / cze216", "BSGG9968", "Karla Cruz - 4866898", "hgh661 - Capital", "b@x.example"]]
+        res = self.drop(head, rows_, 1)
+        self.assertEqual((res.alerts[0].agent, res.alerts[0].ticket), ("Karla Cruz", "4866898"))
+        msgs, unmapped = build_messages(res.alerts, self.NAMES, JIRA)
+        self.assertEqual((msgs[0]["user_id"], unmapped), ("UKARLA", []))
+        self.assertIn("(ZD <https://thryv.zendesk.com/4866898|4866898>)", msgs[0]["text"])
+
+    def test_agent_plus_zd_ticket_header_with_first_names_and_full_names(self):
+        head = "||*Thryv ID*||*Country + Package*||*MRR*||*Agent + ZD Ticket*||"
+        rows_ = [["gd2lwfe97inqoj7p", "US MC Pro", "US$884.00", "Barbara 4842994"],
+                 ["0wt13lcd6w95vsen", "US MC Plus", "$226.00 USD", "Barbara Larrosa"],
+                 ["twt612", "US MC Plus", "US$6,054.00", "Ryan 4848169"],
+                 ["dci714", "US Signature", "USD 800", "Karla Cruz"]]
+        for index, expect in ((0, "UBARB"), (1, "UBARB"), (2, "URYAN"), (3, "UKARLA")):
+            res = self.drop(head, rows_, index)
+            msgs, unmapped = build_messages(res.alerts, self.NAMES, JIRA)
+            self.assertEqual((msgs[0]["user_id"], unmapped), (expect, []), rows_[index][3])
+
+    def test_agent_found_in_another_cell_when_there_is_no_agent_column(self):
+        head = "||*Thryv ID*||*Plan*||*Owner*||"
+        rows_ = [["a1", "MC Plus", "Naomi Jiminian"], ["b2", "MC Pro", "Vanessa Garcia"], ["c3", "MC Pro", "Karla Cruz"]]
+        res = self.drop(head, rows_, 0)
+        self.assertEqual(build_messages(res.alerts, self.NAMES, JIRA)[0][0]["user_id"], "UNAOMI")
+
+    def test_unknown_name_in_agent_cell_is_not_guessed_from_other_cells(self):
+        head = "||*Thryv ID*||*Notes*||*Agent*||"
+        rows_ = [["a1", "Karla Cruz said so", "Someone New"], ["b2", "n", "Someone New"], ["c3", "n", "Someone New"]]
+        res = self.drop(head, rows_, 0)
+        msgs, unmapped = build_messages(res.alerts, self.NAMES, JIRA)
+        self.assertEqual((msgs[0]["user_id"], unmapped), (None, ["Someone New"]))
+
+    def test_ticket_note_beside_the_number_does_not_change_the_row_key(self):
+        head = "||*Thryv ID*||*ZD Ticket*||*Agent*||"
+        before = "Intro\n\n" + head + "\n|a1|4640512|Karla Cruz|\n|b2|4640513|Karla Cruz|\n|c3|4640514|Karla Cruz|"
+        after = "Intro\n\n" + head + "\n|a1|4640512 I was able to generate a TPN (see LEADS-1556)|Karla Cruz|\n|b2|4640513|Karla Cruz|\n|c3|4640514|Karla Cruz|"
+        self.assertEqual(analyze("TP-1", [save(1, before, after)]).alerts, [])
+
+
+class ResolvedColumn(unittest.TestCase):
+    HEAD = "||Thryv ID||Country||ZD Ticket||Agent||*Resolved*||"
+    NAMES = name_map_from_mentions({"Vanessa Garcia": "UVANESSA", "Karla Cruz": "UKARLA", "Barbara Larrosa": "UBARB"})
+
+    def table_text(self, rows_):
+        return "Intro\n\n" + self.HEAD + "\n" + "\n".join("|" + "|".join(r) + "|" for r in rows_)
+
+    def base(self):
+        return [["a1", "AU", "4581710", "Vanessa Garcia", ""], ["b2", "US", "4631017", "Karla Cruz", ""], ["c3", "NZ", "4741628", "Barbara Larrosa", "N"]]
+
+    def flipped(self, value, index=0):
+        rows_ = self.base()
+        after = [r[:] for r in rows_]
+        after[index][4] = value
+        return analyze("TP-1", [save(1, self.table_text(rows_), self.table_text(after))])
+
+    def test_yes_marks_the_row_resolved_and_tags_the_agent(self):
+        for value in ("Yes", "Y", "yes", "x", "Done"):
+            res = self.flipped(value)
+            self.assertEqual([a.kind for a in res.alerts], ["resolved"], value)
+        msgs, _ = build_messages(self.flipped("Yes").alerts, self.NAMES, JIRA)
+        self.assertEqual(msgs[0]["user_id"], "UVANESSA")
+        self.assertTrue(msgs[0]["text"].startswith(":white_check_mark: <@UVANESSA> a1 (ZD <https://thryv.zendesk.com/4581710|4581710>) was marked resolved in "))
+        self.assertIn("Please check.", msgs[0]["text"])
+        self.assertIn("a1 | AU | 4581710 | Vanessa Garcia | Yes", msgs[0]["text"])
+
+    def test_n_blank_and_unchanged_do_not_alert(self):
+        self.assertEqual(self.flipped("N").alerts, [])
+        self.assertEqual(self.flipped("").alerts, [])
+        self.assertEqual(self.flipped("N", 2).alerts, [])                 # c3 was already N
+        rows_ = self.base()
+        rows_[1][4] = "Yes"
+        same = analyze("TP-1", [save(1, self.table_text(rows_), self.table_text(rows_))])
+        self.assertEqual(same.alerts, [])                                 # already resolved before and after
+
+    def test_a_row_marked_resolved_in_a_new_save_after_unresolving_alerts_again(self):
+        rows_ = self.base()
+        yes, no = [r[:] for r in rows_], [r[:] for r in rows_]
+        yes[0][4] = "Yes"
+        res = analyze("TP-1", [save(1, self.table_text(rows_), self.table_text(yes)),
+                                save(2, self.table_text(yes), self.table_text(no), "2026-10-26T10:05:00.000-0700"),
+                                save(3, self.table_text(no), self.table_text(yes), "2026-10-26T10:10:00.000-0700")])
+        self.assertEqual([(a.kind, a.history_id) for a in res.alerts], [("resolved", "1"), ("resolved", "3")])
+
+    def test_strikethrough_and_formatting_do_not_hide_the_change(self):
+        before = self.HEAD + "\n|~~tzw999~~|~~US~~|[~~4640512~~|https://x.example] I was able to generate a TPN|~~Karla Cruz~~||\n|b2|US|4631017|Karla Cruz||"
+        after = self.HEAD + "\n|~~tzw999~~|~~US~~|[~~4640512~~|https://x.example] I was able to generate a TPN|~~Karla Cruz~~|Yes|\n|b2|US|4631017|Karla Cruz||"
+        res = analyze("TP-1", [save(1, "Intro\n\n" + before, "Intro\n\n" + after)])
+        self.assertEqual([(a.kind, a.agent, a.ticket) for a in res.alerts], [("resolved", "Karla Cruz", "4640512")])
+
+    def test_marking_more_than_ten_rows_is_one_untagged_message(self):
+        rows_ = [[f"id{i}", "US", str(4000000 + i), "Karla Cruz", ""] for i in range(14)]
+        after = [r[:] for r in rows_]
+        for r in after[:12]:
+            r[4] = "Yes"
+        res = analyze("TP-1", [save(1, self.table_text(rows_), self.table_text(after))])
+        self.assertEqual([a.kind for a in res.alerts], ["resolved_bulk"])
+        msgs, _ = build_messages(res.alerts, self.NAMES, JIRA)
+        self.assertEqual((len(msgs), msgs[0]["user_id"]), (1, None))
+        self.assertIn("12 rows were marked resolved", msgs[0]["text"])
+
+    def test_several_rows_for_one_agent_in_one_save_are_grouped(self):
+        rows_ = [["a1", "AU", "4581710", "Vanessa Garcia", ""], ["b2", "US", "4631017", "Vanessa Garcia", ""], ["c3", "NZ", "4741628", "Karla Cruz", ""]]
+        after = [r[:] for r in rows_]
+        after[0][4] = after[1][4] = "Yes"
+        res = analyze("TP-1", [save(1, self.table_text(rows_), self.table_text(after))])
+        msgs, _ = build_messages(res.alerts, self.NAMES, JIRA)
+        self.assertEqual(len(msgs), 1)
+        self.assertIn("were marked resolved", msgs[0]["text"])
+        self.assertIn("a1 (ZD", msgs[0]["text"])
+        self.assertIn("b2 (ZD", msgs[0]["text"])
+
+    def test_removing_a_resolved_row_stays_quiet_and_resolved_alert_is_sent_once(self):
+        rows_ = self.base()
+        rows_[0][4] = "Yes"
+        res = analyze("TP-1", [save(1, self.table_text(rows_), self.table_text(rows_[1:]))])
+        self.assertEqual(res.alerts, [])                                  # a resolved row being cleaned out is not a drop
+        state = {"last": {"TP-1": 0}, "sent": {}}
+        h = [save(5, self.table_text(self.base()), self.table_text([self.base()[0][:4] + ["Yes"]] + self.base()[1:]))]
+        sent = []
+        cfg = {"JIRA_SITE": JIRA, "MENTIONS": MENTIONS}
+        run_once = lambda s: runner.run(cfg, s, lambda jql: [{"key": "TP-1", "labels": ["techsupport"]}], lambda key: h, sent.append)
+        state, counts = run_once(state)
+        state, counts = run_once(state)
+        self.assertEqual(len(sent), 1)
+
+
+class ParserAndNames(unittest.TestCase):
+    def test_a_cell_with_a_line_break_does_not_cut_the_table_short(self):
+        text = ("Intro\n\n||Thryv ID||Notes||Agent||\n|a1|Missing from TPN  \nEP CTNs are off at client request|Karla Cruz|\n"
+                "|b2|plain|Karla Cruz|\n|c3|plain|Karla Cruz|\n\nAfter the table")
+        table = parse_tables(text)[0]
+        self.assertEqual([r[0] for r in table.rows], ["a1", "b2", "c3"])
+        self.assertEqual(table.rows[0][1], "Missing from TPN EP CTNs are off at client request")
+
+    def test_a_row_dropped_after_a_multi_line_row_is_still_seen(self):
+        head = "||Thryv ID||Notes||Agent||"
+        before = "Intro\n\n" + head + "\n|a1|line one  \nline two|Karla Cruz|\n|b2|n|Karla Cruz|\n|c3|n|Karla Cruz|"
+        after = "Intro\n\n" + head + "\n|a1|line one  \nline two|Karla Cruz|\n|b2|n|Karla Cruz|"
+        res = analyze("TP-1", [save(1, before, after)])
+        self.assertEqual(len(res.alerts), 1)
+        self.assertEqual(res.alerts[0].thryv_id, "c3")
+
+    def test_first_name_and_initial_matches_when_unique(self):
+        from table_watch.message import lookup_agent
+        names = name_map_from_mentions({"Katie Chambers": "USCOTT", "Karla Cruz": "UKARLA", "Karla Castro": "UOTHER"})
+        self.assertEqual(lookup_agent(names, "Katie C"), "USCOTT")
+        self.assertIsNone(lookup_agent(names, "Karla C"))                # two Karla C names: do not guess
+        self.assertIsNone(lookup_agent(names, "Katie X"))
+
+
 class Runner(unittest.TestCase):
     def setUp(self):
         r = rows(4)

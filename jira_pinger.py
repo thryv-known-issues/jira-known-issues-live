@@ -199,10 +199,10 @@ def table_watch_step(config, tw_state):
             _post(config, message["user_id"], text)                      # no channel set: the rep who added the row gets the DM
         elif message["agent"]:
             _post(config, owner, f"*Table watch: I could not match the agent name \"{message['agent']}\" to a Slack user, so this went only to you.*\n{text}")
-        elif any(a.kind == "bulk" for a in message["alerts"]):
-            _post(config, owner, f"*Table watch: a large part of a table was removed in one save. Sent only to you for a human check.*\n{text}")
+        elif any(a.kind in ("bulk", "resolved_bulk") for a in message["alerts"]):
+            _post(config, owner, f"*Table watch: a large number of rows changed in one save. Sent only to you for a human check.*\n{text}")
         else:
-            _post(config, owner, f"*Table watch: the dropped row names no agent, so this went only to you.*\n{text}")
+            _post(config, owner, f"*Table watch: no agent could be found in that row, so this went only to you.*\n{text}")
 
     new_state, counts = runner.run(config, tw_state, fetch_issues, lambda key: fetch_changelog(config, key), send,
                                    label=config["TABLE_WATCH_LABEL"])
