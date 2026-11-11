@@ -106,7 +106,7 @@
     "TSM-487942": "2026-10-30T14:15:16.157112+00:00"
   },
   "last_digest_dm": "2026-11-10T14:30:20.634590+00:00",
-  "last_full_run": "2026-11-11T01:30:20.629522+00:00",
+  "last_full_run": "2026-11-11T02:30:19.730957+00:00",
   "people_snapshot_done": "one-time-test-2026-10-21",
   "statuses": {
     "AR-74840": "Complete",
@@ -138,6 +138,7 @@
     "SHAR-10121": "Done",
     "SHAR-10123": "Done",
     "SHAR-10253": "Open",
+    "SHAR-10261": "Ready for Dev",
     "SHAR-4325": "In Progress",
     "SHAR-8117": "Done",
     "SHAR-8280": "Ready for Dev",
