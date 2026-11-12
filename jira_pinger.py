@@ -206,10 +206,33 @@ def table_watch_step(config, tw_state):
 
     new_state, counts = runner.run(config, tw_state, fetch_issues, lambda key: fetch_changelog(config, key), send,
                                    label=config["TABLE_WATCH_LABEL"])
+    LAST_TABLE_WATCH_COUNTS.clear()
+    LAST_TABLE_WATCH_COUNTS.update(counts)
     mode = "dry run" if dry else "live"
     print("Table watch ({}): {} ticket(s) checked, {} new to it, {} alert(s) sent, {} unmapped name(s), {} send failure(s).".format(
         mode, counts["checked"], counts["baselined"], counts["alerts"], counts["unmapped"], counts["failed"]))
     return new_state
+
+
+LAST_TABLE_WATCH_COUNTS = {}       # numbers from the latest table-watch pass, read by the weekly counters
+
+
+def week_key(now=None):
+    """ISO week in Central time, for example 2026-W46."""
+    year, week, _ = (now or datetime.now(timezone.utc)).astimezone(LOCAL_TZ).isocalendar()
+    return f"{year}-W{week:02d}"
+
+
+def bump_metrics(metrics, now=None, **amounts):
+    """Add to this week's counters. Only numbers are kept, so state.json in this public repo stays safe."""
+    metrics = {week: dict(values) for week, values in (metrics or {}).items()}
+    if not any(amounts.values()):
+        return metrics
+    week = metrics.setdefault(week_key(now), {})
+    for name, amount in amounts.items():
+        if amount:
+            week[name] = round(week.get(name, 0) + amount, 2)
+    return metrics
 
 
 FULL_RUN_MINUTES = 55          # status pings, channel posts and the daily list run about hourly; table watch runs on every pass
@@ -235,7 +258,12 @@ def light_run(config, state):
         print("Light pass: nothing to do (hourly work is not due yet).")
         return
     try:
+        LAST_TABLE_WATCH_COUNTS.clear()
         state["table_watch"] = table_watch_step(config, state.get("table_watch"))
+        state["metrics"] = bump_metrics(state.get("metrics"), table_drops_alerted=LAST_TABLE_WATCH_COUNTS.get("drops", 0),
+                                        table_resolved_alerted=LAST_TABLE_WATCH_COUNTS.get("resolved_marks", 0),
+                                        table_bulk_flagged=LAST_TABLE_WATCH_COUNTS.get("bulk", 0),
+                                        table_rows_restored=LAST_TABLE_WATCH_COUNTS.get("restored", 0))
     except Exception as exc:
         print(f"Table watch error ({type(exc).__name__}); it will retry on the next pass. Pings are not affected.")
         return
@@ -790,6 +818,7 @@ def main():
     previous = state["statuses"]
     last_digest = state.get("last_digest_dm")
     hits = find_transitions(issues, previous)
+    metrics = bump_metrics(state.get("metrics"), status_dms=0 if args.dry_run else len(hits))
     print(f"Found {len(issues)} recent issue(s); {len(hits)} moved into a finished status.")
 
     for key, summary, status in hits:
@@ -809,6 +838,7 @@ def main():
             if not args.dry_run:
                 send_slack_dm(config, digest)
                 last_digest = datetime.now(timezone.utc).isoformat()
+                metrics = bump_metrics(metrics, daily_lists=1)
         else:
             print("Nothing finished, and today's open-issues digest is not due (or was already sent).")
 
@@ -851,12 +881,19 @@ def main():
                 notes = review_closures(config, fresh, resolutions, changed_at)
                 print(f"Channel: {len(candidates)} techsupport issue(s) resolved recently; {len(fresh)} new to the channel; "
                       f"{len(notes)} with a closure reason added.")
-                for text, keys in build_channel_batches(config, fresh, tags_for(fresh), notes=notes):
+                tag_map = tags_for(fresh)
+                for text, keys in build_channel_batches(config, fresh, tag_map, notes=notes):
                     if args.dry_run:
                         print(f"--- channel post ---\n{text}")
                     else:
                         send_slack_channel(config, text)
                         announced = {**announced, **{key: now_iso for key in keys}}
+                        waits = [(datetime.now(timezone.utc) - parse_jira_time(changed_at.get(k))).total_seconds() / 60
+                                 for k in keys if parse_jira_time(changed_at.get(k))]
+                        metrics = bump_metrics(metrics, channel_posts=1, tickets_announced=len(keys),
+                                               people_tagged=len({uid for k in keys for uid in tag_map.get(k, [])}),
+                                               duplicates_consolidated=sum(1 for k in keys if (notes.get(k) or {}).get("dup_of")),
+                                               minutes_to_announce_total=sum(waits), minutes_to_announce_samples=len(waits))
                         if in_window:
                             weekend_resolved = sorted(set(weekend_resolved) | set(keys))
                 announced = prune_announced(announced)
@@ -869,12 +906,15 @@ def main():
                 else:
                     fresh_in = [i for i in incoming if i[0] not in incoming_announced and i[0] not in announced]
                     print(f"Channel: {len(incoming)} issue(s) at Integration recently; {len(fresh_in)} new heads-up(s).")
-                    for text, keys in build_channel_batches(config, fresh_in, tags_for(fresh_in), INCOMING_HEADER):
+                    tag_map_in = tags_for(fresh_in)
+                    for text, keys in build_channel_batches(config, fresh_in, tag_map_in, INCOMING_HEADER):
                         if args.dry_run:
                             print(f"--- fix incoming post ---\n{text}")
                         else:
                             send_slack_channel(config, text)
                             incoming_announced = {**incoming_announced, **{key: now_iso for key in keys}}
+                            metrics = bump_metrics(metrics, channel_posts=1, fix_incoming_announced=len(keys),
+                                                   people_tagged=len({uid for k in keys for uid in tag_map_in.get(k, [])}))
                             if in_window:
                                 weekend_incoming = sorted(set(weekend_incoming) | set(keys))
                 if incoming_announced is not None:
@@ -894,6 +934,7 @@ def main():
                             print(f"--- weekend recap ---\n{text}")
                         else:
                             send_slack_channel(config, text)
+                            metrics = bump_metrics(metrics, recaps=1, recap_tickets=len(recap_resolved) + len(recap_incoming))
                     if not args.dry_run:
                         weekend_resolved, weekend_incoming = [], []
         except (requests.RequestException, RuntimeError) as exc:
@@ -910,7 +951,12 @@ def main():
             print("Table watch: skipped in a --dry-run preview.")
         else:
             try:
+                LAST_TABLE_WATCH_COUNTS.clear()
                 tw_state = table_watch_step(config, tw_state)
+                metrics = bump_metrics(metrics, table_drops_alerted=LAST_TABLE_WATCH_COUNTS.get("drops", 0),
+                                       table_resolved_alerted=LAST_TABLE_WATCH_COUNTS.get("resolved_marks", 0),
+                                       table_bulk_flagged=LAST_TABLE_WATCH_COUNTS.get("bulk", 0),
+                                       table_rows_restored=LAST_TABLE_WATCH_COUNTS.get("restored", 0))
             except Exception as exc:
                 print(f"Table watch error ({type(exc).__name__}); it will retry on the next run. Pings are not affected.")
 
@@ -975,7 +1021,8 @@ def main():
         return
 
     save_state({**previous, **current}, last_digest, announced, snapshot_done, weekend_resolved, {"channel_incoming": incoming_announced, "weekend_incoming": weekend_incoming, "bot_preview_done": preview_done, "table_watch": tw_state, "table_watch_preview_done": tw_preview_done,
-                                                   "last_full_run": datetime.now(timezone.utc).isoformat()})
+                                                   "last_full_run": datetime.now(timezone.utc).isoformat(),
+                                                   "metrics": metrics})
     if channel_error or snapshot_error or preview_error:
         sys.exit(" ".join(m for m in (channel_error, snapshot_error, preview_error) if m))
 

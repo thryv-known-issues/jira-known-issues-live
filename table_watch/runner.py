@@ -26,7 +26,7 @@ def run(config, tw_state, fetch_issues, fetch_changelog, send, label=DEFAULT_LAB
     now = now or datetime.now(timezone.utc)
     last = dict((tw_state or {}).get("last", {}))
     sent = dict((tw_state or {}).get("sent", {}))
-    counts = {"checked": 0, "baselined": 0, "alerts": 0, "unmapped": 0, "failed": 0}
+    counts = {"checked": 0, "baselined": 0, "alerts": 0, "unmapped": 0, "failed": 0, "drops": 0, "resolved_marks": 0, "bulk": 0, "restored": 0}
     name_map = name_map_from_mentions(config.get("MENTIONS"))
     jira_base = config["JIRA_SITE"]
     for issue in fetch_issues(f'labels = "{label}" AND updated >= "{LOOKBACK}"'):
@@ -40,6 +40,7 @@ def run(config, tw_state, fetch_issues, fetch_changelog, send, label=DEFAULT_LAB
             counts["baselined"] += 1
             continue
         result = analyze(key, histories, labels=issue.get("labels"), label=label)
+        counts["restored"] += sum(1 for e in result.logs if e.kind == "readded" and int(e.history_id) > previous)
         fresh = [a for a in result.alerts if int(a.history_id) > previous and alert_hash(a) not in sent]
         messages, unmapped = build_messages(fresh, name_map, jira_base)
         counts["unmapped"] += len(unmapped)
@@ -53,6 +54,12 @@ def run(config, tw_state, fetch_issues, fetch_changelog, send, label=DEFAULT_LAB
                 continue
             for a in message["alerts"]:
                 sent[alert_hash(a)] = now.isoformat()
+                if a.kind == "drop":
+                    counts["drops"] += 1
+                elif a.kind == "resolved":
+                    counts["resolved_marks"] += 1
+                else:
+                    counts["bulk"] += 1
             counts["alerts"] += len(message["alerts"])
         if not failed:
             last[key] = max(newest, previous)

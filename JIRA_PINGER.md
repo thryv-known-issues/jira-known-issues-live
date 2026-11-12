@@ -39,6 +39,10 @@ Several agents add rows to the affected-accounts table inside the description of
 - **Safe by design:** an error inside table watch is reported by type only and never stops the pings above it.
 - Code lives in `table_watch/`, tests in `tests/test_table_watch.py` (`python -m unittest tests.test_table_watch`).
 
+## Impact counters
+
+The tool keeps weekly counters in `state.json` (numbers only, nothing about tickets or people): tickets announced, agents tagged, minutes from "resolved in Jira" to the channel post, duplicate closures explained, Monday recaps, dropped rows flagged, rows put back afterwards, rows marked resolved and large changes flagged. Run `python metrics_report.py` to print the totals and a week-by-week table. The two things it measures are the ones the tool exists for: telling ticket openers sooner, and catching slippage in shared tables.
+
 ## When it runs
 
 An outside timer (cron-job.org) starts the workflow every 15 minutes, because GitHub's own scheduler often skips runs. A GitHub schedule is also set as a backup. Table watch runs on every pass. Everything else (status pings, channel posts, recap, daily list) runs about once an hour. Each run looks back about two hours, so a skipped run is covered, and the saved list of announced issues in `state.json` prevents repeat posts.
