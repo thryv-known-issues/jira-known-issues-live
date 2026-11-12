@@ -564,6 +564,15 @@ def fetch_close_context(config, key):
     return {"links": links, "comments": comments}
 
 
+def fetch_issue_title(config, key):
+    """Summary of one issue (read-only), shortened and with customer emails hidden."""
+    resp = requests.get(f"{config['JIRA_SITE']}/rest/api/3/issue/{key}", params={"fields": "summary"},
+                        auth=(config["JIRA_EMAIL"], config["JIRA_API_TOKEN"]), headers={"Accept": "application/json"}, timeout=HTTP_TIMEOUT)
+    resp.raise_for_status()
+    title = mask_emails((resp.json().get("fields") or {}).get("summary") or "").strip()
+    return title if len(title) <= 120 else title[:120].rstrip() + "..."
+
+
 def clean_reason(text):
     text = mask_emails(re.sub(r"\s+", " ", re.sub(r"https?://\S+", "", text or ""))).strip(" -:")
     return text if len(text) <= REASON_CHARS else text[:REASON_CHARS].rstrip() + "..."
@@ -597,7 +606,7 @@ def closure_note(key, status, resolution, context, changed_at=None):
     return note
 
 
-def review_closures(config, items, resolutions, changed_at=None, fetch=None):
+def review_closures(config, items, resolutions, changed_at=None, fetch=None, fetch_title=None):
     """{key: note} for tickets closed with a reason worth showing. Never hides a ticket; a failed lookup just means less context."""
     notes = {}
     for key, _, status in items:
@@ -613,6 +622,16 @@ def review_closures(config, items, resolutions, changed_at=None, fetch=None):
         note = closure_note(key, status, resolution, context, parse_jira_time((changed_at or {}).get(key)))
         if note["dup_of"] or note["reason"]:
             notes[key] = note
+    titles = {}
+    for note in notes.values():                                     # the title of the ticket they were folded into, looked up once per target
+        target = note["dup_of"]
+        if target and target not in titles:
+            try:
+                titles[target] = (fetch_title or fetch_issue_title)(config, target)
+            except Exception:
+                titles[target] = None
+        if target:
+            note["dup_title"] = titles.get(target)
     return notes
 
 
@@ -650,18 +669,21 @@ def build_channel_batches(config, items, tags=None, header=None, notes=None):
         note = notes.get(key) or {}
         target = note.get("dup_of")
         who_keys = [key]
+        consolidated = False
         if target and len(grouped[target]) >= 2:
             members = grouped[target]
             used.update(m[0] for m in members)
             who_keys = [m[0] for m in members]
             names = ", ".join(link(m[0]) for m in members[:-1]) + " and " + link(members[-1][0])
             text = f"- {names} closed as duplicates of {link(target)} ({escape_slack(status)})"
+            consolidated = True
         else:
             summary = mask_emails(summary)
             if len(summary) > CHANNEL_SUMMARY_CHARS:
                 summary = summary[:CHANNEL_SUMMARY_CHARS].rstrip() + "..."
             if target:
-                label = f"{escape_slack(status)}: duplicate of {link(target)}"
+                label = escape_slack(status)
+                consolidated = True
             elif note.get("reason"):
                 label = f"{escape_slack(status)}: {escape_slack(note['reason'])}"
             else:
@@ -672,7 +694,11 @@ def build_channel_batches(config, items, tags=None, header=None, notes=None):
             for uid in tags.get(k, []):
                 if uid not in ids:
                     ids.append(uid)
-        entries.append((text + "".join(f" <@{uid}>" for uid in ids), who_keys))
+        text += "".join(f" <@{uid}>" for uid in ids)
+        if consolidated and target:                                 # second line: where they were folded into, with the ticket's title
+            title = escape_slack(note.get("dup_title") or "") or target
+            text += f"\n      \u25e6 Consolidated into <{site}/browse/{target}|{title}>"
+        entries.append((text, who_keys))
     for start in range(0, len(entries), CHANNEL_MAX_PER_MESSAGE):
         chunk = entries[start:start + CHANNEL_MAX_PER_MESSAGE]
         yield "\n".join([header or RESOLVED_HEADER] + [text for text, _ in chunk]), [k for _, keys in chunk for k in keys]
@@ -711,14 +737,14 @@ def prune_announced(announced, now=None):
     return keep
 
 
-def _post(config, channel, text):
+def _post(config, channel, text, unfurl=False):
     resp = requests.post(
         SLACK_POST_URL,
         headers={"Authorization": f"Bearer {config['SLACK_BOT_TOKEN']}"},
         json={
             "channel": channel,
             "text": text,
-            "unfurl_links": False,
+            "unfurl_links": unfurl,                      # link previews only for the "Consolidated into" posts
             "unfurl_media": False,
         },
         timeout=HTTP_TIMEOUT,
@@ -734,7 +760,7 @@ def send_slack_dm(config, text):
 
 
 def send_slack_channel(config, text):
-    _post(config, config["SLACK_CHANNEL_ID"], text)
+    _post(config, config["SLACK_CHANNEL_ID"], text, unfurl="Consolidated into" in text)
 
 
 def main():

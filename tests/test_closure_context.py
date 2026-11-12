@@ -87,13 +87,22 @@ class Review(unittest.TestCase):
             return {"links": [], "comments": [comment("Closing as a duplicate of TP-9", "2026-11-11T20:44:00.000-0800")]}
         items = [("T-1", "s", "Cancelled"), ("T-2", "s", "Done"), ("T-3", "s", "Cancelled"), ("T-4", "s", "Production")]
         changed = {"T-1": "2026-11-11T20:44:48.152-0800", "T-3": "2026-11-11T20:44:48.152-0800"}
-        notes = j.review_closures(CFG, items, {"T-1": "Duplicate"}, changed, fetch=fetch)
+        notes = j.review_closures(CFG, items, {"T-1": "Duplicate"}, changed, fetch=fetch, fetch_title=lambda c, k: "Target title")
         self.assertEqual(calls, ["T-1", "T-3"])
-        self.assertEqual(notes, {"T-1": {"dup_of": "TP-9", "reason": "duplicate"}})
+        self.assertEqual(notes, {"T-1": {"dup_of": "TP-9", "reason": "duplicate", "dup_title": "Target title"}})
+
+    def test_a_failed_title_lookup_still_gives_a_note(self):
+        def no_title(config, key):
+            raise RuntimeError("jira down")
+        ctx = {"links": [], "comments": [comment("Closing as a duplicate of TP-9", "2026-11-11T20:44:00.000-0800")]}
+        notes = j.review_closures(CFG, [("T-1", "s", "Cancelled")], {"T-1": "Duplicate"}, {"T-1": "2026-11-11T20:44:48.152-0800"},
+                                  fetch=lambda c, k: ctx, fetch_title=no_title)
+        self.assertEqual(notes["T-1"]["dup_title"], None)
+        self.assertEqual(notes["T-1"]["dup_of"], "TP-9")
 
     def test_a_done_ticket_with_resolution_duplicate_gets_a_note_without_any_lookup(self):
         calls = []
-        notes = j.review_closures(CFG, [("T-1", "s", "Closed")], {"T-1": "Duplicate"}, {}, fetch=lambda c, k: calls.append(k))
+        notes = j.review_closures(CFG, [("T-1", "s", "Closed")], {"T-1": "Duplicate"}, {}, fetch=lambda c, k: calls.append(k), fetch_title=lambda c, k: None)
         self.assertEqual((calls, notes["T-1"]["reason"]), ([], "duplicate"))
 
 
@@ -101,40 +110,62 @@ class Posting(unittest.TestCase):
     def batch(self, items, notes, tags=None):
         return list(j.build_channel_batches(CFG, items, tags or {}, notes=notes))
 
-    def test_five_duplicates_of_one_ticket_become_one_line(self):
+    def test_five_duplicates_of_one_ticket_become_one_line_plus_a_consolidated_into_line(self):
         items = [(f"TP-{n}", f"Update Deposit Status {n}", "Cancelled") for n in (1, 2, 3, 4, 5)]
-        notes = {k: {"dup_of": "TP-99", "reason": "duplicate"} for k, _, _ in items}
+        notes = {k: {"dup_of": "TP-99", "reason": "duplicate", "dup_title": "ThryvPay: Deposit Status Stuck on Preparing - V1"} for k, _, _ in items}
         text, keys = self.batch(items, notes, {"TP-1": ["UME"], "TP-2": ["UME"]})[0]
         lines = text.splitlines()
-        self.assertEqual(len(lines), 2)
-        self.assertIn(f"<{SITE}/TP-1|TP-1>, <{SITE}/TP-2|TP-2>, <{SITE}/TP-3|TP-3>, <{SITE}/TP-4|TP-4> and <{SITE}/TP-5|TP-5> closed as duplicates of <{SITE}/TP-99|TP-99> (Cancelled)", lines[1])
-        self.assertEqual(lines[1].count("<@UME>"), 1)                        # the same person is tagged once
+        self.assertEqual(len(lines), 3)
+        self.assertEqual(lines[1], f"- <{SITE}/TP-1|TP-1>, <{SITE}/TP-2|TP-2>, <{SITE}/TP-3|TP-3>, <{SITE}/TP-4|TP-4> and <{SITE}/TP-5|TP-5> "
+                                   f"closed as duplicates of <{SITE}/TP-99|TP-99> (Cancelled) <@UME>")
+        self.assertEqual(lines[2].strip(), f"\u25e6 Consolidated into <{SITE}/TP-99|ThryvPay: Deposit Status Stuck on Preparing - V1>")
         self.assertEqual(sorted(keys), ["TP-1", "TP-2", "TP-3", "TP-4", "TP-5"])
 
-    def test_a_single_duplicate_keeps_its_summary_and_names_the_target(self):
-        text, _ = self.batch([("TP-1", "Some summary", "Cancelled")], {"TP-1": {"dup_of": "TP-99", "reason": "duplicate"}})[0]
-        self.assertIn(f"- <{SITE}/TP-1|TP-1> Some summary (Cancelled: duplicate of <{SITE}/TP-99|TP-99>)", text)
+    def test_a_single_duplicate_keeps_its_summary_and_gets_the_consolidated_line(self):
+        notes = {"TP-1": {"dup_of": "TP-99", "reason": "duplicate", "dup_title": "The real ticket"}}
+        text, _ = self.batch([("TP-1", "Some summary", "Cancelled")], notes)[0]
+        lines = text.splitlines()
+        self.assertEqual(lines[1], f"- <{SITE}/TP-1|TP-1> Some summary (Cancelled)")
+        self.assertEqual(lines[2].strip(), f"\u25e6 Consolidated into <{SITE}/TP-99|The real ticket>")
+
+    def test_when_the_target_title_is_unknown_the_key_is_used(self):
+        notes = {"TP-1": {"dup_of": "TP-99", "reason": "duplicate", "dup_title": None}}
+        text, _ = self.batch([("TP-1", "s", "Cancelled")], notes)[0]
+        self.assertIn(f"Consolidated into <{SITE}/TP-99|TP-99>", text)
 
     def test_other_reasons_show_in_the_brackets_and_plain_tickets_are_unchanged(self):
         items = [("TP-1", "A", "Cancelled"), ("TP-2", "B", "Done")]
         text, _ = self.batch(items, {"TP-1": {"dup_of": None, "reason": "Won't Do, \"not needed\""}})[0]
         self.assertIn("(Cancelled: Won't Do, \"not needed\")", text)
         self.assertIn(f"- <{SITE}/TP-2|TP-2> B (Done)", text)
+        self.assertNotIn("Consolidated into", text)
 
     def test_duplicates_of_different_tickets_stay_separate_and_mixed_with_normal_lines(self):
         items = [("TP-1", "A", "Cancelled"), ("TP-2", "B", "Cancelled"), ("TP-3", "C", "Cancelled"), ("TP-4", "D", "Done")]
-        notes = {"TP-1": {"dup_of": "TP-90", "reason": "duplicate"}, "TP-2": {"dup_of": "TP-90", "reason": "duplicate"}, "TP-3": {"dup_of": "TP-91", "reason": "duplicate"}}
+        notes = {"TP-1": {"dup_of": "TP-90", "reason": "duplicate", "dup_title": "X"}, "TP-2": {"dup_of": "TP-90", "reason": "duplicate", "dup_title": "X"},
+                 "TP-3": {"dup_of": "TP-91", "reason": "duplicate", "dup_title": "Y"}}
         text, keys = self.batch(items, notes)[0]
-        lines = text.splitlines()
-        self.assertEqual(len(lines), 4)
-        self.assertIn("closed as duplicates of", lines[1])
-        self.assertIn("(Cancelled: duplicate of", lines[2])
-        self.assertIn("(Done)", lines[3])
+        self.assertEqual(text.count("Consolidated into"), 2)
+        self.assertIn("closed as duplicates of", text)
+        self.assertIn("(Done)", text)
         self.assertEqual(sorted(keys), ["TP-1", "TP-2", "TP-3", "TP-4"])
 
     def test_without_notes_the_post_is_exactly_as_before(self):
         text, keys = self.batch([("TP-1", "A", "Done")], None, {"TP-1": ["U1"]})[0]
         self.assertEqual(text, f":white_check_mark: Resolved, please check:\n- <{SITE}/TP-1|TP-1> A (Done) <@U1>")
+
+
+class Unfurl(unittest.TestCase):
+    def test_link_previews_only_for_posts_with_a_consolidated_into_line(self):
+        sent = []
+        real = j._post
+        j._post = lambda config, channel, text, unfurl=False: sent.append(unfurl)
+        try:
+            j.send_slack_channel({"SLACK_CHANNEL_ID": "C1"}, "- TP-1 closed as duplicates\n      \u25e6 Consolidated into <x|TP-9>")
+            j.send_slack_channel({"SLACK_CHANNEL_ID": "C1"}, ":white_check_mark: Resolved\n- TP-2 A (Done)")
+        finally:
+            j._post = real
+        self.assertEqual(sent, [True, False])
 
 
 class Intact(unittest.TestCase):
@@ -151,7 +182,7 @@ class InMain(unittest.TestCase):
 
     def setUp(self):
         self._orig = {n: getattr(j, n) for n in ("send_slack_dm", "send_slack_channel", "save_state", "digest_due", "snapshot_id", "bot_preview_id",
-                                                  "table_watch_preview_id", "load_config", "load_state", "fetch_jira_issues", "fetch_close_context")}
+                                                  "table_watch_preview_id", "load_config", "load_state", "fetch_jira_issues", "fetch_close_context", "fetch_issue_title")}
 
     def tearDown(self):
         for name, value in self._orig.items():
@@ -170,6 +201,7 @@ class InMain(unittest.TestCase):
                                  "TABLE_WATCH_ENABLED": False, "TABLE_WATCH_DRY_RUN": True, "TABLE_WATCH_CHANNEL": "", "TABLE_WATCH_LABEL": "techsupport"}
         j.load_state = lambda: {"statuses": {}, "channel_announced": {"OLD-1": "2026-01-01T00:00:00+00:00"}, "channel_incoming": {}}
         j.fetch_close_context = lambda config, key: {"links": [], "comments": [comment("Closing as a duplicate. Consolidated into https://x.example/browse/TP-43198#icft=TP-43198")]}
+        j.fetch_issue_title = lambda config, key: "ThryvPay: Deposit Status Stuck on Preparing Instead of Submitted - V1"
 
         def issue(key, status, resolution=None):
             fields = {"summary": f"s {key}", "status": {"name": status}, "project": {"key": "T", "name": "T"}, "reporter": {"displayName": "Ryan Lann"},
@@ -187,6 +219,7 @@ class InMain(unittest.TestCase):
         self.assertIn("TP-1|TP-1>", sent[0])
         self.assertIn("closed as duplicates of", sent[0])
         self.assertIn("TP-43198", sent[0])
+        self.assertIn("Consolidated into <https://example.invalid/browse/TP-43198|ThryvPay: Deposit Status Stuck on Preparing Instead of Submitted - V1>", sent[0])
         self.assertIn("(Done)", sent[0])
         self.assertTrue({"TP-1", "TP-2", "TP-3"} <= set(saved[0]))
         self.assertIn("2 with a closure reason added", buf.getvalue())
