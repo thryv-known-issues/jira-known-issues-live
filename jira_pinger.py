@@ -508,11 +508,16 @@ def incoming_items(issues):
     ]
 
 
-# Closure context: a ticket closed as a duplicate (or consolidated into another) is not "resolved, please check", so it is
-# not posted to the team channel. Jira's Resolution field says "Duplicate" when someone cancels a ticket that way; for
-# Cancelled-type tickets the links and the latest comments are read too, in case the Resolution was left empty.
+# Closure context: a Cancelled (or Won't Do) ticket is posted with the reason it was closed, so the team does not read it as
+# "this could have been resolved without a Jira". The reason comes from Jira's Resolution field, the issue links and the
+# closing comment (the newest comment written around the time of the status change).
 CONTEXT_STATUSES = {"cancelled", "canceled", "won't do"}
 DUPLICATE_WORDS = ("duplicate", "dupe", "consolidated into", "consolidated in ", "merged into", "merged with")
+ISSUE_KEY = re.compile(r"\b[A-Z][A-Z0-9]+-\d+\b")
+CLOSING_COMMENT_WINDOW = timedelta(minutes=15)
+REASON_CHARS = 110
+RESOLUTION_LABELS = {"duplicate": "duplicate", "won't do": "Won't Do", "won't fix": "Won't Fix", "cannot reproduce": "cannot reproduce",
+                     "declined": "declined", "not a bug": "not a bug", "obsolete": "obsolete", "incomplete": "incomplete"}
 
 
 def adf_text(node):
@@ -531,8 +536,20 @@ def adf_text(node):
     return ""
 
 
+def parse_jira_time(value):
+    """Jira timestamps look like 2026-11-11T20:44:48.152-0800; returns an aware datetime or None."""
+    if not value:
+        return None
+    for fmt in ("%Y-%m-%dT%H:%M:%S.%f%z", "%Y-%m-%dT%H:%M:%S%z"):
+        try:
+            return datetime.strptime(value, fmt)
+        except ValueError:
+            pass
+    return None
+
+
 def fetch_close_context(config, key):
-    """Issue links and the latest comments of one issue (read-only)."""
+    """Issue links and comments of one issue (read-only)."""
     resp = requests.get(f"{config['JIRA_SITE']}/rest/api/3/issue/{key}", params={"fields": "issuelinks,comment"},
                         auth=(config["JIRA_EMAIL"], config["JIRA_API_TOKEN"]), headers={"Accept": "application/json"}, timeout=HTTP_TIMEOUT)
     resp.raise_for_status()
@@ -540,39 +557,63 @@ def fetch_close_context(config, key):
     links = []
     for link in fields.get("issuelinks") or []:
         kind = link.get("type") or {}
-        links.append(" ".join(str(kind.get(k, "")) for k in ("name", "inward", "outward")))
-    comments = [adf_text(c.get("body")) for c in ((fields.get("comment") or {}).get("comments") or [])[-5:]]
+        other = (link.get("outwardIssue") or link.get("inwardIssue") or {}).get("key", "")
+        links.append({"text": " ".join(str(kind.get(k, "")) for k in ("name", "inward", "outward")), "key": other})
+    comments = [{"text": adf_text(c.get("body")), "created": c.get("created", "")}
+                for c in ((fields.get("comment") or {}).get("comments") or [])[-8:]]
     return {"links": links, "comments": comments}
 
 
-def duplicate_by_resolution(name):
-    return "duplicate" in (name or "").lower()
+def clean_reason(text):
+    text = mask_emails(re.sub(r"\s+", " ", re.sub(r"https?://\S+", "", text or ""))).strip(" -:")
+    return text if len(text) <= REASON_CHARS else text[:REASON_CHARS].rstrip() + "..."
 
 
-def duplicate_by_context(context):
-    if any("duplicate" in link.lower() for link in context.get("links", [])):
-        return True
-    return any(word in comment.lower() for comment in context.get("comments", []) for word in DUPLICATE_WORDS)
+def closure_note(key, status, resolution, context, changed_at=None):
+    """{"dup_of": key or None, "reason": text or None} for one ticket."""
+    label = RESOLUTION_LABELS.get((resolution or "").strip().lower())
+    comments = (context or {}).get("comments", [])
+    closing = None
+    if changed_at:
+        near = [c for c in comments if parse_jira_time(c.get("created")) and abs(parse_jira_time(c["created"]) - changed_at) <= CLOSING_COMMENT_WINDOW]
+        closing = near[-1]["text"] if near else None
+    if closing is None:                                            # no timestamp to compare: a comment that says "duplicate" counts
+        said = [c["text"] for c in comments if any(w in c["text"].lower() for w in DUPLICATE_WORDS)]
+        closing = said[-1] if said else None
+    is_dup = label == "duplicate" or any("duplicate" in link["text"].lower() for link in (context or {}).get("links", [])) \
+        or (closing is not None and any(w in closing.lower() for w in DUPLICATE_WORDS))
+    if is_dup:
+        target = next((l["key"] for l in (context or {}).get("links", []) if "duplicate" in l["text"].lower() and l["key"]), None)
+        if not target and closing:
+            target = next((k for k in ISSUE_KEY.findall(closing) if k != key), None)
+        return {"dup_of": target, "reason": "duplicate"}
+    note = {"dup_of": None, "reason": None}
+    if label and closing:
+        note["reason"] = f'{label}, "{clean_reason(closing)}"'
+    elif label:
+        note["reason"] = label
+    elif closing:
+        note["reason"] = f'"{clean_reason(closing)}"'
+    return note
 
 
-def review_closures(config, items, resolutions, fetch=None):
-    """Split (key, summary, status) items into (to post, keys closed as a duplicate). A failed lookup never blocks a post."""
-    post, hidden = [], []
-    for item in items:
-        key, _, status = item
-        if duplicate_by_resolution(resolutions.get(key)):
-            hidden.append(key)
-            continue
+def review_closures(config, items, resolutions, changed_at=None, fetch=None):
+    """{key: note} for tickets closed with a reason worth showing. Never hides a ticket; a failed lookup just means less context."""
+    notes = {}
+    for key, _, status in items:
+        resolution = resolutions.get(key)
+        context = None
         if status.strip().lower() in CONTEXT_STATUSES:
             try:
                 context = (fetch or fetch_close_context)(config, key)
             except Exception:
                 context = None
-            if context and duplicate_by_context(context):
-                hidden.append(key)
-                continue
-        post.append(item)
-    return post, hidden
+        elif not RESOLUTION_LABELS.get((resolution or "").strip().lower()):
+            continue
+        note = closure_note(key, status, resolution, context, parse_jira_time((changed_at or {}).get(key)))
+        if note["dup_of"] or note["reason"]:
+            notes[key] = note
+    return notes
 
 
 def channel_resolved(issues):
@@ -589,20 +630,52 @@ def mask_emails(text):
     return EMAIL_RE.sub("[email]", text)
 
 
-def build_channel_batches(config, items, tags=None, header=None):
-    """Yield (message text, keys it covers), at most CHANNEL_MAX_PER_MESSAGE issues per message.
-    tags maps an issue key to the Slack IDs to tag on its line."""
-    tags = tags or {}
-    for start in range(0, len(items), CHANNEL_MAX_PER_MESSAGE):
-        chunk = items[start:start + CHANNEL_MAX_PER_MESSAGE]
-        lines = [header or RESOLVED_HEADER]
-        for key, summary, status in chunk:
+def build_channel_batches(config, items, tags=None, header=None, notes=None):
+    """Yield (message text, keys it covers), at most CHANNEL_MAX_PER_MESSAGE lines per message.
+    tags maps an issue key to the Slack IDs to tag on its line. notes maps a key to its closure reason; two or more
+    tickets closed as duplicates of the same ticket share one line."""
+    tags, notes = tags or {}, notes or {}
+    site = config["JIRA_SITE"]
+    link = lambda k: f"<{site}/browse/{k}|{k}>"
+    grouped = {}
+    for item in items:
+        target = (notes.get(item[0]) or {}).get("dup_of")
+        if target:
+            grouped.setdefault(target, []).append(item)
+    entries, used = [], set()                                       # (line text, keys it covers)
+    for item in items:
+        key, summary, status = item
+        if key in used:
+            continue
+        note = notes.get(key) or {}
+        target = note.get("dup_of")
+        who_keys = [key]
+        if target and len(grouped[target]) >= 2:
+            members = grouped[target]
+            used.update(m[0] for m in members)
+            who_keys = [m[0] for m in members]
+            names = ", ".join(link(m[0]) for m in members[:-1]) + " and " + link(members[-1][0])
+            text = f"- {names} closed as duplicates of {link(target)} ({escape_slack(status)})"
+        else:
             summary = mask_emails(summary)
             if len(summary) > CHANNEL_SUMMARY_CHARS:
                 summary = summary[:CHANNEL_SUMMARY_CHARS].rstrip() + "..."
-            who = "".join(f" <@{uid}>" for uid in tags.get(key, []))
-            lines.append(f"- <{config['JIRA_SITE']}/browse/{key}|{key}> {escape_slack(summary)} ({escape_slack(status)}){who}")
-        yield "\n".join(lines), [key for key, _, _ in chunk]
+            if target:
+                label = f"{escape_slack(status)}: duplicate of {link(target)}"
+            elif note.get("reason"):
+                label = f"{escape_slack(status)}: {escape_slack(note['reason'])}"
+            else:
+                label = escape_slack(status)
+            text = f"- {link(key)} {escape_slack(summary)} ({label})"
+        ids = []
+        for k in who_keys:
+            for uid in tags.get(k, []):
+                if uid not in ids:
+                    ids.append(uid)
+        entries.append((text + "".join(f" <@{uid}>" for uid in ids), who_keys))
+    for start in range(0, len(entries), CHANNEL_MAX_PER_MESSAGE):
+        chunk = entries[start:start + CHANNEL_MAX_PER_MESSAGE]
+        yield "\n".join([header or RESOLVED_HEADER] + [text for text, _ in chunk]), [k for _, keys in chunk for k in keys]
 
 
 def build_recap(config, resolved, incoming, tags=None):
@@ -724,9 +797,10 @@ def main():
     weekend_incoming = list(state.get("weekend_incoming", []))
     if config["SLACK_CHANNEL_ID"]:
         try:
-            channel_issues = fetch_jira_issues(config, CHANNEL_JQL, fields="summary,status,reporter,resolution")
+            channel_issues = fetch_jira_issues(config, CHANNEL_JQL, fields="summary,status,reporter,resolution,statuscategorychangedate")
             reporters = {i["key"]: ((i["fields"].get("reporter")) or {}).get("displayName") for i in channel_issues}
             resolutions = {i["key"]: ((i["fields"].get("resolution")) or {}).get("name") for i in channel_issues}
+            changed_at = {i["key"]: i["fields"].get("statuscategorychangedate") for i in channel_issues}
             candidates = channel_resolved(channel_issues)
             incoming = incoming_items(channel_issues)
             now_iso = datetime.now(timezone.utc).isoformat()
@@ -748,12 +822,10 @@ def main():
                     announced = {key: now_iso for key, _, _ in candidates}
             else:
                 fresh = [item for item in candidates if item[0] not in announced]
-                fresh, duplicates = review_closures(config, fresh, resolutions)
-                if duplicates and not args.dry_run:
-                    announced = {**announced, **{key: now_iso for key in duplicates}}      # remembered, never posted
+                notes = review_closures(config, fresh, resolutions, changed_at)
                 print(f"Channel: {len(candidates)} techsupport issue(s) resolved recently; {len(fresh)} new to the channel; "
-                      f"{len(duplicates)} closed as a duplicate and left out.")
-                for text, keys in build_channel_batches(config, fresh, tags_for(fresh)):
+                      f"{len(notes)} with a closure reason added.")
+                for text, keys in build_channel_batches(config, fresh, tags_for(fresh), notes=notes):
                     if args.dry_run:
                         print(f"--- channel post ---\n{text}")
                     else:
