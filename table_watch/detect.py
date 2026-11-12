@@ -139,11 +139,18 @@ def analyze(issue, histories, labels=None, label="techsupport", muted=frozenset(
                     before = {}
                     for r in prev.rows:
                         if any(r):
-                            before.setdefault(prev.key(r), r)
+                            before.setdefault(prev.key(r), []).append(r)
+                    seen = {}
                     flipped = []
                     for r in new.rows:
-                        old = before.get(new.key(r)) if any(r) else None
-                        if old is not None and not prev.is_resolved(old) and new.is_resolved(r):
+                        if not any(r):
+                            continue
+                        # Rows for the same account share a key, so the nth such row now is compared with the nth such row before.
+                        k = new.key(r)
+                        n = seen.get(k, 0)
+                        seen[k] = n + 1
+                        olds = before.get(k, [])
+                        if n < len(olds) and not prev.is_resolved(olds[n]) and new.is_resolved(r):
                             flipped.append(r)
                     if flipped and len(flipped) > BULK_ROWS:
                         result.alerts.append(Alert("resolved_bulk", rows=flipped, keys=[new.key(r) for r in flipped], **common))

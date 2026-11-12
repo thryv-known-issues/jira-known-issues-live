@@ -362,6 +362,52 @@ class ParserAndNames(unittest.TestCase):
         self.assertIsNone(lookup_agent(names, "Katie X"))
 
 
+class OwnChangesAndRepeatedRows(unittest.TestCase):
+    """The TP-43198 case: one agent, many payment rows for the same account, marked Y by that same agent."""
+    HEAD = "||Thryv ID||Business||Agent + ZD Ticket||Payment Intent||Resolved Y/N?||"
+    NAMES = name_map_from_mentions({"Ryan Lann": "URYAN", "Karla Cruz": "UKARLA"})
+
+    def text(self, rows_):
+        return "Intro\n\n" + self.HEAD + "\n" + "\n".join("|" + "|".join(r) + "|" for r in rows_)
+
+    def rows(self, flag, count=8, agent="Ryan Lann 4828743"):
+        return [["2yok5ni2nbjrgv7f", "Maid to Go USA", agent, f"pi_{i}", flag] for i in range(count)]
+
+    def test_marking_your_own_rows_resolved_sends_nothing(self):
+        res = analyze("TP-1", [save(1, self.text(self.rows("")), self.text(self.rows("Y")), who="Ryan Lann")])
+        self.assertEqual(len(res.alerts), 8)                                          # the change is detected ...
+        msgs, unmapped = build_messages(res.alerts, self.NAMES, JIRA)
+        self.assertEqual((msgs, unmapped), ([], []))                                  # ... but the agent made it, so nobody is told
+
+    def test_someone_else_marking_the_rows_resolved_does_tag_the_agent_and_counts_them(self):
+        res = analyze("TP-1", [save(1, self.text(self.rows("")), self.text(self.rows("Y")), who="Karla Cruz")])
+        msgs, _ = build_messages(res.alerts, self.NAMES, JIRA)
+        self.assertEqual((len(msgs), msgs[0]["user_id"]), (1, "URYAN"))
+        self.assertEqual(msgs[0]["text"].count("2yok5ni2nbjrgv7f (ZD"), 1)             # one reference, not eight
+        self.assertIn("(8 rows)", msgs[0]["text"])
+        self.assertIn("were marked resolved", msgs[0]["text"])
+
+    def test_rows_added_already_resolved_are_not_flips(self):
+        before = self.rows("", count=2)
+        after = before[:1] + [before[1][:4] + ["Y"]] + self.rows("Y", count=8)[2:]       # row 2 flips; six brand-new rows come in already Y
+        res = analyze("TP-1", [save(1, self.text(before), self.text(after), who="Karla Cruz")])
+        self.assertEqual(len(res.alerts), 1)
+
+    def test_only_the_rows_that_changed_flip_when_several_share_a_key(self):
+        before = self.rows("", count=4)
+        before[0][4] = "Y"
+        after = [r[:] for r in before]
+        after[2][4] = "Y"
+        res = analyze("TP-1", [save(1, self.text(before), self.text(after), who="Karla Cruz")])
+        self.assertEqual([a.rows[0][3] for a in res.alerts], ["pi_2"])
+
+    def test_dropped_rows_by_the_same_person_are_still_reported(self):
+        rows_ = [[f"acct{i}", "Biz", "Ryan Lann 48287%02d" % i, f"pi_{i}", ""] for i in range(4)]
+        res = analyze("TP-1", [save(1, self.text(rows_), self.text(rows_[:3]), who="Ryan Lann")])
+        msgs, _ = build_messages(res.alerts, self.NAMES, JIRA)
+        self.assertEqual((len(msgs), msgs[0]["user_id"]), (1, "URYAN"))                  # drops are not suppressed by this rule
+
+
 class Runner(unittest.TestCase):
     def setUp(self):
         r = rows(4)

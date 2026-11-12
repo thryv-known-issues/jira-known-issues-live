@@ -94,6 +94,8 @@ def build_messages(alerts, name_map, jira_base, zendesk_base=ZENDESK_BASE):
             messages.append({"history_id": a.history_id, "user_id": None, "agent": "", "kind": "resolved_bulk", "text": text, "alerts": [a]})
         else:
             uid, who = find_agent(name_map, a)
+            if a.kind == "resolved" and uid and lookup_agent(name_map, a.author) == uid:
+                continue                                 # the agent marked their own row resolved: they already know
             groups.setdefault((a.kind, a.history_id, a.table_no, uid or norm_name(who)), []).append((a, uid, who))
     for (kind, history_id, _, _), group in groups.items():
         alerts = [a for a, _, _ in group]
@@ -101,9 +103,12 @@ def build_messages(alerts, name_map, jira_base, zendesk_base=ZENDESK_BASE):
         if who and not uid and who not in unmapped:
             unmapped.append(who)
         tag = f"<@{uid}> " if uid else ""
-        refs = _join([_ref(a, zendesk_base) for a in alerts])
+        counted = {}
+        for a in alerts:
+            counted[_ref(a, zendesk_base)] = counted.get(_ref(a, zendesk_base), 0) + 1
+        refs = _join([ref if n == 1 else f"{ref} ({n} rows)" for ref, n in counted.items()])
         if kind == "resolved":
-            verb = "was" if len(alerts) == 1 else "were"
+            verb = "was" if len(counted) == 1 and len(alerts) == 1 else "were"
             text = (f":white_check_mark: {tag}{refs} {verb} marked resolved in {_where(first, jira_base)}. Please check.\n"
                     + _rows_block([a.rows[0] for a in alerts]))
         else:
