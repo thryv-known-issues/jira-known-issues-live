@@ -105,8 +105,7 @@
     "TP-42467": "2026-11-12T16:00:21.520832+00:00"
   },
   "last_digest_dm": "2026-11-12T14:00:20.799797+00:00",
-  "last_full_run": "2026-11-13T01:00:23.289480+00:00",
-  "metrics": {},
+  "last_full_run": "2026-11-13T02:00:19.277636+00:00",
   "people_snapshot_done": "one-time-test-2026-10-21",
   "statuses": {
     "AR-74840": "Complete",
@@ -146,6 +145,7 @@
     "SHAR-9702": "Done",
     "SHAR-9965": "Cancelled",
     "SW-1088": "Cancelled",
+    "SW-1319": "Ready for Dev",
     "SW-1364": "Cancelled",
     "SW-147": "In Progress",
     "SW-1497": "Done",
