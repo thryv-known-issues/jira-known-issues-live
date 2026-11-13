@@ -106,6 +106,7 @@
   },
   "last_digest_dm": "2026-11-12T14:00:20.799797+00:00",
   "last_full_run": "2026-11-13T02:00:19.277636+00:00",
+  "metrics": {},
   "people_snapshot_done": "one-time-test-2026-10-21",
   "statuses": {
     "AR-74840": "Complete",
