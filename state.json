@@ -106,11 +106,12 @@
   "channel_incoming": {
     "TP-42467": "2026-11-12T16:00:21.520832+00:00"
   },
-  "last_digest_dm": "2026-11-12T14:00:20.799797+00:00",
-  "last_full_run": "2026-11-13T13:00:23.997813+00:00",
+  "last_digest_dm": "2026-11-13T14:00:22.734434+00:00",
+  "last_full_run": "2026-11-13T14:00:24.846150+00:00",
   "metrics": {
     "2026-W46": {
       "channel_posts": 1,
+      "daily_lists": 1,
       "minutes_to_announce_samples": 3,
       "minutes_to_announce_total": 20.54,
       "people_tagged": 4,
