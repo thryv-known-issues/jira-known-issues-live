@@ -97,28 +97,28 @@
     "TP-43079": "2026-11-10T18:30:19.554778+00:00",
     "TP-43087": "2026-11-11T15:30:19.562986+00:00",
     "TP-43090": "2026-11-10T20:30:17.708982+00:00",
+    "TP-43157": "2026-11-13T15:00:23.112796+00:00",
     "TP-43174": "2026-11-12T17:00:23.311329+00:00",
     "TP-43198": "2026-11-12T21:00:23.133693+00:00",
     "TP-43217": "2026-11-12T14:00:21.226973+00:00",
-    "TP-43247": "2026-11-13T04:57:13.263451+00:00",
-    "TSM-487942": "2026-10-30T14:15:16.157112+00:00"
+    "TP-43247": "2026-11-13T04:57:13.263451+00:00"
   },
   "channel_incoming": {
     "TP-42467": "2026-11-12T16:00:21.520832+00:00"
   },
   "last_digest_dm": "2026-11-13T14:00:22.734434+00:00",
-  "last_full_run": "2026-11-13T14:00:24.846150+00:00",
+  "last_full_run": "2026-11-13T15:00:24.870459+00:00",
   "metrics": {
     "2026-W46": {
-      "channel_posts": 1,
+      "channel_posts": 2,
       "daily_lists": 1,
-      "minutes_to_announce_samples": 3,
-      "minutes_to_announce_total": 20.54,
-      "people_tagged": 4,
+      "minutes_to_announce_samples": 4,
+      "minutes_to_announce_total": 51.03,
+      "people_tagged": 5,
       "status_dms": 1,
       "table_drops_alerted": 1,
       "table_resolved_alerted": 6,
-      "tickets_announced": 3
+      "tickets_announced": 4
     }
   },
   "people_snapshot_done": "one-time-test-2026-10-21",
