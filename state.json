@@ -46,6 +46,7 @@
     "SW-1680": "2026-11-13T21:00:21.824796+00:00",
     "SW-1702": "2026-11-12T20:00:20.320181+00:00",
     "SW-1775": "2026-11-11T05:30:20.657840+00:00",
+    "SW-1862": "2026-11-14T12:00:20.331195+00:00",
     "TP-34774": "2026-11-12T14:00:21.226973+00:00",
     "TP-34840": "2026-11-05T05:30:15.299574+00:00",
     "TP-36935": "2026-11-02T16:15:15.467595+00:00",
@@ -94,20 +95,20 @@
     "TP-42701": "2026-11-13T20:00:21.573906+00:00"
   },
   "last_digest_dm": "2026-11-13T14:00:22.734434+00:00",
-  "last_full_run": "2026-11-14T11:00:28.568246+00:00",
+  "last_full_run": "2026-11-14T12:00:21.418971+00:00",
   "metrics": {
     "2026-W46": {
-      "channel_posts": 8,
+      "channel_posts": 9,
       "daily_lists": 1,
       "fix_incoming_announced": 1,
-      "minutes_to_announce_samples": 10,
-      "minutes_to_announce_total": 70965.74,
-      "people_tagged": 17,
+      "minutes_to_announce_samples": 11,
+      "minutes_to_announce_total": 71023.6,
+      "people_tagged": 18,
       "status_dms": 4,
       "table_bulk_flagged": 1,
       "table_drops_alerted": 1,
       "table_resolved_alerted": 7,
-      "tickets_announced": 10
+      "tickets_announced": 11
     }
   },
   "people_snapshot_done": "one-time-test-2026-10-21",
@@ -555,6 +556,7 @@
   },
   "table_watch_preview_done": "table-watch-look-2026-10-26-b",
   "weekend_resolved": [
+    "SW-1862",
     "TP-41712"
   ]
 }
