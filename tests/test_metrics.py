@@ -37,8 +37,8 @@ class Counters(unittest.TestCase):
 
 class Report(unittest.TestCase):
     def test_report_sums_weeks_and_averages_minutes(self):
-        metrics = {"2026-W45": {"tickets_announced": 4, "minutes_to_announce_total": 120, "minutes_to_announce_samples": 4, "table_drops_alerted": 1},
-                   "2026-W46": {"tickets_announced": 6, "minutes_to_announce_total": 60, "minutes_to_announce_samples": 6, "table_drops_alerted": 2,
+        metrics = {"2026-W45": {"tickets_announced": 4, "announce_minutes_total": 120, "announce_minutes_samples": 4, "table_drops_alerted": 1},
+                   "2026-W46": {"tickets_announced": 6, "announce_minutes_total": 60, "announce_minutes_samples": 6, "table_drops_alerted": 2,
                                 "table_rows_restored": 3, "recaps": 1}}
         text = metrics_report.report(metrics)
         self.assertIn("Resolved tickets announced: 10", text)
@@ -46,6 +46,24 @@ class Report(unittest.TestCase):
         self.assertIn("Dropped rows flagged: 3", text)
         self.assertIn("Rows put back after a drop: 3", text)
         self.assertIn("2026-W45: 4 / 1 / 30", text)
+
+    def test_the_old_polluted_counter_names_are_ignored(self):
+        text = metrics_report.report({"2026-W46": {"tickets_announced": 11, "minutes_to_announce_total": 71027, "minutes_to_announce_samples": 11}})
+        self.assertIn("Average minutes from resolved in Jira to posted: no data yet", text)
+
+    def test_csv_export_has_one_row_per_week_and_opens_in_excel(self):
+        import csv
+        import tempfile
+        metrics = {"2026-W45": {"tickets_announced": 4, "announce_minutes_total": 120, "announce_minutes_samples": 4},
+                   "2026-W46": {"tickets_announced": 6, "table_drops_alerted": 2}}
+        path = Path(tempfile.mkdtemp()) / "impact.csv"
+        metrics_report.write_csv(metrics, path)
+        raw = path.read_bytes()
+        self.assertTrue(raw.startswith(b"\xef\xbb\xbf"))                      # a byte-order mark so Excel reads it as UTF-8
+        rows = list(csv.reader(path.read_text(encoding="utf-8-sig").splitlines()))
+        self.assertEqual(rows[0][0], "Week")
+        self.assertEqual((rows[1][0], rows[1][1], rows[1][-1]), ("2026-W45", "4", "30"))
+        self.assertEqual((rows[2][0], rows[2][-1]), ("2026-W46", ""))
 
     def test_empty_report_says_so(self):
         self.assertIn("No counters yet", metrics_report.report({}))
@@ -86,8 +104,48 @@ class Wired(unittest.TestCase):
             j.main()
         week = saved[0]["metrics"][j.week_key()]
         self.assertEqual((week["channel_posts"], week["tickets_announced"]), (1, 2))
-        self.assertEqual(week["minutes_to_announce_samples"], 2)
-        self.assertTrue(0 <= week["minutes_to_announce_total"] < 5)             # they were closed a moment ago
+        self.assertEqual(week["announce_minutes_samples"], 2)
+        self.assertTrue(0 <= week["announce_minutes_total"] < 5)                # they were closed a moment ago
+        self.assertNotIn("announce_minutes_ignored", week)
+
+
+class OldDates(unittest.TestCase):
+    """Jira's status-category date can be days old for a ticket that just moved between two done-type statuses."""
+
+    def test_an_old_date_is_left_out_of_the_average_and_counted_as_ignored(self):
+        old_year = "2026-09-01T10:00:00.000-0600"
+        sent, saved = [], []
+        orig = {n: getattr(j, n) for n in ("send_slack_dm", "send_slack_channel", "save_state", "digest_due", "snapshot_id", "bot_preview_id",
+                                           "table_watch_preview_id", "load_config", "load_state", "fetch_jira_issues")}
+        try:
+            j.send_slack_dm = lambda config, text: None
+            j.send_slack_channel = lambda config, text: sent.append(text)
+            j.save_state = lambda s, last=None, ann=None, snap=None, held=None, extra=None: saved.append(extra)
+            j.digest_due = lambda last, now=None: False
+            j.snapshot_id = lambda: None
+            j.bot_preview_id = lambda: None
+            j.table_watch_preview_id = lambda: None
+            j.load_config = lambda: {"JIRA_SITE": "https://example.invalid", "SLACK_CHANNEL_ID": "C1", "SLACK_USER_ID": "UME", "MENTIONS": {},
+                                     "TABLE_WATCH_ENABLED": False, "TABLE_WATCH_DRY_RUN": True, "TABLE_WATCH_CHANNEL": "", "TABLE_WATCH_LABEL": "techsupport"}
+            j.load_state = lambda: {"statuses": {}, "channel_announced": {"OLD-1": "2026-01-01T00:00:00+00:00"}, "channel_incoming": {}}
+            fresh = datetime.now(timezone.utc).astimezone().strftime("%Y-%m-%dT%H:%M:%S.000%z")
+
+            def issue(key, when):
+                return {"key": key, "fields": {"summary": key, "status": {"name": "Done"}, "project": {"key": "T", "name": "T"},
+                                               "reporter": {"displayName": "Ryan Lann"}, "statuscategorychangedate": when}}
+            rows = [issue("TP-1", fresh), issue("TP-2", old_year)]
+            j.fetch_jira_issues = lambda config, jql=j.JQL, fields="x": list(rows) if jql == j.CHANNEL_JQL else []
+            sys.argv = ["jira_pinger.py"]
+            with contextlib.redirect_stdout(io.StringIO()):
+                j.main()
+        finally:
+            for name, value in orig.items():
+                setattr(j, name, value)
+        week = saved[0]["metrics"][j.week_key()]
+        self.assertEqual(week["tickets_announced"], 2)
+        self.assertEqual(week["announce_minutes_samples"], 1)                  # only the real wait counts
+        self.assertEqual(week["announce_minutes_ignored"], 1)
+        self.assertTrue(week["announce_minutes_total"] < 5)
 
 
 class RunnerCounts(unittest.TestCase):

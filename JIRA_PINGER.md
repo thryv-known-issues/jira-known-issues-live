@@ -41,7 +41,7 @@ Several agents add rows to the affected-accounts table inside the description of
 
 ## Impact counters
 
-The tool keeps weekly counters in `state.json` (numbers only, nothing about tickets or people): tickets announced, agents tagged, minutes from "resolved in Jira" to the channel post, duplicate closures explained, Monday recaps, dropped rows flagged, rows put back afterwards, rows marked resolved and large changes flagged. Run `python metrics_report.py` to print the totals and a week-by-week table. The two things it measures are the ones the tool exists for: telling ticket openers sooner, and catching slippage in shared tables.
+The tool keeps weekly counters in `state.json` (numbers only, nothing about tickets or people): tickets announced, agents tagged, minutes from "resolved in Jira" to the channel post, duplicate closures explained, Monday recaps, dropped rows flagged, rows put back afterwards, rows marked resolved and large changes flagged. Run `python metrics_report.py` to print the totals and a week-by-week table, or `python metrics_report.py --csv impact.csv` to also write a file that opens in Excel. The "minutes to announce" figure only counts waits within the status lookback window (3 hours at most); a ticket whose Jira date is older than that, which happens when it moves between two done-type statuses, is left out and counted as ignored. The two things it measures are the ones the tool exists for: telling ticket openers sooner, and catching slippage in shared tables.
 
 ## When it runs
 

@@ -235,6 +235,7 @@ def bump_metrics(metrics, now=None, **amounts):
     return metrics
 
 
+MAX_REAL_WAIT_MINUTES = 180        # the status lookback is 125 minutes, so a longer "wait" is a date artifact, not a delay
 FULL_RUN_MINUTES = 55          # status pings, channel posts and the daily list run about hourly; table watch runs on every pass
 
 
@@ -888,12 +889,16 @@ def main():
                     else:
                         send_slack_channel(config, text)
                         announced = {**announced, **{key: now_iso for key in keys}}
-                        waits = [(datetime.now(timezone.utc) - parse_jira_time(changed_at.get(k))).total_seconds() / 60
-                                 for k in keys if parse_jira_time(changed_at.get(k))]
+                        # Jira's status-category date does not move between two done-type statuses, so an old date can make a
+                        # ticket look like it waited days. Anything past the lookback window is not a real wait: leave it out.
+                        gaps = [(datetime.now(timezone.utc) - parse_jira_time(changed_at.get(k))).total_seconds() / 60
+                                for k in keys if parse_jira_time(changed_at.get(k))]
+                        waits = [m for m in gaps if 0 <= m <= MAX_REAL_WAIT_MINUTES]
                         metrics = bump_metrics(metrics, channel_posts=1, tickets_announced=len(keys),
                                                people_tagged=len({uid for k in keys for uid in tag_map.get(k, [])}),
                                                duplicates_consolidated=sum(1 for k in keys if (notes.get(k) or {}).get("dup_of")),
-                                               minutes_to_announce_total=sum(waits), minutes_to_announce_samples=len(waits))
+                                               announce_minutes_total=sum(waits), announce_minutes_samples=len(waits),
+                                               announce_minutes_ignored=len(gaps) - len(waits))
                         if in_window:
                             weekend_resolved = sorted(set(weekend_resolved) | set(keys))
                 announced = prune_announced(announced)
