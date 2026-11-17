@@ -53,6 +53,7 @@
     "SW-1775": "2026-11-11T05:30:20.657840+00:00",
     "SW-1821": "2026-11-17T21:00:22.827553+00:00",
     "SW-1862": "2026-11-14T12:00:20.331195+00:00",
+    "SW-1871": "2026-11-17T22:00:23.045938+00:00",
     "TP-34774": "2026-11-12T14:00:21.226973+00:00",
     "TP-34840": "2026-11-05T05:30:15.299574+00:00",
     "TP-37043": "2026-11-17T01:00:24.636234+00:00",
@@ -93,6 +94,7 @@
     "TP-8135": "2026-11-16T17:00:25.779017+00:00"
   },
   "channel_incoming": {
+    "SHAR-10391": "2026-11-17T22:00:23.045938+00:00",
     "TP-35814": "2026-11-16T19:00:26.711509+00:00",
     "TP-35834": "2026-11-16T20:00:22.679309+00:00",
     "TP-42467": "2026-11-12T16:00:21.520832+00:00",
@@ -100,7 +102,7 @@
     "TP-42701": "2026-11-13T20:00:21.573906+00:00"
   },
   "last_digest_dm": "2026-11-17T14:00:24.164552+00:00",
-  "last_full_run": "2026-11-17T21:00:28.651197+00:00",
+  "last_full_run": "2026-11-17T22:00:28.905843+00:00",
   "metrics": {
     "2026-W46": {
       "channel_posts": 9,
@@ -116,14 +118,14 @@
       "tickets_announced": 11
     },
     "2026-W47": {
-      "announce_minutes_samples": 5,
-      "announce_minutes_total": 127.75,
-      "channel_posts": 9,
+      "announce_minutes_samples": 6,
+      "announce_minutes_total": 170.82,
+      "channel_posts": 11,
       "daily_lists": 2,
-      "fix_incoming_announced": 3,
+      "fix_incoming_announced": 4,
       "minutes_to_announce_samples": 9,
       "minutes_to_announce_total": 231.58,
-      "people_tagged": 15,
+      "people_tagged": 18,
       "recap_tickets": 2,
       "recaps": 1,
       "status_dms": 2,
@@ -131,7 +133,7 @@
       "table_drops_alerted": 1,
       "table_resolved_alerted": 13,
       "table_rows_restored": 1,
-      "tickets_announced": 14
+      "tickets_announced": 15
     }
   },
   "people_snapshot_done": "one-time-test-2026-10-21",
@@ -271,7 +273,7 @@
       "CCPT-4957": 19361319,
       "CCPT-5135": 20015755,
       "CCPT-5188": 20018933,
-      "DATA-2069": 20033972,
+      "DATA-2069": 20034415,
       "DATA-2090": 20033984,
       "DSEO-2683": 19426667,
       "LEADS-1414": 19276515,
