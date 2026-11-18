@@ -78,6 +78,7 @@
     "TP-42229": "2026-11-16T17:00:25.779017+00:00",
     "TP-42249": "2026-11-10T15:30:19.877430+00:00",
     "TP-42458": "2026-11-04T21:30:16.104446+00:00",
+    "TP-42662": "2026-11-18T20:00:25.716673+00:00",
     "TP-42665": "2026-11-13T04:57:13.263451+00:00",
     "TP-42692": "2026-11-05T16:30:17.389920+00:00",
     "TP-42722": "2026-11-06T15:30:19.738927+00:00",
@@ -105,7 +106,7 @@
     "TP-42701": "2026-11-13T20:00:21.573906+00:00"
   },
   "last_digest_dm": "2026-11-18T14:00:24.849992+00:00",
-  "last_full_run": "2026-11-18T19:00:29.032719+00:00",
+  "last_full_run": "2026-11-18T20:00:29.657835+00:00",
   "metrics": {
     "2026-W46": {
       "channel_posts": 9,
@@ -121,14 +122,14 @@
       "tickets_announced": 11
     },
     "2026-W47": {
-      "announce_minutes_samples": 16,
-      "announce_minutes_total": 480.84,
-      "channel_posts": 17,
+      "announce_minutes_samples": 17,
+      "announce_minutes_total": 496.45,
+      "channel_posts": 18,
       "daily_lists": 3,
       "fix_incoming_announced": 4,
       "minutes_to_announce_samples": 9,
       "minutes_to_announce_total": 231.58,
-      "people_tagged": 31,
+      "people_tagged": 32,
       "recap_tickets": 2,
       "recaps": 1,
       "status_dms": 2,
@@ -136,7 +137,7 @@
       "table_drops_alerted": 1,
       "table_resolved_alerted": 25,
       "table_rows_restored": 1,
-      "tickets_announced": 25
+      "tickets_announced": 26
     }
   },
   "people_snapshot_done": "one-time-test-2026-10-21",
@@ -235,7 +236,7 @@
     "TP-41712": "Done",
     "TP-42257": "Ready for Dev",
     "TP-42446": "Cancelled",
-    "TP-42662": "Integration",
+    "TP-42662": "Done",
     "TP-42665": "Done",
     "TP-42721": "In Progress",
     "TP-42988": "Cancelled",
@@ -245,6 +246,7 @@
     "TP-43329": "Ready for Dev",
     "TP-43555": "Ready for Dev",
     "TP-43566": "In Progress",
+    "TP-43840": "Ready for Dev",
     "TPS-236": "Closed",
     "TPS-242": "Closed",
     "TPS-246": "Closed",
@@ -358,7 +360,7 @@
       "SHAR-10435": 20026570,
       "SHAR-10459": 20047492,
       "SHAR-10470": 20052358,
-      "SHAR-10478": 20053575,
+      "SHAR-10478": 20053898,
       "SHAR-4325": 18748574,
       "SHAR-6599": 20011572,
       "SHAR-7597": 20032690,
@@ -421,7 +423,7 @@
       "SW-1690": 19504437,
       "SW-1702": 19529664,
       "SW-1703": 19339891,
-      "SW-1732": 20041524,
+      "SW-1732": 20053869,
       "SW-1759": 20041863,
       "SW-1773": 20041690,
       "SW-1775": 19527953,
