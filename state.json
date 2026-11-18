@@ -100,8 +100,8 @@
     "TP-42662": "2026-11-16T19:00:26.711509+00:00",
     "TP-42701": "2026-11-13T20:00:21.573906+00:00"
   },
-  "last_digest_dm": "2026-11-17T14:00:24.164552+00:00",
-  "last_full_run": "2026-11-18T13:00:24.741427+00:00",
+  "last_digest_dm": "2026-11-18T14:00:24.849992+00:00",
+  "last_full_run": "2026-11-18T14:00:27.312725+00:00",
   "metrics": {
     "2026-W46": {
       "channel_posts": 9,
@@ -120,7 +120,7 @@
       "announce_minutes_samples": 10,
       "announce_minutes_total": 250.27,
       "channel_posts": 13,
-      "daily_lists": 2,
+      "daily_lists": 3,
       "fix_incoming_announced": 4,
       "minutes_to_announce_samples": 9,
       "minutes_to_announce_total": 231.58,
