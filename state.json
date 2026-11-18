@@ -49,6 +49,7 @@
     "SW-1702": "2026-11-12T20:00:20.320181+00:00",
     "SW-1759": "2026-11-18T07:00:25.443357+00:00",
     "SW-1775": "2026-11-11T05:30:20.657840+00:00",
+    "SW-1810": "2026-11-18T15:00:21.867781+00:00",
     "SW-1821": "2026-11-17T21:00:22.827553+00:00",
     "SW-1822": "2026-11-18T07:00:25.443357+00:00",
     "SW-1862": "2026-11-14T12:00:20.331195+00:00",
@@ -101,7 +102,7 @@
     "TP-42701": "2026-11-13T20:00:21.573906+00:00"
   },
   "last_digest_dm": "2026-11-18T14:00:24.849992+00:00",
-  "last_full_run": "2026-11-18T14:00:27.312725+00:00",
+  "last_full_run": "2026-11-18T15:00:24.906614+00:00",
   "metrics": {
     "2026-W46": {
       "channel_posts": 9,
@@ -117,14 +118,14 @@
       "tickets_announced": 11
     },
     "2026-W47": {
-      "announce_minutes_samples": 10,
-      "announce_minutes_total": 250.27,
-      "channel_posts": 13,
+      "announce_minutes_samples": 11,
+      "announce_minutes_total": 288.41,
+      "channel_posts": 14,
       "daily_lists": 3,
       "fix_incoming_announced": 4,
       "minutes_to_announce_samples": 9,
       "minutes_to_announce_total": 231.58,
-      "people_tagged": 22,
+      "people_tagged": 24,
       "recap_tickets": 2,
       "recaps": 1,
       "status_dms": 2,
@@ -132,7 +133,7 @@
       "table_drops_alerted": 1,
       "table_resolved_alerted": 23,
       "table_rows_restored": 1,
-      "tickets_announced": 19
+      "tickets_announced": 20
     }
   },
   "people_snapshot_done": "one-time-test-2026-10-21",
@@ -255,7 +256,7 @@
   },
   "table_watch": {
     "last": {
-      "CCPT-1784": 20026201,
+      "CCPT-1784": 20047148,
       "CCPT-3028": 19487611,
       "CCPT-3492": 19216168,
       "CCPT-4281": 19274823,
@@ -321,7 +322,7 @@
       "SEO-417": 19599411,
       "SEO-418": 19522698,
       "SEO-425": 20033636,
-      "SEO-428": 20047084,
+      "SEO-428": 20047087,
       "SEO-74": 19402664,
       "SHAR-10001": 19280775,
       "SHAR-10005": 20010919,
@@ -426,7 +427,7 @@
       "SW-1863": 20007282,
       "SW-1868": 20032797,
       "SW-1871": 20034077,
-      "SW-1872": 20040165,
+      "SW-1872": 20047154,
       "SW-1874": 20041976,
       "SW-790": 19596671,
       "TP-15402": 19245881,
