@@ -1,6 +1,7 @@
 {
   "bot_preview_done": "all-styles-eyes-2026-10-26",
   "channel_announced": {
+    "CCPT-1786": "2026-11-18T17:00:23.363322+00:00",
     "CCPT-4827": "2026-11-04T17:30:17.820184+00:00",
     "CCPT-4836": "2026-11-09T17:30:19.128735+00:00",
     "CCPT-5135": "2026-11-16T22:00:22.578480+00:00",
@@ -36,7 +37,6 @@
     "SHAR-10411": "2026-11-16T22:00:22.578480+00:00",
     "SHAR-10435": "2026-11-17T16:00:26.100139+00:00",
     "SHAR-10459": "2026-11-18T16:00:24.298488+00:00",
-    "SHAR-8217": "2026-11-04T16:30:20.087547+00:00",
     "SHAR-8821": "2026-11-16T22:00:22.578480+00:00",
     "SHAR-9053": "2026-11-16T22:00:22.578480+00:00",
     "SHAR-9226": "2026-11-17T07:00:22.810488+00:00",
@@ -105,7 +105,7 @@
     "TP-42701": "2026-11-13T20:00:21.573906+00:00"
   },
   "last_digest_dm": "2026-11-18T14:00:24.849992+00:00",
-  "last_full_run": "2026-11-18T16:00:29.763226+00:00",
+  "last_full_run": "2026-11-18T17:00:29.246950+00:00",
   "metrics": {
     "2026-W46": {
       "channel_posts": 9,
@@ -121,14 +121,14 @@
       "tickets_announced": 11
     },
     "2026-W47": {
-      "announce_minutes_samples": 14,
-      "announce_minutes_total": 434.3,
-      "channel_posts": 15,
+      "announce_minutes_samples": 15,
+      "announce_minutes_total": 451.07,
+      "channel_posts": 16,
       "daily_lists": 3,
       "fix_incoming_announced": 4,
       "minutes_to_announce_samples": 9,
       "minutes_to_announce_total": 231.58,
-      "people_tagged": 29,
+      "people_tagged": 30,
       "recap_tickets": 2,
       "recaps": 1,
       "status_dms": 2,
@@ -136,7 +136,7 @@
       "table_drops_alerted": 1,
       "table_resolved_alerted": 23,
       "table_rows_restored": 1,
-      "tickets_announced": 23
+      "tickets_announced": 24
     }
   },
   "people_snapshot_done": "one-time-test-2026-10-21",
@@ -446,7 +446,7 @@
       "TP-33443": 19597645,
       "TP-33518": 19491255,
       "TP-33647": 19597631,
-      "TP-33911": 20049992,
+      "TP-33911": 20050517,
       "TP-34731": 20029156,
       "TP-34737": 20017174,
       "TP-34774": 19523568,
