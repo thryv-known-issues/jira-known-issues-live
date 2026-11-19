@@ -19,6 +19,7 @@
     "SEO-406": "2026-11-06T20:30:17.223070+00:00",
     "SEO-411": "2026-11-10T19:30:20.301442+00:00",
     "SEO-417": "2026-11-13T20:00:21.573906+00:00",
+    "SEO-418": "2026-11-19T13:00:22.958115+00:00",
     "SEO-425": "2026-11-17T21:00:22.827553+00:00",
     "SHAR-10005": "2026-11-06T17:30:16.522844+00:00",
     "SHAR-10124": "2026-11-13T04:57:13.263451+00:00",
@@ -107,7 +108,7 @@
     "TP-42701": "2026-11-13T20:00:21.573906+00:00"
   },
   "last_digest_dm": "2026-11-18T14:00:24.849992+00:00",
-  "last_full_run": "2026-11-19T12:00:25.375964+00:00",
+  "last_full_run": "2026-11-19T13:00:25.205359+00:00",
   "metrics": {
     "2026-W46": {
       "channel_posts": 9,
@@ -123,14 +124,14 @@
       "tickets_announced": 11
     },
     "2026-W47": {
-      "announce_minutes_samples": 23,
-      "announce_minutes_total": 745.27,
-      "channel_posts": 21,
+      "announce_minutes_samples": 24,
+      "announce_minutes_total": 749.43,
+      "channel_posts": 22,
       "daily_lists": 3,
       "fix_incoming_announced": 4,
       "minutes_to_announce_samples": 9,
       "minutes_to_announce_total": 231.58,
-      "people_tagged": 38,
+      "people_tagged": 40,
       "recap_tickets": 2,
       "recaps": 1,
       "status_dms": 3,
@@ -138,7 +139,7 @@
       "table_drops_alerted": 3,
       "table_resolved_alerted": 25,
       "table_rows_restored": 2,
-      "tickets_announced": 32
+      "tickets_announced": 33
     }
   },
   "people_snapshot_done": "one-time-test-2026-10-21",
@@ -329,9 +330,9 @@
       "SEO-414": 20066762,
       "SEO-415": 19504377,
       "SEO-417": 19599411,
-      "SEO-418": 19522698,
+      "SEO-418": 20067011,
       "SEO-425": 20033636,
-      "SEO-428": 20066930,
+      "SEO-428": 20067025,
       "SEO-74": 19402664,
       "SHAR-10001": 19280775,
       "SHAR-10005": 20010919,
@@ -473,7 +474,7 @@
       "TP-38163": 19223807,
       "TP-38522": 20035119,
       "TP-38687": 19276675,
-      "TP-38883": 20012255,
+      "TP-38883": 20066982,
       "TP-39029": 20011239,
       "TP-39036": 20028324,
       "TP-39332": 19517778,
