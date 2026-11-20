@@ -11,6 +11,7 @@
     "LEADS-1760": "2026-11-19T22:00:21.514892+00:00",
     "LEADS-1765": "2026-11-16T22:00:22.578480+00:00",
     "LEADS-1792": "2026-11-18T16:00:24.298488+00:00",
+    "LEADS-1809": "2026-11-20T06:00:22.762497+00:00",
     "LEADS-912": "2026-11-13T19:00:29.260986+00:00",
     "SEO-146": "2026-11-12T04:00:19.889877+00:00",
     "SEO-397": "2026-11-11T23:00:22.678649+00:00",
@@ -113,7 +114,7 @@
     "TP-43573": "2026-11-19T19:00:22.402285+00:00"
   },
   "last_digest_dm": "2026-11-19T14:00:30.763140+00:00",
-  "last_full_run": "2026-11-20T05:00:21.492892+00:00",
+  "last_full_run": "2026-11-20T06:00:25.044887+00:00",
   "metrics": {
     "2026-W46": {
       "channel_posts": 9,
@@ -129,23 +130,23 @@
       "tickets_announced": 11
     },
     "2026-W47": {
-      "announce_minutes_samples": 33,
-      "announce_minutes_total": 990.69,
-      "channel_posts": 30,
+      "announce_minutes_samples": 34,
+      "announce_minutes_total": 998.18,
+      "channel_posts": 31,
       "daily_lists": 4,
       "duplicates_consolidated": 1,
       "fix_incoming_announced": 5,
       "minutes_to_announce_samples": 9,
       "minutes_to_announce_total": 231.58,
-      "people_tagged": 56,
+      "people_tagged": 57,
       "recap_tickets": 2,
       "recaps": 1,
       "status_dms": 6,
       "table_bulk_flagged": 2,
       "table_drops_alerted": 4,
-      "table_resolved_alerted": 40,
+      "table_resolved_alerted": 41,
       "table_rows_restored": 2,
-      "tickets_announced": 42
+      "tickets_announced": 43
     }
   },
   "people_snapshot_done": "one-time-test-2026-10-21",
@@ -319,7 +320,7 @@
       "LEADS-1791": 20075565,
       "LEADS-1792": 20047205,
       "LEADS-1808": 20069788,
-      "LEADS-1809": 20077878,
+      "LEADS-1809": 20082122,
       "LEADS-912": 20049056,
       "MC-1558": 20077319,
       "MC-5686": 19198137,
@@ -462,7 +463,7 @@
       "SW-1872": 20077898,
       "SW-1874": 20041976,
       "SW-1881": 20077943,
-      "SW-1893": 20077935,
+      "SW-1893": 20082133,
       "SW-790": 19596671,
       "TP-15402": 19245881,
       "TP-24469": 20048767,
@@ -667,6 +668,7 @@
       "745a11ebf5070a2d": "2026-11-17T20:45:15.534241+00:00",
       "777381644c893f0e": "2026-11-18T06:00:23.647183+00:00",
       "78c777d8901d6bee": "2026-11-19T16:00:24.281839+00:00",
+      "79ac8312b6d28dc5": "2026-11-20T06:00:23.410397+00:00",
       "7b772197b5bf9329": "2026-11-02T13:45:14.175758+00:00",
       "7cfbe45beac313b7": "2026-11-18T06:00:23.647183+00:00",
       "7f81a57cadcfc92b": "2026-11-19T21:15:15.905882+00:00",
