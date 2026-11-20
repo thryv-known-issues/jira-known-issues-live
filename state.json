@@ -45,11 +45,13 @@
     "SHAR-9053": "2026-11-16T22:00:22.578480+00:00",
     "SHAR-9226": "2026-11-17T07:00:22.810488+00:00",
     "SHAR-9840": "2026-11-06T16:30:19.269243+00:00",
+    "SHAR-9880": "2026-11-20T14:00:23.430241+00:00",
     "SW-1221": "2026-11-13T19:00:29.260986+00:00",
     "SW-1364": "2026-11-11T01:30:19.055898+00:00",
     "SW-1421": "2026-11-10T21:30:21.848158+00:00",
     "SW-1499": "2026-11-10T21:30:21.848158+00:00",
     "SW-1647": "2026-11-12T18:00:25.839346+00:00",
+    "SW-1665": "2026-11-20T14:00:23.430241+00:00",
     "SW-1679": "2026-11-10T21:30:21.848158+00:00",
     "SW-1680": "2026-11-13T21:00:21.824796+00:00",
     "SW-1688": "2026-11-18T16:00:24.298488+00:00",
@@ -113,8 +115,8 @@
     "TP-42701": "2026-11-13T20:00:21.573906+00:00",
     "TP-43573": "2026-11-19T19:00:22.402285+00:00"
   },
-  "last_digest_dm": "2026-11-19T14:00:30.763140+00:00",
-  "last_full_run": "2026-11-20T13:00:20.772981+00:00",
+  "last_digest_dm": "2026-11-20T14:00:23.076333+00:00",
+  "last_full_run": "2026-11-20T14:00:25.586958+00:00",
   "metrics": {
     "2026-W46": {
       "channel_posts": 9,
@@ -130,15 +132,15 @@
       "tickets_announced": 11
     },
     "2026-W47": {
-      "announce_minutes_samples": 34,
-      "announce_minutes_total": 998.18,
-      "channel_posts": 31,
-      "daily_lists": 4,
+      "announce_minutes_samples": 36,
+      "announce_minutes_total": 1045.51,
+      "channel_posts": 32,
+      "daily_lists": 5,
       "duplicates_consolidated": 1,
       "fix_incoming_announced": 5,
       "minutes_to_announce_samples": 9,
       "minutes_to_announce_total": 231.58,
-      "people_tagged": 57,
+      "people_tagged": 60,
       "recap_tickets": 2,
       "recaps": 1,
       "status_dms": 6,
@@ -146,7 +148,7 @@
       "table_drops_alerted": 5,
       "table_resolved_alerted": 42,
       "table_rows_restored": 2,
-      "tickets_announced": 43
+      "tickets_announced": 45
     }
   },
   "people_snapshot_done": "one-time-test-2026-10-21",
@@ -156,7 +158,7 @@
     "CCPT-1784": "Ready for Dev",
     "CCPT-4768": "Ready for Dev",
     "CUS-13204": "Technical Readiness",
-    "DATA-2070": "Dev Backlog",
+    "DATA-2070": "Dev Complete",
     "LEADS-1243": "Done",
     "LEADS-1412": "Done",
     "LEADS-1418": "Done",
@@ -440,7 +442,7 @@
       "SW-1547": 19215727,
       "SW-1582": 19197962,
       "SW-1647": 20032718,
-      "SW-1665": 20029753,
+      "SW-1665": 20087266,
       "SW-1679": 19504434,
       "SW-1680": 19600681,
       "SW-1688": 20053560,
