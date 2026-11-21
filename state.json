@@ -97,8 +97,10 @@
     "TP-43654": "2026-11-17T18:00:25.464808+00:00",
     "TP-43655": "2026-11-17T21:00:22.827553+00:00",
     "TP-43824": "2026-11-20T19:00:23.461216+00:00",
+    "TP-43840": "2026-11-21T04:00:20.083505+00:00",
     "TP-43888": "2026-11-19T15:00:24.273912+00:00",
     "TP-44023": "2026-11-19T23:00:31.440523+00:00",
+    "TP-44045": "2026-11-21T04:00:20.083505+00:00",
     "TP-8135": "2026-11-16T17:00:25.779017+00:00"
   },
   "channel_incoming": {
@@ -111,7 +113,7 @@
     "TP-43573": "2026-11-19T19:00:22.402285+00:00"
   },
   "last_digest_dm": "2026-11-20T14:00:23.076333+00:00",
-  "last_full_run": "2026-11-21T03:00:21.444939+00:00",
+  "last_full_run": "2026-11-21T04:00:22.106502+00:00",
   "metrics": {
     "2026-W46": {
       "channel_posts": 9,
@@ -127,23 +129,23 @@
       "tickets_announced": 11
     },
     "2026-W47": {
-      "announce_minutes_samples": 39,
-      "announce_minutes_total": 1148.54,
-      "channel_posts": 34,
+      "announce_minutes_samples": 41,
+      "announce_minutes_total": 1157.23,
+      "channel_posts": 35,
       "daily_lists": 5,
       "duplicates_consolidated": 1,
       "fix_incoming_announced": 5,
       "minutes_to_announce_samples": 9,
       "minutes_to_announce_total": 231.58,
-      "people_tagged": 66,
+      "people_tagged": 68,
       "recap_tickets": 2,
       "recaps": 1,
-      "status_dms": 7,
+      "status_dms": 8,
       "table_bulk_flagged": 2,
       "table_drops_alerted": 7,
       "table_resolved_alerted": 53,
       "table_rows_restored": 2,
-      "tickets_announced": 48
+      "tickets_announced": 50
     }
   },
   "people_snapshot_done": "one-time-test-2026-10-21",
@@ -255,7 +257,7 @@
     "TP-43329": "In Progress",
     "TP-43555": "Ready for Dev",
     "TP-43566": "Done",
-    "TP-43840": "Ready for Dev",
+    "TP-43840": "Done",
     "TP-43888": "Done",
     "TP-44058": "Ready for Dev",
     "TP-44059": "Ready for Dev",
@@ -606,7 +608,7 @@
       "TP-43656": 20072263,
       "TP-43824": 20093465,
       "TP-43829": 20089084,
-      "TP-43840": 20052852,
+      "TP-43840": 20098607,
       "TP-43864": 20055198,
       "TP-43888": 20067664,
       "TP-43923": 20086994,
@@ -617,7 +619,7 @@
       "TP-44007": 20077511,
       "TP-44011": 20077539,
       "TP-44023": 20077802,
-      "TP-44045": 20089006,
+      "TP-44045": 20098616,
       "TP-44048": 20089136,
       "TP-44058": 20092750,
       "TP-44059": 20093350,
@@ -738,5 +740,9 @@
       "fbce6179a6f06b95": "2026-11-20T06:15:15.100337+00:00"
     }
   },
-  "table_watch_preview_done": "table-watch-look-2026-10-26-b"
+  "table_watch_preview_done": "table-watch-look-2026-10-26-b",
+  "weekend_resolved": [
+    "TP-43840",
+    "TP-44045"
+  ]
 }
