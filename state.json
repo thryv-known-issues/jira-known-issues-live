@@ -67,6 +67,7 @@
     "TP-39029": "2026-11-12T15:00:22.763901+00:00",
     "TP-39036": "2026-11-12T22:00:21.391717+00:00",
     "TP-39332": "2026-11-12T05:00:21.309713+00:00",
+    "TP-39905": "2026-11-21T06:00:19.370499+00:00",
     "TP-40182": "2026-11-12T05:00:21.309713+00:00",
     "TP-40547": "2026-11-12T05:00:21.309713+00:00",
     "TP-40853": "2026-11-10T23:30:17.626091+00:00",
@@ -117,7 +118,7 @@
     "TP-43573": "2026-11-19T19:00:22.402285+00:00"
   },
   "last_digest_dm": "2026-11-20T14:00:23.076333+00:00",
-  "last_full_run": "2026-11-21T05:00:22.980407+00:00",
+  "last_full_run": "2026-11-21T06:00:22.739537+00:00",
   "metrics": {
     "2026-W46": {
       "channel_posts": 9,
@@ -133,15 +134,15 @@
       "tickets_announced": 11
     },
     "2026-W47": {
-      "announce_minutes_samples": 45,
-      "announce_minutes_total": 1349.99,
-      "channel_posts": 36,
+      "announce_minutes_samples": 46,
+      "announce_minutes_total": 1391.74,
+      "channel_posts": 37,
       "daily_lists": 5,
       "duplicates_consolidated": 1,
       "fix_incoming_announced": 5,
       "minutes_to_announce_samples": 9,
       "minutes_to_announce_total": 231.58,
-      "people_tagged": 71,
+      "people_tagged": 74,
       "recap_tickets": 2,
       "recaps": 1,
       "status_dms": 10,
@@ -149,7 +150,7 @@
       "table_drops_alerted": 7,
       "table_resolved_alerted": 58,
       "table_rows_restored": 2,
-      "tickets_announced": 54
+      "tickets_announced": 55
     }
   },
   "people_snapshot_done": "one-time-test-2026-10-21",
@@ -752,6 +753,7 @@
   "table_watch_preview_done": "table-watch-look-2026-10-26-b",
   "weekend_resolved": [
     "LEADS-1649",
+    "TP-39905",
     "TP-43840",
     "TP-44045",
     "TP-44048",
