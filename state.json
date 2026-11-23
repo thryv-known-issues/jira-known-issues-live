@@ -121,7 +121,7 @@
     "TP-43573": "2026-11-19T19:00:22.402285+00:00"
   },
   "last_digest_dm": "2026-11-20T14:00:23.076333+00:00",
-  "last_full_run": "2026-11-23T11:00:21.676438+00:00",
+  "last_full_run": "2026-11-23T12:00:26.855994+00:00",
   "metrics": {
     "2026-W46": {
       "channel_posts": 9,
@@ -154,6 +154,10 @@
       "table_resolved_alerted": 58,
       "table_rows_restored": 2,
       "tickets_announced": 58
+    },
+    "2026-W48": {
+      "recap_tickets": 10,
+      "recaps": 1
     }
   },
   "people_snapshot_done": "one-time-test-2026-10-21",
@@ -754,17 +758,5 @@
       "fbce6179a6f06b95": "2026-11-20T06:15:15.100337+00:00"
     }
   },
-  "table_watch_preview_done": "table-watch-look-2026-10-26-b",
-  "weekend_resolved": [
-    "LEADS-1649",
-    "TP-39905",
-    "TP-43656",
-    "TP-43840",
-    "TP-44011",
-    "TP-44045",
-    "TP-44048",
-    "TP-44058",
-    "TP-44059",
-    "TP-44061"
-  ]
+  "table_watch_preview_done": "table-watch-look-2026-10-26-b"
 }
