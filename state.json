@@ -123,7 +123,7 @@
     "TP-43573": "2026-11-19T19:00:22.402285+00:00"
   },
   "last_digest_dm": "2026-11-23T14:00:31.675848+00:00",
-  "last_full_run": "2026-11-23T18:00:28.022586+00:00",
+  "last_full_run": "2026-11-23T19:00:37.609269+00:00",
   "metrics": {
     "2026-W46": {
       "channel_posts": 9,
@@ -165,7 +165,7 @@
       "people_tagged": 6,
       "recap_tickets": 10,
       "recaps": 1,
-      "status_dms": 1,
+      "status_dms": 2,
       "table_resolved_alerted": 6,
       "tickets_announced": 3
     }
@@ -295,7 +295,8 @@
     "TSM-485923": "Done",
     "TSM-489701": "Done",
     "TSM-490779": "Done",
-    "TSM-578891": "Open"
+    "TSM-578891": "Done",
+    "TSM-579250": "Open"
   },
   "table_watch": {
     "last": {
