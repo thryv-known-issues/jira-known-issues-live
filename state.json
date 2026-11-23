@@ -2,7 +2,6 @@
   "bot_preview_done": "all-styles-eyes-2026-10-26",
   "channel_announced": {
     "CCPT-1786": "2026-11-18T17:00:23.363322+00:00",
-    "CCPT-4836": "2026-11-09T17:30:19.128735+00:00",
     "CCPT-5135": "2026-11-16T22:00:22.578480+00:00",
     "LEADS-1566": "2026-11-12T15:00:22.763901+00:00",
     "LEADS-1649": "2026-11-21T05:00:18.836161+00:00",
@@ -19,6 +18,7 @@
     "SEO-404": "2026-11-13T18:00:26.528484+00:00",
     "SEO-405": "2026-11-19T07:00:38.000128+00:00",
     "SEO-411": "2026-11-10T19:30:20.301442+00:00",
+    "SEO-414": "2026-11-23T18:00:22.419047+00:00",
     "SEO-417": "2026-11-13T20:00:21.573906+00:00",
     "SEO-418": "2026-11-19T13:00:22.958115+00:00",
     "SEO-425": "2026-11-17T21:00:22.827553+00:00",
@@ -123,7 +123,7 @@
     "TP-43573": "2026-11-19T19:00:22.402285+00:00"
   },
   "last_digest_dm": "2026-11-23T14:00:31.675848+00:00",
-  "last_full_run": "2026-11-23T17:00:29.677769+00:00",
+  "last_full_run": "2026-11-23T18:00:28.022586+00:00",
   "metrics": {
     "2026-W46": {
       "channel_posts": 9,
@@ -158,15 +158,16 @@
       "tickets_announced": 58
     },
     "2026-W48": {
-      "announce_minutes_samples": 2,
-      "announce_minutes_total": 67.64,
-      "channel_posts": 2,
+      "announce_minutes_samples": 3,
+      "announce_minutes_total": 76.09,
+      "channel_posts": 3,
       "daily_lists": 1,
-      "people_tagged": 3,
+      "people_tagged": 6,
       "recap_tickets": 10,
       "recaps": 1,
+      "status_dms": 1,
       "table_resolved_alerted": 4,
-      "tickets_announced": 2
+      "tickets_announced": 3
     }
   },
   "people_snapshot_done": "one-time-test-2026-10-21",
@@ -200,7 +201,7 @@
     "SEO-404": "Done",
     "SEO-410": "Ready for Dev",
     "SEO-411": "Done",
-    "SEO-414": "In Progress",
+    "SEO-414": "Done",
     "SHAR-10121": "Done",
     "SHAR-10123": "Done",
     "SHAR-10253": "Done",
@@ -369,7 +370,7 @@
       "SEO-411": 19492956,
       "SEO-412": 19495180,
       "SEO-413": 19490387,
-      "SEO-414": 20069783,
+      "SEO-414": 20135991,
       "SEO-415": 20076045,
       "SEO-417": 19599411,
       "SEO-418": 20067011,
