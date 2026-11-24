@@ -123,7 +123,7 @@
     "TP-43573": "2026-11-19T19:00:22.402285+00:00"
   },
   "last_digest_dm": "2026-11-23T14:00:31.675848+00:00",
-  "last_full_run": "2026-11-24T03:45:16.522946+00:00",
+  "last_full_run": "2026-11-24T04:45:25.889222+00:00",
   "metrics": {
     "2026-W46": {
       "channel_posts": 9,
@@ -176,6 +176,7 @@
     "AR-75451": "Complete",
     "CCPT-1784": "Ready for Dev",
     "CCPT-4768": "Ready for Dev",
+    "CCPT-5327": "Open",
     "CUS-13204": "Technical Readiness",
     "CUS-13251": "Code Review",
     "CUS-13258": "Open",
@@ -270,7 +271,7 @@
     "TP-41582": "Done",
     "TP-41704": "Production",
     "TP-41712": "Done",
-    "TP-42257": "Ready for Stage",
+    "TP-42257": "Stage",
     "TP-42446": "Cancelled",
     "TP-42662": "Done",
     "TP-42665": "Done",
