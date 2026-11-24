@@ -177,7 +177,7 @@
       "table_bulk_flagged": 1,
       "table_drops_alerted": 4,
       "table_resolved_alerted": 13,
-      "table_rows_restored": 1,
+      "table_rows_restored": 2,
       "tickets_announced": 19
     }
   },
@@ -410,7 +410,7 @@
       "SEO-456": 20142866,
       "SEO-457": 20142830,
       "SEO-462": 20147990,
-      "SEO-463": 20156077,
+      "SEO-463": 20157312,
       "SEO-465": 20154744,
       "SEO-467": 20155810,
       "SEO-74": 19402664,
