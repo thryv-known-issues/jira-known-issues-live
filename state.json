@@ -123,7 +123,7 @@
     "TP-43573": "2026-11-19T19:00:22.402285+00:00"
   },
   "last_digest_dm": "2026-11-23T14:00:31.675848+00:00",
-  "last_full_run": "2026-11-24T02:45:15.208452+00:00",
+  "last_full_run": "2026-11-24T03:45:16.522946+00:00",
   "metrics": {
     "2026-W46": {
       "channel_posts": 9,
@@ -212,6 +212,7 @@
     "SHAR-10432": "Ready for Dev",
     "SHAR-10504": "Ready for Dev",
     "SHAR-10603": "Open",
+    "SHAR-10604": "Open",
     "SHAR-4325": "In Progress",
     "SHAR-8117": "Done",
     "SHAR-8280": "Ready for Dev",
